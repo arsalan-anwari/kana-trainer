@@ -1,5 +1,10 @@
 # kana-trainer
 
+[![crates.io](https://img.shields.io/crates/v/kana-trainer.svg)](https://crates.io/crates/kana-trainer)
+[![downloads](https://img.shields.io/crates/d/kana-trainer.svg)](https://crates.io/crates/kana-trainer)
+[![CI](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml/badge.svg)](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml)
+[![license](https://img.shields.io/crates/l/kana-trainer.svg)](LICENSE)
+
 Desktop trainer for the hiragana and katakana alphabets. Built with Tauri 2, Svelte 5 and a theme ported from kasumi-ui.
 
 ![Showcase of kana-trainer's practice setup, quiz formats, results and settings screens](docs/showcase.gif)
