@@ -158,7 +158,7 @@ build_snap() {
     snapcraft remote-build --launchpad-accept-public-upload
   else
     say "Building the snap"
-    snapcraft
+    snapcraft pack
   fi
   stage snap ./*_"$VERSION"_*.snap
 }
