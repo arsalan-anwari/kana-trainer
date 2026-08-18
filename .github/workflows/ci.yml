@@ -1,0 +1,60 @@
+# Runs the same checks as scripts/test.sh on every push and pull request:
+# the svelte type check, the vitest suite, rust formatting and cargo check.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: checks
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the libraries tauri builds against
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libwebkit2gtk-4.1-dev libgtk-3-dev libssl-dev librsvg2-dev \
+            libayatana-appindicator3-dev libasound2-dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Add rustfmt
+        run: rustup component add rustfmt
+
+      - name: Cache the cargo registry and build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: cargo-${{ runner.os }}-
+
+      - name: Install the node packages
+        run: npm ci --no-audit --no-fund
+
+      - name: Build the frontend
+        # tauri::generate_context! embeds src-tauri/dist, so cargo needs it to exist
+        run: npm run build
+
+      - name: Run the checks
+        run: ./scripts/test.sh

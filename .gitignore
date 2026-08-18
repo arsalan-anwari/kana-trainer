@@ -1,0 +1,16 @@
+node_modules
+src-tauri/dist
+src-tauri/target
+dist
+build
+snap
+packaging/arch/src
+packaging/arch/pkg
+packaging/arch/*.pkg.tar.*
+packaging/arch/*.tar.gz
+!packaging/snap/
+*.snap
+.DS_Store
+*.log
+target-portable
+.cargo-container

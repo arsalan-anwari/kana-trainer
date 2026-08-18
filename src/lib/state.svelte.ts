@@ -1,0 +1,354 @@
+import { allKana, dakutenRows, kanaById, rows } from "./core/kana";
+import {
+  buildQuestions,
+  checkChoice,
+  checkTyped,
+  eligibleKana,
+  type Answer,
+  type Choice,
+  type Question
+} from "./core/quiz";
+import {
+  defaultSettings,
+  normalizeSettings,
+  usesAudio,
+  type RunSettings
+} from "./core/settings";
+import { summarize, weakKanaIds, type Report, type Summary } from "./core/report";
+import { playKana, preloadKana, setEffectsEnabled, sfx } from "./audio";
+import { listReports, loadJson, saveReport, storeJson } from "./storage";
+
+export type Route = "setup" | "quiz" | "result" | "reports";
+export type Phase = "answering" | "feedback" | "done";
+
+const SETTINGS_KEY = "kana-trainer-settings";
+const PREFS_KEY = "kana-trainer-prefs";
+
+export type Prefs = {
+  effects: boolean;
+  theme: "system" | "light" | "dark";
+};
+
+function newId(): string {
+  const stamp = Date.now().toString(36);
+  const noise = Math.floor(Math.random() * 1e6).toString(36);
+  return `${stamp}-${noise}`;
+}
+
+function startingSelection(): string[] {
+  return rows
+    .filter((row) => !row.dakuten)
+    .flatMap((row) => row.kana.map((kana) => kana.id));
+}
+
+class AppState {
+  route = $state<Route>("setup");
+  settings = $state<RunSettings>({
+    ...defaultSettings,
+    selection: startingSelection()
+  });
+  prefs = $state<Prefs>({ effects: true, theme: "system" });
+  notes = $state<string[]>([]);
+  reports = $state<Report[]>([]);
+  message = $state<string>("");
+
+  questions = $state<Question[]>([]);
+  answers = $state<Answer[]>([]);
+  index = $state(0);
+  phase = $state<Phase>("answering");
+  typed = $state("");
+  picked = $state<Choice | null>(null);
+  lastCorrect = $state(false);
+  lastReport = $state<Report | null>(null);
+
+  now = $state(0);
+  questionStartedAt = $state(0);
+  runStartedAt = $state(0);
+  timer: ReturnType<typeof setInterval> | null = null;
+
+  current = $derived(this.questions[this.index] ?? null);
+  progress = $derived(
+    this.questions.length === 0 ? 0 : (this.index / this.questions.length) * 100
+  );
+  score = $derived(this.answers.filter((answer) => answer.correct).length);
+  eligibleCount = $derived(eligibleKana(this.settings).length);
+  questionRemaining = $derived(
+    this.settings.perQuestionSeconds === 0
+      ? null
+      : Math.max(
+          0,
+          this.settings.perQuestionSeconds * 1000 - (this.now - this.questionStartedAt)
+        )
+  );
+  totalRemaining = $derived(
+    this.settings.totalSeconds === 0
+      ? null
+      : Math.max(0, this.settings.totalSeconds * 1000 - (this.now - this.runStartedAt))
+  );
+
+  load(): void {
+    const storedSettings = loadJson<RunSettings | null>(SETTINGS_KEY, null);
+    if (storedSettings !== null) {
+      this.settings = { ...defaultSettings, ...storedSettings };
+      if (this.settings.selection.length === 0) {
+        this.settings.selection = startingSelection();
+      }
+      const result = normalizeSettings(this.settings);
+      this.settings = result.settings;
+      this.notes = result.notes;
+    }
+    this.prefs = loadJson<Prefs>(PREFS_KEY, this.prefs);
+    this.applyPrefs();
+    void this.refreshReports();
+  }
+
+  applyPrefs(): void {
+    setEffectsEnabled(this.prefs.effects);
+    const root = document.documentElement;
+    root.classList.remove("light", "dark");
+    if (this.prefs.theme !== "system") root.classList.add(this.prefs.theme);
+    storeJson(PREFS_KEY, this.prefs);
+  }
+
+  updateSettings(patch: Partial<RunSettings>): void {
+    const merged = { ...this.settings, ...patch };
+    const result = normalizeSettings(merged);
+    this.settings = result.settings;
+    this.notes = result.notes;
+    storeJson(SETTINGS_KEY, this.settings);
+  }
+
+  toggleKana(id: string): void {
+    const selection = new Set(this.settings.selection);
+    if (selection.has(id)) selection.delete(id);
+    else selection.add(id);
+    sfx.select();
+    this.updateSettings({ selection: [...selection] });
+  }
+
+  toggleRow(rowId: string): void {
+    const row = rows.find((item) => item.id === rowId);
+    if (!row) return;
+    const selection = new Set(this.settings.selection);
+    const complete = row.kana.every((kana) => selection.has(kana.id));
+    for (const kana of row.kana) {
+      if (complete) selection.delete(kana.id);
+      else selection.add(kana.id);
+    }
+    sfx.select();
+    this.updateSettings({ selection: [...selection] });
+  }
+
+  setDakuten(value: boolean): void {
+    const selection = new Set(this.settings.selection);
+    for (const row of dakutenRows) {
+      for (const kana of row.kana) {
+        if (value) selection.add(kana.id);
+        else selection.delete(kana.id);
+      }
+    }
+    this.updateSettings({ includeDakuten: value, selection: [...selection] });
+  }
+
+  setSelection(ids: string[]): void {
+    sfx.select();
+    this.updateSettings({ selection: ids });
+  }
+
+  async refreshReports(): Promise<void> {
+    this.reports = await listReports();
+  }
+
+  weakSelection(): string[] {
+    const answers = this.reports.flatMap((report) => report.answers);
+    return weakKanaIds(answers);
+  }
+
+  start(): void {
+    const result = normalizeSettings(this.settings);
+    this.settings = result.settings;
+    this.notes = result.notes;
+    storeJson(SETTINGS_KEY, this.settings);
+
+    const questions = buildQuestions(this.settings);
+    if (questions.length === 0) {
+      this.message = "Pick at least one character that fits the selected mode.";
+      return;
+    }
+
+    if (usesAudio(this.settings.format)) {
+      preloadKana(
+        eligibleKana(this.settings)
+          .map((kana) => kana.audio)
+          .filter((name): name is string => name !== null)
+      );
+    }
+
+    this.message = "";
+    this.questions = questions;
+    this.answers = [];
+    this.index = 0;
+    this.phase = "answering";
+    this.typed = "";
+    this.picked = null;
+    this.route = "quiz";
+    this.now = Date.now();
+    this.runStartedAt = this.now;
+    this.questionStartedAt = this.now;
+    sfx.start();
+    this.startTimer();
+    this.speakPrompt();
+  }
+
+  startTimer(): void {
+    this.stopTimer();
+    this.timer = setInterval(() => this.tick(), 100);
+  }
+
+  stopTimer(): void {
+    if (this.timer !== null) clearInterval(this.timer);
+    this.timer = null;
+  }
+
+  tick(): void {
+    this.now = Date.now();
+    if (this.phase !== "answering") return;
+    if (this.totalRemaining !== null && this.totalRemaining <= 0) {
+      this.finish();
+      return;
+    }
+    if (this.questionRemaining !== null && this.questionRemaining <= 0) {
+      this.recordAnswer(false, true, "");
+    }
+  }
+
+  speakPrompt(): void {
+    const question = this.current;
+    if (question === null || question.prompt !== "audio") return;
+    const kana = kanaById(question.kanaId);
+    playKana(kana?.audio ?? null);
+  }
+
+  replayPrompt(): void {
+    this.speakPrompt();
+  }
+
+  playChoice(choice: Choice): HTMLAudioElement | null {
+    const kana = kanaById(choice.kanaId);
+    return playKana(kana?.audio ?? null);
+  }
+
+  recordAnswer(correct: boolean, timedOut: boolean, given: string): void {
+    const question = this.current;
+    if (question === null) return;
+    this.answers = [
+      ...this.answers,
+      {
+        kanaId: question.kanaId,
+        script: question.script,
+        correct,
+        timedOut,
+        elapsedMs: Date.now() - this.questionStartedAt,
+        given
+      }
+    ];
+    this.lastCorrect = correct;
+    this.phase = "feedback";
+    if (correct) {
+      sfx.correct();
+      setTimeout(() => {
+        if (this.phase === "feedback") this.next();
+      }, 700);
+    } else {
+      sfx.wrong();
+    }
+  }
+
+  answerChoice(choice: Choice): void {
+    if (this.phase !== "answering" || this.current === null) return;
+    this.picked = choice;
+    const kana = kanaById(choice.kanaId);
+    this.recordAnswer(checkChoice(this.current, choice), false, kana?.romaji ?? "");
+  }
+
+  submitTyped(): void {
+    if (this.phase !== "answering" || this.current === null) return;
+    if (this.typed.trim() === "") return;
+    const acceptEitherScript = this.settings.format === "audio-text";
+    this.recordAnswer(
+      checkTyped(this.current, this.typed, acceptEitherScript),
+      false,
+      this.typed.trim()
+    );
+  }
+
+  next(): void {
+    if (this.index + 1 >= this.questions.length) {
+      this.finish();
+      return;
+    }
+    this.index += 1;
+    this.phase = "answering";
+    this.typed = "";
+    this.picked = null;
+    this.questionStartedAt = Date.now();
+    this.now = this.questionStartedAt;
+    this.speakPrompt();
+  }
+
+  finish(): void {
+    this.stopTimer();
+    this.phase = "done";
+    const report: Report = {
+      id: newId(),
+      createdAt: new Date().toISOString(),
+      durationMs: Date.now() - this.runStartedAt,
+      settings: { ...this.settings },
+      answers: this.answers
+    };
+    this.lastReport = report;
+    this.route = "result";
+    sfx.finish();
+    void saveReport(report).then(() => this.refreshReports());
+  }
+
+  quit(): void {
+    this.stopTimer();
+    if (this.answers.length > 0) {
+      this.finish();
+      return;
+    }
+    this.phase = "answering";
+    this.route = "setup";
+  }
+
+  summary(): Summary {
+    return summarize(this.answers);
+  }
+
+  practiceMistakes(answers: Answer[]): void {
+    const ids = weakKanaIds(answers);
+    if (ids.length === 0) {
+      this.message = "No mistakes found to practice.";
+      return;
+    }
+    const needsDakuten = ids.some((id) => kanaById(id)?.dakuten === true);
+    this.updateSettings({
+      selection: ids,
+      includeDakuten: needsDakuten ? true : this.settings.includeDakuten
+    });
+    this.route = "setup";
+    this.message = `Loaded ${ids.length} characters you missed into the practice set.`;
+  }
+
+  go(route: Route): void {
+    sfx.click();
+    this.route = route;
+    this.message = "";
+    if (route === "reports") void this.refreshReports();
+  }
+}
+
+export const app = new AppState();
+
+export const totalKanaCount = allKana.length;

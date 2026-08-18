@@ -1,0 +1,40 @@
+id: nl.anwari.kanatrainer
+runtime: org.gnome.Platform
+runtime-version: "48"
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.node22
+command: kana-trainer
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=dri
+  - --filesystem=xdg-documents
+modules:
+  - name: kana-trainer
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node22/bin
+      build-args:
+        - --share=network
+    build-commands:
+      - npm install
+      - npm run build
+      - cargo build --release --manifest-path src-tauri/Cargo.toml
+      - install -Dm755 src-tauri/target/release/kana-trainer /app/bin/kana-trainer
+      - install -Dm644 packaging/linux/nl.anwari.kanatrainer.desktop /app/share/applications/nl.anwari.kanatrainer.desktop
+      - install -Dm644 packaging/linux/nl.anwari.kanatrainer.metainfo.xml /app/share/metainfo/nl.anwari.kanatrainer.metainfo.xml
+      - install -Dm644 src-tauri/icons/128x128.png /app/share/icons/hicolor/128x128/apps/nl.anwari.kanatrainer.png
+      - install -Dm644 src-tauri/icons/32x32.png /app/share/icons/hicolor/32x32/apps/nl.anwari.kanatrainer.png
+    sources:
+      - type: dir
+        path: ../..
+        skip:
+          - .git
+          - node_modules
+          - build
+          - src-tauri/target
+          - src-tauri/dist

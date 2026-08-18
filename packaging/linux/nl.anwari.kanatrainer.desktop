@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Kana Trainer
+Comment=Practice hiragana and katakana
+Exec=kana-trainer
+Icon=nl.anwari.kanatrainer
+Terminal=false
+Categories=Education;Languages;
+Keywords=japanese;hiragana;katakana;kana;

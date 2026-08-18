@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>nl.anwari.kanatrainer</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>Apache-2.0</project_license>
+  <name>Kana Trainer</name>
+  <summary>Practice hiragana and katakana</summary>
+  <description>
+    <p>
+      Kana Trainer drills hiragana and katakana with multiple choice quizzes, typing drills
+      and recorded character sounds. Pick single characters or whole rows, set a timer per
+      question or for the whole run, and review your score reports with charts that show
+      which characters need more work.
+    </p>
+  </description>
+  <launchable type="desktop-id">nl.anwari.kanatrainer.desktop</launchable>
+  <url type="homepage">https://github.com/arsalan-anwari/kana-trainer</url>
+  <provides>
+    <binary>kana-trainer</binary>
+  </provides>
+  <releases>
+    <release version="1.0.0" date="2026-08-18"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

@@ -1,0 +1,1 @@
+{"default":{"identifier":"default","description":"Permissions used by the kana trainer window","local":true,"windows":["main"],"permissions":["core:default","dialog:allow-open","dialog:allow-save","dialog:allow-message"]}}
