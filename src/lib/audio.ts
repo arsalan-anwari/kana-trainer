@@ -83,12 +83,21 @@ export function setEffectsEnabled(value: boolean): void {
   effectsOn = value;
 }
 
+// WebKitGTK's media backend (used on Linux in production builds) can't
+// stream from the `tauri://` custom protocol, Loading the file as a blob 
+// and playing that instead sidesteps the limitation.
 function element(name: string): HTMLAudioElement {
   const found = cache.get(name);
   if (found) return found;
-  const audio = new Audio(`audio/kana/${name}.mp3`);
+  const audio = new Audio();
   audio.preload = "auto";
   cache.set(name, audio);
+  void fetch(`audio/kana/${name}.mp3`)
+    .then((response) => response.blob())
+    .then((blob) => {
+      audio.src = URL.createObjectURL(blob);
+    })
+    .catch(() => undefined);
   return audio;
 }
 
@@ -99,9 +108,14 @@ export function playKana(name: string | null): HTMLAudioElement | null {
     current.currentTime = 0;
   }
   const audio = element(name);
-  audio.currentTime = 0;
   current = audio;
-  void audio.play().catch(() => undefined);
+  const start = (): void => {
+    if (current !== audio) return;
+    audio.currentTime = 0;
+    void audio.play().catch(() => undefined);
+  };
+  if (audio.src) start();
+  else audio.addEventListener("loadedmetadata", start, { once: true });
   return audio;
 }
 
