@@ -1,7 +1,6 @@
 # kana-trainer
 
-Desktop trainer for the hiragana and katakana alphabets. Built with Tauri 2, Svelte 5 and a
-theme ported from kasumi-ui.
+Desktop trainer for the hiragana and katakana alphabets. Built with Tauri 2, Svelte 5 and a theme ported from kasumi-ui.
 
 ![Showcase of kana-trainer's practice setup, quiz formats, results and settings screens](docs/showcase.gif)
 
@@ -40,7 +39,6 @@ sudo apt install ./dist/release/*.deb                  # debian 12+, ubuntu 22.0
 chmod +x dist/release/*.AppImage && ./dist/release/*.AppImage   # any distro
 sudo pacman -U dist/release/*.pkg.tar.zst              # arch
 flatpak install --user dist/release/*.flatpak          # any distro with flatpak
-sudo snap install --dangerous dist/release/*.snap      # any distro with snapd
 ```
 
 ## Keyboard Shortcuts

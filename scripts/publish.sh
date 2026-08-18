@@ -8,9 +8,8 @@
 #   scripts/publish.sh                  the whole release
 #   scripts/publish.sh --dry-run        build and check everything, upload nothing, tag nothing
 #   scripts/publish.sh --allow-dirty    release even though the working tree has changes
-#   scripts/publish.sh --skip-packages  do not build the deb, rpm, appimage, arch, flatpak and snap
+#   scripts/publish.sh --skip-packages  do not build the deb, rpm, appimage, arch and flatpak
 #   scripts/publish.sh --native         build the packages against this machine's glibc, not bookworm's
-#   scripts/publish.sh --snap-remote    build the snap on launchpad instead of locally
 #   scripts/publish.sh --skip-crate     do not publish to crates.io
 #   scripts/publish.sh --skip-release   do not tag and do not create the github release
 
@@ -30,9 +29,9 @@ for arg in "$@"; do
     --skip-packages) SKIP_PACKAGES=true ;;
     --skip-crate) SKIP_CRATE=true ;;
     --skip-release) SKIP_RELEASE=true ;;
-    --native|--snap-remote) PACKAGING+=("$arg") ;;
+    --native) PACKAGING+=("$arg") ;;
     -h|--help)
-      sed -n '3,15p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+      sed -n '3,14p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
       exit 0
       ;;
     *)
@@ -68,7 +67,6 @@ check_version_in() {
 say "Checking that every manifest agrees on $VERSION"
 check_version_in src-tauri/Cargo.toml "^version = \"$VERSION\""
 check_version_in src-tauri/tauri.conf.json "\"version\": \"$VERSION\""
-check_version_in packaging/snap/snapcraft.yaml "^version: \"$VERSION\""
 check_version_in packaging/arch/PKGBUILD "^pkgver=$VERSION"
 check_version_in packaging/linux/nl.anwari.kanatrainer.metainfo.xml "release version=\"$VERSION\""
 

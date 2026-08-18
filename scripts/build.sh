@@ -5,7 +5,6 @@
 # Usage:
 #   scripts/build.sh                 all of it, portable
 #   scripts/build.sh --native        build against this machine's glibc, not bookworm's
-#   scripts/build.sh --snap-remote   build the snap on launchpad instead of locally
 #   scripts/build.sh --app-only      just the desktop app, no packages
 
 source "$(dirname "$0")/common.sh"
@@ -16,9 +15,9 @@ PASSED=()
 for arg in "$@"; do
   case "$arg" in
     --app-only) APP_ONLY=true ;;
-    --native|--snap-remote) PASSED+=("$arg") ;;
+    --native) PASSED+=("$arg") ;;
     -h|--help)
-      sed -n '3,13p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+      sed -n '3,8p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
       exit 0
       ;;
     *)

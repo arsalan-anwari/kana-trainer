@@ -21,6 +21,6 @@ First stable release.
 - Charts for the characters, rows and alphabets you struggle with
 - One click to turn past mistakes into a new practice set
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
-- Linux packaging for deb, rpm, AppImage, Arch, Flatpak and Snap
+- Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
 [1.0.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.0.0

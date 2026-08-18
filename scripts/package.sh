@@ -4,30 +4,26 @@
 # carry. 
 #
 # Usage:
-#   scripts/package.sh                 the binary, deb, rpm, appimage, arch, flatpak and snap
+#   scripts/package.sh                 the binary, deb, rpm, appimage, arch and flatpak
 #   scripts/package.sh bundles         the binary, deb, rpm and appimage
 #   scripts/package.sh flatpak         the flatpak bundle
-#   scripts/package.sh snap            the snap
 #   scripts/package.sh arch            the arch package, from the last binary built
 #   scripts/package.sh --native        build against this machine's glibc, not bookworm's
-#   scripts/package.sh --snap-remote   build the snap on launchpad instead of locally
 
 source "$(dirname "$0")/common.sh"
 source "$(dirname "$0")/container.sh"
 
 TARGET=""
 NATIVE=false
-SNAP_REMOTE=false
 
 for arg in "$@"; do
   case "$arg" in
     --native) NATIVE=true ;;
-    --snap-remote) SNAP_REMOTE=true ;;
     -h|--help)
-      sed -n '3,22p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+      sed -n '3,11p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
       exit 0
       ;;
-    all|bundles|appimage|arch|flatpak|snap)
+    all|bundles|appimage|arch|flatpak)
       TARGET="$arg"
       ;;
     *)
@@ -143,26 +139,6 @@ build_flatpak() {
   stage flatpak "build/nl.anwari.kanatrainer-$VERSION.flatpak"
 }
 
-build_snap() {
-  if ! command -v snapcraft >/dev/null 2>&1; then
-    say "snapcraft is not on this machine, skipping the snap"
-    say "Snaps are built on launchpad with --snap-remote, or locally with snapd and lxd"
-    return
-  fi
-
-  mkdir -p snap
-  cp packaging/snap/snapcraft.yaml snap/snapcraft.yaml
-
-  if [ "$SNAP_REMOTE" = true ]; then
-    say "Building the snap on launchpad"
-    snapcraft remote-build --launchpad-accept-public-upload
-  else
-    say "Building the snap"
-    snapcraft pack
-  fi
-  stage snap ./*_"$VERSION"_*.snap
-}
-
 mkdir -p "$STAGE"
 rm -f "$STAGE/SHA256SUMS.txt"
 
@@ -171,14 +147,12 @@ case "$TARGET" in
   appimage) build_bundles ;;
   arch) build_arch ;;
   flatpak) build_flatpak ;;
-  snap) build_snap ;;
   all)
     rm -rf "$STAGE"
     mkdir -p "$STAGE"
     build_bundles
     build_arch
     build_flatpak
-    build_snap
     ;;
 esac
 
