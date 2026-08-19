@@ -5,14 +5,16 @@
 [![CI](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml/badge.svg)](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml)
 [![license](https://img.shields.io/crates/l/kana-trainer.svg)](LICENSE)
 
-Desktop trainer for the hiragana and katakana alphabets. Built with Tauri 2, Svelte 5 and a theme ported from kasumi-ui.
+Trainer for the hiragana and katakana alphabets, on desktop, tablet and phone.
+Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 
-![Showcase of kana-trainer's practice setup, quiz formats, results and settings screens](docs/showcase.gif)
+![Showcase of kana-trainer's practice setup, the three quiz formats, run results and the reports screen](docs/showcase.gif)
 
 ## What it does
 
+- Responsive interface, the same app on a wide screen and on a phone
 - Practice hiragana, katakana or both, in either direction (kana to romaji, romaji to kana or mixed)
-- Three question formats: text to text, audio to text and text to audio
+- Three question formats: text to text, audio to text, and text to audio with a waveform for each sound
 - Two answer styles: multiple choice with four options, or typing the romaji yourself
 - Time trial with 5, 10, 15 or 30 seconds per question and an optional limit for the whole run
 - Pick single characters, whole rows, or the characters you keep getting wrong
@@ -20,13 +22,6 @@ Desktop trainer for the hiragana and katakana alphabets. Built with Tauri 2, Sve
 - Score reports saved on disk, loaded and exported as JSON files
 - Charts for the characters, rows and alphabets you struggle with
 - One click to turn past mistakes into a new practice set
-
-## Requirements
-
-- Rust 1.77 or newer
-- Node 20 or newer
-- On Linux: webkit2gtk 4.1, gtk3 and the distro base build tools
-
 
 ## Installing
 
@@ -36,24 +31,43 @@ From crates.io:
 cargo install kana-trainer
 ```
 
-From a Linux package:
+Download pages at [releases page](https://github.com/arsalan-anwari/kana-trainer/releases).
 
 ```sh
-sudo dnf install ./dist/release/*.rpm                  # fedora, opensuse
-sudo apt install ./dist/release/*.deb                  # debian 12+, ubuntu 22.04+
-chmod +x dist/release/*.AppImage && ./dist/release/*.AppImage   # any distro
-sudo pacman -U dist/release/*.pkg.tar.zst              # arch
-flatpak install --user dist/release/*.flatpak          # any distro with flatpak
+sudo dnf install ./kana-trainer-*.rpm            # fedora, opensuse
+sudo apt install ./kana-trainer_*.deb            # debian 12+, ubuntu 22.04+
+chmod +x ./kana-trainer_*.AppImage && ./kana-trainer_*.AppImage
+sudo pacman -U ./kana-trainer-*.pkg.tar.zst      # arch
+flatpak install --user ./kana-trainer-*.flatpak  # any distro with flatpak
+adb install ./kana-trainer-*.apk                 # android
+```
+
+## Building
+
+### Requirements
+
+- Rust 1.77 or newer
+- Node 20 or newer
+- On Linux: webkit2gtk 4.1, gtk3 and the distro base build tools
+
+### Commands
+
+```sh
+npm install
+npm run tauri:dev     # the app
+npm run check         # type check
+npm run test          # unit tests
+npm run test:e2e      # playwright smoke test
 ```
 
 ## Keyboard Shortcuts
 
 - `1` to `4` picks an answer in multiple choice
-- `Enter` submits a typed answer and moves on after feedback
+- `Enter` submits a typed answer, submits the picked sound in text to audio, and
+  moves on after feedback
 - `r` replays the sound in audio questions
 - `Escape` leaves the run
 
 ## Credits
 
 - Character sounds from [digitaIfabric/japanese](https://github.com/digitaIfabric/japanese)
-- Theme from [kasumi-ui](https://github.com/ashunar0/kasumi-ui)

@@ -2,107 +2,129 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Washi paper and sumi ink.
+   Light is a warm cream page with near black text, dark is the same idea
+   inverted: an ink ground with cream text. Only two accents break the
+   monochrome, a vermilion seal red for mistakes and a muted moss for wins. */
+
 :root {
-  --background: #ffffff;
-  --foreground: #333333;
-  --primary: #1c1917;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f4;
-  --secondary-foreground: #0c0a09;
-  --muted: #f5f5f4;
-  --muted-foreground: #78716c;
-  --accent: #f5f5f4;
-  --accent-foreground: #0c0a09;
-  --destructive: #e7000b;
-  --destructive-foreground: #ffffff;
-  --border: #e7e5e4;
-  --input: #e7e5e4;
-  --ring: #0c0a09;
-  --sidebar: #f9f8f7;
-  --sidebar-foreground: #0c0a09;
-  --sidebar-border: #e7e5e4;
-  --radius: 0.5rem;
-  --brand: #7ccf00;
-  --brand-foreground: #1a2e00;
-  --brand-shadow: #5ea500;
-  --success: #5ea500;
-  --success-foreground: #ffffff;
-  --success-soft: #f2fbe3;
-  --danger: #e7000b;
-  --danger-foreground: #ffffff;
-  --danger-soft: #fdeceb;
-  --chart-1: #bbf451;
-  --chart-2: #7ccf00;
-  --chart-3: #5ea500;
-  --chart-4: #497d00;
-  --chart-5: #3c6300;
+  --background: #f7f2e7;
+  --foreground: #1b1915;
+  --surface: #fffdf7;
+  --primary: #1b1915;
+  --primary-foreground: #fbf7ee;
+  --secondary: #ece5d5;
+  --secondary-foreground: #1b1915;
+  --muted: #ece5d5;
+  --muted-foreground: #6e6657;
+  --accent: #efe9db;
+  --accent-foreground: #1b1915;
+  --destructive: #ad3a2c;
+  --destructive-foreground: #fbf7ee;
+  --border: #ded5c1;
+  --wire: #d4cab3;
+  --input: #ded5c1;
+  --ring: #1b1915;
+  --sidebar: #f1ebdd;
+  --sidebar-foreground: #1b1915;
+  --sidebar-border: #ded5c1;
+  --radius: 0.75rem;
+  --brand: #1b1915;
+  --brand-foreground: #fbf7ee;
+  --brand-shadow: #4a4437;
+  --success: #4c6b4a;
+  --success-foreground: #fbf7ee;
+  --success-soft: #e8eee1;
+  --danger: #ad3a2c;
+  --danger-foreground: #fbf7ee;
+  --danger-soft: #f7e7e1;
+  --chart-1: #cfc5ae;
+  --chart-2: #a89c81;
+  --chart-3: #7b7159;
+  --chart-4: #4b453a;
+  --chart-5: #1b1915;
 }
 
 .dark {
-  --background: #0c0a09;
-  --foreground: #fafaf9;
-  --primary: #fafaf9;
-  --primary-foreground: #0c0a09;
-  --secondary: #292524;
-  --secondary-foreground: #fafaf9;
-  --muted: #292524;
-  --muted-foreground: #a8a29e;
-  --accent: #292524;
-  --accent-foreground: #fafaf9;
-  --destructive: #ff6467;
-  --destructive-foreground: #ffffff;
-  --border: #292524;
-  --input: #292524;
-  --ring: #d6d3d1;
-  --sidebar: #1c1917;
-  --sidebar-foreground: #fafaf9;
-  --sidebar-border: #292524;
-  --brand: #7ccf00;
-  --brand-foreground: #14210a;
-  --brand-shadow: #497d00;
-  --success: #7ccf00;
-  --success-foreground: #14210a;
-  --success-soft: #1e2a10;
-  --danger: #ff6467;
-  --danger-foreground: #2a0b0c;
-  --danger-soft: #2e1414;
+  --background: #16150f;
+  --foreground: #f3eddf;
+  --surface: #1e1c15;
+  --primary: #f3eddf;
+  --primary-foreground: #16150f;
+  --secondary: #2a281f;
+  --secondary-foreground: #f3eddf;
+  --muted: #2a281f;
+  --muted-foreground: #a49a84;
+  --accent: #2a281f;
+  --accent-foreground: #f3eddf;
+  --destructive: #dd7263;
+  --destructive-foreground: #16150f;
+  --border: #353227;
+  --wire: #403c2e;
+  --input: #353227;
+  --ring: #d8d0bc;
+  --sidebar: #1c1a14;
+  --sidebar-foreground: #f3eddf;
+  --sidebar-border: #353227;
+  --brand: #f3eddf;
+  --brand-foreground: #16150f;
+  --brand-shadow: #6d6753;
+  --success: #8fae86;
+  --success-foreground: #16150f;
+  --success-soft: #232a1e;
+  --danger: #dd7263;
+  --danger-foreground: #16150f;
+  --danger-soft: #2e1d19;
+  --chart-1: #3f3b2e;
+  --chart-2: #635c47;
+  --chart-3: #8b8267;
+  --chart-4: #b8ae90;
+  --chart-5: #f3eddf;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --background: #0c0a09;
-    --foreground: #fafaf9;
-    --primary: #fafaf9;
-    --primary-foreground: #0c0a09;
-    --secondary: #292524;
-    --secondary-foreground: #fafaf9;
-    --muted: #292524;
-    --muted-foreground: #a8a29e;
-    --accent: #292524;
-    --accent-foreground: #fafaf9;
-    --destructive: #ff6467;
-    --destructive-foreground: #ffffff;
-    --border: #292524;
-    --input: #292524;
-    --ring: #d6d3d1;
-    --sidebar: #1c1917;
-    --sidebar-foreground: #fafaf9;
-    --sidebar-border: #292524;
-    --brand: #7ccf00;
-    --brand-foreground: #14210a;
-    --brand-shadow: #497d00;
-    --success: #7ccf00;
-    --success-foreground: #14210a;
-    --success-soft: #1e2a10;
-    --danger: #ff6467;
-    --danger-foreground: #2a0b0c;
-    --danger-soft: #2e1414;
+    --background: #16150f;
+    --foreground: #f3eddf;
+    --surface: #1e1c15;
+    --primary: #f3eddf;
+    --primary-foreground: #16150f;
+    --secondary: #2a281f;
+    --secondary-foreground: #f3eddf;
+    --muted: #2a281f;
+    --muted-foreground: #a49a84;
+    --accent: #2a281f;
+    --accent-foreground: #f3eddf;
+    --destructive: #dd7263;
+    --destructive-foreground: #16150f;
+    --border: #353227;
+    --wire: #403c2e;
+    --input: #353227;
+    --ring: #d8d0bc;
+    --sidebar: #1c1a14;
+    --sidebar-foreground: #f3eddf;
+    --sidebar-border: #353227;
+    --brand: #f3eddf;
+    --brand-foreground: #16150f;
+    --brand-shadow: #6d6753;
+    --success: #8fae86;
+    --success-foreground: #16150f;
+    --success-soft: #232a1e;
+    --danger: #dd7263;
+    --danger-foreground: #16150f;
+    --danger-soft: #2e1d19;
+    --chart-1: #3f3b2e;
+    --chart-2: #635c47;
+    --chart-3: #8b8267;
+    --chart-4: #b8ae90;
+    --chart-5: #f3eddf;
   }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -114,6 +136,7 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-wire: var(--wire);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-sidebar: var(--sidebar);
@@ -133,38 +156,35 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --font-sans: ui-sans-serif, system-ui, sans-serif;
   --font-kana: "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Noto Sans JP",
     "Yu Gothic", Meiryo, ui-sans-serif, system-ui, sans-serif;
   --text-ui: 0.875rem;
-  --text-ui--line-height: 2;
+  --text-ui--line-height: 1.6;
   --text-body: 1rem;
-  --text-body--line-height: 2.5;
-  --text-h4: 1.1875rem;
-  --text-h3: 1.4375rem;
-  --text-h2: 1.75rem;
-  --text-h1: 2.0625rem;
+  --text-body--line-height: 1.7;
+  --text-h4: 1.125rem;
+  --text-h3: 1.375rem;
+  --text-h2: 1.625rem;
+  --text-h1: 2rem;
 }
 
-html,
-body {
-  height: 100%;
-}
-
-#app {
-  height: 100%;
+html {
+  /* keeps the fixed header offset and scroll anchoring sane on mobile */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  overflow: hidden;
+  overscroll-behavior-y: none;
 }
 
 .kana {
@@ -173,14 +193,8 @@ body {
 }
 
 ::selection {
-  background: var(--brand);
-  color: var(--brand-foreground);
-}
-
-.scroll-area {
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  background: var(--foreground);
+  color: var(--background);
 }
 
 @keyframes pop-in {
@@ -204,7 +218,7 @@ body {
 
 @keyframes cheer {
   0% { transform: scale(1); }
-  40% { transform: scale(1.08); }
+  40% { transform: scale(1.04); }
   100% { transform: scale(1); }
 }
 

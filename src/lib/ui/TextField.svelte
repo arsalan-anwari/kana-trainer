@@ -40,7 +40,7 @@
   autocorrect="off"
   spellcheck="false"
   onkeydown={keydown}
-  class="w-full rounded-xl border-2 border-input bg-background text-center font-semibold transition-colors placeholder:font-normal placeholder:text-muted-foreground focus-visible:border-brand focus-visible:outline-none disabled:opacity-50 {big
-    ? 'h-16 text-h2'
+  class="w-full rounded-xl border-2 border-input bg-surface text-center font-semibold transition-colors placeholder:font-normal placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:outline-none disabled:opacity-50 {big
+    ? 'h-16 text-h2 sm:h-20'
     : 'h-11 px-4 text-sm'}"
 />

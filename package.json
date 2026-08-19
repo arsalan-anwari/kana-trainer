@@ -1,6 +1,6 @@
 {
   "name": "kana-trainer",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Desktop trainer for hiragana and katakana",
   "type": "module",
   "private": true,
@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "tauri": "tauri",
     "tauri:dev": "tauri dev -- --no-default-features",
     "tauri:build": "tauri build"
@@ -19,6 +20,7 @@
     "@tauri-apps/plugin-dialog": "^2.7.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@sveltejs/vite-plugin-svelte": "7.3.0",
     "@tailwindcss/vite": "4.3.3",
     "@tauri-apps/cli": "2.11.4",

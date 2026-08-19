@@ -1,5 +1,5 @@
-# Runs the same checks as scripts/test.sh on every push and pull request:
-# the svelte type check, the vitest suite, rust formatting and cargo check.
+# The checks that used to live in scripts/test.sh: the svelte type check, the
+# vitest suite, the playwright smoke test, rust formatting and cargo check.
 
 name: ci
 
@@ -52,9 +52,23 @@ jobs:
       - name: Install the node packages
         run: npm ci --no-audit --no-fund
 
+      - name: Install the browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Type check the frontend
+        run: npm run check
+
+      - name: Run the frontend tests
+        run: npm run test
+
       - name: Build the frontend
-        # tauri::generate_context! embeds src-tauri/dist, so cargo needs it to exist
         run: npm run build
 
-      - name: Run the checks
-        run: ./scripts/test.sh
+      - name: Run the smoke test
+        run: npx playwright test
+
+      - name: Check rust formatting
+        run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
+
+      - name: Build the rust backend
+        run: cargo check --manifest-path src-tauri/Cargo.toml

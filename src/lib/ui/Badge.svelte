@@ -11,7 +11,7 @@
 
   const tones: Record<Tone, string> = {
     default: "bg-primary text-primary-foreground",
-    outline: "border border-border text-foreground",
+    outline: "border border-border text-muted-foreground",
     success: "bg-success-soft text-success",
     danger: "bg-danger-soft text-danger",
     brand: "bg-brand text-brand-foreground"
@@ -19,7 +19,7 @@
 </script>
 
 <span
-  class="inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold {tones[tone]} {className}"
+  class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold {tones[tone]} {className}"
 >
   {@render children()}
 </span>

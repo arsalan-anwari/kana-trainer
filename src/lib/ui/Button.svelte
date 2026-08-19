@@ -34,23 +34,23 @@
 
   const variants: Record<Variant, string> = {
     primary:
-      "bg-primary text-primary-foreground shadow-[0_4px_0_var(--color-border)] hover:brightness-110 active:translate-y-[4px] active:shadow-none",
+      "bg-primary text-primary-foreground shadow-[0_3px_0_var(--color-brand-shadow)] hover:opacity-90 active:translate-y-[3px] active:shadow-none",
     brand:
-      "bg-brand text-brand-foreground shadow-[0_4px_0_var(--color-brand-shadow)] hover:brightness-105 active:translate-y-[4px] active:shadow-none",
+      "bg-brand text-brand-foreground shadow-[0_3px_0_var(--color-brand-shadow)] hover:opacity-90 active:translate-y-[3px] active:shadow-none",
     secondary:
-      "bg-secondary text-secondary-foreground shadow-[0_4px_0_var(--color-border)] hover:brightness-105 active:translate-y-[4px] active:shadow-none",
+      "bg-secondary text-secondary-foreground border border-border hover:bg-accent active:translate-y-[2px]",
     outline:
-      "border border-border bg-background text-foreground hover:bg-accent active:translate-y-[2px]",
+      "border border-border bg-surface text-foreground hover:bg-accent active:translate-y-[2px]",
     ghost: "text-foreground hover:bg-accent active:translate-y-[2px]",
     danger:
-      "bg-danger text-danger-foreground shadow-[0_4px_0_rgba(0,0,0,0.2)] hover:brightness-110 active:translate-y-[4px] active:shadow-none"
+      "bg-danger text-danger-foreground shadow-[0_3px_0_rgba(0,0,0,0.25)] hover:opacity-90 active:translate-y-[3px] active:shadow-none"
   };
 
   const sizes: Record<Size, string> = {
     sm: "h-9 px-3 text-sm rounded-md",
-    md: "h-11 px-5 text-sm rounded-lg",
-    lg: "h-14 px-8 text-h4 rounded-xl",
-    xl: "h-16 px-10 text-h3 rounded-xl"
+    md: "h-11 px-4 text-sm rounded-lg",
+    lg: "h-13 px-6 text-base rounded-xl",
+    xl: "h-16 px-8 text-h3 rounded-xl"
   };
 
   function handle(): void {

@@ -5,6 +5,37 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-08-19
+
+### Added
+
+- Windows, macOS and Android packages: the release workflow now builds deb, rpm,
+  AppImage, Arch, Flatpak, an `.exe` installer, a universal `.dmg` and an `.apk`
+- A `build-pkg-*` tag builds a chosen subset of those packages as workflow
+  artifacts, so a package can be installed on a device before a release is cut
+- A playwright smoke test covering that the app opens, a run starts and a
+  character sound really plays, run on every release and in ci
+
+### Changed
+
+- Responsive layout for desktop, tablet and phone. 
+- New look: warm cream paper and near black ink, in both light and dark, with
+  the seal red and moss green kept for wrong and right answers
+- New app icon
+- Multiple choice answers are square tiles and the question sits in a larger
+  square wireframe frame, easier to read and easier to hit on a phone
+- Text to audio runs have their own interface: the character stays on screen and
+  the four sounds are wide tiles with a waveform of the clip, tapping one plays
+  it and picks it, and a check button below submits the pick
+- Assets load through one reusable store that keeps the bytes and hands out blob
+  URLs, which is also what lets the waveforms be drawn from the real audio
+- Screens are split into small components under `src/lib/components/<screen>/`
+
+### Removed
+
+- The build, package, container, dev and test shell scripts. `scripts/publish.sh`
+  publishes to crates.io and the github workflows do everything else
+
 ## [1.0.1] - 2026-08-18
 
 ### Fixed
@@ -32,5 +63,6 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.1.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.1.0
 [1.0.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.0.1
 [1.0.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.0.0

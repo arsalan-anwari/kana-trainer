@@ -1,0 +1,115 @@
+# Cuts a github release from a v1.2.3 tag.
+#
+#   1. builds every package in a matrix
+#   2. runs the playwright smoke test against the same frontend the packages carry
+#   3. creates the release, with the changelog entry as the description and
+#      every package plus a checksum file attached
+
+name: release
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  packages:
+    uses: ./.github/workflows/package-build.yml
+    with:
+      targets: '["deb","rpm","appimage","arch","flatpak","exe","dmg","apk"]'
+
+  smoke:
+    name: smoke test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install the node packages
+        run: npm ci --no-audit --no-fund
+
+      - name: Install the browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Build the frontend
+        run: npm run build
+
+      - name: Check that the app opens, a quiz starts and a sound plays
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+
+  release:
+    name: publish the release
+    needs: [packages, smoke]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect every package
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pkg-*
+          path: staging
+          merge-multiple: true
+
+      - name: Write the checksums
+        run: |
+          cd staging
+          sha256sum -- * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Read the changelog entry for this tag
+        id: notes
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v version="$version" '
+            $0 ~ "^## \\[?" version "\\]?" { found = 1; next }
+            found && /^## / { exit }
+            found && !/^\[[^][]*\]: / { print }
+          ' CHANGELOG.md | sed -e '/./,$!d' > notes.md
+
+          if [ ! -s notes.md ]; then
+            echo "CHANGELOG.md has no entry for $version, stopping" >&2
+            exit 1
+          fi
+
+          {
+            echo
+            echo '## Checksums'
+            echo
+            echo '```'
+            cat staging/SHA256SUMS.txt
+            echo '```'
+          } >> notes.md
+          cat notes.md
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "kana-trainer ${GITHUB_REF_NAME#v}" \
+            --notes-file notes.md \
+            --verify-tag \
+            staging/*

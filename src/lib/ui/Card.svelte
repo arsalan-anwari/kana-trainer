@@ -18,13 +18,13 @@
   } = $props();
 </script>
 
-<section class="rounded-xl border border-border bg-background shadow-sm {className}">
+<section class="rounded-xl border border-border bg-surface {className}">
   {#if title !== "" || action}
-    <header class="flex items-start justify-between gap-4 px-6 pt-5 pb-3">
+    <header class="flex flex-wrap items-start justify-between gap-3 px-4 pt-4 pb-3 sm:px-5">
       <div class="flex flex-col gap-1">
-        <h3 class="text-h4 font-semibold leading-none tracking-tight">{title}</h3>
+        <h3 class="text-h4 font-semibold leading-tight tracking-tight">{title}</h3>
         {#if description !== ""}
-          <p class="text-sm leading-normal text-muted-foreground">{description}</p>
+          <p class="text-sm leading-snug text-muted-foreground">{description}</p>
         {/if}
       </div>
       {#if action}
@@ -32,7 +32,7 @@
       {/if}
     </header>
   {/if}
-  <div class="px-6 pb-5 {contentClass}">
+  <div class="px-4 pb-4 sm:px-5 sm:pb-5 {contentClass}">
     {@render children()}
   </div>
 </section>

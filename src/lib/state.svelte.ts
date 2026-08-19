@@ -15,7 +15,7 @@ import {
   type RunSettings
 } from "./core/settings";
 import { summarize, weakKanaIds, type Report, type Summary } from "./core/report";
-import { playKana, preloadKana, setEffectsEnabled, sfx } from "./audio";
+import { kanaAudio, setEffectsEnabled, sfx } from "./audio";
 import { listReports, loadJson, saveReport, storeJson } from "./storage";
 
 export type Route = "setup" | "quiz" | "result" | "reports";
@@ -58,6 +58,7 @@ class AppState {
   phase = $state<Phase>("answering");
   typed = $state("");
   picked = $state<Choice | null>(null);
+  staged = $state<Choice | null>(null);
   lastCorrect = $state(false);
   lastReport = $state<Report | null>(null);
 
@@ -177,7 +178,7 @@ class AppState {
     }
 
     if (usesAudio(this.settings.format)) {
-      preloadKana(
+      kanaAudio.preload(
         eligibleKana(this.settings)
           .map((kana) => kana.audio)
           .filter((name): name is string => name !== null)
@@ -191,6 +192,7 @@ class AppState {
     this.phase = "answering";
     this.typed = "";
     this.picked = null;
+    this.staged = null;
     this.route = "quiz";
     this.now = Date.now();
     this.runStartedAt = this.now;
@@ -226,16 +228,31 @@ class AppState {
     const question = this.current;
     if (question === null || question.prompt !== "audio") return;
     const kana = kanaById(question.kanaId);
-    playKana(kana?.audio ?? null);
+    void kanaAudio.play(kana?.audio ?? null);
   }
 
   replayPrompt(): void {
     this.speakPrompt();
   }
 
-  playChoice(choice: Choice): HTMLAudioElement | null {
+  playChoice(choice: Choice): void {
     const kana = kanaById(choice.kanaId);
-    return playKana(kana?.audio ?? null);
+    void kanaAudio.play(kana?.audio ?? null);
+  }
+
+  /**
+   * Text to audio answers are staged rather than submitted: tapping a sound
+   * plays it and marks it as the pick, and the check button commits it.
+   */
+  stageChoice(choice: Choice): void {
+    if (this.phase !== "answering" || this.current === null) return;
+    this.staged = choice;
+    this.playChoice(choice);
+  }
+
+  submitStaged(): void {
+    if (this.staged === null) return;
+    this.answerChoice(this.staged);
   }
 
   recordAnswer(correct: boolean, timedOut: boolean, given: string): void {
@@ -291,6 +308,7 @@ class AppState {
     this.phase = "answering";
     this.typed = "";
     this.picked = null;
+    this.staged = null;
     this.questionStartedAt = Date.now();
     this.now = this.questionStartedAt;
     this.speakPrompt();
@@ -298,6 +316,7 @@ class AppState {
 
   finish(): void {
     this.stopTimer();
+    kanaAudio.stop();
     this.phase = "done";
     const report: Report = {
       id: newId(),
@@ -314,6 +333,7 @@ class AppState {
 
   quit(): void {
     this.stopTimer();
+    kanaAudio.stop();
     if (this.answers.length > 0) {
       this.finish();
       return;

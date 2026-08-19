@@ -11,3 +11,8 @@ packaging/arch/*.tar.gz
 *.log
 target-portable
 .cargo-container
+.flatpak-builder
+test-results
+playwright-report
+src-tauri/gen/android
+src-tauri/gen/apple

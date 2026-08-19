@@ -1,0 +1,228 @@
+# Builds one installable package per matrix entry.
+
+name: package build
+
+on:
+  workflow_call:
+    inputs:
+      targets:
+        description: 'JSON array of package names, for example ["deb","apk"]'
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    name: plan
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - name: Turn the target names into matrix entries
+        id: plan
+        env:
+          TARGETS: ${{ inputs.targets }}
+        run: |
+          cat > catalog.json <<'JSON'
+          {
+            "deb":      { "name": "deb",      "os": "ubuntu-22.04",   "kind": "tauri",   "bundle": "deb",      "glob": "src-tauri/target/release/bundle/deb/*.deb" },
+            "rpm":      { "name": "rpm",      "os": "ubuntu-22.04",   "kind": "tauri",   "bundle": "rpm",      "glob": "src-tauri/target/release/bundle/rpm/*.rpm" },
+            "appimage": { "name": "appimage", "os": "ubuntu-22.04",   "kind": "tauri",   "bundle": "appimage", "glob": "src-tauri/target/release/bundle/appimage/*.AppImage" },
+            "exe":      { "name": "exe",      "os": "windows-latest", "kind": "tauri",   "bundle": "nsis",     "glob": "src-tauri/target/release/bundle/nsis/*-setup.exe" },
+            "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "bundle": "dmg",      "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
+            "arch":     { "name": "arch",     "os": "ubuntu-22.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
+            "flatpak":  { "name": "flatpak",  "os": "ubuntu-22.04",   "kind": "flatpak", "glob": "dist/packages/*.flatpak" },
+            "apk":      { "name": "apk",      "os": "ubuntu-22.04",   "kind": "apk",     "glob": "dist/packages/*.apk" }
+          }
+          JSON
+
+          unknown="$(jq -r --argjson want "$TARGETS" '. as $c | [$want[] | select($c[.] == null)] | join(", ")' catalog.json)"
+          if [ -n "$unknown" ]; then
+            echo "unknown package targets: $unknown" >&2
+            jq -r '"known targets: " + (keys | join(", "))' catalog.json >&2
+            exit 1
+          fi
+
+          matrix="$(jq -c --argjson want "$TARGETS" '. as $c | [$want[] | $c[.]]' catalog.json)"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "building: $matrix"
+
+  build:
+    name: ${{ matrix.name }}
+    needs: plan
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Work out the version being built
+        id: version
+        shell: bash
+        run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: matrix.kind != 'arch' && matrix.kind != 'flatpak'
+        with:
+          node-version: '22'
+          cache: npm
+
+      # arch and flatpak bring their own toolchains inside the container sandbox
+      - name: Install the libraries tauri builds against
+        if: startsWith(matrix.os, 'ubuntu') && (matrix.kind == 'tauri' || matrix.kind == 'apk')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libwebkit2gtk-4.1-dev libgtk-3-dev libssl-dev librsvg2-dev \
+            libayatana-appindicator3-dev libasound2-dev file
+
+      - name: Install rpm tooling
+        if: matrix.bundle == 'rpm'
+        run: sudo apt-get install -y --no-install-recommends rpm
+
+      - uses: dtolnay/rust-toolchain@stable
+        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+
+      - name: Add the apple targets
+        if: matrix.bundle == 'dmg'
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+
+      - name: Add the android targets
+        if: matrix.kind == 'apk'
+        run: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+
+      - name: Cache the cargo registry and build
+        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: pkg-${{ matrix.name }}-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: pkg-${{ matrix.name }}-${{ runner.os }}-
+
+      - name: Install the node packages
+        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        run: npm ci --no-audit --no-fund
+
+      # deb, rpm, appimage and exe
+
+      - name: Build the ${{ matrix.name }} package
+        if: matrix.kind == 'tauri' && matrix.bundle != 'dmg'
+        run: npx tauri build --bundles ${{ matrix.bundle }}
+
+      # dmg, one image covering apple silicon and intel
+
+      - name: Build the universal macos disk image
+        if: matrix.bundle == 'dmg'
+        run: npx tauri build --target universal-apple-darwin --bundles dmg
+
+      # arch, built from the checkout so untagged commits package too
+
+      - name: Build the arch package
+        if: matrix.kind == 'arch'
+        run: |
+          mkdir -p dist/packages dist/arch/repo
+          git archive HEAD | tar -x -C dist/arch/repo
+          sed -e 's|^source=.*|source=()|' \
+              -e '/^sha256sums=/d' \
+              -e 's|cd "$srcdir/$pkgname-$pkgver"|cd "$startdir/repo"|' \
+              packaging/arch/PKGBUILD > dist/arch/PKGBUILD
+          docker run --rm -v "$PWD/dist/arch:/build" -w /build archlinux:base-devel bash -eux -c "
+            pacman -Syu --noconfirm --needed rust nodejs npm webkit2gtk-4.1 gtk3 libayatana-appindicator
+            useradd -m builder
+            chown -R builder /build
+            su builder -c 'makepkg --noconfirm --nodeps'
+          "
+          cp dist/arch/*.pkg.tar.zst dist/packages/
+
+      # flatpak
+
+      - name: Build the flatpak bundle
+        if: matrix.kind == 'flatpak'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends flatpak flatpak-builder
+          flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub \
+            org.gnome.Platform//49 org.gnome.Sdk//49 \
+            org.freedesktop.Sdk.Extension.rust-stable//25.08 \
+            org.freedesktop.Sdk.Extension.node22//25.08
+          mkdir -p dist/packages
+          flatpak-builder --user --force-clean --repo=dist/flatpak-repo \
+            dist/flatpak-build packaging/flatpak/nl.anwari.kanatrainer.yml
+          flatpak build-bundle dist/flatpak-repo \
+            "dist/packages/kana-trainer-${{ steps.version.outputs.value }}.flatpak" \
+            nl.anwari.kanatrainer
+
+      # apk
+
+      - uses: actions/setup-java@v4
+        if: matrix.kind == 'apk'
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+        if: matrix.kind == 'apk'
+
+      - name: Install the android ndk
+        if: matrix.kind == 'apk'
+        run: |
+          sdkmanager --install "ndk;27.2.12479018" "platforms;android-34" "build-tools;34.0.0"
+          echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/27.2.12479018" >> "$GITHUB_ENV"
+
+      - name: Build the apk
+        if: matrix.kind == 'apk'
+        run: |
+          npx tauri android init --skip-targets-install
+          npx tauri android build --apk
+
+      # Android will not install an unsigned release apk, so it is signed
+      # here with a key generated for this run. That is enough to side load it.
+      - name: Sign the apk
+        if: matrix.kind == 'apk'
+        run: |
+          set -eu
+          password=kanatrainer
+          alias=kanatrainer
+          keytool -genkeypair -v -keystore keystore.jks -keyalg RSA -keysize 2048 \
+            -validity 10000 -alias "$alias" -storepass "$password" -keypass "$password" \
+            -dname "CN=Kana Trainer, O=nl.anwari, C=NL"
+
+          unsigned="$(find src-tauri/gen/android -name '*.apk' -path '*release*' | head -1)"
+          [ -n "$unsigned" ] || { echo "tauri produced no release apk" >&2; exit 1; }
+
+          tools="$ANDROID_SDK_ROOT/build-tools/34.0.0"
+          mkdir -p dist/packages
+          out="dist/packages/kana-trainer-${{ steps.version.outputs.value }}.apk"
+          "$tools/zipalign" -p -f 4 "$unsigned" aligned.apk
+          "$tools/apksigner" sign --ks keystore.jks --ks-pass "pass:$password" \
+            --ks-key-alias "$alias" --key-pass "pass:$password" --out "$out" aligned.apk
+          "$tools/apksigner" verify "$out"
+          rm -f keystore.jks aligned.apk
+
+      - name: Collect the package
+        shell: bash
+        run: |
+          mkdir -p out
+          shopt -s nullglob
+          files=(${{ matrix.glob }})
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "no ${{ matrix.name }} package was produced" >&2
+            exit 1
+          fi
+          cp "${files[@]}" out/
+          ls -lh out
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg-${{ matrix.name }}
+          path: out/*
+          if-no-files-found: error

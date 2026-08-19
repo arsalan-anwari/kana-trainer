@@ -1,0 +1,68 @@
+# Builds packages without releasing anything
+#
+# Push a tag naming the packages you want, dash separated:
+#
+#   git tag build-pkg-deb && git push origin build-pkg-deb
+#   git tag build-pkg-rpm-flatpak-apk && git push origin build-pkg-rpm-flatpak-apk
+#   git tag build-pkg-all && git push origin build-pkg-all
+
+name: build packages
+
+on:
+  push:
+    tags: ['build-pkg-*']
+  workflow_dispatch:
+    inputs:
+      targets:
+        description: 'Packages to build, comma separated, or "all"'
+        type: string
+        required: true
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-packages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  choose:
+    name: read the requested packages
+    runs-on: ubuntu-24.04
+    outputs:
+      targets: ${{ steps.parse.outputs.targets }}
+    steps:
+      - name: Parse the tag or the dispatch input
+        id: parse
+        env:
+          DISPATCH_TARGETS: ${{ inputs.targets }}
+        run: |
+          all='["deb","rpm","appimage","arch","flatpak","exe","dmg","apk"]'
+
+          if [ -n "${DISPATCH_TARGETS:-}" ]; then
+            raw="$(echo "$DISPATCH_TARGETS" | tr ',' ' ')"
+          else
+            # build-pkg-rpm-flatpak-apk -> rpm flatpak apk
+            raw="$(echo "${GITHUB_REF_NAME#build-pkg-}" | tr '-' ' ')"
+          fi
+
+          if echo " $raw " | grep -q ' all '; then
+            targets="$all"
+          else
+            targets="$(printf '%s\n' $raw | jq -R . | jq -sc .)"
+          fi
+
+          if [ "$targets" = '[]' ]; then
+            echo "no packages named, use build-pkg-all or build-pkg-deb-rpm" >&2
+            exit 1
+          fi
+
+          echo "targets=$targets" >> "$GITHUB_OUTPUT"
+          echo "building $targets"
+
+  packages:
+    needs: choose
+    uses: ./.github/workflows/package-build.yml
+    with:
+      targets: ${{ needs.choose.outputs.targets }}

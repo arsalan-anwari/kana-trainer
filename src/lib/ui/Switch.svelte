@@ -27,7 +27,7 @@
   role="switch"
   aria-checked={checked}
   {disabled}
-  class="flex w-full cursor-pointer items-center justify-between gap-4 rounded-lg border border-border bg-background px-4 py-3 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40"
+  class="flex w-full cursor-pointer items-center justify-between gap-4 rounded-lg border border-border bg-surface px-4 py-3 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40"
   onclick={toggle}
 >
   <span class="flex flex-col gap-0.5">
@@ -37,14 +37,14 @@
     {/if}
   </span>
   <span
-    class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors {checked
-      ? 'bg-brand'
-      : 'bg-secondary'}"
+    class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors {checked
+      ? 'border-foreground bg-foreground'
+      : 'border-border bg-secondary'}"
   >
     <span
-      class="absolute h-5 w-5 rounded-full bg-background shadow transition-transform duration-150 {checked
-        ? 'translate-x-[22px]'
-        : 'translate-x-[2px]'}"
+      class="absolute h-4 w-4 rounded-full transition-transform duration-150 {checked
+        ? 'translate-x-[24px] bg-background'
+        : 'translate-x-[4px] bg-muted-foreground'}"
     ></span>
   </span>
 </button>
