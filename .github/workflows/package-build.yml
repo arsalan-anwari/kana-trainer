@@ -33,7 +33,7 @@ jobs:
             "exe":      { "name": "exe",      "os": "windows-latest", "kind": "tauri",   "bundle": "nsis",     "glob": "src-tauri/target/release/bundle/nsis/*-setup.exe" },
             "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "bundle": "dmg",      "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
             "arch":     { "name": "arch",     "os": "ubuntu-22.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
-            "flatpak":  { "name": "flatpak",  "os": "ubuntu-22.04",   "kind": "flatpak", "glob": "dist/packages/*.flatpak" },
+            "flatpak":  { "name": "flatpak",  "os": "ubuntu-24.04",   "kind": "flatpak", "glob": "dist/packages/*.flatpak" },
             "apk":      { "name": "apk",      "os": "ubuntu-22.04",   "kind": "apk",     "glob": "dist/packages/*.apk" }
           }
           JSON
@@ -162,14 +162,18 @@ jobs:
           fi
           sudo apt-get install -y --no-install-recommends \
             -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180 \
-            flatpak flatpak-builder
+            flatpak
           flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+          # The builder comes from flathub rather than apt. The apt one is too old
+          # to compose appstream data for a freedesktop 25.08 based runtime: it calls
+          # appstream-compose, which AppStream 1.x replaced with `appstreamcli compose`.
           flatpak install --user -y flathub \
+            org.flatpak.Builder \
             org.gnome.Platform//49 org.gnome.Sdk//49 \
             org.freedesktop.Sdk.Extension.rust-stable//25.08 \
             org.freedesktop.Sdk.Extension.node22//25.08
           mkdir -p dist/packages
-          flatpak-builder --user --force-clean --repo=dist/flatpak-repo \
+          flatpak run org.flatpak.Builder --user --force-clean --repo=dist/flatpak-repo \
             dist/flatpak-build packaging/flatpak/nl.anwari.kanatrainer.yml
           flatpak build-bundle dist/flatpak-repo \
             "dist/packages/kana-trainer-${{ steps.version.outputs.value }}.flatpak" \
@@ -196,6 +200,7 @@ jobs:
         if: matrix.kind == 'apk'
         run: |
           npx tauri android init --skip-targets-install
+          sh scripts/android-icons.sh
           npx tauri android build --apk
 
       # Android will not install an unsigned release apk, so it is signed
