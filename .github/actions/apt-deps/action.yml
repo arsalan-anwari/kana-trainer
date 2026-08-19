@@ -1,14 +1,4 @@
 # Installs apt packages without paying for `apt-get update` on every run.
-#
-# The slow, hang prone part of an apt install on a github runner is the index
-# download: it fans out over the ubuntu archive plus whatever third party
-# sources the image ships, and one unreachable host stalls the whole step until
-# the job timeout. So the first run for a given package set downloads the debs
-# into a cached directory, and every run after that installs straight from the
-# cache with dpkg and never touches the network at all.
-#
-# The cache key covers the runner image and the sorted package list, so bumping
-# the image or the package list simply misses and repopulates.
 
 name: apt deps
 description: Install apt packages from a cache of their .deb files
@@ -64,9 +54,7 @@ runs:
         TRIM_SOURCES: ${{ inputs.trim-sources }}
       run: |
         set -eu
-
-        # The image boots apt-daily and unattended-upgrades, which hold the same
-        # locks we are about to want. Nothing here depends on them finishing.
+        
         for unit in apt-daily.service apt-daily-upgrade.service unattended-upgrades.service; do
           sudo systemctl stop "$unit" 2>/dev/null || true
         done
@@ -84,10 +72,6 @@ runs:
           sudo rm -rf "$cache"
         fi
 
-        if [ "$TRIM_SOURCES" = "true" ]; then
-          sudo rm -f /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources || true
-        fi
-
         # Bounded rather than unbounded: a dead mirror now costs a minute, not
         # the whole job.
         opts="-o Acquire::Retries=3
@@ -96,17 +80,53 @@ runs:
               -o Acquire::ftp::Timeout=15
               -o DPkg::Lock::Timeout=180"
 
-        echo "::group::apt-get update"
-        sudo apt-get update $opts
-        echo "::endgroup::"
+        backup=/tmp/apt-deps-sources
+        trim() {
 
-        sudo mkdir -p "$cache/partial"
-        echo "::group::downloading $PACKAGES"
-        sudo apt-get install -y --no-install-recommends -d $opts \
-          -o Dir::Cache::archives="$cache" $PACKAGES
-        echo "::endgroup::"
+          sudo rm -rf "$backup"
+          sudo mkdir -p "$backup"
+          for f in /etc/apt/sources.list.d/*; do
+            [ -f "$f" ] || continue
+            grep -qiE '(archive|security|ports)\.ubuntu\.com' "$f" && continue
+            echo "setting aside the third party apt source $f"
+            sudo mv "$f" "$backup/"
+          done
+        }
 
-        sudo dpkg -i "$cache"/*.deb || sudo apt-get install -y -f $opts
+        untrim() {
+          if [ -d "$backup" ]; then
+            sudo cp -a "$backup"/. /etc/apt/sources.list.d/ 2>/dev/null || true
+            sudo rm -rf "$backup"
+          fi
+        }
+
+        fetch() {
+          echo "::group::apt-get update"
+          sudo apt-get update $opts || { echo "::endgroup::"; return 1; }
+          echo "::endgroup::"
+
+          sudo mkdir -p "$cache/partial"
+          echo "::group::downloading $PACKAGES"
+          sudo apt-get install -y --no-install-recommends -d $opts \
+            -o Dir::Cache::archives="$cache" $PACKAGES || { echo "::endgroup::"; return 1; }
+          echo "::endgroup::"
+        }
+
+        [ "$TRIM_SOURCES" = "true" ] && trim
+
+
+        if ! fetch; then
+          echo "the trimmed sources could not satisfy $PACKAGES, retrying with all of them"
+          untrim
+          fetch
+        fi
+
+        # Nothing to install only means the image already carried the whole set.
+        if ls "$cache"/*.deb >/dev/null 2>&1; then
+          sudo dpkg -i "$cache"/*.deb || sudo apt-get install -y -f $opts
+        else
+          echo "every requested package was already installed"
+        fi
 
         # actions/cache runs unprivileged, and the lock files are not worth keeping.
         sudo rm -rf "$cache/partial" "$cache/lock" "$cache/lock-frontend"
