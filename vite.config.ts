@@ -8,8 +8,7 @@ export default defineConfig({
   server: {
     port: 1420,
     strictPort: true,
-    // packaging leaves symlink farms behind that the watcher cannot walk
-    watch: { ignored: ["**/src-tauri/**", "**/build/**", "**/dist/**"] }
+    watch: { ignored: ["**/src-tauri/**", "**/build/**", "**/dist/**", "**/.flatpak-builder/**", "**/packaging/**"] }
   },
   build: {
     outDir: "src-tauri/dist",
