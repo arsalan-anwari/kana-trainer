@@ -23,6 +23,12 @@ include = [
   "LICENSE",
 ]
 
+[lib]
+# The `_lib` suffix keeps the library name distinct from the binary name, which
+# cargo requires on Windows. Android and iOS build this target, not the binary.
+name = "kana_trainer_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [[bin]]
 name = "kana-trainer"
 path = "src/main.rs"
