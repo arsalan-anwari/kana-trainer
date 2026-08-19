@@ -1,0 +1,113 @@
+# Installs apt packages without paying for `apt-get update` on every run.
+#
+# The slow, hang prone part of an apt install on a github runner is the index
+# download: it fans out over the ubuntu archive plus whatever third party
+# sources the image ships, and one unreachable host stalls the whole step until
+# the job timeout. So the first run for a given package set downloads the debs
+# into a cached directory, and every run after that installs straight from the
+# cache with dpkg and never touches the network at all.
+#
+# The cache key covers the runner image and the sorted package list, so bumping
+# the image or the package list simply misses and repopulates.
+
+name: apt deps
+description: Install apt packages from a cache of their .deb files
+
+inputs:
+  packages:
+    description: Space separated package names
+    required: true
+  trim-sources:
+    description: >
+      Drop the third party apt sources the runner image ships. Everything here
+      comes from the ubuntu archive, and those extra sources are the ones that
+      usually stall the index download.
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+
+  steps:
+    - name: Work out the package set and the cache key
+      id: plan
+      shell: bash
+      env:
+        PACKAGES: ${{ inputs.packages }}
+      run: |
+        set -eu
+        list="$(printf '%s' "$PACKAGES" | tr -s ' \t\n' '\n' | grep -v '^$' | sort -u | tr '\n' ' ')"
+        list="${list% }"
+        [ -n "$list" ] || { echo "no packages were named" >&2; exit 1; }
+
+        stamp="$(printf '%s|%s|%s' "${ImageOS:-unknown}" "${ImageVersion:-unknown}" "$list" \
+          | sha256sum | cut -c1-16)"
+
+        echo "packages=$list" >> "$GITHUB_OUTPUT"
+        echo "key=apt-${ImageOS:-linux}-$stamp" >> "$GITHUB_OUTPUT"
+        echo "installing: $list"
+
+    - name: Restore the downloaded packages
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: /tmp/apt-deps-cache
+        key: ${{ steps.plan.outputs.key }}
+
+    - name: Install them
+      shell: bash
+      env:
+        DEBIAN_FRONTEND: noninteractive
+        NEEDRESTART_MODE: a
+        PACKAGES: ${{ steps.plan.outputs.packages }}
+        CACHE_HIT: ${{ steps.cache.outputs.cache-hit }}
+        TRIM_SOURCES: ${{ inputs.trim-sources }}
+      run: |
+        set -eu
+
+        # The image boots apt-daily and unattended-upgrades, which hold the same
+        # locks we are about to want. Nothing here depends on them finishing.
+        for unit in apt-daily.service apt-daily-upgrade.service unattended-upgrades.service; do
+          sudo systemctl stop "$unit" 2>/dev/null || true
+        done
+
+        cache=/tmp/apt-deps-cache
+
+        if [ "${CACHE_HIT:-}" = "true" ] && ls "$cache"/*.deb >/dev/null 2>&1; then
+          echo "::group::installing $(ls "$cache"/*.deb | wc -l) cached debs"
+          if sudo dpkg -i "$cache"/*.deb; then
+            echo "::endgroup::"
+            exit 0
+          fi
+          echo "::endgroup::"
+          echo "the cached debs did not satisfy dpkg, falling back to a full apt run"
+          sudo rm -rf "$cache"
+        fi
+
+        if [ "$TRIM_SOURCES" = "true" ]; then
+          sudo rm -f /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources || true
+        fi
+
+        # Bounded rather than unbounded: a dead mirror now costs a minute, not
+        # the whole job.
+        opts="-o Acquire::Retries=3
+              -o Acquire::http::Timeout=15
+              -o Acquire::https::Timeout=15
+              -o Acquire::ftp::Timeout=15
+              -o DPkg::Lock::Timeout=180"
+
+        echo "::group::apt-get update"
+        sudo apt-get update $opts
+        echo "::endgroup::"
+
+        sudo mkdir -p "$cache/partial"
+        echo "::group::downloading $PACKAGES"
+        sudo apt-get install -y --no-install-recommends -d $opts \
+          -o Dir::Cache::archives="$cache" $PACKAGES
+        echo "::endgroup::"
+
+        sudo dpkg -i "$cache"/*.deb || sudo apt-get install -y -f $opts
+
+        # actions/cache runs unprivileged, and the lock files are not worth keeping.
+        sudo rm -rf "$cache/partial" "$cache/lock" "$cache/lock-frontend"
+        sudo chown -R "$(id -u):$(id -g)" "$cache"

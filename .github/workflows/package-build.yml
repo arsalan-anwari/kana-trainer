@@ -27,14 +27,14 @@ jobs:
         run: |
           cat > catalog.json <<'JSON'
           {
-            "deb":      { "name": "deb",      "os": "ubuntu-22.04",   "kind": "tauri",   "bundle": "deb",      "glob": "src-tauri/target/release/bundle/deb/*.deb" },
-            "rpm":      { "name": "rpm",      "os": "ubuntu-22.04",   "kind": "tauri",   "bundle": "rpm",      "glob": "src-tauri/target/release/bundle/rpm/*.rpm" },
-            "appimage": { "name": "appimage", "os": "ubuntu-22.04",   "kind": "tauri",   "bundle": "appimage", "glob": "src-tauri/target/release/bundle/appimage/*.AppImage" },
+            "deb":      { "name": "deb",      "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "deb",      "glob": "src-tauri/target/release/bundle/deb/*.deb" },
+            "rpm":      { "name": "rpm",      "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "rpm",      "glob": "src-tauri/target/release/bundle/rpm/*.rpm" },
+            "appimage": { "name": "appimage", "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "appimage", "glob": "src-tauri/target/release/bundle/appimage/*.AppImage" },
             "exe":      { "name": "exe",      "os": "windows-latest", "kind": "tauri",   "bundle": "nsis",     "glob": "src-tauri/target/release/bundle/nsis/*-setup.exe" },
             "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "bundle": "dmg",      "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
-            "arch":     { "name": "arch",     "os": "ubuntu-22.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
+            "arch":     { "name": "arch",     "os": "ubuntu-24.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
             "flatpak":  { "name": "flatpak",  "os": "ubuntu-24.04",   "kind": "flatpak", "glob": "dist/packages/*.flatpak" },
-            "apk":      { "name": "apk",      "os": "ubuntu-22.04",   "kind": "apk",     "glob": "dist/packages/*.apk" }
+            "apk":      { "name": "apk",      "os": "ubuntu-24.04",   "kind": "apk",     "glob": "dist/packages/*.apk" }
           }
           JSON
 
@@ -76,19 +76,11 @@ jobs:
       - name: Install the libraries tauri builds against
         if: startsWith(matrix.os, 'ubuntu') && (matrix.kind == 'tauri' || matrix.kind == 'apk')
         timeout-minutes: 15
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          NEEDRESTART_MODE: a
-        run: |
-          set -eux
-          # A reused container already has the indexes, so skip the download.
-          if ! ls /var/lib/apt/lists/*Packages* >/dev/null 2>&1; then
-            sudo apt-get update -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180
-          fi
-          sudo apt-get install -y --no-install-recommends \
-            -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180 \
-            libwebkit2gtk-4.1-dev libgtk-3-dev libssl-dev librsvg2-dev \
-            libayatana-appindicator3-dev libasound2-dev file \
+        uses: ./.github/actions/apt-deps
+        with:
+          packages: >-
+            libwebkit2gtk-4.1-dev libgtk-3-dev libssl-dev librsvg2-dev
+            libayatana-appindicator3-dev libasound2-dev file
             ${{ matrix.bundle == 'rpm' && 'rpm' || '' }}
 
       - uses: dtolnay/rust-toolchain@stable
@@ -150,19 +142,17 @@ jobs:
 
       # flatpak
 
+      - name: Install flatpak
+        if: matrix.kind == 'flatpak'
+        timeout-minutes: 15
+        uses: ./.github/actions/apt-deps
+        with:
+          packages: flatpak
+
       - name: Build the flatpak bundle
         if: matrix.kind == 'flatpak'
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          NEEDRESTART_MODE: a
         run: |
           set -eux
-          if ! ls /var/lib/apt/lists/*Packages* >/dev/null 2>&1; then
-            sudo apt-get update -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180
-          fi
-          sudo apt-get install -y --no-install-recommends \
-            -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180 \
-            flatpak
           flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
           # The builder comes from flathub rather than apt. The apt one is too old
           # to compose appstream data for a freedesktop 25.08 based runtime: it calls

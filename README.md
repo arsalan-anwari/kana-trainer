@@ -35,7 +35,7 @@ Download pages at [releases page](https://github.com/arsalan-anwari/kana-trainer
 
 ```sh
 sudo dnf install ./kana-trainer-*.rpm            # fedora, opensuse
-sudo apt install ./kana-trainer_*.deb            # debian 12+, ubuntu 22.04+
+sudo apt install ./kana-trainer_*.deb            # debian 13+, ubuntu 24.04+
 chmod +x ./kana-trainer_*.AppImage && ./kana-trainer_*.AppImage
 sudo pacman -U ./kana-trainer-*.pkg.tar.zst      # arch
 flatpak install --user ./kana-trainer-*.flatpak  # any distro with flatpak

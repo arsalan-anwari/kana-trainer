@@ -72,18 +72,9 @@ jobs:
       # tray libraries are a bundling concern, so they live in package-build.
       - name: Install the libraries tauri builds against
         timeout-minutes: 10
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          NEEDRESTART_MODE: a
-        run: |
-          set -eux
-          # A reused container already has the indexes, so skip the download.
-          if ! ls /var/lib/apt/lists/*Packages* >/dev/null 2>&1; then
-            sudo apt-get update -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180
-          fi
-          sudo apt-get install -y --no-install-recommends \
-            -o Acquire::Retries=3 -o DPkg::Lock::Timeout=180 \
-            libwebkit2gtk-4.1-dev libgtk-3-dev libssl-dev
+        uses: ./.github/actions/apt-deps
+        with:
+          packages: libwebkit2gtk-4.1-dev libgtk-3-dev libssl-dev
 
       - uses: actions/setup-node@v4
         with:
