@@ -3,7 +3,7 @@
 # Push a tag naming the packages you want, dash separated:
 #
 #   git tag build-pkg-deb && git push origin build-pkg-deb
-#   git tag build-pkg-rpm-flatpak-apk && git push origin build-pkg-rpm-flatpak-apk
+#   git tag build-pkg-rpm-apk && git push origin build-pkg-rpm-apk
 #   git tag build-pkg-all && git push origin build-pkg-all
 
 name: build packages
@@ -38,12 +38,12 @@ jobs:
         env:
           DISPATCH_TARGETS: ${{ inputs.targets }}
         run: |
-          all='["deb","rpm","appimage","arch","flatpak","exe","dmg","apk"]'
+          all='["deb","rpm","appimage","arch","exe","dmg","apk"]'
 
           if [ -n "${DISPATCH_TARGETS:-}" ]; then
             raw="$(echo "$DISPATCH_TARGETS" | tr ',' ' ')"
           else
-            # build-pkg-rpm-flatpak-apk -> rpm flatpak apk
+            # build-pkg-rpm-apk -> rpm apk
             raw="$(echo "${GITHUB_REF_NAME#build-pkg-}" | tr '-' ' ')"
           fi
 

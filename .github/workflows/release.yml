@@ -23,7 +23,7 @@ jobs:
   packages:
     uses: ./.github/workflows/package-build.yml
     with:
-      targets: '["deb","rpm","appimage","arch","flatpak","exe","dmg","apk"]'
+      targets: '["deb","rpm","appimage","arch","exe","dmg","apk"]'
 
   smoke:
     name: smoke test
