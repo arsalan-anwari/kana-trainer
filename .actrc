@@ -1,0 +1,9 @@
+# Local `act` defaults.
+#
+# --reuse keeps the container between runs, so the apt indexes, the npm cache
+# and src-tauri/target survive and only the first run pays for apt-get update.
+# Drop it with `act --rm` when you want a clean-room run.
+--reuse
+-P ubuntu-24.04=catthehacker/ubuntu:act-24.04
+-P ubuntu-22.04=catthehacker/ubuntu:act-22.04
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
