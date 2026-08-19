@@ -9,34 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Windows, macOS and Android packages: the release workflow now builds deb, rpm,
-  AppImage, Arch, an `.exe` installer, a universal `.dmg` and an `.apk`
+- Windows, macOS and Android packages: the release workflow now builds deb, rpm, Arch, an `.exe` installer, a universal `.dmg` and an `.apk`
 - A `build-pkg-*` tag builds a chosen subset of those packages as workflow
   artifacts.
-- A playwright smoke test covering that the app opens, a run starts and a
-  character sound really plays, run on every release and in ci.
+- A playwright smoke test covering that the app opens, a run starts and a character sound really plays, run on every release and in ci.
 
 ### Changed
 
 - Responsive layout for desktop, tablet and phone. 
-- New look: warm cream paper and near black ink, in both light and dark, with
-  the seal red and moss green kept for wrong and right answers
-- New app icons and optimzied icons for android sdk <25
-- Multiple choice answers are square tiles and the question sits in a larger
-  square wireframe frame, easier to read and easier to hit on a touch devices.
-- Text to audio runs have their own interface: the character stays on screen and
-  the four sounds are wide tiles with a waveform of the clip, tapping one plays
-  it and picks it, and a check button below submits the pick
-- Assets load through one reusable store that keeps the bytes and hands out blob
-  URLs, which is also what lets the waveforms be drawn from the real audio
+- New design for the app to make it more modern
+- New app icons and optimized icons for android sdk <25
+- Quizes optimized for mobile and touch devices. 
+- Assets load through one reusable store that keeps the bytes and hands out blob URLs.
 - Screens are split into small components under `src/lib/components/<screen>/`
 
 ### Removed
 
-- The build, package, container, dev and test shell scripts. `scripts/publish.sh`
-  publishes to crates.io and the github workflows do everything else.
-- Flatpack as a build and release target. Native binaries and appimage already cover all 
-  major distros. An extra target stalls the ci too much. 
+- The build, package, container, dev and test shell scripts as `scripts/publish.sh` publishes to crates.io and the github workflows do everything else.
+- Flatpack and appimage as a build and release target. Native binaries already cover all major distros. An extra target stalls the ci too much. Appimage is bugged on tauri with wayland, waiting for fix (see: https://github.com/readest/readest/issues/190). 
 
 ## [1.0.1] - 2026-08-18
 

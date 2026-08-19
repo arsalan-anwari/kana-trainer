@@ -29,7 +29,6 @@ jobs:
           {
             "deb":      { "name": "deb",      "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "deb",      "glob": "src-tauri/target/release/bundle/deb/*.deb" },
             "rpm":      { "name": "rpm",      "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "rpm",      "glob": "src-tauri/target/release/bundle/rpm/*.rpm" },
-            "appimage": { "name": "appimage", "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "appimage", "glob": "src-tauri/target/release/bundle/appimage/*.AppImage" },
             "exe":      { "name": "exe",      "os": "windows-latest", "kind": "tauri",   "bundle": "nsis",     "glob": "src-tauri/target/release/bundle/nsis/*-setup.exe" },
             "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "bundle": "dmg",      "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
             "arch":     { "name": "arch",     "os": "ubuntu-24.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
@@ -108,7 +107,7 @@ jobs:
         if: matrix.kind == 'tauri' || matrix.kind == 'apk'
         run: npm ci --no-audit --no-fund
 
-      # deb, rpm, appimage and exe
+      # deb, rpm and exe
 
       - name: Build the ${{ matrix.name }} package
         if: matrix.kind == 'tauri' && matrix.bundle != 'dmg'
