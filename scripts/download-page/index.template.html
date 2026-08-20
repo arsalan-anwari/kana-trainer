@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <title>Download Kana Trainer</title>
+    <meta
+      name="description"
+      content="Download Kana Trainer {{VERSION}} for Windows, macOS, Linux and Android. Pick your system and install." />
+    <meta property="og:title" content="Download Kana Trainer" />
+    <meta
+      property="og:description"
+      content="Trainer for the hiragana and katakana alphabets, on desktop, tablet and phone." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="showcase.gif" />
+
+    <style>
+      :root {
+        --paper: #f7f2e7;
+        --ink: #1b1915;
+        --muted: #6e6657;
+        --wire: #ded5c1;
+        --card: #fffdf7;
+        --accent: #1b1915;
+        --accent-ink: #f7f2e7;
+        --shadow: 0 1px 2px rgb(27 25 21 / 6%), 0 8px 24px rgb(27 25 21 / 6%);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #16150f;
+          --ink: #f3eddf;
+          --muted: #a49a84;
+          --wire: #353227;
+          --card: #1e1c15;
+          --accent: #f3eddf;
+          --accent-ink: #16150f;
+          --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 30%);
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        padding: 0 1.25rem 4rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      main {
+        max-width: 54rem;
+        margin: 0 auto;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* header */
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 3.5rem 0 2.5rem;
+        text-align: center;
+      }
+
+      .mark {
+        display: flex;
+        width: 4.5rem;
+        height: 4.5rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1rem;
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-family: "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP",
+          "Noto Sans JP", "Yu Gothic", Meiryo, ui-sans-serif, system-ui, sans-serif;
+        font-size: 2.25rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.875rem, 5vw, 2.5rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .tagline {
+        max-width: 34rem;
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .version {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border: 1px solid var(--wire);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 0.8125rem;
+        text-decoration: none;
+      }
+
+      .version:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+      }
+
+      /* the pick-your-system grid */
+
+      h2 {
+        margin: 2.5rem 0 1rem;
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .downloads {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 0.875rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem;
+        border: 1px solid var(--wire);
+        border-radius: 0.875rem;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+
+      .card-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .card svg {
+        flex: none;
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: currentColor;
+      }
+
+      .card-name {
+        font-weight: 600;
+      }
+
+      .card-note {
+        color: var(--muted);
+        font-size: 0.8125rem;
+      }
+
+      .card-body {
+        flex: 1;
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      .button {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        border-radius: 0.625rem;
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .button:hover {
+        opacity: 0.88;
+      }
+
+      .button:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+
+      .button .size {
+        font-size: 0.75rem;
+        font-weight: 400;
+        opacity: 0.7;
+      }
+
+      /* the card matching the visitor's system, marked by the script below */
+
+      .card.is-yours {
+        border-color: var(--ink);
+      }
+
+      .card.is-yours .card-head {
+        padding-right: 5.5rem;
+      }
+
+      .yours-flag {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        display: none;
+        padding: 0.125rem 0.5rem;
+        border-radius: 999px;
+        background: var(--paper);
+        color: var(--muted);
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .card.is-yours .yours-flag {
+        display: block;
+      }
+
+      /* install notes */
+
+      details {
+        margin-top: 1.5rem;
+        padding: 1rem 1.25rem;
+        border: 1px solid var(--wire);
+        border-radius: 0.875rem;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      details h3 {
+        margin: 1.25rem 0 0.375rem;
+        font-size: 0.9375rem;
+      }
+
+      details p {
+        margin: 0.375rem 0;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      pre {
+        overflow-x: auto;
+        margin: 0.5rem 0 0;
+        padding: 0.75rem 0.875rem;
+        border-radius: 0.5rem;
+        background: var(--paper);
+        font-size: 0.8125rem;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+          monospace;
+      }
+
+      /* preview */
+
+      .preview {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .preview img {
+        max-width: 100%;
+        border: 1px solid var(--wire);
+        border-radius: 0.625rem;
+      }
+
+      .preview .desktop {
+        width: 26rem;
+      }
+
+      .preview .phone {
+        width: 9rem;
+      }
+
+      /* footer */
+
+      footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--wire);
+        color: var(--muted);
+        font-size: 0.8125rem;
+        text-align: center;
+      }
+
+      footer a {
+        text-decoration-color: var(--wire);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <div class="mark" aria-hidden="true">あ</div>
+        <h1>Kana Trainer</h1>
+        <p class="tagline">
+          Learn the hiragana and katakana alphabets on desktop, tablet and phone.
+          Pick your system below and the download starts straight away.
+        </p>
+        <a class="version" href="{{RELEASE_URL}}">
+          Version {{VERSION}} &middot; released {{RELEASED_ON}}
+        </a>
+      </header>
+
+      <h2>Choose your system</h2>
+      <ul class="downloads">
+{{CARDS}}
+      </ul>
+
+      <details>
+        <summary>How do I install the file I just downloaded?</summary>
+
+        <h3>Windows</h3>
+        <p>
+          Double click the <code>.exe</code> and follow the installer. Windows may
+          warn that the publisher is unknown, because the app is not signed with a
+          paid certificate. Choose <b>More info</b> then <b>Run anyway</b>.
+        </p>
+
+        <h3>macOS</h3>
+        <p>
+          Open the <code>.dmg</code> and drag Kana Trainer into Applications. The
+          first launch needs a right click on the app and then <b>Open</b>, since
+          the app is not notarised.
+        </p>
+
+        <h3>Linux</h3>
+        <p>Open a terminal in your downloads folder and run the line for your distribution.</p>
+        <pre><code>sudo apt install ./Kana.Trainer_*.deb          # debian 13+, ubuntu 24.04+
+sudo dnf install ./Kana.Trainer-*.rpm          # fedora, opensuse
+sudo pacman -U ./kana-trainer-*.pkg.tar.zst    # arch</code></pre>
+
+        <h3>Android</h3>
+        <p>
+          Open the <code>.apk</code> from your notification shade and allow your
+          browser to install unknown apps when asked.
+        </p>
+
+        <h3>From source</h3>
+        <p>With a Rust toolchain installed:</p>
+        <pre><code>cargo install kana-trainer</code></pre>
+      </details>
+
+      <h2>What it looks like</h2>
+      <div class="preview">
+        <img
+          class="desktop"
+          src="showcase.gif"
+          loading="lazy"
+          alt="Kana Trainer on a desktop window, walking through the practice setup, the question formats, a scored run, the reports screen and the character chart" />
+        <img
+          class="phone"
+          src="showcase-phone.gif"
+          loading="lazy"
+          alt="The same walkthrough of Kana Trainer on a phone screen" />
+      </div>
+
+      <footer>
+        <p>
+          <a href="{{RELEASE_URL}}">All files for this release</a> &middot;
+          <a href="{{CHECKSUMS_URL}}">SHA256 checksums</a> &middot;
+          <a href="{{REPO_URL}}">Source on GitHub</a>
+        </p>
+        <p>Free and open source under the Apache 2.0 licence.</p>
+      </footer>
+    </main>
+
+    <script>
+      // Put the card matching the visitor's system first and mark it, so the
+      // common case is one obvious button. Everything stays reachable if the
+      // guess is wrong, and the list is already correct without any script.
+      (function () {
+        var ua = navigator.userAgent;
+        var os = /Android/i.test(ua)
+          ? "android"
+          : /iPhone|iPad|iPod/i.test(ua)
+            ? "ios"
+            : /Mac OS X|Macintosh/i.test(ua)
+              ? "macos"
+              : /Windows/i.test(ua)
+                ? "windows"
+                : /Linux|X11/i.test(ua)
+                  ? "linux"
+                  : "";
+
+        if (!os) return;
+
+        var list = document.querySelector(".downloads");
+        var mine = list.querySelectorAll('[data-os~="' + os + '"]');
+
+        for (var i = mine.length - 1; i >= 0; i--) {
+          mine[i].classList.add("is-yours");
+          list.prepend(mine[i]);
+        }
+      })();
+    </script>
+  </body>
+</html>

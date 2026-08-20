@@ -4,6 +4,8 @@
 #   2. runs the playwright smoke test against the same frontend the packages carry
 #   3. creates the release, with the changelog entry as the description and
 #      every package plus a checksum file attached
+#   4. repoints the github pages download page at the new assets and commits it,
+#      which triggers the pages workflow
 
 name: release
 
@@ -134,3 +136,44 @@ jobs:
             --notes-file notes.md \
             --verify-tag \
             staging/*
+
+  download-page:
+    name: repoint the download page
+    needs: release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      # the release job runs against the tag, and the page is committed to
+      # main, so check that out instead
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Work out which version was released
+        id: version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="${{ inputs.version }}"
+          fi
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild docs/html from the release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/build-download-page.sh "${{ steps.version.outputs.tag }}"
+
+      - name: Commit it
+        run: |
+          if git diff --quiet -- docs/html; then
+            echo "the download page already points at ${{ steps.version.outputs.tag }}"
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/html
+          git commit -m 'Point the download page at ${{ steps.version.outputs.tag }}'
+          git push origin main

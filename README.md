@@ -41,13 +41,9 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 
 ## Installing
 
-From crates.io:
+### Manually
 
-```sh
-cargo install kana-trainer
-```
-
-Download pages at [releases page](https://github.com/arsalan-anwari/kana-trainer/releases).
+[https://arsalan-anwari.github.io/kana-trainer/](https://arsalan-anwari.github.io/kana-trainer/)
 
 ```sh
 sudo dnf install ./kana-trainer-*.rpm            # fedora, opensuse
@@ -55,6 +51,15 @@ sudo apt install ./kana-trainer_*.deb            # debian 13+, ubuntu 24.04+
 sudo pacman -U ./kana-trainer-*.pkg.tar.zst      # arch
 adb install ./kana-trainer-*.apk                 # android
 ```
+
+Or run exe/dmg package with your OS package installer. 
+
+### From crates.io
+
+```sh
+cargo install kana-trainer
+```
+
 
 ## Keyboard Shortcuts
 
