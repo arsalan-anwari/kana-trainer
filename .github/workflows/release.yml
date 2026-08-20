@@ -11,6 +11,11 @@ on:
   push:
     tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, without the leading v (e.g. 1.2.0). The tag must already exist.'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -79,10 +84,22 @@ jobs:
           sha256sum -- * > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
+      - name: Work out which version is being released
+        id: version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="${{ inputs.version }}"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
       - name: Read the changelog entry for this tag
         id: notes
+        env:
+          version: ${{ steps.version.outputs.version }}
         run: |
-          version="${GITHUB_REF_NAME#v}"
           awk -v version="$version" '
             $0 ~ "^## \\[?" version "\\]?" { found = 1; next }
             found && /^## / { exit }
@@ -108,8 +125,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" \
-            --title "kana-trainer ${GITHUB_REF_NAME#v}" \
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "kana-trainer ${{ steps.version.outputs.version }}" \
             --notes-file notes.md \
             --verify-tag \
             staging/*
