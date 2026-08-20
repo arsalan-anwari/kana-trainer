@@ -1,5 +1,5 @@
 import { allKana, kanaById, type Kana, type Script } from "./kana";
-import { sidesFor, usesAudio, type RunSettings, type Side } from "./settings";
+import { groupEnabled, sidesFor, type RunSettings, type Side } from "./settings";
 
 export type Choice = {
   kanaId: string;
@@ -28,12 +28,9 @@ const CHOICE_COUNT = 4;
 
 export function eligibleKana(settings: RunSettings): Kana[] {
   const selected = new Set(settings.selection);
-  return allKana.filter((kana) => {
-    if (!selected.has(kana.id)) return false;
-    if (kana.dakuten && !settings.includeDakuten) return false;
-    if (usesAudio(settings.format) && kana.audio === null) return false;
-    return true;
-  });
+  return allKana.filter(
+    (kana) => selected.has(kana.id) && groupEnabled(settings, kana.group)
+  );
 }
 
 function shuffle<T>(items: T[], rng: () => number): T[] {
@@ -83,11 +80,7 @@ export function buildQuestions(
   const distractorPool =
     pool.length >= CHOICE_COUNT
       ? pool
-      : allKana.filter((kana) => {
-          if (kana.dakuten && !settings.includeDakuten) return false;
-          if (usesAudio(settings.format) && kana.audio === null) return false;
-          return true;
-        });
+      : allKana.filter((kana) => groupEnabled(settings, kana.group));
 
   const total = settings.questionCount > 0 ? settings.questionCount : pool.length;
   const questions: Question[] = [];

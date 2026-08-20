@@ -1,6 +1,14 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { allKana, baseRows, dakutenRows, kanaById, rows } from "../src/lib/core/kana";
+import {
+  allKana,
+  dakuonRows,
+  handakuonRows,
+  kanaById,
+  rows,
+  seionRows,
+  yoonRows
+} from "../src/lib/core/kana";
 
 describe("kana data", () => {
   it("has unique ids", () => {
@@ -8,9 +16,12 @@ describe("kana data", () => {
     expect(ids.size).toBe(allKana.length);
   });
 
-  it("has 46 base characters and 25 dakuten characters", () => {
-    expect(baseRows.flatMap((row) => row.kana)).toHaveLength(46);
-    expect(dakutenRows.flatMap((row) => row.kana)).toHaveLength(25);
+  it("covers every group of the dataset", () => {
+    expect(seionRows.flatMap((row) => row.kana)).toHaveLength(46);
+    expect(dakuonRows.flatMap((row) => row.kana)).toHaveLength(20);
+    expect(handakuonRows.flatMap((row) => row.kana)).toHaveLength(5);
+    expect(yoonRows.flatMap((row) => row.kana)).toHaveLength(33);
+    expect(allKana).toHaveLength(104);
   });
 
   it("keeps hiragana and katakana in step", () => {
@@ -20,23 +31,28 @@ describe("kana data", () => {
     }
   });
 
-  it("gives audio to base characters only", () => {
+  it("files every character under its own group", () => {
     for (const kana of allKana) {
-      if (kana.dakuten) expect(kana.audio).toBeNull();
-      else expect(kana.audio).toBe(kana.romaji);
+      expect(kana.audio.startsWith(`${kana.group}/`)).toBe(true);
     }
   });
 
-  it("ships an audio file for every base character", () => {
+  it("ships an audio file for every character", () => {
     for (const kana of allKana) {
-      if (kana.audio === null) continue;
-      expect(existsSync(`public/audio/kana/${kana.audio}.mp3`)).toBe(true);
+      expect(existsSync(`public/audio/${kana.audio}.mp3`)).toBe(true);
     }
+  });
+
+  it("uses every clip in the dataset exactly once", () => {
+    const clips = allKana.map((kana) => kana.audio);
+    expect(new Set(clips).size).toBe(clips.length);
   });
 
   it("looks characters up by id", () => {
     expect(kanaById("shi")?.hira).toBe("し");
+    expect(kanaById("kya")?.hira).toBe("きゃ");
     expect(kanaById("nope")).toBeUndefined();
     expect(rows.map((row) => row.id)).toContain("pa");
+    expect(rows.map((row) => row.id)).toContain("ja");
   });
 });

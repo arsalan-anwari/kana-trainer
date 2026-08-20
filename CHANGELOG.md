@@ -5,6 +5,27 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-08-20
+
+### Fixed
+- Audio freezes and sound effects. 
+- Muffeled sound effects and general app freezed when switches tabs. 
+
+### Added
+
+- Dakuon, handakuon and yoon characters, 104 in total. Each is a separate switch under Extras and stays off by default.
+- Rows for the yoon characters: きゃ, しゃ, ちゃ, にゃ, ひゃ, みゃ, りゃ, ぎゃ, じゃ, びゃ and ぴゃ.
+- A Chart view next to Reports: every character as a square tile with the romaji above the hiragana and katakana, grouped by seion, dakuon, handakuon and yoon and split by row. Tapping a tile plays its sound.
+- Splash screen for app startup. 
+
+### Changed
+
+- Character sounds now come from [veardk/just-gojuon](https://github.com/veardk/just-gojuon), which covers every character rather than the 46 basic ones.
+- All clips are pitch and loudness normalised to one voice level by `scripts/normalize-audio.py`. The source recordings drift from 149 Hz to 367 Hz and vary 15 dB in level.
+- Audio to text and text to audio work with every character set, so switching one on no longer forces text only mode.
+- Clips live in `public/audio/<group>/<romaji>.mp3` instead of `public/audio/kana/`.
+- A stored `includeDakuten` setting from an older version turns into dakuon plus handakuon on load.
+
 ## [1.1.0] - 2026-08-19
 
 ### Added
@@ -55,6 +76,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.2.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.2.0
 [1.1.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.1.0
 [1.0.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.0.1
 [1.0.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.0.0

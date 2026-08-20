@@ -15,7 +15,7 @@ type Entry = {
 };
 
 export type AssetStoreOptions = {
-  /** Turns a short key such as `a` into a bundle path such as `audio/kana/a.mp3`. */
+  /** Turns a short key such as `seion/a` into a bundle path such as `audio/seion/a.mp3`. */
   path: (key: string) => string;
 };
 

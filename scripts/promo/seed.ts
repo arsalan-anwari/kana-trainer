@@ -1,4 +1,4 @@
-import { baseRows } from "../../src/lib/core/kana";
+import { seionRows } from "../../src/lib/core/kana";
 import type { Answer } from "../../src/lib/core/quiz";
 import type { Report } from "../../src/lib/core/report";
 import type { RunSettings } from "../../src/lib/core/settings";
@@ -10,7 +10,7 @@ const REPORT_KEY = "kana-trainer-reports";
 const SETTINGS_KEY = "kana-trainer-settings";
 const PREFS_KEY = "kana-trainer-prefs";
 
-const pool = baseRows.flatMap((row) => row.kana);
+const pool = seionRows.flatMap((row) => row.kana);
 
 function random(seed: number): () => number {
   let state = seed;
@@ -28,17 +28,18 @@ const settings: RunSettings = {
   format: "text-text",
   answerStyle: "choice",
   direction: "kana-romaji",
-  includeDakuten: false,
+  includeDakuon: false,
+  includeHandakuon: false,
+  includeYoon: false,
   selection: pool.map((kana) => kana.id),
   questionCount: 10,
   perQuestionSeconds: 0,
   totalSeconds: 0
 };
 
-function history(): Report[] {
+function history(now: number): Report[] {
   const roll = random(20260819);
   const day = 24 * 60 * 60 * 1000;
-  const now = Date.now();
 
   return [0, 1, 2, 3, 4, 5].map((index) => {
     const accuracy = 0.58 + index * 0.06;
@@ -72,13 +73,21 @@ export type SeedPayload = {
   keys: { reports: string; settings: string; prefs: string };
   reports: Report[];
   settings: RunSettings;
+  prefs: { effects: boolean; theme: string };
 };
 
-export function seedPayload(): SeedPayload {
+export type SeedOptions = {
+  /** What the seeded history counts back from, pin it to keep stills stable. */
+  now?: number;
+  effects?: boolean;
+};
+
+export function seedPayload(options: SeedOptions = {}): SeedPayload {
   return {
     keys: { reports: REPORT_KEY, settings: SETTINGS_KEY, prefs: PREFS_KEY },
-    reports: history(),
-    settings
+    reports: history(options.now ?? Date.now()),
+    settings,
+    prefs: { effects: options.effects ?? true, theme: "light" }
   };
 }
 
@@ -86,5 +95,5 @@ export function seedPayload(): SeedPayload {
 export function applySeed(payload: SeedPayload): void {
   localStorage.setItem(payload.keys.reports, JSON.stringify(payload.reports));
   localStorage.setItem(payload.keys.settings, JSON.stringify(payload.settings));
-  localStorage.setItem(payload.keys.prefs, JSON.stringify({ effects: true, theme: "light" }));
+  localStorage.setItem(payload.keys.prefs, JSON.stringify(payload.prefs));
 }

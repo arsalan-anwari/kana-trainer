@@ -17,3 +17,4 @@ src-tauri/gen/android
 src-tauri/gen/apple
 .promo
 .flatpak-builder
+.showcase

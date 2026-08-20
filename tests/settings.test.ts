@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { defaultSettings, normalizeSettings, sidesFor } from "../src/lib/core/settings";
+import {
+  defaultSettings,
+  enabledGroups,
+  groupEnabled,
+  migrateSettings,
+  normalizeSettings,
+  sidesFor
+} from "../src/lib/core/settings";
 
 describe("settings rules", () => {
   it("forces multiple choice when the answer is audio", () => {
@@ -48,23 +55,17 @@ describe("settings rules", () => {
     expect(result.settings.direction).toBe("kana-romaji");
   });
 
-  it("drops dakuten in audio modes", () => {
+  it("keeps the extra character sets in audio modes", () => {
     const result = normalizeSettings({
       ...defaultSettings,
       format: "audio-text",
-      includeDakuten: true
+      includeDakuon: true,
+      includeHandakuon: true,
+      includeYoon: true
     });
-    expect(result.settings.includeDakuten).toBe(false);
-  });
-
-  it("keeps dakuten in text to text mode", () => {
-    const result = normalizeSettings({
-      ...defaultSettings,
-      format: "text-text",
-      includeDakuten: true
-    });
-    expect(result.settings.includeDakuten).toBe(true);
-    expect(result.notes).toHaveLength(0);
+    expect(result.settings.includeDakuon).toBe(true);
+    expect(result.settings.includeHandakuon).toBe(true);
+    expect(result.settings.includeYoon).toBe(true);
   });
 
   it("always leaves one alphabet on", () => {
@@ -93,5 +94,27 @@ describe("settings rules", () => {
       prompt: "romaji",
       answer: "kana"
     });
+  });
+});
+
+describe("character groups", () => {
+  it("always keeps seion on", () => {
+    expect(groupEnabled(defaultSettings, "seion")).toBe(true);
+    expect(enabledGroups(defaultSettings)).toEqual(["seion"]);
+  });
+
+  it("reports the groups that are switched on", () => {
+    const settings = { ...defaultSettings, includeDakuon: true, includeYoon: true };
+    expect(enabledGroups(settings)).toEqual(["seion", "dakuon", "yoon"]);
+    expect(groupEnabled(settings, "handakuon")).toBe(false);
+  });
+
+  it("turns an old dakuten setting into dakuon and handakuon", () => {
+    const migrated = migrateSettings({ includeDakuten: true, questionCount: 30 });
+    expect(migrated.includeDakuon).toBe(true);
+    expect(migrated.includeHandakuon).toBe(true);
+    expect(migrated.includeYoon).toBe(false);
+    expect(migrated.questionCount).toBe(30);
+    expect("includeDakuten" in migrated).toBe(false);
   });
 });

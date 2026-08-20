@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { baseRows, dakutenRows } from "../../core/kana";
+  import { rows, seionRows } from "../../core/kana";
+  import { groupEnabled } from "../../core/settings";
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
   import KanaRow from "./KanaRow.svelte";
@@ -8,9 +9,7 @@
   const script = $derived(
     app.settings.scripts.includes("hiragana") ? "hiragana" : "katakana"
   );
-  const shownRows = $derived(
-    app.settings.includeDakuten ? [...baseRows, ...dakutenRows] : baseRows
-  );
+  const shownRows = $derived(rows.filter((row) => groupEnabled(app.settings, row.group)));
 
   function selectAll(): void {
     app.setSelection(shownRows.flatMap((row) => row.kana.map((kana) => kana.id)));
@@ -34,7 +33,7 @@
     <Button
       size="sm"
       variant="outline"
-      onclick={() => app.setSelection(baseRows[0].kana.map((kana) => kana.id))}
+      onclick={() => app.setSelection(seionRows[0].kana.map((kana) => kana.id))}
     >
       Vowels only
     </Button>

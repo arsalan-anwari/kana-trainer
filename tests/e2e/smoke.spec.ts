@@ -53,3 +53,18 @@ test("a character sound plays in the text to audio run", async ({ page }) => {
   await page.getByRole("button", { name: "Check" }).click();
   await expect(page.getByRole("button", { name: "Continue" })).toBeVisible();
 });
+
+test("the chart lists every character and plays one", async ({ page }) => {
+  await openApp(page);
+  await page.getByRole("button", { name: "Chart" }).click();
+
+  await expect(page.getByRole("heading", { name: /Seion/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Play / })).toHaveCount(104);
+
+  await page.getByRole("button", { name: "Play kyo" }).click();
+  await expect.poll(() => playedSeconds(page), { timeout: 15_000 }).toBeGreaterThan(0);
+  await expect(page.getByRole("button", { name: "Play kyo" })).toHaveAttribute(
+    "aria-pressed",
+    "true"
+  );
+});

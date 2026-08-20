@@ -8,7 +8,28 @@
 Trainer for the hiragana and katakana alphabets, on desktop, tablet and phone.
 Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 
-![Showcase of kana-trainer's practice setup, the three quiz formats, run results and the reports screen](docs/showcase.gif)
+<table>
+  <tr>
+    <td align="center" valign="bottom">
+      <img src="docs/showcase.gif" width="420"
+           alt="Kana Trainer on a desktop window, walking through the practice setup, the three question formats, a run result, the reports screen and the character chart">
+    </td>
+    <td align="center" valign="bottom">
+      <img src="docs/showcase-phone.gif" width="160"
+           alt="The same walkthrough of Kana Trainer on a phone screen">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Desktop</b><br>
+      Setup on the left, characters on the right, and every run charted the moment it ends.
+    </td>
+    <td align="center">
+      <b>Phone</b><br>
+      The same screens in one column, sized for thumbs rather than a mouse.
+    </td>
+  </tr>
+</table>
 
 ## What it does
 
@@ -18,7 +39,8 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 - Two answer styles: multiple choice with four options, or typing the romaji yourself
 - Time trial with 5, 10, 15 or 30 seconds per question and an optional limit for the whole run
 - Pick single characters, whole rows, or the characters you keep getting wrong
-- Optional dakuten and handakuten rows (text to text only for now)
+- Optional dakuon, handakuon and yoon rows on top of the 46 seion characters, all with audio
+- Chart view with all 104 characters grouped by sound type and row, tap any tile to hear it
 - Score reports saved on disk, loaded and exported as JSON files
 - Charts for the characters, rows and alphabets you struggle with
 - One click to turn past mistakes into a new practice set
@@ -68,4 +90,4 @@ npm run test:e2e      # playwright smoke test
 
 ## Credits
 
-- Character sounds from [digitaIfabric/japanese](https://github.com/digitaIfabric/japanese)
+- Character sounds from [veardk/just-gojuon](https://github.com/veardk/just-gojuon) (MIT), pitch and loudness normalised with `scripts/normalize-audio.py`

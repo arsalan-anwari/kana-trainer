@@ -1,12 +1,24 @@
 <script lang="ts">
-  import { app } from "./lib/state.svelte";
+  import type { Component } from "svelte";
+  import { app, type Route } from "./lib/state.svelte";
   import AppHeader from "./lib/components/layout/AppHeader.svelte";
-  import QuizScreen from "./lib/components/quiz/QuizScreen.svelte";
-  import ReportsScreen from "./lib/components/reports/ReportsScreen.svelte";
-  import ResultScreen from "./lib/components/result/ResultScreen.svelte";
   import SetupScreen from "./lib/components/setup/SetupScreen.svelte";
 
   app.load();
+
+  const screens: Record<Exclude<Route, "setup">, () => Promise<{ default: Component }>> = {
+    quiz: () => import("./lib/components/quiz/QuizScreen.svelte"),
+    result: () => import("./lib/components/result/ResultScreen.svelte"),
+    chart: () => import("./lib/components/chart/ChartScreen.svelte"),
+    reports: () => import("./lib/components/reports/ReportsScreen.svelte")
+  };
+
+  function warmScreens(): void {
+    for (const load of Object.values(screens)) void load();
+  }
+
+  if (typeof requestIdleCallback === "function") requestIdleCallback(() => warmScreens());
+  else setTimeout(warmScreens, 400);
 </script>
 
 <div class="min-h-dvh w-full">
@@ -17,12 +29,10 @@
 
     {#if app.route === "setup"}
       <SetupScreen />
-    {:else if app.route === "quiz"}
-      <QuizScreen />
-    {:else if app.route === "result"}
-      <ResultScreen />
     {:else}
-      <ReportsScreen />
+      {#await screens[app.route]() then { default: Screen }}
+        <Screen />
+      {/await}
     {/if}
   </main>
 </div>

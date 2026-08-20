@@ -4,16 +4,11 @@
   import Card from "../../ui/Card.svelte";
   import OptionCard from "../../ui/OptionCard.svelte";
 
-  const all: { value: Format; label: string; hint: string }[] = [
+  const formats: { value: Format; label: string; hint: string }[] = [
     { value: "text-text", label: "Text only", hint: "Read a character, answer with text" },
     { value: "audio-text", label: "Audio to text", hint: "Hear a sound, answer with text" },
     { value: "text-audio", label: "Text to audio", hint: "Read a character, pick the sound" }
   ];
-
-  // dakuten characters have no recordings, so audio modes drop out
-  const formats = $derived(
-    app.settings.includeDakuten ? all.filter((format) => format.value === "text-text") : all
-  );
 </script>
 
 <Card title="Question format" description="How each question is shown and answered.">

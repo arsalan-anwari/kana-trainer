@@ -1,4 +1,4 @@
-import type { Script } from "./kana";
+import type { Group, Script } from "./kana";
 
 export type Format = "text-text" | "audio-text" | "text-audio";
 export type AnswerStyle = "choice" | "typing";
@@ -10,12 +10,20 @@ export type RunSettings = {
   format: Format;
   answerStyle: AnswerStyle;
   direction: Direction;
-  includeDakuten: boolean;
+  includeDakuon: boolean;
+  includeHandakuon: boolean;
+  includeYoon: boolean;
   selection: string[];
   questionCount: number;
   perQuestionSeconds: number;
   totalSeconds: number;
 };
+
+export type LegacySettings = Partial<RunSettings> & { includeDakuten?: boolean };
+
+export const optionalGroups = ["dakuon", "handakuon", "yoon"] as const;
+
+export type OptionalGroup = (typeof optionalGroups)[number];
 
 export const perQuestionOptions = [0, 5, 10, 15, 30];
 export const totalTimeOptions = [0, 60, 120, 300, 600];
@@ -26,12 +34,47 @@ export const defaultSettings: RunSettings = {
   format: "text-text",
   answerStyle: "choice",
   direction: "kana-romaji",
-  includeDakuten: false,
+  includeDakuon: false,
+  includeHandakuon: false,
+  includeYoon: false,
   selection: [],
   questionCount: 20,
   perQuestionSeconds: 0,
   totalSeconds: 0
 };
+
+const groupFlags: Record<OptionalGroup, keyof RunSettings> = {
+  dakuon: "includeDakuon",
+  handakuon: "includeHandakuon",
+  yoon: "includeYoon"
+};
+
+export function groupFlag(group: OptionalGroup): keyof RunSettings {
+  return groupFlags[group];
+}
+
+export function groupEnabled(settings: RunSettings, group: Group): boolean {
+  if (group === "seion") return true;
+  return settings[groupFlags[group]] === true;
+}
+
+export function enabledGroups(settings: RunSettings): Group[] {
+  const enabled: Group[] = ["seion"];
+  for (const group of optionalGroups) {
+    if (settings[groupFlags[group]] === true) enabled.push(group);
+  }
+  return enabled;
+}
+
+export function migrateSettings(stored: LegacySettings): RunSettings {
+  const { includeDakuten, ...rest } = stored;
+  const merged: RunSettings = { ...defaultSettings, ...rest };
+  if (includeDakuten === true) {
+    merged.includeDakuon = true;
+    merged.includeHandakuon = true;
+  }
+  return merged;
+}
 
 export function sidesFor(format: Format, direction: Direction, roll: number): {
   prompt: Side;
@@ -80,11 +123,6 @@ export function normalizeSettings(settings: RunSettings): {
   if (next.format === "text-audio" && next.direction !== "kana-romaji") {
     next.direction = "kana-romaji";
     notes.push("Text to audio always starts from the kana character.");
-  }
-
-  if (usesAudio(next.format) && next.includeDakuten) {
-    next.includeDakuten = false;
-    notes.push("Dakuten characters have no audio, so they are left out of audio modes.");
   }
 
   return { settings: next, notes };

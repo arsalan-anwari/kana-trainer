@@ -3,11 +3,133 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <title>Kana Trainer</title>
+
+    <style>
+      :root {
+        --splash-background: #f7f2e7;
+        --splash-foreground: #1b1915;
+        --splash-muted: #6e6657;
+        --splash-wire: #ded5c1;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light) {
+          --splash-background: #16150f;
+          --splash-foreground: #f3eddf;
+          --splash-muted: #a49a84;
+          --splash-wire: #353227;
+        }
+      }
+
+      /* once the app applies a stored theme the splash follows it */
+      :root.dark {
+        --splash-background: #16150f;
+        --splash-foreground: #f3eddf;
+        --splash-muted: #a49a84;
+        --splash-wire: #353227;
+      }
+
+      html,
+      body {
+        background: var(--splash-background);
+      }
+
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.875rem;
+        background: var(--splash-background);
+        color: var(--splash-foreground);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        transition: opacity 0.2s ease-out;
+      }
+
+      #splash[data-done] {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #splash .mark {
+        display: flex;
+        width: 4rem;
+        height: 4rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        background: var(--splash-foreground);
+        color: var(--splash-background);
+        font-family: "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Noto Sans JP",
+          "Yu Gothic", Meiryo, ui-sans-serif, system-ui, sans-serif;
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      #splash .name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      #splash .hint {
+        font-size: 0.8125rem;
+        color: var(--splash-muted);
+      }
+
+      #splash .bar {
+        position: relative;
+        width: 11rem;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--splash-wire);
+      }
+
+      #splash .bar span {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 40%;
+        border-radius: inherit;
+        background: var(--splash-foreground);
+        animation: splash-slide 1.1s ease-in-out infinite;
+      }
+
+      @keyframes splash-slide {
+        0% {
+          transform: translateX(-105%);
+        }
+        100% {
+          transform: translateX(255%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #splash .bar span {
+          animation: none;
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+
+    <div id="splash" role="status" aria-live="polite">
+      <div class="mark" aria-hidden="true">あ</div>
+      <div class="name">Kana Trainer</div>
+      <div class="hint">Loading…</div>
+      <div class="bar" aria-hidden="true"><span></span></div>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

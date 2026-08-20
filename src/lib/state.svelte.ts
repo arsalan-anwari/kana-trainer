@@ -1,4 +1,4 @@
-import { allKana, dakutenRows, kanaById, rows } from "./core/kana";
+import { allKana, kanaById, rows, rowsInGroup, seionRows } from "./core/kana";
 import {
   buildQuestions,
   checkChoice,
@@ -10,15 +10,20 @@ import {
 } from "./core/quiz";
 import {
   defaultSettings,
+  groupFlag,
+  migrateSettings,
   normalizeSettings,
+  optionalGroups,
   usesAudio,
+  type LegacySettings,
+  type OptionalGroup,
   type RunSettings
 } from "./core/settings";
 import { summarize, weakKanaIds, type Report, type Summary } from "./core/report";
 import { kanaAudio, setEffectsEnabled, sfx } from "./audio";
 import { listReports, loadJson, saveReport, storeJson } from "./storage";
 
-export type Route = "setup" | "quiz" | "result" | "reports";
+export type Route = "setup" | "quiz" | "result" | "reports" | "chart";
 export type Phase = "answering" | "feedback" | "done";
 
 const SETTINGS_KEY = "kana-trainer-settings";
@@ -36,9 +41,7 @@ function newId(): string {
 }
 
 function startingSelection(): string[] {
-  return rows
-    .filter((row) => !row.dakuten)
-    .flatMap((row) => row.kana.map((kana) => kana.id));
+  return seionRows.flatMap((row) => row.kana.map((kana) => kana.id));
 }
 
 class AppState {
@@ -88,9 +91,9 @@ class AppState {
   );
 
   load(): void {
-    const storedSettings = loadJson<RunSettings | null>(SETTINGS_KEY, null);
+    const storedSettings = loadJson<LegacySettings | null>(SETTINGS_KEY, null);
     if (storedSettings !== null) {
-      this.settings = { ...defaultSettings, ...storedSettings };
+      this.settings = migrateSettings(storedSettings);
       if (this.settings.selection.length === 0) {
         this.settings.selection = startingSelection();
       }
@@ -140,15 +143,18 @@ class AppState {
     this.updateSettings({ selection: [...selection] });
   }
 
-  setDakuten(value: boolean): void {
+  setGroup(group: OptionalGroup, value: boolean): void {
     const selection = new Set(this.settings.selection);
-    for (const row of dakutenRows) {
+    for (const row of rowsInGroup(group)) {
       for (const kana of row.kana) {
         if (value) selection.add(kana.id);
         else selection.delete(kana.id);
       }
     }
-    this.updateSettings({ includeDakuten: value, selection: [...selection] });
+    this.updateSettings({
+      [groupFlag(group)]: value,
+      selection: [...selection]
+    } as Partial<RunSettings>);
   }
 
   setSelection(ids: string[]): void {
@@ -178,11 +184,7 @@ class AppState {
     }
 
     if (usesAudio(this.settings.format)) {
-      kanaAudio.preload(
-        eligibleKana(this.settings)
-          .map((kana) => kana.audio)
-          .filter((name): name is string => name !== null)
-      );
+      kanaAudio.preload(eligibleKana(this.settings).map((kana) => kana.audio));
     }
 
     this.message = "";
@@ -352,17 +354,20 @@ class AppState {
       this.message = "No mistakes found to practice.";
       return;
     }
-    const needsDakuten = ids.some((id) => kanaById(id)?.dakuten === true);
-    this.updateSettings({
-      selection: ids,
-      includeDakuten: needsDakuten ? true : this.settings.includeDakuten
-    });
+    const patch: Partial<RunSettings> = { selection: ids };
+    for (const group of optionalGroups) {
+      if (ids.some((id) => kanaById(id)?.group === group)) {
+        Object.assign(patch, { [groupFlag(group)]: true });
+      }
+    }
+    this.updateSettings(patch);
     this.route = "setup";
     this.message = `Loaded ${ids.length} characters you missed into the practice set.`;
   }
 
   go(route: Route): void {
     sfx.click();
+    if (this.route === "chart" && route !== "chart") kanaAudio.stop();
     this.route = route;
     this.message = "";
     if (route === "reports") void this.refreshReports();

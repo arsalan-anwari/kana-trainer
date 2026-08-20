@@ -1,11 +1,15 @@
 import { AssetStore } from "../assets/loader";
+import { shared } from "./shared";
 import { peaksFromBytes, syntheticPeaks } from "./waveform";
 
 /**
  * Playback of the recorded character sounds.
  */
 
-const store = new AssetStore({ path: (name) => `audio/kana/${name}.mp3` });
+const store = shared(
+  "kana-assets",
+  () => new AssetStore({ path: (name) => `audio/${name}.mp3` })
+);
 
 class KanaAudio {
   /** Key of the sound playing right now, `null` when silent. */
@@ -99,4 +103,5 @@ class KanaAudio {
   }
 }
 
-export const kanaAudio = new KanaAudio();
+// one per page: see `shared` for why a hot reload must not make a second
+export const kanaAudio = shared("kana-audio", () => new KanaAudio());

@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { allKana, baseRows } from "../../src/lib/core/kana";
+import { allKana, seionRows } from "../../src/lib/core/kana";
 import { applySeed, seedPayload } from "./seed";
 import { installStage, Stage } from "./stage";
 
@@ -67,7 +67,7 @@ async function playingClip(page: Page, candidates: string[]): Promise<string | n
     const current = new Uint8Array(await (await fetch(element.src)).arrayBuffer());
     const clips = await Promise.all(
       names.map(async (name) => {
-        const response = await fetch(`/audio/kana/${name}.mp3`);
+        const response = await fetch(`/audio/${name}.mp3`);
         return { name, bytes: response.ok ? new Uint8Array(await response.arrayBuffer()) : null };
       })
     );
@@ -86,7 +86,7 @@ async function playingClip(page: Page, candidates: string[]): Promise<string | n
   }, candidates);
 }
 
-const everyReading = baseRows.flatMap((row) => row.kana.map((kana) => kana.romaji));
+const everyReading = seionRows.flatMap((row) => row.kana.map((kana) => kana.romaji));
 
 test("record the promo", async ({ page }) => {
   const stage = new Stage(page);

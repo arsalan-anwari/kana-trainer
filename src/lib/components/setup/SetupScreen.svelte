@@ -23,7 +23,7 @@
     {#if textOnly}
       <DirectionPicker />
     {/if}
-    <ExtrasPanel showDakuten={textOnly} />
+    <ExtrasPanel />
     <TimeTrialPanel />
   </div>
 

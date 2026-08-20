@@ -30,6 +30,13 @@
     >
       Reports
     </Button>
+    <Button
+      size="sm"
+      variant={app.route === "chart" ? "secondary" : "ghost"}
+      onclick={() => app.go("chart")}
+    >
+      Chart
+    </Button>
     <ThemeToggle />
   </nav>
 </header>

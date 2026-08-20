@@ -20,14 +20,23 @@ function seeded(seed: number): () => number {
 }
 
 describe("quiz building", () => {
-  it("keeps dakuten out unless asked", () => {
+  it("keeps the extra character sets out unless asked", () => {
     expect(eligibleKana(settings())).toHaveLength(46);
-    expect(eligibleKana(settings({ includeDakuten: true }))).toHaveLength(71);
+    expect(eligibleKana(settings({ includeDakuon: true }))).toHaveLength(66);
+    expect(eligibleKana(settings({ includeHandakuon: true }))).toHaveLength(51);
+    expect(eligibleKana(settings({ includeYoon: true }))).toHaveLength(79);
   });
 
-  it("keeps characters without audio out of audio modes", () => {
-    const pool = eligibleKana(settings({ format: "audio-text", includeDakuten: true }));
-    expect(pool.every((kana) => kana.audio !== null)).toBe(true);
+  it("gives every character in an audio run a clip", () => {
+    const pool = eligibleKana(
+      settings({
+        format: "audio-text",
+        includeDakuon: true,
+        includeHandakuon: true,
+        includeYoon: true
+      })
+    );
+    expect(pool).toHaveLength(104);
   });
 
   it("builds the asked number of questions", () => {
