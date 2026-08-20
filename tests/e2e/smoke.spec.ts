@@ -2,6 +2,8 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function openApp(page: Page): Promise<void> {
   await page.goto("/");
+  // the splash overlays the app and carries its own "Kana Trainer" text
+  await expect(page.locator("#splash")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Alphabets" })).toBeVisible();
 }
 
@@ -15,7 +17,7 @@ function playedSeconds(page: Page): Promise<number> {
 
 test("the app opens on the practice setup", async ({ page }) => {
   await openApp(page);
-  await expect(page.getByText("Kana Trainer")).toBeVisible();
+  await expect(page.locator("#app").getByText("Kana Trainer")).toBeVisible();
   await expect(page.getByRole("button", { name: "Start run" })).toBeEnabled();
   await expect(page.getByRole("heading", { name: "Characters" })).toBeVisible();
 });
