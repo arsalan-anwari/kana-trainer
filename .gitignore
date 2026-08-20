@@ -18,3 +18,4 @@ src-tauri/gen/apple
 .promo
 .flatpak-builder
 .showcase
+.test_ci.log

@@ -12,7 +12,11 @@ pub fn run() {
         .setup(|app| {
             if let Some(window) = app.get_webview_window("main") {
                 let dark = matches!(window.theme(), Ok(Theme::Dark));
-                let background = if dark { DARK_BACKGROUND } else { LIGHT_BACKGROUND };
+                let background = if dark {
+                    DARK_BACKGROUND
+                } else {
+                    LIGHT_BACKGROUND
+                };
                 // best effort: an unsupported platform just keeps the config colour
                 let _ = window.set_background_color(Some(background));
             }
