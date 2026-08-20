@@ -15,7 +15,7 @@
       </span>
     </div>
   </div>
-  <nav class="flex items-center gap-2">
+  <nav class="ml-auto flex items-center gap-2">
     <Button
       size="sm"
       variant={app.route === "setup" ? "secondary" : "ghost"}
@@ -37,6 +37,9 @@
     >
       Chart
     </Button>
-    <ThemeToggle />
+    <!-- kept apart from the three screen buttons so it does not read as a fourth -->
+    <span class="ml-3 border-l border-border pl-3 sm:ml-4 sm:pl-4">
+      <ThemeToggle />
+    </span>
   </nav>
 </header>

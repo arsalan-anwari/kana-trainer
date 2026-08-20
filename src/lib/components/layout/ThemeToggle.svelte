@@ -1,14 +1,15 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
+  import IconButton from "../../ui/IconButton.svelte";
+  import type { IconName } from "../../ui/icons";
 
-  const themes: { value: "system" | "light" | "dark"; label: string }[] = [
-    { value: "system", label: "Auto" },
-    { value: "light", label: "Light" },
-    { value: "dark", label: "Dark" }
+  const themes: { value: "system" | "light" | "dark"; label: string; icon: IconName }[] = [
+    { value: "system", label: "Theme: follow the system", icon: "monitor" },
+    { value: "light", label: "Theme: light", icon: "sun" },
+    { value: "dark", label: "Theme: dark", icon: "moon" }
   ];
 
-  const label = $derived(themes.find((theme) => theme.value === app.prefs.theme)?.label ?? "Auto");
+  const current = $derived(themes.find((theme) => theme.value === app.prefs.theme) ?? themes[0]);
 
   function cycle(): void {
     const index = themes.findIndex((theme) => theme.value === app.prefs.theme);
@@ -17,4 +18,4 @@
   }
 </script>
 
-<Button size="sm" variant="outline" title="Switch theme" onclick={cycle}>{label}</Button>
+<IconButton size="sm" icon={current.icon} label={current.label} onclick={cycle} />

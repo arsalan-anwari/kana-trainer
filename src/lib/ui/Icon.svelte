@@ -1,0 +1,43 @@
+<script lang="ts">
+  /** The line icons used around the app, drawn on one 24 unit grid. */
+
+  import type { IconName } from "./icons";
+
+  let {
+    name,
+    class: className = "size-4"
+  }: { name: IconName; class?: string } = $props();
+</script>
+
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+>
+  {#if name === "sun"}
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+  {:else if name === "moon"}
+    <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z" />
+  {:else if name === "monitor"}
+    <rect x="2.5" y="4" width="19" height="12.5" rx="2" />
+    <path d="M8.5 20.5h7M12 16.5v4" />
+  {:else if name === "select-all"}
+    <rect x="3.5" y="3.5" width="17" height="17" rx="3" />
+    <path d="M8 12.2l2.7 2.8L16 9.5" />
+  {:else if name === "select-none"}
+    <rect x="3.5" y="3.5" width="17" height="17" rx="3" />
+  {:else if name === "folder-open"}
+    <path d="M3 8.5V6a2 2 0 0 1 2-2h3.6a2 2 0 0 1 1.4.6L11.5 6H19a2 2 0 0 1 2 2v1" />
+    <path d="M3.3 10.5h18.1l-2 8.2a2 2 0 0 1-1.9 1.5H5.2a2 2 0 0 1-2-1.7z" />
+  {:else if name === "filter"}
+    <path d="M3.5 5.5h17l-6.5 7.6v5.6l-4 2.3v-7.9z" />
+  {:else if name === "chevron-down"}
+    <path d="M6 9.5l6 6 6-6" />
+  {/if}
+</svg>

@@ -5,6 +5,31 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-08-20
+
+### Fixed
+
+- A run with every answer right said "Nearly perfect". It now says "Perfect", with the grades in between rebalanced around it.
+- Quitting a run part way through scored and saved it. A run only counts once finished; stopping one, or leaving the quiz screen through the header, now throws it away.
+- Multiple choice could offer two options meaning the same thing, marking a right answer wrong. Options are now compared on what they show or play, not on their id.
+- The android apk was signed with a freshly generated key on every release, so Android refused to install one over another and only a clean install worked. Releases now carry a fixed signing key. Uninstall any earlier apk once before installing this one; updates work normally from here.
+
+### Added
+
+- A confirmation before a run is stopped, with the clock held while it is up.
+- A splash over the finished run: an emoji for the grade and confetti for the good ones. Tap or wait to reach the report.
+- More question counts, a custom count from 10 to 500, and one pass.
+- A difficulty under Settings, deciding how many wrong answers are deliberate look alikes.
+- A separate character set per alphabet, as a tab each when hiragana and katakana are both on.
+- Reports filter by today, yesterday, last week or last month, with icon buttons to select all, clear and load.
+- A Mistakes by group panel under the reports charts, filing every miss by set and row.
+
+### Changed
+
+- The Time trial block is now called Settings, since it holds more than timing.
+- The theme switcher is an icon button pinned to the right of the header.
+- Removed the navigation buttons from the chart, reports and character picker screens, which the header already covers.
+
 ## [1.2.0] - 2026-08-20
 
 ### Fixed

@@ -62,6 +62,27 @@ export function installShowcase(init: ShowcaseInit): void {
       caret-color: transparent !important;
     }
     html { scroll-behavior: auto !important; }
+
+    /*
+     * the confetti is half of what the result splash is, so rather than being
+     * killed it is held still part way down: one shared negative delay against
+     * four fall times, which drops each piece a different distance before the
+     * frame is taken. the blanket rule above zeroes the durations the app sets
+     * on each piece, so they are handed back here. four of them against the
+     * five colours it cycles through, or every band would be one colour.
+     */
+    .anim-confetti {
+      animation-name: confetti-fall !important;
+      animation-timing-function: linear !important;
+      animation-fill-mode: both !important;
+      animation-iteration-count: 1 !important;
+      animation-delay: -1s !important;
+      animation-play-state: paused !important;
+      animation-duration: 3s !important;
+    }
+    .anim-confetti:nth-child(4n + 1) { animation-duration: 1.4s !important; }
+    .anim-confetti:nth-child(4n + 2) { animation-duration: 4.6s !important; }
+    .anim-confetti:nth-child(4n + 3) { animation-duration: 2s !important; }
   `;
 
   const paint = (): void => {
@@ -123,9 +144,19 @@ export class Showcase {
 
   async shot(name: string): Promise<void> {
     await this.settle();
+    await this.snap(name);
+  }
+
+  /**
+   * A still of something that will not wait to be shot. The result splash is
+   * only up for a moment before it clears itself, and settling would spend it.
+   * Leaving the animations alone keeps the confetti where the css above pinned
+   * it, since playwright finishes off every animation it is asked to disable.
+   */
+  async snap(name: string, animations: "disabled" | "allow" = "disabled"): Promise<void> {
     await this.page.screenshot({
       path: `${this.dir}/${name}.png`,
-      animations: "disabled",
+      animations,
       caret: "hide"
     });
     this.taken += 1;
@@ -188,7 +219,7 @@ export async function answering(page: Page): Promise<void> {
  * Answers the multiple choice question on screen, right or wrong on purpose,
  * and leaves the run on the next question.
  */
-export async function answerChoice(page: Page, correct: boolean): Promise<void> {
+export async function answerChoice(page: Page, correct: boolean, wait = true): Promise<void> {
   await answering(page);
   const labels = await tileLabels(page);
   const right = slotOf(labels, await promptText(page));
@@ -196,8 +227,23 @@ export async function answerChoice(page: Page, correct: boolean): Promise<void> 
   await tiles(page).nth(index).click();
 
   // a right answer walks on by itself, a wrong one waits to be read
-  if (correct) await page.waitForTimeout(850);
-  else await page.getByRole("button", { name: "Continue" }).click();
+  if (!correct) await page.getByRole("button", { name: "Continue" }).click();
+  else if (wait) await page.waitForTimeout(850);
+}
+
+/**
+ * Walks out of a half finished run. Only a finished run is scored, so this
+ * throws the answers away rather than filing a one question report.
+ */
+export async function discardRun(page: Page): Promise<void> {
+  await expect(page.getByRole("alertdialog")).toBeVisible();
+  await page.getByRole("button", { name: "Stop and discard" }).click();
+  await expect(page.getByRole("alertdialog")).toBeHidden();
+}
+
+/** The splash over a finished run, while it is still up. */
+export function splash(page: Page): Locator {
+  return page.getByText("Tap anywhere to skip");
 }
 
 /**

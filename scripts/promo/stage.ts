@@ -254,6 +254,12 @@ export class Stage {
     return box === null ? null : { x: box.x + box.width / 2, y: box.y + box.height / 2 };
   }
 
+  /** Brings a target into view without touching it, for a beat to read it. */
+  async show(target: Locator, settle = 260): Promise<void> {
+    await this.reveal(target);
+    await this.beat(settle);
+  }
+
   /** Glides the cursor onto a target without pressing it. */
   async hover(target: Locator, settle = 220): Promise<void> {
     const point = await this.reveal(target);

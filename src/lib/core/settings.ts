@@ -4,6 +4,10 @@ export type Format = "text-text" | "audio-text" | "text-audio";
 export type AnswerStyle = "choice" | "typing";
 export type Direction = "kana-romaji" | "romaji-kana" | "mixed";
 export type Side = "kana" | "romaji" | "audio";
+export type Difficulty = "beginner" | "advanced" | "expert";
+
+/** One selected set of characters per alphabet, so the two can differ. */
+export type Selections = Record<Script, string[]>;
 
 export type RunSettings = {
   scripts: Script[];
@@ -13,13 +17,19 @@ export type RunSettings = {
   includeDakuon: boolean;
   includeHandakuon: boolean;
   includeYoon: boolean;
-  selection: string[];
+  selections: Selections;
   questionCount: number;
+  difficulty: Difficulty;
   perQuestionSeconds: number;
   totalSeconds: number;
 };
 
-export type LegacySettings = Partial<RunSettings> & { includeDakuten?: boolean };
+export type LegacySettings = Partial<Omit<RunSettings, "selections">> & {
+  includeDakuten?: boolean;
+  /** Pre-1.3 runs kept a single list shared by both alphabets. */
+  selection?: string[];
+  selections?: Partial<Selections>;
+};
 
 export const optionalGroups = ["dakuon", "handakuon", "yoon"] as const;
 
@@ -27,7 +37,30 @@ export type OptionalGroup = (typeof optionalGroups)[number];
 
 export const perQuestionOptions = [0, 5, 10, 15, 30];
 export const totalTimeOptions = [0, 60, 120, 300, 600];
-export const questionCountOptions = [10, 20, 30, 50];
+
+/** Laid out as the two rows of five the setup screen draws. */
+export const questionCountRows = [
+  [10, 20, 30, 40, 50],
+  [60, 80, 100, 150, 200]
+];
+export const questionCountOptions = questionCountRows.flat();
+
+export const customCountMin = 10;
+export const customCountMax = 500;
+export const customCountStep = 10;
+
+export const customCountValues = Array.from(
+  { length: (customCountMax - customCountMin) / customCountStep + 1 },
+  (_, index) => customCountMin + index * customCountStep
+);
+
+export const difficulties = ["beginner", "advanced", "expert"] as const;
+
+/**
+ * Below this many characters in play there are not enough look alikes to draw
+ * from, so the difficulty is ignored and choices stay random.
+ */
+export const difficultyMinPool = 15;
 
 export const defaultSettings: RunSettings = {
   scripts: ["hiragana"],
@@ -37,8 +70,9 @@ export const defaultSettings: RunSettings = {
   includeDakuon: false,
   includeHandakuon: false,
   includeYoon: false,
-  selection: [],
+  selections: { hiragana: [], katakana: [] },
   questionCount: 20,
+  difficulty: "beginner",
   perQuestionSeconds: 0,
   totalSeconds: 0
 };
@@ -66,9 +100,33 @@ export function enabledGroups(settings: RunSettings): Group[] {
   return enabled;
 }
 
+/** The characters picked for one alphabet, whether or not it is switched on. */
+export function selectionFor(settings: RunSettings, script: Script): string[] {
+  return settings.selections[script] ?? [];
+}
+
+export function withSelection(
+  settings: RunSettings,
+  script: Script,
+  ids: string[]
+): Selections {
+  return { ...settings.selections, [script]: ids };
+}
+
 export function migrateSettings(stored: LegacySettings): RunSettings {
-  const { includeDakuten, ...rest } = stored;
-  const merged: RunSettings = { ...defaultSettings, ...rest };
+  const { includeDakuten, selection, selections, ...rest } = stored;
+  const merged: RunSettings = {
+    ...defaultSettings,
+    ...rest,
+    selections: { ...defaultSettings.selections }
+  };
+
+  const shared = selection ?? [];
+  merged.selections = {
+    hiragana: selections?.hiragana ?? shared,
+    katakana: selections?.katakana ?? shared
+  };
+
   if (includeDakuten === true) {
     merged.includeDakuon = true;
     merged.includeHandakuon = true;
@@ -128,6 +186,17 @@ export function normalizeSettings(settings: RunSettings): {
   return { settings: next, notes };
 }
 
+export function clampCustomCount(value: number): number {
+  if (!Number.isFinite(value)) return customCountMin;
+  const stepped = Math.round(value / customCountStep) * customCountStep;
+  return Math.min(customCountMax, Math.max(customCountMin, stepped));
+}
+
+/** A count that is neither one pass nor one of the preset chips. */
+export function isCustomCount(count: number): boolean {
+  return count > 0 && !questionCountOptions.includes(count);
+}
+
 export function formatLabel(format: Format): string {
   if (format === "audio-text") return "Audio to text";
   if (format === "text-audio") return "Text to audio";
@@ -142,4 +211,17 @@ export function directionLabel(direction: Direction): string {
   if (direction === "romaji-kana") return "Romaji to kana";
   if (direction === "mixed") return "Mixed";
   return "Kana to romaji";
+}
+
+export function difficultyLabel(difficulty: Difficulty): string {
+  if (difficulty === "advanced") return "Advanced";
+  if (difficulty === "expert") return "Expert";
+  return "Beginner";
+}
+
+/** How many of the three wrong answers should be look alikes. */
+export function lookAlikeCount(difficulty: Difficulty): number {
+  if (difficulty === "expert") return 3;
+  if (difficulty === "advanced") return 1;
+  return 0;
 }

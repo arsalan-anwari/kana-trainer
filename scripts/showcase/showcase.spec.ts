@@ -2,7 +2,16 @@ import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { applySeed, seedPayload } from "../promo/seed";
-import { answerChoice, answering, installShowcase, missed, Showcase, silence } from "./drive";
+import {
+  answerChoice,
+  answering,
+  discardRun,
+  installShowcase,
+  missed,
+  Showcase,
+  silence,
+  splash
+} from "./drive";
 
 /**
  * The readme showcase. This is not a test: it walks the app through every
@@ -12,7 +21,7 @@ import { answerChoice, answering, installShowcase, missed, Showcase, silence } f
  */
 
 /** The moment the whole recording pretends to happen at. */
-const CLOCK = Date.UTC(2026, 7, 19, 9, 30);
+const CLOCK = Date.UTC(2026, 7, 19, 20, 30);
 
 /** Seeds the generator the app draws its questions from. */
 const SEED = 20260820;
@@ -33,11 +42,12 @@ test("record the showcase", async ({ page }, testInfo) => {
   const startRun = button("Start run");
 
   /**
-   * Walks out of a half finished run. Quitting would file it as a report and
-   * put a one question run on the reports screen further down.
+   * Leaves a half finished run. Walking off the quiz screen is stopping the
+   * run, so it asks first and the answers are thrown away.
    */
   const backToSetup = async (): Promise<void> => {
     await button("Practice", true).click();
+    await discardRun(page);
     await expect(startRun).toBeEnabled();
   };
 
@@ -55,14 +65,28 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("03_Setup_TextAudio");
 
-  // read the character, tap the reading
+  // both alphabets at once, each with a set of its own behind its tab
   await button("Text only").click();
   await button("Multiple choice").click();
   await button("Kana to romaji").click();
+  await button("Katakana").click();
+  await page.getByRole("tab", { name: "Katakana" }).click();
+  await button("KA", true).click();
+  await shots.top();
+  await shots.reveal(page.getByText("Characters", { exact: true }), 44);
+  await shots.shot("04_Setup_Alphabets");
+
+  // how long the run is and how hard it pushes
+  await shots.reveal(page.getByText("Settings", { exact: true }), 44);
+  await button("Advanced").click();
+  await shots.shot("05_Setup_Settings");
+  await shots.top();
+
+  // read the character, tap the reading
   await startRun.click();
   await answering(page);
   await shots.top();
-  await shots.shot("04_Quiz_TextOnly_KanaRomaji");
+  await shots.shot("06_Quiz_TextOnly_KanaRomaji");
   await backToSetup();
 
   // and the other way round, read the reading and tap the character
@@ -70,7 +94,7 @@ test("record the showcase", async ({ page }, testInfo) => {
   await startRun.click();
   await answering(page);
   await shots.top();
-  await shots.shot("05_Quiz_TextOnly_RomajiKana");
+  await shots.shot("07_Quiz_TextOnly_RomajiKana");
   await backToSetup();
 
   // hear a character, type what it was
@@ -79,7 +103,7 @@ test("record the showcase", async ({ page }, testInfo) => {
   await startRun.click();
   await silence(page);
   await shots.top();
-  await shots.shot("06_Quiz_AudioText_Typing");
+  await shots.shot("08_Quiz_AudioText_Typing");
 
   // the same run getting one wrong, the first guess that happens to miss.
   // the answer goes in through the check button, enter also reaches the window
@@ -94,7 +118,7 @@ test("record the showcase", async ({ page }, testInfo) => {
   }
   await silence(page);
   await shots.top();
-  await shots.shot("07_Quiz_AudioText_Incorrect");
+  await shots.shot("09_Quiz_AudioText_Incorrect");
   await backToSetup();
 
   // read the character, pick the sound that fits
@@ -104,8 +128,16 @@ test("record the showcase", async ({ page }, testInfo) => {
   await page.getByRole("button", { name: "Sound 2" }).click();
   await silence(page);
   await shots.top();
-  await shots.shot("08_Quiz_TextAudio_Sounds");
-  await backToSetup();
+  await shots.shot("10_Quiz_TextAudio_Sounds");
+
+  // stopping a run asks first, and says what it costs
+  await shots.advance(2400);
+  await button("Check").click();
+  await button("Quit", true).click();
+  await expect(page.getByRole("alertdialog")).toBeVisible();
+  await shots.shot("11_Quiz_QuitConfirm");
+  await discardRun(page);
+  await expect(startRun).toBeEnabled();
 
   // a run answered end to end, so the score screen has something to show
   await button("Text only").click();
@@ -115,28 +147,39 @@ test("record the showcase", async ({ page }, testInfo) => {
 
   for (let question = 1; question <= 10; question += 1) {
     await shots.advance(1600 + question * 240);
-    await answerChoice(page, !MISSED.has(question));
+    await answerChoice(page, !MISSED.has(question), question < 10);
   }
+
+  // the grade lands over the report and then clears itself, so it is caught on
+  // the way past rather than settled for
+  await expect(splash(page)).toBeVisible();
+  await shots.snap("12_Result_Splash", "allow");
+  await expect(splash(page)).toBeHidden();
 
   await expect(button("Run it again")).toBeVisible();
   await shots.top();
-  await shots.shot("09_Result_Score");
+  await shots.shot("13_Result_Score");
 
   // one click turns the misses into the next practice set
   await button("Practice my mistakes").click();
   await expect(startRun).toBeEnabled();
   await shots.top();
   await shots.reveal(page.getByText(/Loaded \d+ characters/));
-  await shots.shot("10_Setup_Mistakes");
+  await shots.shot("14_Setup_Mistakes");
 
-  // every run is kept, charted and looked back on
+  // every run is kept, charted and looked back on, a window at a time
   await button("Reports", true).click();
+  await button("Last week", true).click();
   await shots.top();
-  await shots.shot("11_Reports_Overview");
+  await shots.shot("15_Reports_LastWeek");
+
+  await shots.reveal(page.getByText("Mistakes by group"));
+  await shots.shot("16_Reports_Mistakes");
+  await shots.top();
 
   await button("Chart", true).click();
   await shots.top();
-  await shots.shot("12_Chart_Characters");
+  await shots.shot("17_Chart_Characters");
 
   console.log(`  ${shots.count} stills in docs/${testInfo.project.name}`);
 });

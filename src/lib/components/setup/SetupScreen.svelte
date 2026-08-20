@@ -8,7 +8,7 @@
   import FormatPicker from "./FormatPicker.svelte";
   import KanaPicker from "./KanaPicker.svelte";
   import StartPanel from "./StartPanel.svelte";
-  import TimeTrialPanel from "./TimeTrialPanel.svelte";
+  import SettingsPanel from "./SettingsPanel.svelte";
 
   const textOnly = $derived(app.settings.format === "text-text");
 </script>
@@ -24,7 +24,7 @@
       <DirectionPicker />
     {/if}
     <ExtrasPanel />
-    <TimeTrialPanel />
+    <SettingsPanel />
   </div>
 
   <div class="flex flex-col gap-4 lg:sticky lg:top-6">

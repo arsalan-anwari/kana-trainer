@@ -5,6 +5,7 @@
   import ChoiceGrid from "./ChoiceGrid.svelte";
   import FeedbackPanel from "./FeedbackPanel.svelte";
   import QuestionPrompt from "./QuestionPrompt.svelte";
+  import QuitConfirm from "./QuitConfirm.svelte";
   import QuizStatusBar from "./QuizStatusBar.svelte";
   import SoundChoiceList from "./SoundChoiceList.svelte";
   import TypingAnswer from "./TypingAnswer.svelte";
@@ -18,9 +19,11 @@
 
   function keydown(event: KeyboardEvent): void {
     if (question === null) return;
+    // the run is on hold behind the dialog, which owns the keyboard until it goes
+    if (app.confirmQuit) return;
 
     if (event.key === "Escape") {
-      app.quit();
+      app.askQuit();
       return;
     }
 
@@ -55,6 +58,10 @@
 </script>
 
 <svelte:window onkeydown={keydown} />
+
+{#if app.confirmQuit}
+  <QuitConfirm />
+{/if}
 
 {#if question !== null && kana !== null}
   <div class="flex flex-col gap-6">

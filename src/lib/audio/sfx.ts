@@ -1,5 +1,6 @@
 /** Short synthesised interface sounds. No files, no assets, just oscillators. */
 
+import type { ScoreTier } from "../core/score";
 import { shared } from "./shared";
 
 let enabled = true;
@@ -77,6 +78,41 @@ export function setEffectsEnabled(value: boolean): void {
   enabled = value;
 }
 
+/**
+ * One flourish per grade. A clean run gets the full rising run with a sparkle
+ * on top, a poor one gets something short and kind rather than a raspberry.
+ */
+const fanfares: Record<ScoreTier, Step[]> = {
+  perfect: [
+    [523, 0.12, "sine", 0.11, 0],
+    [659, 0.12, "sine", 0.11, 0.1],
+    [784, 0.12, "sine", 0.11, 0.2],
+    [1047, 0.16, "sine", 0.12, 0.3],
+    [1319, 0.3, "sine", 0.11, 0.44],
+    [1568, 0.4, "triangle", 0.07, 0.5],
+    [2093, 0.22, "sine", 0.05, 0.66]
+  ],
+  great: [
+    [523, 0.12, "sine", 0.11, 0],
+    [784, 0.12, "sine", 0.11, 0.11],
+    [1047, 0.16, "sine", 0.11, 0.22],
+    [1319, 0.3, "sine", 0.1, 0.36]
+  ],
+  good: [
+    [523, 0.13, "sine", 0.1, 0],
+    [659, 0.13, "sine", 0.1, 0.12],
+    [880, 0.26, "sine", 0.1, 0.24]
+  ],
+  fair: [
+    [440, 0.14, "sine", 0.09, 0],
+    [587, 0.24, "sine", 0.09, 0.13]
+  ],
+  poor: [
+    [392, 0.16, "sine", 0.08, 0],
+    [330, 0.28, "sine", 0.07, 0.15]
+  ]
+};
+
 export const sfx = {
   click: (): void => play([[420, 0.05, "triangle", 0.08, 0]]),
   select: (): void => play([[620, 0.06, "triangle", 0.08, 0]]),
@@ -97,13 +133,8 @@ export const sfx = {
       [659, 0.1, "sine", 0.1, 0.09],
       [784, 0.18, "sine", 0.1, 0.18]
     ]),
-  finish: (): void =>
-    play([
-      [659, 0.12, "sine", 0.11, 0],
-      [784, 0.12, "sine", 0.11, 0.11],
-      [988, 0.14, "sine", 0.11, 0.22],
-      [1319, 0.24, "sine", 0.1, 0.34]
-    ])
+  /** The splash sound at the end of a run, picked from how the run went. */
+  score: (tier: ScoreTier): void => play(fanfares[tier])
 };
 
 /** Shared with the waveform code so both use one decoder context. */

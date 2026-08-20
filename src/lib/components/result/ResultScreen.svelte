@@ -6,6 +6,7 @@
   import Card from "../../ui/Card.svelte";
   import BarChart from "../charts/BarChart.svelte";
   import MissedAnswers from "./MissedAnswers.svelte";
+  import ResultSplash from "./ResultSplash.svelte";
   import ScoreHeadline from "./ScoreHeadline.svelte";
 
   const report = $derived(app.lastReport);
@@ -19,6 +20,10 @@
     app.message = path === null ? "" : `Saved a copy to ${path}`;
   }
 </script>
+
+{#if app.splash !== null}
+  <ResultSplash tier={app.splash} {summary} />
+{/if}
 
 {#if report !== null}
   <div class="flex flex-col gap-5">

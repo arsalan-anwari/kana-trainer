@@ -1,22 +1,32 @@
 <script lang="ts">
-  import { statsByKana, statsByRow, statsByScript, summarize } from "../../core/report";
+  import {
+    filterReports,
+    statsByKana,
+    statsByRow,
+    statsByScript,
+    summarize,
+    type ReportFilter
+  } from "../../core/report";
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
   import Card from "../../ui/Card.svelte";
   import BarChart from "../charts/BarChart.svelte";
+  import MistakeBreakdown from "./MistakeBreakdown.svelte";
   import ReportList from "./ReportList.svelte";
 
   let picked = $state<string[]>([]);
+  let filter = $state<ReportFilter>("all");
 
+  const shown = $derived(filterReports(app.reports, filter));
   const chosen = $derived(
-    picked.length === 0 ? app.reports : app.reports.filter((report) => picked.includes(report.id))
+    picked.length === 0 ? shown : shown.filter((report) => picked.includes(report.id))
   );
   const answers = $derived(chosen.flatMap((report) => report.answers));
   const summary = $derived(summarize(answers));
 </script>
 
 <div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(260px,340px)_minmax(0,1fr)]">
-  <ReportList bind:picked />
+  <ReportList reports={shown} bind:picked bind:filter />
 
   <div class="flex flex-col gap-5">
     <div
@@ -30,17 +40,14 @@
           {summary.correct} of {summary.total} correct, {Math.round(summary.accuracy * 100)}% overall
         </span>
       </div>
-      <div class="flex flex-wrap gap-2">
-        <Button
-          size="lg"
-          variant="brand"
-          disabled={answers.length === 0}
-          onclick={() => app.practiceMistakes(answers)}
-        >
-          Practice these mistakes
-        </Button>
-        <Button size="lg" variant="ghost" onclick={() => app.go("setup")}>Back to setup</Button>
-      </div>
+      <Button
+        size="lg"
+        variant="brand"
+        disabled={answers.length === 0}
+        onclick={() => app.practiceMistakes(answers)}
+      >
+        Practice these mistakes
+      </Button>
     </div>
 
     {#if app.message !== ""}
@@ -63,5 +70,7 @@
         <BarChart rows={statsByScript(answers)} empty="No alphabet data yet." />
       </Card>
     </div>
+
+    <MistakeBreakdown {answers} />
   </div>
 </div>

@@ -9,6 +9,20 @@ on:
         description: 'JSON array of package names, for example ["deb","apk"]'
         type: string
         required: true
+      require_signing_key:
+        description: 'Fail the apk build unless the real android signing key is available'
+        type: boolean
+        required: false
+        default: false
+    secrets:
+      ANDROID_KEYSTORE_BASE64:
+        required: false
+      ANDROID_KEYSTORE_PASSWORD:
+        required: false
+      ANDROID_KEY_ALIAS:
+        required: false
+      ANDROID_KEY_PASSWORD:
+        required: false
 
 permissions:
   contents: read
@@ -172,28 +186,59 @@ jobs:
           sh scripts/android-icons.sh
           npx tauri android build --apk
 
-      # Android will not install an unsigned release apk, so it is signed
-      # here with a key generated for this run. That is enough to side load it.
+      # Android will not install an unsigned release apk, and it refuses to
+      # update an installed one whose signing certificate has changed, so every
+      # release has to be signed with the same key. That key lives in the
+      # repository secrets. Builds without it fall back to a throwaway key,
+      # which side loads fine but can only ever be installed fresh.
       - name: Sign the apk
         if: matrix.kind == 'apk'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          REQUIRE_SIGNING_KEY: ${{ inputs.require_signing_key }}
+          VERSION: ${{ steps.version.outputs.value }}
         run: |
           set -eu
-          password=kanatrainer
-          alias=kanatrainer
-          keytool -genkeypair -v -keystore keystore.jks -keyalg RSA -keysize 2048 \
-            -validity 10000 -alias "$alias" -storepass "$password" -keypass "$password" \
-            -dname "CN=Kana Trainer, O=nl.anwari, C=NL"
+
+          if [ -n "${KEYSTORE_BASE64:-}" ]; then
+            if [ -z "${KEYSTORE_PASSWORD:-}" ]; then
+              echo "ANDROID_KEYSTORE_BASE64 is set but ANDROID_KEYSTORE_PASSWORD is not" >&2
+              exit 1
+            fi
+            printf '%s' "$KEYSTORE_BASE64" | base64 -d > keystore.jks
+            alias="${KEY_ALIAS:-kanatrainer}"
+            STOREPASS="$KEYSTORE_PASSWORD"
+            KEYPASS="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
+          elif [ "${REQUIRE_SIGNING_KEY:-false}" = true ]; then
+            echo "no ANDROID_KEYSTORE_BASE64 secret. A release apk signed with a" >&2
+            echo "throwaway key cannot update an installed copy, so stopping here." >&2
+            exit 1
+          else
+            echo "::warning::no ANDROID_KEYSTORE_BASE64 secret, signing with a throwaway key; this apk can only be installed fresh, never as an update"
+            alias=kanatrainer
+            STOREPASS=kanatrainer
+            KEYPASS=kanatrainer
+            keytool -genkeypair -v -keystore keystore.jks -keyalg RSA -keysize 2048 \
+              -validity 10000 -alias "$alias" -storepass "$STOREPASS" -keypass "$KEYPASS" \
+              -dname "CN=Kana Trainer, O=nl.anwari, C=NL"
+          fi
+          export STOREPASS KEYPASS
 
           unsigned="$(find src-tauri/gen/android -name '*.apk' -path '*release*' | head -1)"
           [ -n "$unsigned" ] || { echo "tauri produced no release apk" >&2; exit 1; }
 
           tools="$ANDROID_SDK_ROOT/build-tools/34.0.0"
           mkdir -p dist/packages
-          out="dist/packages/kana-trainer-${{ steps.version.outputs.value }}.apk"
+          out="dist/packages/kana-trainer-$VERSION.apk"
           "$tools/zipalign" -p -f 4 "$unsigned" aligned.apk
-          "$tools/apksigner" sign --ks keystore.jks --ks-pass "pass:$password" \
-            --ks-key-alias "$alias" --key-pass "pass:$password" --out "$out" aligned.apk
-          "$tools/apksigner" verify "$out"
+          "$tools/apksigner" sign --ks keystore.jks --ks-pass env:STOREPASS \
+            --ks-key-alias "$alias" --key-pass env:KEYPASS --out "$out" aligned.apk
+          # the fingerprint has to match every previous release, print it so a
+          # mismatch can be spotted in the log
+          "$tools/apksigner" verify --print-certs "$out"
           rm -f keystore.jks aligned.apk
 
       - name: Collect the package

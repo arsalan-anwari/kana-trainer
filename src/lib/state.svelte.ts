@@ -1,9 +1,10 @@
-import { allKana, kanaById, rows, rowsInGroup, seionRows } from "./core/kana";
+import { allKana, kanaById, rows, rowsInGroup, seionRows, type Script } from "./core/kana";
 import {
   buildQuestions,
   checkChoice,
   checkTyped,
   eligibleKana,
+  eligiblePairs,
   type Answer,
   type Choice,
   type Question
@@ -14,12 +15,15 @@ import {
   migrateSettings,
   normalizeSettings,
   optionalGroups,
+  selectionFor,
   usesAudio,
+  withSelection,
   type LegacySettings,
   type OptionalGroup,
   type RunSettings
 } from "./core/settings";
 import { summarize, weakKanaIds, type Report, type Summary } from "./core/report";
+import { scoreTier, type ScoreTier } from "./core/score";
 import { kanaAudio, setEffectsEnabled, sfx } from "./audio";
 import { listReports, loadJson, saveReport, storeJson } from "./storage";
 
@@ -44,11 +48,13 @@ function startingSelection(): string[] {
   return seionRows.flatMap((row) => row.kana.map((kana) => kana.id));
 }
 
+const scripts: Script[] = ["hiragana", "katakana"];
+
 class AppState {
   route = $state<Route>("setup");
   settings = $state<RunSettings>({
     ...defaultSettings,
-    selection: startingSelection()
+    selections: { hiragana: startingSelection(), katakana: startingSelection() }
   });
   prefs = $state<Prefs>({ effects: true, theme: "system" });
   notes = $state<string[]>([]);
@@ -64,18 +70,37 @@ class AppState {
   staged = $state<Choice | null>(null);
   lastCorrect = $state(false);
   lastReport = $state<Report | null>(null);
+  /** The grade of the run just finished, while its splash is still up. */
+  splash = $state<ScoreTier | null>(null);
+
+  /** Which alphabet the character picker is editing when both are on. */
+  pickerChoice = $state<Script>("hiragana");
+
+  /** Whether the "stop this run" question is on screen. */
+  confirmQuit = $state(false);
+  /** When the run was put on hold for that question, so it can be given back. */
+  pausedAt = 0;
+  /** Where to land once the run is abandoned. */
+  quitTo: Route = "setup";
 
   now = $state(0);
   questionStartedAt = $state(0);
   runStartedAt = $state(0);
   timer: ReturnType<typeof setInterval> | null = null;
 
+  pickerScript = $derived<Script>(
+    this.settings.scripts.includes(this.pickerChoice)
+      ? this.pickerChoice
+      : (this.settings.scripts[0] ?? "hiragana")
+  );
+  selection = $derived(selectionFor(this.settings, this.pickerScript));
+
   current = $derived(this.questions[this.index] ?? null);
   progress = $derived(
     this.questions.length === 0 ? 0 : (this.index / this.questions.length) * 100
   );
   score = $derived(this.answers.filter((answer) => answer.correct).length);
-  eligibleCount = $derived(eligibleKana(this.settings).length);
+  eligibleCount = $derived(eligiblePairs(this.settings).length);
   questionRemaining = $derived(
     this.settings.perQuestionSeconds === 0
       ? null
@@ -94,8 +119,10 @@ class AppState {
     const storedSettings = loadJson<LegacySettings | null>(SETTINGS_KEY, null);
     if (storedSettings !== null) {
       this.settings = migrateSettings(storedSettings);
-      if (this.settings.selection.length === 0) {
-        this.settings.selection = startingSelection();
+      for (const script of scripts) {
+        if (this.settings.selections[script].length === 0) {
+          this.settings.selections[script] = startingSelection();
+        }
       }
       const result = normalizeSettings(this.settings);
       this.settings = result.settings;
@@ -122,53 +149,65 @@ class AppState {
     storeJson(SETTINGS_KEY, this.settings);
   }
 
+  /** The picker edits one alphabet at a time, so every edit lands on that one. */
+  usePicker(script: Script): void {
+    sfx.click();
+    this.pickerChoice = script;
+  }
+
   toggleKana(id: string): void {
-    const selection = new Set(this.settings.selection);
+    const selection = new Set(this.selection);
     if (selection.has(id)) selection.delete(id);
     else selection.add(id);
     sfx.select();
-    this.updateSettings({ selection: [...selection] });
+    this.updateSettings({
+      selections: withSelection(this.settings, this.pickerScript, [...selection])
+    });
   }
 
   toggleRow(rowId: string): void {
     const row = rows.find((item) => item.id === rowId);
     if (!row) return;
-    const selection = new Set(this.settings.selection);
+    const selection = new Set(this.selection);
     const complete = row.kana.every((kana) => selection.has(kana.id));
     for (const kana of row.kana) {
       if (complete) selection.delete(kana.id);
       else selection.add(kana.id);
     }
     sfx.select();
-    this.updateSettings({ selection: [...selection] });
+    this.updateSettings({
+      selections: withSelection(this.settings, this.pickerScript, [...selection])
+    });
   }
 
+  /** Extra sets are a property of the run, so they land on both alphabets. */
   setGroup(group: OptionalGroup, value: boolean): void {
-    const selection = new Set(this.settings.selection);
-    for (const row of rowsInGroup(group)) {
-      for (const kana of row.kana) {
-        if (value) selection.add(kana.id);
-        else selection.delete(kana.id);
+    const selections = { ...this.settings.selections };
+    for (const script of scripts) {
+      const selection = new Set(selections[script]);
+      for (const row of rowsInGroup(group)) {
+        for (const kana of row.kana) {
+          if (value) selection.add(kana.id);
+          else selection.delete(kana.id);
+        }
       }
+      selections[script] = [...selection];
     }
     this.updateSettings({
       [groupFlag(group)]: value,
-      selection: [...selection]
+      selections
     } as Partial<RunSettings>);
   }
 
   setSelection(ids: string[]): void {
     sfx.select();
-    this.updateSettings({ selection: ids });
+    this.updateSettings({
+      selections: withSelection(this.settings, this.pickerScript, ids)
+    });
   }
 
   async refreshReports(): Promise<void> {
     this.reports = await listReports();
-  }
-
-  weakSelection(): string[] {
-    const answers = this.reports.flatMap((report) => report.answers);
-    return weakKanaIds(answers);
   }
 
   start(): void {
@@ -195,6 +234,8 @@ class AppState {
     this.typed = "";
     this.picked = null;
     this.staged = null;
+    this.splash = null;
+    this.confirmQuit = false;
     this.route = "quiz";
     this.now = Date.now();
     this.runStartedAt = this.now;
@@ -329,19 +370,57 @@ class AppState {
     };
     this.lastReport = report;
     this.route = "result";
-    sfx.finish();
+    const summary = summarize(this.answers);
+    this.splash = scoreTier(summary.accuracy, summary.total);
+    sfx.score(this.splash);
     void saveReport(report).then(() => this.refreshReports());
   }
 
+  /**
+   * Puts the run on hold and asks. The clock stops with it, so a run cannot
+   * time out underneath the question, and thinking time is not charged for.
+   */
+  askQuit(to: Route = "setup"): void {
+    if (this.confirmQuit) return;
+    this.stopTimer();
+    kanaAudio.stop();
+    this.quitTo = to;
+    this.pausedAt = Date.now();
+    this.confirmQuit = true;
+  }
+
+  cancelQuit(): void {
+    if (!this.confirmQuit) return;
+    this.confirmQuit = false;
+    const held = Date.now() - this.pausedAt;
+    this.runStartedAt += held;
+    this.questionStartedAt += held;
+    this.now = Date.now();
+    this.startTimer();
+  }
+
+  /**
+   * Abandons the run outright. A run that was not seen through is not a run:
+   * nothing is scored, nothing is saved and there is no splash for it.
+   */
   quit(): void {
     this.stopTimer();
     kanaAudio.stop();
-    if (this.answers.length > 0) {
-      this.finish();
-      return;
-    }
+    this.confirmQuit = false;
+    this.questions = [];
+    this.answers = [];
+    this.index = 0;
     this.phase = "answering";
-    this.route = "setup";
+    this.typed = "";
+    this.picked = null;
+    this.staged = null;
+    this.splash = null;
+    this.navigate(this.quitTo);
+    this.quitTo = "setup";
+  }
+
+  dismissSplash(): void {
+    this.splash = null;
   }
 
   summary(): Summary {
@@ -354,19 +433,37 @@ class AppState {
       this.message = "No mistakes found to practice.";
       return;
     }
-    const patch: Partial<RunSettings> = { selection: ids };
+    // a miss belongs to the alphabet it was made in, so each side gets its own
+    const selections = { hiragana: [] as string[], katakana: [] as string[] };
+    for (const script of scripts) {
+      const inScript = weakKanaIds(answers.filter((answer) => answer.script === script));
+      selections[script] = inScript.length > 0 ? inScript : ids;
+    }
+
+    const patch: Partial<RunSettings> = { selections };
     for (const group of optionalGroups) {
       if (ids.some((id) => kanaById(id)?.group === group)) {
         Object.assign(patch, { [groupFlag(group)]: true });
       }
     }
     this.updateSettings(patch);
+    this.splash = null;
     this.route = "setup";
     this.message = `Loaded ${ids.length} characters you missed into the practice set.`;
   }
 
   go(route: Route): void {
     sfx.click();
+    // walking away from a run is stopping it, so it gets the same question
+    if (this.route === "quiz" && route !== "quiz" && this.questions.length > 0) {
+      this.askQuit(route);
+      return;
+    }
+    this.splash = null;
+    this.navigate(route);
+  }
+
+  private navigate(route: Route): void {
     if (this.route === "chart" && route !== "chart") kanaAudio.stop();
     this.route = route;
     this.message = "";

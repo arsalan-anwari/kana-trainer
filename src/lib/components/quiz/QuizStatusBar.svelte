@@ -13,7 +13,7 @@
 
 <div class="flex flex-col gap-3">
   <div class="flex items-center gap-3">
-    <Button size="sm" variant="ghost" onclick={() => app.quit()}>Quit</Button>
+    <Button size="sm" variant="ghost" onclick={() => app.askQuit()}>Quit</Button>
     <Progress value={app.progress} class="flex-1" />
     <span class="shrink-0 text-sm font-semibold tabular-nums">
       {app.index + 1} / {app.questions.length}

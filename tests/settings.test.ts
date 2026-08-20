@@ -1,10 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
+  clampCustomCount,
+  customCountMax,
+  customCountMin,
+  customCountValues,
   defaultSettings,
   enabledGroups,
   groupEnabled,
+  isCustomCount,
+  lookAlikeCount,
   migrateSettings,
   normalizeSettings,
+  questionCountOptions,
   sidesFor
 } from "../src/lib/core/settings";
 
@@ -116,5 +123,59 @@ describe("character groups", () => {
     expect(migrated.includeYoon).toBe(false);
     expect(migrated.questionCount).toBe(30);
     expect("includeDakuten" in migrated).toBe(false);
+  });
+});
+
+describe("stored settings", () => {
+  it("gives an old shared character list to both alphabets", () => {
+    const migrated = migrateSettings({ selection: ["ka", "ki"] });
+    expect(migrated.selections.hiragana).toEqual(["ka", "ki"]);
+    expect(migrated.selections.katakana).toEqual(["ka", "ki"]);
+    expect("selection" in migrated).toBe(false);
+  });
+
+  it("keeps two lists that were already stored apart", () => {
+    const migrated = migrateSettings({
+      selections: { hiragana: ["ka"], katakana: ["mi"] }
+    });
+    expect(migrated.selections.hiragana).toEqual(["ka"]);
+    expect(migrated.selections.katakana).toEqual(["mi"]);
+  });
+
+  it("fills in a difficulty for runs saved before it existed", () => {
+    expect(migrateSettings({ questionCount: 10 }).difficulty).toBe("beginner");
+  });
+});
+
+describe("question counts", () => {
+  it("offers ten presets over two rows", () => {
+    expect(questionCountOptions).toEqual([10, 20, 30, 40, 50, 60, 80, 100, 150, 200]);
+  });
+
+  it("rolls from 10 to 500 in steps of ten", () => {
+    expect(customCountValues[0]).toBe(customCountMin);
+    expect(customCountValues.at(-1)).toBe(customCountMax);
+    expect(customCountValues).toHaveLength(50);
+  });
+
+  it("snaps a typed count onto the step and inside the range", () => {
+    expect(clampCustomCount(117)).toBe(120);
+    expect(clampCustomCount(4)).toBe(customCountMin);
+    expect(clampCustomCount(9000)).toBe(customCountMax);
+    expect(clampCustomCount(Number.NaN)).toBe(customCountMin);
+  });
+
+  it("only calls a count custom when no chip covers it", () => {
+    expect(isCustomCount(70)).toBe(true);
+    expect(isCustomCount(50)).toBe(false);
+    expect(isCustomCount(0)).toBe(false);
+  });
+});
+
+describe("difficulty", () => {
+  it("decides how many wrong answers are look alikes", () => {
+    expect(lookAlikeCount("beginner")).toBe(0);
+    expect(lookAlikeCount("advanced")).toBe(1);
+    expect(lookAlikeCount("expert")).toBe(3);
   });
 });

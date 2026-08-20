@@ -1,8 +1,5 @@
 <script lang="ts">
   import { groupLabel, rowsInGroup, type Group } from "../../core/kana";
-  import { kanaAudio } from "../../audio";
-  import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
   import Card from "../../ui/Card.svelte";
   import ChartRow from "./ChartRow.svelte";
 
@@ -19,19 +16,11 @@
 </script>
 
 <div class="flex flex-col gap-5">
-  <div
-    class="flex flex-col gap-4 rounded-xl border border-border bg-sidebar p-5 sm:flex-row sm:items-center sm:justify-between"
-  >
-    <div class="flex flex-col gap-1">
-      <span class="text-h2 font-bold leading-tight">Character chart</span>
-      <span class="text-sm text-muted-foreground">
-        All 104 characters, grouped and split by row. Tap one to hear it.
-      </span>
-    </div>
-    <div class="flex flex-wrap gap-2">
-      <Button size="lg" variant="ghost" onclick={() => kanaAudio.stop()}>Stop sound</Button>
-      <Button size="lg" variant="ghost" onclick={() => app.go("setup")}>Back to setup</Button>
-    </div>
+  <div class="flex flex-col gap-1 rounded-xl border border-border bg-sidebar p-5">
+    <span class="text-h2 font-bold leading-tight">Character chart</span>
+    <span class="text-sm text-muted-foreground">
+      All 104 characters, grouped and split by row. Tap one to hear it.
+    </span>
   </div>
 
   {#each sections as section (section.group)}

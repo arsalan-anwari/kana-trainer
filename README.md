@@ -12,7 +12,7 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
   <tr>
     <td align="center" valign="bottom">
       <img src="docs/showcase.gif" width="420"
-           alt="Kana Trainer on a desktop window, walking through the practice setup, the three question formats, a run result, the reports screen and the character chart">
+           alt="Kana Trainer on a desktop window, walking through the practice setup, the three question formats, a character set per alphabet, the run length and difficulty, a run stopped and a run scored, the reports screen and the character chart">
     </td>
     <td align="center" valign="bottom">
       <img src="docs/showcase-phone.gif" width="160"
@@ -29,19 +29,15 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
   </tr>
 </table>
 
-## What it does
+## Features
 
+- Hiragana, katakana or both, in either direction, from single characters up to all 104 including the dakuon, handakuon and yoon rows
+- Three question formats (text to text, audio to text, text to audio) and answers by multiple choice or typing
+- Runs of 10 to 500 questions or one pass over the set, at three difficulty levels that decide how look alike the wrong answers are
+- Optional time trial, per question and for the whole run
+- Chart view of every character grouped by sound type and row, tap a tile to hear it
+- Score reports saved on disk and exportable as JSON, with charts of what you keep missing and one click to practice it again
 - Responsive interface, the same app on a wide screen and on a phone
-- Practice hiragana, katakana or both, in either direction (kana to romaji, romaji to kana or mixed)
-- Three question formats: text to text, audio to text, and text to audio with a waveform for each sound
-- Two answer styles: multiple choice with four options, or typing the romaji yourself
-- Time trial with 5, 10, 15 or 30 seconds per question and an optional limit for the whole run
-- Pick single characters, whole rows, or the characters you keep getting wrong
-- Optional dakuon, handakuon and yoon rows on top of the 46 seion characters, all with audio
-- Chart view with all 104 characters grouped by sound type and row, tap any tile to hear it
-- Score reports saved on disk, loaded and exported as JSON files
-- Charts for the characters, rows and alphabets you struggle with
-- One click to turn past mistakes into a new practice set
 
 ## Installing
 
@@ -58,24 +54,6 @@ sudo dnf install ./kana-trainer-*.rpm            # fedora, opensuse
 sudo apt install ./kana-trainer_*.deb            # debian 13+, ubuntu 24.04+
 sudo pacman -U ./kana-trainer-*.pkg.tar.zst      # arch
 adb install ./kana-trainer-*.apk                 # android
-```
-
-## Building
-
-### Requirements
-
-- Rust 1.77 or newer
-- Node 20 or newer
-- On Linux: webkit2gtk 4.1, gtk3 and the distro base build tools
-
-### Commands
-
-```sh
-npm install
-npm run tauri:dev     # the app
-npm run check         # type check
-npm run test          # unit tests
-npm run test:e2e      # playwright smoke test
 ```
 
 ## Keyboard Shortcuts

@@ -64,5 +64,6 @@ jobs:
   packages:
     needs: choose
     uses: ./.github/workflows/package-build.yml
+    secrets: inherit
     with:
       targets: ${{ needs.choose.outputs.targets }}

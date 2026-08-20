@@ -1,16 +1,17 @@
-import { seionRows } from "../../src/lib/core/kana";
+import { allKana, seionRows, type Script } from "../../src/lib/core/kana";
 import type { Answer } from "../../src/lib/core/quiz";
 import type { Report } from "../../src/lib/core/report";
-import type { RunSettings } from "../../src/lib/core/settings";
+import type { AnswerStyle, Format, RunSettings } from "../../src/lib/core/settings";
 
 /**
- * The reports screen and the "my weak spots" button
+ * A believable history behind the reports screen.
  */
 const REPORT_KEY = "kana-trainer-reports";
 const SETTINGS_KEY = "kana-trainer-settings";
 const PREFS_KEY = "kana-trainer-prefs";
 
-const pool = seionRows.flatMap((row) => row.kana);
+const seion = seionRows.flatMap((row) => row.kana);
+const extras = allKana.filter((kana) => kana.group !== "seion");
 
 function random(seed: number): () => number {
   let state = seed;
@@ -31,26 +32,155 @@ const settings: RunSettings = {
   includeDakuon: false,
   includeHandakuon: false,
   includeYoon: false,
-  selection: pool.map((kana) => kana.id),
+  selections: {
+    hiragana: seion.map((kana) => kana.id),
+    katakana: seion.map((kana) => kana.id)
+  },
   questionCount: 10,
+  difficulty: "beginner",
   perQuestionSeconds: 0,
   totalSeconds: 0
 };
 
+type Session = {
+  /** Days back from the day the recording pretends to happen on. */
+  daysAgo: number;
+  /** The hour of that day the run sat down at. */
+  hour: number;
+  questions: number;
+  accuracy: number;
+  scripts: Script[];
+  format: Format;
+  answerStyle: AnswerStyle;
+  /** Whether the run reached past the basic characters. */
+  extras: boolean;
+};
+
+const HOUR = 60 * 60 * 1000;
+const DAY = 24 * HOUR;
+
+function startOfDay(stamp: number): number {
+  const date = new Date(stamp);
+  date.setHours(0, 0, 0, 0);
+  return date.getTime();
+}
+
+/**
+ * Spread over the calendar on purpose: every window the reports screen filters
+ * by has runs in it, and the accuracy climbs towards today so the charts read
+ * as somebody getting better.
+ */
+const sessions: Session[] = [
+  {
+    daysAgo: 0,
+    hour: 18.5,
+    questions: 20,
+    accuracy: 0.9,
+    scripts: ["hiragana", "katakana"],
+    format: "text-text",
+    answerStyle: "choice",
+    extras: true
+  },
+  {
+    daysAgo: 0,
+    hour: 14,
+    questions: 10,
+    accuracy: 0.86,
+    scripts: ["hiragana"],
+    format: "audio-text",
+    answerStyle: "typing",
+    extras: false
+  },
+  {
+    daysAgo: 1,
+    hour: 19.5,
+    questions: 20,
+    accuracy: 0.82,
+    scripts: ["hiragana", "katakana"],
+    format: "text-audio",
+    answerStyle: "choice",
+    extras: true
+  },
+  {
+    daysAgo: 2,
+    hour: 21,
+    questions: 20,
+    accuracy: 0.78,
+    scripts: ["katakana"],
+    format: "text-text",
+    answerStyle: "choice",
+    extras: false
+  },
+  {
+    daysAgo: 4,
+    hour: 18,
+    questions: 30,
+    accuracy: 0.72,
+    scripts: ["hiragana", "katakana"],
+    format: "text-text",
+    answerStyle: "typing",
+    extras: true
+  },
+  {
+    daysAgo: 6,
+    hour: 20,
+    questions: 20,
+    accuracy: 0.68,
+    scripts: ["hiragana"],
+    format: "audio-text",
+    answerStyle: "typing",
+    extras: false
+  },
+  {
+    daysAgo: 11,
+    hour: 19,
+    questions: 20,
+    accuracy: 0.62,
+    scripts: ["hiragana"],
+    format: "text-text",
+    answerStyle: "choice",
+    extras: false
+  },
+  {
+    daysAgo: 19,
+    hour: 22,
+    questions: 10,
+    accuracy: 0.55,
+    scripts: ["hiragana"],
+    format: "text-text",
+    answerStyle: "choice",
+    extras: false
+  }
+];
+
+/**
+ * When a seeded run happened. Recording at ten in the morning would otherwise
+ * put this evening's practice in the future, so a run that has not happened yet
+ * is pulled back behind the clock instead.
+ */
+function stampOf(session: Session, index: number, now: number): string {
+  const sat = startOfDay(now) - session.daysAgo * DAY + session.hour * HOUR;
+  return new Date(Math.min(sat, now - (index + 1) * 45 * 60 * 1000)).toISOString();
+}
+
 function history(now: number): Report[] {
   const roll = random(20260819);
-  const day = 24 * 60 * 60 * 1000;
 
-  return [0, 1, 2, 3, 4, 5].map((index) => {
-    const accuracy = 0.58 + index * 0.06;
+  return sessions.map((session, index) => {
+    const pool = session.extras ? [...seion, ...extras] : seion;
     const answers: Answer[] = [];
 
-    for (let question = 0; question < 20; question += 1) {
+    for (let question = 0; question < session.questions; question += 1) {
       const kana = pool[Math.floor(roll() * pool.length)];
-      const correct = roll() < accuracy;
+      const correct = roll() < session.accuracy;
       answers.push({
         kanaId: kana.id,
-        script: roll() < 0.65 ? "hiragana" : "katakana",
+        script:
+          session.scripts.length === 1
+            ? session.scripts[0]
+            : roll() < 0.65
+              ? "hiragana"
+              : "katakana",
         correct,
         timedOut: !correct && roll() < 0.2,
         elapsedMs: Math.round(1400 + roll() * 3200),
@@ -60,10 +190,18 @@ function history(now: number): Report[] {
 
     return {
       id: `promo-${index}`,
-      createdAt: new Date(now - (13 - index * 2) * day - Math.floor(roll() * 6) * 3600_000)
-        .toISOString(),
+      createdAt: stampOf(session, index, now),
       durationMs: answers.reduce((sum, answer) => sum + answer.elapsedMs, 0),
-      settings: { ...settings, scripts: index % 3 === 0 ? ["hiragana", "katakana"] : ["hiragana"] },
+      settings: {
+        ...settings,
+        scripts: session.scripts,
+        format: session.format,
+        answerStyle: session.answerStyle,
+        questionCount: session.questions,
+        includeDakuon: session.extras,
+        includeHandakuon: session.extras,
+        includeYoon: session.extras
+      },
       answers
     };
   });
