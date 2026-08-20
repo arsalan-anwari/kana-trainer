@@ -184,6 +184,18 @@ test("record the promo", async ({ page }) => {
   await stage.scroll(0, 240);
   stage.mark("reports");
 
+  // the character chart 
+  await stage.tap(button("Chart", true), 320);
+  await stage.caption("Every character in one chart, tap one to hear it");
+  await stage.tap(button("Play ka", true), 560);
+  await stage.beat(200);
+  await stage.caption("Voiced, half voiced and contracted rows as well");
+  await stage.tap(button("Play kyo", true), 560);
+  await stage.beat(320);
+  await stage.hideCaption();
+  await stage.scroll(0, 300);
+  stage.mark("chart");
+
   // end card 
   await stage.card(outro, 1600);
   stage.mark("end");

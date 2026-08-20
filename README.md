@@ -22,11 +22,9 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
   <tr>
     <td align="center">
       <b>Desktop</b><br>
-      Setup on the left, characters on the right, and every run charted the moment it ends.
     </td>
     <td align="center">
       <b>Phone</b><br>
-      The same screens in one column, sized for thumbs rather than a mouse.
     </td>
   </tr>
 </table>
