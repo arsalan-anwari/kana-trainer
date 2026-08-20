@@ -103,6 +103,16 @@ jobs:
           key: pkg-${{ matrix.name }}-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.lock') }}
           restore-keys: pkg-${{ matrix.name }}-${{ runner.os }}-
 
+      # the cache carries src-tauri/target, and tauri writes its packages in
+      # there, so a restore brings the previous release's packages back and the
+      # collect step would upload those too
+      - name: Drop any packages the cache restored
+        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        shell: bash
+        run: |
+          rm -rf src-tauri/target/release/bundle \
+                 src-tauri/target/universal-apple-darwin/release/bundle
+
       - name: Install the node packages
         if: matrix.kind == 'tauri' || matrix.kind == 'apk'
         run: npm ci --no-audit --no-fund

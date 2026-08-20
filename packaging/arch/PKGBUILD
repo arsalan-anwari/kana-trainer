@@ -7,6 +7,7 @@ url="https://github.com/arsalan-anwari/kana-trainer"
 license=('Apache-2.0')
 depends=('webkit2gtk-4.1' 'gtk3' 'libayatana-appindicator')
 makedepends=('rust' 'cargo' 'nodejs' 'npm')
+options=('!debug')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
