@@ -1,9 +1,11 @@
 # kana-trainer
 
-[![crates.io](https://img.shields.io/crates/v/kana-trainer.svg)](https://crates.io/crates/kana-trainer)
-[![downloads](https://img.shields.io/crates/d/kana-trainer.svg)](https://crates.io/crates/kana-trainer)
-[![CI](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml/badge.svg)](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml)
-[![license](https://img.shields.io/crates/l/kana-trainer.svg)](LICENSE)
+<a href="https://crates.io/crates/kana-trainer"><img src="https://img.shields.io/crates/v/kana-trainer.svg?style=flat-square" alt="crates.io" /></a>
+<a href="https://github.com/arsalan-anwari/kana-trainer/releases"><img src="https://img.shields.io/github/downloads/arsalan-anwari/kana-trainer/total?style=flat-square" alt="GitHub Downloads" /></a>
+<a href="https://crates.io/crates/kana-trainer"><img src="https://img.shields.io/crates/d/kana-trainer.svg?style=flat-square" alt="Crates Downloads" /></a>
+<a href="https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml"><img src="https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+<a href="LICENSE"><img src="https://img.shields.io/crates/l/kana-trainer.svg?style=flat-square" alt="license" /></a>
+<a href="https://arsalan-anwari.github.io/kana-trainer/"><img src="https://img.shields.io/badge/Docs-1a1b27?style=flat-square&logo=readthedocs&logoColor=white&labelColor=0d1117" alt="Docs" /></a>
 
 Trainer for the hiragana and katakana alphabets, on desktop, tablet and phone.
 Built with Tauri 2 and Svelte 5, in cream paper and black ink.

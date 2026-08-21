@@ -14,9 +14,8 @@ const intro = { title: "Kana Trainer", lines: ["Hiragana and katakana practice"]
 const outro = {
   title: "Kana Trainer",
   lines: [
-    "Free and open source, for desktop, tablet and phone",
-    "$ cargo install kana-trainer",
-    "Binaries at: github.com/arsalan-anwari/kana-trainer"
+    "Free and open source. Desktop, tablet and phone",
+    "Download at: https://arsalan-anwari.github.io/kana-trainer/",
   ]
 };
 
@@ -120,28 +119,28 @@ test("record the promo", async ({ page }) => {
   stage.mark("alphabets");
 
   // a set of characters per alphabet, behind a tab each
-  await stage.caption("Each alphabet keeps a set of its own");
+  await stage.caption("Each alphabet has its own set");
   await stage.tap(page.getByRole("tab", { name: "Katakana" }), 240);
   await stage.tap(button("KA", true), 200);
   await stage.tap(page.getByRole("tab", { name: "Hiragana" }), 260);
   stage.mark("alphabet tabs");
 
   // how long the run is and how hard it pushes
-  await stage.caption("Ten questions up to five hundred, or one pass over the set");
+  await stage.caption("10 to 500 questions, or one pass over the set");
   await stage.tap(button("100", true), 240);
   await stage.tap(button("One pass", true), 280);
-  await stage.caption("Three difficulties, deciding how alike the wrong answers look");
+  await stage.caption("Harder difficulty, closer wrong answers");
   await stage.tap(button("Expert"), 300);
   stage.mark("settings");
 
-  await stage.caption("A timer per question, whole rows or single characters");
+  await stage.caption("Time each question. Pick rows or single characters");
   await stage.tap(button("15s"), 240);
   await stage.scroll(0, 240);
   await stage.tap(button("Select all"), 160);
   stage.mark("setup");
 
   // run one: hear a character, type the reading
-  await stage.caption("Audio to text: hear a character, type it");
+  await stage.caption("Audio to text: hear it, type it");
   await stage.tap(button("Typing"), 120);
   await stage.tap(button("Audio to text"), 140);
   await stage.tap(startRun, 550);
@@ -154,14 +153,14 @@ test("record the promo", async ({ page }) => {
   stage.mark("audio run");
 
   // walking out of a run asks first, and nothing half done is kept
-  await stage.caption("Only a finished run is scored, so leaving one asks first");
+  await stage.caption("Quit early and nothing is saved");
   await stage.tap(backToSetup, 700);
   await stage.tap(discard, 200);
   await stage.hideCaption();
   stage.mark("quit");
 
   // run two: pick the matching sound
-  await stage.caption("Text to audio: pick the sound that fits");
+  await stage.caption("Text to audio: pick the sound");
   await stage.tap(button("Text to audio"), 140);
   await stage.tap(startRun, 240);
   await stage.frame("main .anim-pop");
@@ -176,7 +175,7 @@ test("record the promo", async ({ page }) => {
 
   // the closing run: short enough to see through, so the score is real
   await abandon(140);
-  await stage.caption("One pass over exactly the characters you picked");
+  await stage.caption("One pass covers exactly what you picked");
   await stage.tap(button("Text only"), 140);
   await stage.tap(button("Katakana"), 160);
   await stage.tap(button("Clear", true), 160);
@@ -185,7 +184,7 @@ test("record the promo", async ({ page }) => {
   await stage.frame("main .anim-pop");
 
   // the first two by hand, one right and one wrong, the rest on the keys
-  await stage.caption("Text only: read the character, tap the reading");
+  await stage.caption("Text only: read it, tap the reading");
   await answerChoice(page, stage, true);
   await stage.beat(320);
 
@@ -195,7 +194,7 @@ test("record the promo", async ({ page }) => {
   await stage.beat(750);
   await stage.tap(button("Continue"), 140);
 
-  await stage.caption("Keys 1 to 4 answer without the mouse");
+  await stage.caption("Shortcut keys 1 to 4 work too");
   for (let question = 3; question <= FINALE; question += 1) {
     await answering(page);
     await stage.press(String(slotOf(await tileLabels(page), await promptText(page)) + 1), 420);
@@ -207,10 +206,10 @@ test("record the promo", async ({ page }) => {
   await stage.beat(3000);
   stage.mark("splash");
 
-  await stage.caption("Every finished run is scored, saved and charted");
+  await stage.caption("Finish a run and it gets scored and saved");
   await stage.scroll(430, 400);
   await stage.beat(250);
-  await stage.caption("One click turns your misses into the next set");
+  await stage.caption("Turn your misses into the next run");
   await stage.hover(button("Practice my mistakes"), 280);
   stage.mark("result");
 
@@ -218,12 +217,12 @@ test("record the promo", async ({ page }) => {
   await stage.hideCaption();
   await stage.scroll(0, 240);
   await stage.tap(button("Reports", true), 300);
-  await stage.caption("Reports over every run, kept on your machine");
+  await stage.caption("Every run kept, on your machine only");
   await stage.beat(420);
-  await stage.caption("Today, yesterday, the last week or the last month");
+  await stage.caption("Look back a day, a week or a month");
   await stage.tap(button("Last week", true), 320);
   await stage.tap(page.getByRole("button", { name: "Select every run shown" }), 380);
-  await stage.caption("Every miss filed by set and row");
+  await stage.caption("See which rows trip you up");
   await stage.show(page.getByText("Mistakes by group"), 900);
   await stage.hideCaption();
   await stage.scroll(0, 240);
@@ -231,15 +230,15 @@ test("record the promo", async ({ page }) => {
 
   // the character chart
   await stage.tap(button("Chart", true), 320);
-  await stage.caption("Every character in one chart, tap one to hear it");
+  await stage.caption("Every character in one chart. Tap to hear it");
   await stage.tap(button("Play ka", true), 560);
   await stage.beat(200);
-  await stage.caption("Voiced, half voiced and contracted rows as well");
+  await stage.caption("Voiced and contracted rows too");
   await stage.tap(button("Play kyo", true), 560);
   await stage.beat(320);
 
   // light or dark, from the header
-  await stage.caption("Light, dark, or whatever the system says");
+  await stage.caption("Light, dark, or system default theme.");
   await stage.tap(page.getByRole("button", { name: "Theme: light" }), 700);
   await stage.tap(page.getByRole("button", { name: "Theme: dark" }), 500);
   await stage.hideCaption();
