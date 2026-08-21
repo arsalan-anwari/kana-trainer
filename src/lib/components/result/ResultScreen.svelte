@@ -1,7 +1,7 @@
 <script lang="ts">
   import { statsByKana, statsByRow, summarize } from "../../core/report";
   import { app } from "../../state.svelte";
-  import { exportReports } from "../../storage";
+  import { exportReports, fileLabel } from "../../storage";
   import Button from "../../ui/Button.svelte";
   import Card from "../../ui/Card.svelte";
   import BarChart from "../charts/BarChart.svelte";
@@ -16,8 +16,12 @@
 
   async function saveCopy(): Promise<void> {
     if (report === null) return;
-    const path = await exportReports([report]);
-    app.message = path === null ? "" : `Exported this run to ${path}`;
+    try {
+      const path = await exportReports([report]);
+      app.message = path === null ? "" : `Exported this run to ${fileLabel(path)}`;
+    } catch (error) {
+      app.message = error instanceof Error ? error.message : "That file could not be written.";
+    }
   }
 </script>
 

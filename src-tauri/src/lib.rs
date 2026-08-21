@@ -9,6 +9,7 @@ const DARK_BACKGROUND: Color = Color(0x16, 0x15, 0x0f, 0xff);
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_fs::init())
         .setup(|app| {
             if let Some(window) = app.get_webview_window("main") {
                 let dark = matches!(window.theme(), Ok(Theme::Dark));

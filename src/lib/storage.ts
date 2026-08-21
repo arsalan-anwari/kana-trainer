@@ -57,8 +57,16 @@ function suggestedName(count: number): string {
 
 const fileFilters = [{ name: "Kana Trainer runs", extensions: [FILE_EXTENSION] }];
 
-/** Writes the given runs to one file. Returns where it landed, or null if the
- * user backed out of the dialog. */
+export function fileLabel(path: string): string {
+  if (!path.startsWith("content://")) return path;
+  try {
+    const tail = decodeURIComponent(path).split(/[/:]/).pop();
+    return tail === undefined || tail === "" ? path : tail;
+  } catch {
+    return path;
+  }
+}
+
 export async function exportReports(reports: Report[]): Promise<string | null> {
   const bytes = encodeReportFile(reports);
   if (inTauri()) {

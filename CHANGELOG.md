@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-08-21
+
+### Fixed
+
+- Exporting and importing on android, which left a zero byte file behind: the file dialogs there hand back a `content://` URI rather than a path, so the write went through the fs plugin instead of the filesystem directly.
+- A failed export now says so instead of passing in silence.
+
 ## [1.5.0] - 2026-08-21
 
 ### Changed

@@ -1,5 +1,6 @@
 # The checks that used to live in scripts/test.sh: the svelte type check, the
-# vitest suite, the playwright smoke test, rust formatting and cargo check.
+# vitest suite, the playwright smoke test, rust formatting, cargo check and the
+# rust tests.
 #
 # The frontend and the rust checks are separate jobs on purpose. Only the rust
 # side needs the webkitgtk headers, so the fast checks no longer queue behind
@@ -106,3 +107,6 @@ jobs:
 
       - name: Build the rust backend
         run: cargo check --manifest-path src-tauri/Cargo.toml
+
+      - name: Run the rust tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml --no-default-features

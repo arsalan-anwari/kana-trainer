@@ -1,6 +1,6 @@
 [package]
 name = "kana-trainer"
-version = "1.5.0"
+version = "1.5.1"
 edition = "2021"
 rust-version = "1.77.2"
 description = "Desktop trainer for hiragana and katakana with quiz, typing and audio modes"
@@ -40,9 +40,14 @@ custom-protocol = ["tauri/custom-protocol"]
 [build-dependencies]
 tauri-build = { version = "2.6.3", features = [] }
 
+[dev-dependencies]
+# the mock runtime, so the export and import commands can be exercised without a window
+tauri = { version = "2.11.5", features = ["test"] }
+
 [dependencies]
 tauri = { version = "2.11.5", features = [] }
 tauri-plugin-dialog = "2.7.2"
+tauri-plugin-fs = "2.5.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 

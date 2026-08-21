@@ -1,7 +1,7 @@
 <script lang="ts">
   import { reportFilterLabel, reportFilters, type Report, type ReportFilter } from "../../core/report";
   import { app } from "../../state.svelte";
-  import { deleteReport, exportReports, importReports } from "../../storage";
+  import { deleteReport, exportReports, fileLabel, importReports } from "../../storage";
   import Chip from "../../ui/Chip.svelte";
   import ConfirmDialog from "../../ui/ConfirmDialog.svelte";
   import IconButton from "../../ui/IconButton.svelte";
@@ -50,10 +50,14 @@
   }
 
   async function save(): Promise<void> {
-    const path = await exportReports(target);
-    if (path === null) return;
-    const count = target.length === 1 ? "1 run" : `${target.length} runs`;
-    app.message = `Exported ${count} to ${path}`;
+    try {
+      const path = await exportReports(target);
+      if (path === null) return;
+      const count = target.length === 1 ? "1 run" : `${target.length} runs`;
+      app.message = `Exported ${count} to ${fileLabel(path)}`;
+    } catch (error) {
+      app.message = error instanceof Error ? error.message : "That file could not be written.";
+    }
   }
 
   async function load(): Promise<void> {
