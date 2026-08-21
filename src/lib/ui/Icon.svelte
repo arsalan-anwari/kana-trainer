@@ -35,6 +35,11 @@
   {:else if name === "folder-open"}
     <path d="M3 8.5V6a2 2 0 0 1 2-2h3.6a2 2 0 0 1 1.4.6L11.5 6H19a2 2 0 0 1 2 2v1" />
     <path d="M3.3 10.5h18.1l-2 8.2a2 2 0 0 1-1.9 1.5H5.2a2 2 0 0 1-2-1.7z" />
+  {:else if name === "trash"}
+    <path d="M4 6.5h16" />
+    <path d="M9.5 6.5V4.8a1.3 1.3 0 0 1 1.3-1.3h2.4a1.3 1.3 0 0 1 1.3 1.3v1.7" />
+    <path d="M6.3 6.5l.9 12.2a2 2 0 0 0 2 1.8h5.6a2 2 0 0 0 2-1.8l.9-12.2" />
+    <path d="M10.3 10.5v6M13.7 10.5v6" />
   {:else if name === "filter"}
     <path d="M3.5 5.5h17l-6.5 7.6v5.6l-4 2.3v-7.9z" />
   {:else if name === "chevron-down"}

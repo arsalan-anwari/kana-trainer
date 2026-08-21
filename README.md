@@ -73,4 +73,4 @@ cargo install kana-trainer
 
 ## Credits
 
-- Character sounds from [veardk/just-gojuon](https://github.com/veardk/just-gojuon) (MIT), pitch and loudness normalised with `scripts/normalize-audio.py`
+- Character sounds from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html) (CC BY 4.0), pitch and loudness normalised with `scripts/normalize-audio.py`

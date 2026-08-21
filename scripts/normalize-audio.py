@@ -1,6 +1,6 @@
+import argparse
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -15,7 +15,7 @@ SILENCE_FLOOR_DB = -45.0
 HEAD_PAD_MS = 30
 TAIL_PAD_MS = 60
 FADE_MS = 8
-BITRATE = "64k"
+BITRATE = "128k"
 
 
 def decode(path):
@@ -26,11 +26,11 @@ def decode(path):
     return np.frombuffer(raw, dtype="<f4").astype(np.float64)
 
 
-def encode(samples, path):
+def encode(samples, path, bitrate=BITRATE):
     path.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run(
         ["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(RATE), "-ac", "1",
-         "-i", "-", "-c:a", "libmp3lame", "-b:a", BITRATE, "-ac", "1", str(path)],
+         "-i", "-", "-c:a", "libmp3lame", "-b:a", bitrate, "-ac", "1", str(path)],
         check=True, input=samples.astype("<f4").tobytes())
 
 
@@ -103,56 +103,82 @@ def shift_pitch(x, cents):
     return np.frombuffer(raw, dtype="<f4").astype(np.float64)
 
 
-def level(x):
+def rms_db(x):
+    rms = np.sqrt(np.mean(x ** 2))
+    return float(20 * np.log10(rms)) if rms > 0 else float("-inf")
+
+
+def level(x, target_db=TARGET_RMS_DB, ceiling_db=PEAK_CEILING_DB):
     rms = np.sqrt(np.mean(x ** 2))
     if rms <= 0:
         return x
-    gain = 10 ** ((TARGET_RMS_DB - 20 * np.log10(rms)) / 20)
+    gain = 10 ** ((target_db - 20 * np.log10(rms)) / 20)
     out = x * gain
     peak = np.max(np.abs(out))
-    ceiling = 10 ** (PEAK_CEILING_DB / 20)
+    ceiling = 10 ** (ceiling_db / 20)
     if peak > ceiling:
         out *= ceiling / peak
     return out
 
 
-def process(src, dst):
+def process(src, dst, pitch=False, bitrate=BITRATE,
+            target_db=TARGET_RMS_DB, ceiling_db=PEAK_CEILING_DB):
     report = []
     for category in CATEGORIES:
         for path in sorted((src / category).glob("*.mp3")):
             audio = trim(decode(path))
-            f0 = estimate_f0(audio)
-            semitones = 0.0
-            if f0 is not None:
-                semitones = float(np.clip(12 * np.log2(TARGET_F0 / f0),
-                                          -MAX_SHIFT_SEMITONES, MAX_SHIFT_SEMITONES))
-                audio = shift_pitch(audio, semitones * 100)
-            audio = level(audio)
-            encode(audio, dst / category / path.name)
+            before = rms_db(audio)
+            f0, semitones, clamped = None, 0.0, False
+            if pitch:
+                f0 = estimate_f0(audio)
+                if f0 is not None:
+                    wanted = 12 * np.log2(TARGET_F0 / f0)
+                    semitones = float(np.clip(wanted, -MAX_SHIFT_SEMITONES,
+                                              MAX_SHIFT_SEMITONES))
+                    clamped = abs(wanted) > MAX_SHIFT_SEMITONES
+                    audio = shift_pitch(audio, semitones * 100)
+            audio = level(audio, target_db, ceiling_db)
+            encode(audio, dst / category / path.name, bitrate)
             report.append({
                 "file": f"{category}/{path.name}",
                 "f0": round(f0, 1) if f0 else None,
                 "semitones": round(semitones, 2),
-                "clamped": bool(f0 is not None
-                                and abs(12 * np.log2(TARGET_F0 / f0))
-                                > MAX_SHIFT_SEMITONES),
+                "clamped": clamped,
+                "rms_before": round(before, 2),
+                "rms_after": round(rms_db(audio), 2),
                 "seconds": round(len(audio) / RATE, 3),
             })
     return report
 
 
 def main():
-    src, dst = Path(sys.argv[1]), Path(sys.argv[2])
-    report = process(src, dst)
-    shifted = [r for r in report if abs(r["semitones"]) >= 0.5]
-    clamped = [r for r in report if r["clamped"]]
-    print(f"normalized {len(report)} files into {dst}")
-    print(f"pitch corrected {len(shifted)} of them")
-    for entry in clamped:
-        print(f"  off-pitch source, correction clamped: {entry['file']} "
-              f"({entry['f0']} Hz)")
-    if len(sys.argv) > 3:
-        Path(sys.argv[3]).write_text(json.dumps(report, indent=1))
+    parser = argparse.ArgumentParser(
+        description="Trim, level and re-encode the kana clips.")
+    parser.add_argument("src", type=Path)
+    parser.add_argument("dst", type=Path)
+    parser.add_argument("report", type=Path, nargs="?")
+    parser.add_argument("--pitch", action="store_true",
+                        help=f"also shift every clip to {TARGET_F0:.0f} Hz (needs sox)")
+    parser.add_argument("--bitrate", default=BITRATE)
+    parser.add_argument("--target-rms", type=float, default=TARGET_RMS_DB)
+    parser.add_argument("--peak-ceiling", type=float, default=PEAK_CEILING_DB)
+    args = parser.parse_args()
+
+    report = process(args.src, args.dst, args.pitch, args.bitrate,
+                     args.target_rms, args.peak_ceiling)
+    after = [r["rms_after"] for r in report]
+    print(f"normalized {len(report)} files into {args.dst} at {args.bitrate}")
+    print(f"RMS {min(after):.2f} to {max(after):.2f} dB "
+          f"(spread {max(after) - min(after):.2f} dB)")
+    if args.pitch:
+        shifted = [r for r in report if abs(r["semitones"]) >= 0.5]
+        print(f"pitch corrected {len(shifted)} of them")
+        for entry in report:
+            if entry["clamped"]:
+                print(f"  off-pitch source, correction clamped: {entry['file']} "
+                      f"({entry['f0']} Hz)")
+    if args.report:
+        args.report.write_text(json.dumps(report, indent=1))
 
 
 if __name__ == "__main__":

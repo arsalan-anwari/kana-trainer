@@ -6,5 +6,6 @@ export type IconName =
   | "select-all"
   | "select-none"
   | "folder-open"
+  | "trash"
   | "filter"
   | "chevron-down";

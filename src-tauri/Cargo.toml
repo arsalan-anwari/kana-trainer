@@ -1,6 +1,6 @@
 [package]
 name = "kana-trainer"
-version = "1.3.0"
+version = "1.4.0"
 edition = "2021"
 rust-version = "1.77.2"
 description = "Desktop trainer for hiragana and katakana with quiz, typing and audio modes"

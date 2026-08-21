@@ -20,7 +20,7 @@
     active?: boolean;
     disabled?: boolean;
     size?: "sm" | "md";
-    variant?: "outline" | "ghost";
+    variant?: "outline" | "ghost" | "danger";
     class?: string;
     onclick?: () => void;
   } = $props();
@@ -28,6 +28,13 @@
   const sizes = {
     sm: "size-9 rounded-md",
     md: "size-11 rounded-lg"
+  };
+
+  const variants = {
+    outline:
+      "border border-border bg-surface text-muted-foreground hover:bg-accent hover:text-foreground active:translate-y-[1px]",
+    ghost: "text-muted-foreground hover:bg-accent hover:text-foreground active:translate-y-[1px]",
+    danger: "border border-danger bg-danger-soft text-danger active:translate-y-[1px]"
   };
 
   function handle(): void {
@@ -47,9 +54,7 @@
     size
   ]} {className} {active
     ? 'border-2 border-foreground bg-foreground/10 text-foreground'
-    : variant === 'ghost'
-      ? 'text-muted-foreground hover:bg-accent hover:text-foreground active:translate-y-[1px]'
-      : 'border border-border bg-surface text-muted-foreground hover:bg-accent hover:text-foreground active:translate-y-[1px]'}"
+    : variants[variant]}"
   onclick={handle}
 >
   <Icon name={icon} class={size === "sm" ? "size-4" : "size-5"} />

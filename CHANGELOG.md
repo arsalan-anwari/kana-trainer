@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-08-21
+
+### Added
+
+- A remove all button in the reports list, next to select all and clear.
+- Improved audio samples with better alternatives and normalized and cropped samples to be shorter. 
+
 ## [1.3.0] - 2026-08-20
 
 ### Fixed
@@ -101,6 +108,8 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.4.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.4.0
+[1.3.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.3.0
 [1.2.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.2.0
 [1.1.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.1.0
 [1.0.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.0.1

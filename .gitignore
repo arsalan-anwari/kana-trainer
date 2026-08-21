@@ -19,3 +19,4 @@ src-tauri/gen/apple
 .flatpak-builder
 .showcase
 .test_ci.log
+__pycache__

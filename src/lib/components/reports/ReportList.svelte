@@ -16,6 +16,9 @@
     reports.length > 0 && reports.every((report) => picked.includes(report.id))
   );
 
+  let armed = $state(false);
+  let armTimer: ReturnType<typeof setTimeout> | undefined;
+
   function toggle(id: string): void {
     picked = picked.includes(id) ? picked.filter((item) => item !== id) : [...picked, id];
   }
@@ -25,12 +28,34 @@
     // ones that survive is not worth the surprise of a half kept selection
     filter = next;
     picked = [];
+    disarm();
   }
 
   async function remove(id: string): Promise<void> {
     await deleteReport(id);
     picked = picked.filter((item) => item !== id);
     await app.refreshReports();
+  }
+
+  function disarm(): void {
+    clearTimeout(armTimer);
+    armed = false;
+  }
+
+  /** Wiping a window of runs cannot be undone, so the first click only arms it. */
+  async function removeShown(): Promise<void> {
+    if (!armed) {
+      armed = true;
+      clearTimeout(armTimer);
+      armTimer = setTimeout(() => (armed = false), 4000);
+      return;
+    }
+    disarm();
+    const ids = reports.map((report) => report.id);
+    for (const id of ids) await deleteReport(id);
+    picked = picked.filter((item) => !ids.includes(item));
+    await app.refreshReports();
+    app.message = ids.length === 1 ? "Removed 1 run." : `Removed ${ids.length} runs.`;
   }
 
   async function load(): Promise<void> {
@@ -74,6 +99,16 @@
         label="Clear the selection"
         disabled={picked.length === 0}
         onclick={() => (picked = [])}
+      />
+      <IconButton
+        size="sm"
+        icon="trash"
+        label={armed
+          ? `Click again to remove ${reports.length === 1 ? "this run" : `all ${reports.length} runs shown`}`
+          : "Remove every run shown"}
+        variant={armed ? "danger" : "outline"}
+        disabled={reports.length === 0}
+        onclick={removeShown}
       />
       <IconButton size="sm" icon="folder-open" label="Load a report file" onclick={load} />
     </div>
