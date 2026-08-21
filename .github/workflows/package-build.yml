@@ -41,12 +41,13 @@ jobs:
         run: |
           cat > catalog.json <<'JSON'
           {
-            "deb":      { "name": "deb",      "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "deb",      "glob": "src-tauri/target/release/bundle/deb/*.deb" },
-            "rpm":      { "name": "rpm",      "os": "ubuntu-24.04",   "kind": "tauri",   "bundle": "rpm",      "glob": "src-tauri/target/release/bundle/rpm/*.rpm" },
-            "exe":      { "name": "exe",      "os": "windows-latest", "kind": "tauri",   "bundle": "nsis",     "glob": "src-tauri/target/release/bundle/nsis/*-setup.exe" },
-            "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "bundle": "dmg",      "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
+            "deb":      { "name": "deb",      "os": "ubuntu-24.04",   "kind": "tauri",   "rust": true, "bundle": "deb",  "glob": "src-tauri/target/release/bundle/deb/*.deb" },
+            "rpm":      { "name": "rpm",      "os": "ubuntu-24.04",   "kind": "tauri",   "rust": true, "bundle": "rpm",  "glob": "src-tauri/target/release/bundle/rpm/*.rpm" },
+            "exe":      { "name": "exe",      "os": "windows-latest", "kind": "tauri",   "rust": true, "bundle": "nsis", "glob": "src-tauri/target/release/bundle/nsis/*-setup.exe" },
+            "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "rust": true, "bundle": "dmg",  "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
+            "msix":     { "name": "msix",     "os": "windows-latest", "kind": "msix",    "rust": true, "glob": "dist/packages/*.msix" },
             "arch":     { "name": "arch",     "os": "ubuntu-24.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
-            "apk":      { "name": "apk",      "os": "ubuntu-24.04",   "kind": "apk",     "glob": "dist/packages/*.apk" }
+            "apk":      { "name": "apk",      "os": "ubuntu-24.04",   "kind": "apk",     "rust": true, "glob": "dist/packages/*.apk" }
           }
           JSON
 
@@ -86,7 +87,7 @@ jobs:
 
       # arch brings its own toolchain inside the container sandbox
       - name: Install the libraries tauri builds against
-        if: startsWith(matrix.os, 'ubuntu') && (matrix.kind == 'tauri' || matrix.kind == 'apk')
+        if: startsWith(matrix.os, 'ubuntu') && matrix.rust
         timeout-minutes: 15
         uses: ./.github/actions/apt-deps
         with:
@@ -96,7 +97,7 @@ jobs:
             ${{ matrix.bundle == 'rpm' && 'rpm' || '' }}
 
       - uses: dtolnay/rust-toolchain@stable
-        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        if: matrix.rust
 
       - name: Add the apple targets
         if: matrix.bundle == 'dmg'
@@ -107,7 +108,7 @@ jobs:
         run: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 
       - name: Cache the cargo registry and build
-        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        if: matrix.rust
         uses: actions/cache@v4
         with:
           path: |
@@ -121,14 +122,14 @@ jobs:
       # there, so a restore brings the previous release's packages back and the
       # collect step would upload those too
       - name: Drop any packages the cache restored
-        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        if: matrix.rust
         shell: bash
         run: |
           rm -rf src-tauri/target/release/bundle \
                  src-tauri/target/universal-apple-darwin/release/bundle
 
       - name: Install the node packages
-        if: matrix.kind == 'tauri' || matrix.kind == 'apk'
+        if: matrix.rust
         run: npm ci --no-audit --no-fund
 
       # deb, rpm and exe
@@ -142,6 +143,47 @@ jobs:
       - name: Build the universal macos disk image
         if: matrix.bundle == 'dmg'
         run: npx tauri build --target universal-apple-darwin --bundles dmg
+
+      # msix, the package the microsoft store takes. Tauri has no msix bundler,
+      # so the release binary is staged into a layout directory next to the
+      # manifest and the store logos, and the windows sdk packs that.
+
+      - name: Build the msix package
+        if: matrix.kind == 'msix'
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          npx tauri build --no-bundle
+          if ($LASTEXITCODE -ne 0) { throw 'tauri build failed' }
+
+          $layout = 'dist/msix'
+          New-Item -ItemType Directory -Force -Path "$layout/Assets", 'dist/packages' | Out-Null
+
+          Copy-Item 'src-tauri/target/release/kana-trainer.exe' $layout
+
+          foreach ($logo in 'StoreLogo', 'Square44x44Logo', 'Square71x71Logo', 'Square150x150Logo', 'Square310x310Logo') {
+            Copy-Item "src-tauri/icons/$logo.png" "$layout/Assets"
+          }
+
+          $manifest = Get-Content 'packaging/msix/AppxManifest.xml.in' -Raw
+          if ($manifest -match 'PARTNER_CENTER_') {
+            Write-Output "::warning::packaging/msix/AppxManifest.xml.in still holds its PARTNER_CENTER_ placeholders. This msix packs, but Partner Center will reject it until they are replaced with the values from the app's Product identity page."
+          }
+          $manifest.Replace('@VERSION@', "$env:VERSION.0") |
+            Set-Content "$layout/AppxManifest.xml" -Encoding utf8
+
+          $makeappx = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Filter makeappx.exe -Recurse |
+            Where-Object { $_.Directory.Name -eq 'x64' } |
+            Sort-Object { $_.Directory.Parent.Name } |
+            Select-Object -Last 1
+          if (-not $makeappx) { throw 'no makeappx.exe in the windows sdk on this runner' }
+          Write-Output "packing with $($makeappx.FullName)"
+
+          & $makeappx.FullName pack /d $layout /p "dist/packages/kana-trainer-$env:VERSION-x64.msix" /o
+          if ($LASTEXITCODE -ne 0) { throw 'makeappx failed' }
 
       # arch, built from the checkout so untagged commits package too
 
@@ -188,9 +230,7 @@ jobs:
 
       # Android will not install an unsigned release apk, and it refuses to
       # update an installed one whose signing certificate has changed, so every
-      # release has to be signed with the same key. That key lives in the
-      # repository secrets. Builds without it fall back to a throwaway key,
-      # which side loads fine but can only ever be installed fresh.
+      # release has to be signed with the same key.
       - name: Sign the apk
         if: matrix.kind == 'apk'
         env:

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  Manifest template for the Microsoft Store package.
+  @VERSION@ is filled in by the msix build, from the version in package.json.
+-->
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <!-- Name and Publisher are Package/Identity/Name and Package/Identity/Publisher -->
+  <Identity
+    Name="ArsalanAnwari.Kana-Trainer"
+    Publisher="CN=2C7BAB62-BFE4-484E-B8D0-0F32C81D138F"
+    Version="@VERSION@"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Kana Trainer</DisplayName>
+    <!-- Package/Properties/PublisherDisplayName -->
+    <PublisherDisplayName>Arsalan Anwari</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>Practice hiragana and katakana with multiple choice quizzes, typing drills, audio prompts and time trials.</Description>
+  </Properties>
+
+  <Dependencies>
+    <!--
+      19041 is Windows 10 20H2. Anything that old and still serviced carries the
+      Edge WebView2 evergreen runtime, which the app needs and which an MSIX
+      cannot install for itself the way the NSIS installer does.
+    -->
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <Application Id="KanaTrainer" Executable="kana-trainer.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="Kana Trainer"
+        Description="Practice hiragana and katakana with multiple choice quizzes, typing drills, audio prompts and time trials."
+        BackgroundColor="#f7f2e7"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile
+          Square71x71Logo="Assets\Square71x71Logo.png"
+          Square310x310Logo="Assets\Square310x310Logo.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <!-- a packaged desktop binary rather than a sandboxed store app -->
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
