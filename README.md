@@ -38,7 +38,7 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 - Runs of 10 to 500 questions or one pass over the set, at three difficulty levels that decide how look alike the wrong answers are
 - Optional time trial, per question and for the whole run.
 - Chart view of every character grouped by sound type and row, tap a tile to hear it
-- Score reports saved on disk and exportable as JSON, with charts of what you keep missing and one click to practice it again
+- Score reports saved on disk, exported and imported as `.kt-report` files holding any number of runs. Easy migration of runs to other devices. 
 - Responsive interface, the same app on a wide screen and on a phone
 
 ## Installing

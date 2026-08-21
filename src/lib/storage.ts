@@ -1,3 +1,4 @@
+import { decodeReportFile, encodeReportFile, FILE_EXTENSION } from "./core/ktreport";
 import type { Report } from "./core/report";
 
 const REPORT_KEY = "kana-trainer-reports";
@@ -49,62 +50,92 @@ export async function deleteReport(id: string): Promise<void> {
   writeLocal(localReports().filter((item) => item.id !== id));
 }
 
-export async function exportReport(report: Report): Promise<string | null> {
+function suggestedName(count: number): string {
+  const stamp = new Date().toISOString().slice(0, 10);
+  return `kana-runs-${stamp}-${count}.${FILE_EXTENSION}`;
+}
+
+const fileFilters = [{ name: "Kana Trainer runs", extensions: [FILE_EXTENSION] }];
+
+/** Writes the given runs to one file. Returns where it landed, or null if the
+ * user backed out of the dialog. */
+export async function exportReports(reports: Report[]): Promise<string | null> {
+  const bytes = encodeReportFile(reports);
   if (inTauri()) {
     const { save } = await import("@tauri-apps/plugin-dialog");
     const path = await save({
-      defaultPath: `kana-report-${report.id}.json`,
-      filters: [{ name: "Report", extensions: ["json"] }]
+      defaultPath: suggestedName(reports.length),
+      filters: fileFilters
     });
     if (path === null) return null;
-    await call<null>("export_report", { id: report.id, path });
+    await call<null>("write_report_file", { path, data: [...bytes] });
     return path;
   }
-  const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
+  const name = suggestedName(reports.length);
+  const blob = new Blob([bytes as BlobPart], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `kana-report-${report.id}.json`;
+  link.download = name;
   link.click();
   URL.revokeObjectURL(url);
-  return link.download;
+  return name;
 }
 
-function readFileFromBrowser(): Promise<Report | null> {
+function pickFileInBrowser(): Promise<Uint8Array | null> {
   return new Promise((resolve) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = "application/json";
+    input.accept = `.${FILE_EXTENSION}`;
     input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) {
         resolve(null);
         return;
       }
-      try {
-        resolve(JSON.parse(await file.text()) as Report);
-      } catch {
-        resolve(null);
-      }
+      resolve(new Uint8Array(await file.arrayBuffer()));
     };
     input.click();
   });
 }
 
-export async function importReport(): Promise<Report | null> {
+export type ImportResult = {
+  /** Runs the app did not hold yet, now written. */
+  added: number;
+  /** Runs already held under the same id, left alone. */
+  skipped: number;
+};
+
+/**
+ * Reads a .kt-report file and folds its runs into the ones already held.
+ */
+export async function importReports(): Promise<ImportResult | null> {
+  let bytes: Uint8Array | null;
   if (inTauri()) {
     const { open } = await import("@tauri-apps/plugin-dialog");
-    const path = await open({
-      multiple: false,
-      filters: [{ name: "Report", extensions: ["json"] }]
-    });
+    const path = await open({ multiple: false, filters: fileFilters });
     if (path === null || Array.isArray(path)) return null;
-    return call<Report>("import_report", { path });
+    const data = await call<number[]>("read_report_file", { path });
+    bytes = Uint8Array.from(data);
+  } else {
+    bytes = await pickFileInBrowser();
   }
-  const report = await readFileFromBrowser();
-  if (report === null) return null;
-  await saveReport(report);
-  return report;
+  if (bytes === null) return null;
+
+  const incoming = decodeReportFile(bytes);
+  const held = new Set((await listReports()).map((report) => report.id));
+  let added = 0;
+  let skipped = 0;
+  for (const report of incoming) {
+    if (held.has(report.id)) {
+      skipped += 1;
+      continue;
+    }
+    await saveReport(report);
+    held.add(report.id);
+    added += 1;
+  }
+  return { added, skipped };
 }
 
 export function loadJson<T>(key: string, fallback: T): T {

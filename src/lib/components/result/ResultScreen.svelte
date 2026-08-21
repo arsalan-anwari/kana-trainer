@@ -1,7 +1,7 @@
 <script lang="ts">
   import { statsByKana, statsByRow, summarize } from "../../core/report";
   import { app } from "../../state.svelte";
-  import { exportReport } from "../../storage";
+  import { exportReports } from "../../storage";
   import Button from "../../ui/Button.svelte";
   import Card from "../../ui/Card.svelte";
   import BarChart from "../charts/BarChart.svelte";
@@ -16,8 +16,8 @@
 
   async function saveCopy(): Promise<void> {
     if (report === null) return;
-    const path = await exportReport(report);
-    app.message = path === null ? "" : `Saved a copy to ${path}`;
+    const path = await exportReports([report]);
+    app.message = path === null ? "" : `Exported this run to ${path}`;
   }
 </script>
 
@@ -39,7 +39,7 @@
       >
         Practice my mistakes
       </Button>
-      <Button size="lg" variant="outline" onclick={saveCopy}>Save report to file</Button>
+      <Button size="lg" variant="outline" onclick={saveCopy}>Export this run</Button>
       <Button size="lg" variant="outline" onclick={() => app.go("reports")}>All reports</Button>
       <Button size="lg" variant="ghost" onclick={() => app.go("setup")}>Back to setup</Button>
     </div>

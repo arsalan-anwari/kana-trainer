@@ -80,19 +80,11 @@ pub fn delete_report(app: AppHandle, id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn export_report(app: AppHandle, id: String, path: String) -> Result<(), String> {
-    let checked = check_id(&id)?;
-    let source = reports_dir(&app)?.join(format!("{checked}.json"));
-    let text = fs::read_to_string(&source).map_err(|error| error.to_string())?;
-    fs::write(PathBuf::from(path), text).map_err(|error| error.to_string())
+pub fn write_report_file(path: String, data: Vec<u8>) -> Result<(), String> {
+    fs::write(PathBuf::from(path), data).map_err(|error| error.to_string())
 }
 
 #[tauri::command]
-pub fn import_report(app: AppHandle, path: String) -> Result<Value, String> {
-    let value = read_report(&PathBuf::from(path))?;
-    if value.get("answers").and_then(Value::as_array).is_none() {
-        return Err("file does not look like a kana trainer report".to_string());
-    }
-    save_report(app, value.clone())?;
-    Ok(value)
+pub fn read_report_file(path: String) -> Result<Vec<u8>, String> {
+    fs::read(PathBuf::from(path)).map_err(|error| error.to_string())
 }

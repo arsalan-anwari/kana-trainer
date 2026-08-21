@@ -35,6 +35,10 @@
   {:else if name === "folder-open"}
     <path d="M3 8.5V6a2 2 0 0 1 2-2h3.6a2 2 0 0 1 1.4.6L11.5 6H19a2 2 0 0 1 2 2v1" />
     <path d="M3.3 10.5h18.1l-2 8.2a2 2 0 0 1-1.9 1.5H5.2a2 2 0 0 1-2-1.7z" />
+  {:else if name === "download"}
+    <path d="M12 3.5v11" />
+    <path d="M7.5 10.5l4.5 4.5 4.5-4.5" />
+    <path d="M4 16.5v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
   {:else if name === "trash"}
     <path d="M4 6.5h16" />
     <path d="M9.5 6.5V4.8a1.3 1.3 0 0 1 1.3-1.3h2.4a1.3 1.3 0 0 1 1.3 1.3v1.7" />

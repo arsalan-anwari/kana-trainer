@@ -26,8 +26,8 @@ pub fn run() {
             reports::list_reports,
             reports::save_report,
             reports::delete_report,
-            reports::export_report,
-            reports::import_report
+            reports::write_report_file,
+            reports::read_report_file
         ])
         .run(tauri::generate_context!())
         .expect("failed to start kana trainer");

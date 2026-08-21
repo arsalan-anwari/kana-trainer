@@ -3,12 +3,6 @@ import { allKana, seionRows } from "../../src/lib/core/kana";
 import { applySeed, seedPayload } from "./seed";
 import { installStage, Stage } from "./stage";
 
-/**
- * The short promotion clip. This is not a test: it drives the app through every
- * screen on a fixed script and leaves a video behind. Run it through
- * scripts/record-promo.sh, which will set up the environment and record the video.
- */
-
 const intro = { title: "Kana Trainer", lines: ["Hiragana and katakana practice"] };
 
 const outro = {
@@ -98,7 +92,8 @@ test("record the promo", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("button", { name: "Start run" })).toBeEnabled();
 
-  const button = (name: string, exact = false) => page.getByRole("button", { name, exact });
+  const button = (name: string | RegExp, exact = false) =>
+    page.getByRole("button", { name, exact });
   const startRun = button("Start run");
   const backToSetup = button("Practice", true);
   const discard = button("Stop and discard");
@@ -224,9 +219,30 @@ test("record the promo", async ({ page }) => {
   await stage.tap(page.getByRole("button", { name: "Select every run shown" }), 380);
   await stage.caption("See which rows trip you up");
   await stage.show(page.getByText("Mistakes by group"), 900);
-  await stage.hideCaption();
   await stage.scroll(0, 240);
   stage.mark("reports");
+
+  // the history leaves the machine and comes back: the picked runs go out to
+  // one file, get wiped, and are read back in from that same file
+  await stage.caption("Export the runs you picked to one file");
+  const saved = page.waitForEvent("download");
+  await stage.tap(button(/^Export/), 300);
+  const file = await (await saved).path();
+  await stage.beat(400);
+
+  await stage.caption("Removing asks first, and takes the whole selection");
+  await stage.tap(button(/^Remove \d+ selected/), 300);
+  // long enough on the dialog to read what it is about to throw away
+  await stage.beat(950);
+  await stage.tap(button(/^Remove \d+ runs?$/), 500);
+
+  await stage.caption("One .kt-report file moves them to another device");
+  const picker = page.waitForEvent("filechooser");
+  await stage.tap(button(/^Import runs/), 200);
+  await (await picker).setFiles(file);
+  await stage.beat(900);
+  await stage.hideCaption();
+  stage.mark("transfer");
 
   // the character chart
   await stage.tap(button("Chart", true), 320);

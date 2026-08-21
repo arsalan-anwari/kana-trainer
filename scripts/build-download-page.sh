@@ -5,7 +5,7 @@
 #
 # Usage:
 #   scripts/build-download-page.sh              use the latest release
-#   scripts/build-download-page.sh v1.4.0       use that tag
+#   scripts/build-download-page.sh v1.5.0       use that tag
 #
 # Needs the gh cli, logged in or carrying GH_TOKEN, plus jq.
 

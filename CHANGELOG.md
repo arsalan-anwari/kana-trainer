@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0]
+
+### Changed
+
+- Reports are exported and imported as `.kt-report` files, one file holding any number of runs instead of one JSON file per run.
+- Export moved next to import in the reports toolbar and works on the selection.
+- Deleting asks in a dialog instead of arming the trash icon for a second click.
+
+### Removed
+
+- The per run Save and Delete buttons in the reports list. Ticking runs and using the toolbar covers both.
+- Loading a single run from a JSON file. Older exported JSON reports cannot be imported.
+
 ## [1.4.0] - 2026-08-21
 
 ### Added

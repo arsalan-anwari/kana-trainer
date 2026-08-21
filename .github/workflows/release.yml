@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release, without the leading v (e.g. 1.4.0). The tag must already exist.'
+        description: 'Version to release, without the leading v (e.g. 1.5.0). The tag must already exist.'
         required: true
         type: string
 

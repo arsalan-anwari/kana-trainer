@@ -13,13 +13,6 @@ import {
   splash
 } from "./drive";
 
-/**
- * The readme showcase. This is not a test: it walks the app through every
- * screen and leaves a numbered still of each one behind, at whichever size the
- * running project asks for. Run it through scripts/record-showcase.sh, which
- * sets up the environment and builds the gifs from what lands here.
- */
-
 /** The moment the whole recording pretends to happen at. */
 const CLOCK = Date.UTC(2026, 7, 19, 20, 30);
 
@@ -38,7 +31,8 @@ test("record the showcase", async ({ page }, testInfo) => {
   await page.addInitScript(installShowcase, { randomSeed: SEED, clockStart: CLOCK });
   await page.goto("/");
 
-  const button = (name: string, exact = false) => page.getByRole("button", { name, exact });
+  const button = (name: string | RegExp, exact = false) =>
+    page.getByRole("button", { name, exact });
   const startRun = button("Start run");
 
   /**
@@ -177,9 +171,39 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("16_Reports_Mistakes");
   await shots.top();
 
+  // a history that leaves the machine: the ticked runs are written to one
+  // .kt-report file, removed, and read back in from that same file
+  const runs = page.getByRole("button", { name: /\d+\/\d+ correct/ });
+  await runs.nth(0).click();
+  await runs.nth(1).click();
+
+  const saved = page.waitForEvent("download");
+  await button(/^Export/).click();
+  const file = await (await saved).path();
+  await shots.top();
+  await shots.shot("17_Reports_Export");
+
+  // removing asks first, and it asks about the whole selection at once
+  await button(/^Remove \d+ selected/).click();
+  await expect(page.getByRole("alertdialog")).toBeVisible();
+  await shots.shot("18_Reports_RemoveConfirm");
+  await button("Remove 2 runs", true).click();
+  await expect(page.getByRole("alertdialog")).toHaveCount(0);
+
+  // and the file puts them back, on this machine or on another one
+  const picker = page.waitForEvent("filechooser");
+  await button(/^Import runs/).click();
+  await (await picker).setFiles(file);
+  await expect(page.getByText("Imported 2 runs.")).toBeVisible();
+  // a desktop window has the message in frame already, a phone has to scroll to
+  // it, and the gap leaves the run count above it in the shot
+  await shots.reveal(page.getByText("Imported 2 runs."), 210);
+  await shots.shot("19_Reports_Imported");
+  await shots.top();
+
   await button("Chart", true).click();
   await shots.top();
-  await shots.shot("17_Chart_Characters");
+  await shots.shot("20_Chart_Characters");
 
   console.log(`  ${shots.count} stills in docs/${testInfo.project.name}`);
 });
