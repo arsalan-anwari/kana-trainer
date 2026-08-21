@@ -164,9 +164,14 @@ jobs:
 
           Copy-Item 'src-tauri/target/release/kana-trainer.exe' $layout
 
+          # only the logos the manifest names, each already the size its name claims
           foreach ($logo in 'StoreLogo', 'Square44x44Logo', 'Square71x71Logo', 'Square150x150Logo', 'Square310x310Logo') {
             Copy-Item "src-tauri/icons/$logo.png" "$layout/Assets"
           }
+          # tauri generates no wide logo, and the schema rejects a DefaultTile
+          # that names the large square tile without one, so it is committed
+          # alongside the manifest rather than coming from src-tauri/icons
+          Copy-Item 'packaging/msix/Assets/Wide310x150Logo.png' "$layout/Assets"
 
           $manifest = Get-Content 'packaging/msix/AppxManifest.xml.in' -Raw
           if ($manifest -match 'PARTNER_CENTER_') {

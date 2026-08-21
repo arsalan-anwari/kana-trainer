@@ -47,9 +47,15 @@
         BackgroundColor="#f7f2e7"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
+        <!--
+          Wide310x150Logo is not optional here: the schema rejects a DefaultTile
+          that names Square310x310Logo without it. Tauri does not generate a wide
+          logo, so that one is committed under packaging/msix/Assets instead.
+        -->
         <uap:DefaultTile
           Square71x71Logo="Assets\Square71x71Logo.png"
-          Square310x310Logo="Assets\Square310x310Logo.png" />
+          Square310x310Logo="Assets\Square310x310Logo.png"
+          Wide310x150Logo="Assets\Wide310x150Logo.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
