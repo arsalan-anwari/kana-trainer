@@ -36,7 +36,7 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 - Hiragana, katakana or both, in either direction, from single characters up to all 104 including the dakuon, handakuon and yoon rows
 - Three question formats (text to text, audio to text, text to audio) and answers by multiple choice or typing
 - Runs of 10 to 500 questions or one pass over the set, at three difficulty levels that decide how look alike the wrong answers are
-- Optional time trial, per question and for the whole run
+- Optional time trial, per question and for the whole run.
 - Chart view of every character grouped by sound type and row, tap a tile to hear it
 - Score reports saved on disk and exportable as JSON, with charts of what you keep missing and one click to practice it again
 - Responsive interface, the same app on a wide screen and on a phone
