@@ -19,7 +19,8 @@
     ProcessorArchitecture="x64" />
 
   <Properties>
-    <DisplayName>Kana Trainer</DisplayName>
+ 
+    <DisplayName>Kana-Trainer</DisplayName>
     <!-- Package/Properties/PublisherDisplayName -->
     <PublisherDisplayName>Arsalan Anwari</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
@@ -42,7 +43,7 @@
   <Applications>
     <Application Id="KanaTrainer" Executable="kana-trainer.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-        DisplayName="Kana Trainer"
+        DisplayName="Kana-Trainer"
         Description="Practice hiragana and katakana with multiple choice quizzes, typing drills, audio prompts and time trials."
         BackgroundColor="#f7f2e7"
         Square150x150Logo="Assets\Square150x150Logo.png"
