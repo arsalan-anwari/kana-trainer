@@ -15,8 +15,11 @@ the buffers it hands the compositor are rejected, the compositor drops the
 connection and GDK reports the protocol error. Mesa drivers (Intel, AMD) are
 not affected.
 
-Fixed in 1.5.2, which disables the DMA-BUF renderer on Linux. On 1.5.1 and
-older, start the app with:
+Fixed in 1.5.2. Since 1.5.3 the renderer is only disabled when the session is
+Wayland (`WAYLAND_DISPLAY` set, GDK not pointed at X11) and the Nvidia kernel
+driver is loaded (`/sys/module/nvidia_drm` exists), so Mesa systems keep the GPU
+path. On 1.5.1 and older, or if the detection misses your setup, start the app
+with:
 
 ```sh
 WEBKIT_DISABLE_DMABUF_RENDERER=1 kana-trainer
