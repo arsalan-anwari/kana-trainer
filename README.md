@@ -63,6 +63,38 @@ cargo install kana-trainer
 ```
 
 
+## Development
+
+Needs Node 22+ and Rust 1.77+, plus the GTK and WebKit development headers.
+
+```sh
+# fedora
+sudo dnf install webkit2gtk4.1-devel gtk3-devel glib2-devel librsvg2-devel \
+                 libsoup3-devel openssl-devel dbus-devel patchelf \
+                 libappstream-glib rpm-build dpkg
+
+# debian, ubuntu
+sudo apt install libwebkit2gtk-4.1-dev libgtk-3-dev libglib2.0-dev librsvg2-dev \
+                 libsoup-3.0-dev libssl-dev libdbus-1-dev patchelf \
+                 build-essential curl wget file rpm
+
+# arch
+sudo pacman -S webkit2gtk-4.1 gtk3 glib2 librsvg libsoup3 openssl dbus \
+               patchelf base-devel rpm-tools
+```
+
+`rpm-build`/`rpm`/`rpm-tools` and `dpkg` are only needed for the `.rpm` and
+`.deb` bundle targets, `patchelf` for bundling in general. On Arch `dpkg` comes
+from the AUR.
+
+```sh
+npm ci
+npm run tauri:dev      # run the app against the vite dev server
+npm run tauri:build    # bundle for the current platform
+npm test               # unit tests
+npm run test:e2e       # playwright
+```
+
 ## Keyboard Shortcuts
 
 - `1` to `4` picks an answer in multiple choice
