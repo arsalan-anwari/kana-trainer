@@ -5,9 +5,6 @@
 # Usage:
 #   scripts/publish-crates-io.sh              publish
 #   scripts/publish-crates-io.sh --dry-run    package and verify, upload nothing
-#
-# Run scripts/publish-docs.sh afterwards to point the download page at the
-# release that carries this version.
 
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
