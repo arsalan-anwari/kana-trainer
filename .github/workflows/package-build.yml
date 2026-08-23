@@ -152,6 +152,7 @@ jobs:
           git archive HEAD | tar -x -C dist/arch/repo
           sed -e 's|^source=.*|source=()|' \
               -e '/^sha256sums=/d' \
+              -e "s|^pkgver=.*|pkgver=$(node -p 'require(\"./package.json\").version')|" \
               -e 's|cd "$srcdir/$pkgname-$pkgver"|cd "$startdir/repo"|' \
               packaging/arch/PKGBUILD > dist/arch/PKGBUILD
           docker run --rm -v "$PWD/dist/arch:/build" -w /build archlinux:base-devel bash -eux -c "
