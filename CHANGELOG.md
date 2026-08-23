@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- The 1.5.2 workaround for the Wayland/Nvidia startup failure ("Gdk-Message: Error 71") disabling WebKitGTK's DMA-BUF renderer on every Linux system, which gave up the GPU path for Intel and AMD users who never had the bug. It is now only disabled when the session is Wayland and the Nvidia kernel driver is loaded (see [tauri-apps/tauri#10702](https://github.com/tauri-apps/tauri/issues/10702)). `WEBKIT_DISABLE_DMABUF_RENDERER` still overrides the detection either way.
+- The 1.5.2 workaround for the Wayland/Nvidia startup failure ("Gdk-Message: Error 71") disabling WebKitGTK's DMA-BUF renderer on every Linux system, which gave up the GPU path for Intel and AMD users who never had the bug. It is now only disabled when the session is Wayland (`WAYLAND_DISPLAY`, `WAYLAND_SOCKET` or `XDG_SESSION_TYPE`, so launches without a session environment are still covered) and the Nvidia kernel driver is loaded (see [tauri-apps/tauri#10702](https://github.com/tauri-apps/tauri/issues/10702)). `WEBKIT_DISABLE_DMABUF_RENDERER` still overrides the detection either way.
 
 ## [1.5.2] - 2026-08-23
 

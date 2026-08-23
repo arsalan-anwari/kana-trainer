@@ -143,6 +143,9 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      # the push below is authored by GITHUB_TOKEN, and github never triggers a
+      # workflow from those, so the pages deploy has to be dispatched by hand
+      actions: write
     steps:
       # the release job runs against the tag, and the page is committed to
       # main, so check that out instead
@@ -166,6 +169,8 @@ jobs:
         run: scripts/build-download-page.sh "${{ steps.version.outputs.tag }}"
 
       - name: Commit it
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- docs/html; then
             echo "the download page already points at ${{ steps.version.outputs.tag }}"
@@ -177,3 +182,4 @@ jobs:
           git add docs/html
           git commit -m 'Point the download page at ${{ steps.version.outputs.tag }}'
           git push origin main
+          gh workflow run pages.yml --ref main
