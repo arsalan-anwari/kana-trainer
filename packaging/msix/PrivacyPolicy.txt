@@ -1,0 +1,53 @@
+Privacy Policy for Kana Trainer
+
+Last updated: 21 August 2026
+
+Kana Trainer is a practice app for the hiragana and katakana alphabets. This
+policy explains what the app does with your data. The short version: it does
+not collect any of it.
+
+What the app collects
+
+Nothing. Kana Trainer does not collect, transmit or sell personal data. There
+are no accounts, no sign in, no analytics, no advertising, no tracking and no
+crash reporting.
+
+What the app stores on your device
+
+The app saves your practice settings and the score reports of your runs. This
+data stays on your computer, in the local application data folder that Windows
+gives the app. It is never uploaded anywhere.
+
+You can export your reports to a .kt-report file and import them again, for
+example to move them to another device. That file is written where you choose
+to save it, and moving it somewhere else is entirely up to you.
+
+Uninstalling the app removes it along with the data it stored.
+
+Network use
+
+Kana Trainer works fully offline. All characters, audio and images are part of
+the installed app. The app makes no network requests of its own.
+
+Children
+
+The app is suitable for all ages. Since it collects no data at all, it collects
+no data from children either.
+
+Permissions
+
+Kana Trainer asks for no special Windows permissions beyond reading and writing
+its own data, plus access to a file you pick yourself when you export or import
+reports.
+
+Changes to this policy
+
+If this policy changes, the updated version ships with a new release of the app
+and the date at the top is updated.
+
+Contact
+
+Questions about this policy can go to:
+
+arsalan@anwari.nl
+https://github.com/arsalan-anwari/kana-trainer
