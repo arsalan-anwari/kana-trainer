@@ -15,6 +15,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 OUT_DIR=docs/html
 TEMPLATE=scripts/download-page/index.template.html
 REPO_URL=https://github.com/arsalan-anwari/kana-trainer
+STORE_URL=https://apps.microsoft.com/detail/9pbn4s73d1qc
 
 for tool in gh jq; do
   command -v "$tool" >/dev/null || { echo "$tool is not installed, stopping" >&2; exit 1; }
@@ -53,6 +54,7 @@ icon() {
     debian)  echo '<circle cx="12" cy="12" r="5.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="3.2" r="2.6"/><circle cx="4.4" cy="16.4" r="2.6"/><circle cx="19.6" cy="16.4" r="2.6"/>' ;;
     fedora)  echo '<path d="M12 0a12 12 0 0 0 0 24h5.7a6.3 6.3 0 0 0 6.3-6.3V12A12 12 0 0 0 12 0zm1.6 5.6a3.6 3.6 0 0 1 3.6 3.6 1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 0-1.2-1.2 1.2 1.2 0 0 0-1.2 1.2v2.2h2a1.2 1.2 0 1 1 0 2.4h-2v1.4a3.6 3.6 0 1 1-3.6-3.6h1.2V9.2a3.6 3.6 0 0 1 3.6-3.6zM9.2 13.6a1.2 1.2 0 1 0 1.2 1.2v-1.2z"/>' ;;
     arch)    echo '<path d="M12 .8c.8 1.6 1.3 2.7 2.2 4.3-.6-.6-1.2-1-1.8-1.4.9 2.3 1.4 4.7 1.2 7.1-.1 2.6-1.1 5-2.7 7 1.6-.4 3.2-1.3 4.4-2.5-.1.7-.4 1.4-.9 2.1 2.1-1.4 3.2-3.4 3.4-5.4l4.6 10.2H1.6L12 .8zm.3 15.4c1 .6 1.9 1.4 2.5 2.4H9.2c.6-1 1.5-1.8 2.5-2.4z"/>' ;;
+    store)   echo '<path d="M3.4 7.6h17.2l-1.2 12.6a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.2 7.6V5.4a3.8 3.8 0 0 1 7.6 0v2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.1 11.6h2.6v2.6H9.1zm3.2 0h2.6v2.6h-2.6zm-3.2 3.2h2.6v2.6H9.1zm3.2 0h2.6v2.6h-2.6z"/>' ;;
     android) echo '<path d="M6 9v7.5c0 .6.4 1 1 1h1V21a1.5 1.5 0 0 0 3 0v-3.5h2V21a1.5 1.5 0 0 0 3 0v-3.5h1c.6 0 1-.4 1-1V9H6zM4 9a1.5 1.5 0 0 0-1.5 1.5v5a1.5 1.5 0 0 0 3 0v-5A1.5 1.5 0 0 0 4 9zm16 0a1.5 1.5 0 0 0-1.5 1.5v5a1.5 1.5 0 0 0 3 0v-5A1.5 1.5 0 0 0 20 9zM15.9 2.7l1.1-1.9a.3.3 0 0 0-.5-.3l-1.1 2A6.7 6.7 0 0 0 12 2c-.9 0-1.7.2-2.4.5L8.5.5a.3.3 0 0 0-.5.3l1.1 1.9A5.6 5.6 0 0 0 6 7.5h12a5.6 5.6 0 0 0-2.1-4.8zM9.5 5.4a.6.6 0 1 1 0-1.2.6.6 0 0 1 0 1.2zm5 0a.6.6 0 1 1 0-1.2.6.6 0 0 1 0 1.2z"/>' ;;
   esac
 }
@@ -109,6 +111,24 @@ if [ -z "$cards" ]; then
   echo "$TAG has no assets matching any known package, stopping" >&2
   exit 1
 fi
+
+# The store listing is not a release asset, so it is spelled out rather than
+# looked up on the tag. Appended after the guard above, otherwise a release
+# with no packages at all would still produce a page.
+cards+="        <li class=\"card\" data-os=\"windows\">
+          <div class=\"card-head\">
+            <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">$(icon store)</svg>
+            <div>
+              <div class=\"card-name\">Microsoft Store</div>
+              <div class=\"card-note\">Windows 10 and 11</div>
+            </div>
+            <span class=\"yours-flag\">Your system</span>
+          </div>
+          <p class=\"card-body\">Installs and updates through the store, signed and checked by Microsoft. No unknown publisher warning.</p>
+          <a class=\"button\" href=\"$STORE_URL\">Open in Microsoft Store</a>
+        </li>
+"
+echo "    Microsoft Store -> $STORE_URL"
 
 echo "==> Writing $OUT_DIR"
 mkdir -p "$OUT_DIR"

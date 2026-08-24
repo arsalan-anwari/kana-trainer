@@ -1,11 +1,12 @@
 # kana-trainer
 
-<a href="https://crates.io/crates/kana-trainer"><img src="https://img.shields.io/crates/v/kana-trainer.svg?style=flat-square" alt="crates.io" /></a>
-<a href="https://github.com/arsalan-anwari/kana-trainer/releases"><img src="https://img.shields.io/github/downloads/arsalan-anwari/kana-trainer/total?style=flat-square" alt="GitHub Downloads" /></a>
-<a href="https://crates.io/crates/kana-trainer"><img src="https://img.shields.io/crates/d/kana-trainer.svg?style=flat-square" alt="Crates Downloads" /></a>
-<a href="https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml"><img src="https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-<a href="LICENSE"><img src="https://img.shields.io/crates/l/kana-trainer.svg?style=flat-square" alt="license" /></a>
-<a href="https://arsalan-anwari.github.io/kana-trainer/"><img src="https://img.shields.io/badge/Docs-1a1b27?style=flat-square&logo=readthedocs&logoColor=white&labelColor=0d1117" alt="Docs" /></a>
+[![crates.io](https://img.shields.io/crates/v/kana-trainer.svg?style=flat-square)](https://crates.io/crates/kana-trainer)
+[![GitHub Downloads](https://img.shields.io/github/downloads/arsalan-anwari/kana-trainer/total?style=flat-square)](https://github.com/arsalan-anwari/kana-trainer/releases)
+[![Crates Downloads](https://img.shields.io/crates/d/kana-trainer.svg?style=flat-square)](https://crates.io/crates/kana-trainer)
+[![CI](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml/badge.svg)](https://github.com/arsalan-anwari/kana-trainer/actions/workflows/ci.yml)
+[![license](https://img.shields.io/crates/l/kana-trainer.svg?style=flat-square)](LICENSE)
+[![Docs](https://img.shields.io/badge/Docs-1a1b27?style=flat-square&logo=readthedocs&logoColor=white&labelColor=0d1117)](https://arsalan-anwari.github.io/kana-trainer/)
+[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-1a1b27?style=flat-square&labelColor=0d1117&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZD0iTTMuNCA3LjZoMTcuMmwtMS4yIDEyLjZhMiAyIDAgMCAxLTIgMS44SDYuNmEyIDIgMCAwIDEtMi0xLjh6IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMS42Ii8%2BPHBhdGggZD0iTTguMiA3LjZWNS40YTMuOCAzLjggMCAwIDEgNy42IDB2Mi4yIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMS42Ii8%2BPHBhdGggZD0iTTkuMSAxMS42aDIuNnYyLjZIOS4xem0zLjIgMGgyLjZ2Mi42aC0yLjZ6bS0zLjIgMy4yaDIuNnYyLjZIOS4xem0zLjIgMGgyLjZ2Mi42aC0yLjZ6IiBmaWxsPSIjZmZmIi8%2BPC9zdmc%2B)](https://apps.microsoft.com/detail/9pbn4s73d1qc)
 
 Trainer for the hiragana and katakana alphabets, on desktop, tablet and phone.
 Built with Tauri 2 and Svelte 5, in cream paper and black ink.
