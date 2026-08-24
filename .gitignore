@@ -19,4 +19,5 @@ src-tauri/gen/apple
 .flatpak-builder
 .showcase
 .test_ci.log
+.zed
 __pycache__

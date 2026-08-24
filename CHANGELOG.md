@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.4] - 2026-08-24
+
+### Changed
+
+- The Wayland/Nvidia startup failure ("Gdk-Message: Error 71") is now fixed without giving up hardware acceleration. Instead of disabling WebKitGTK's DMA-BUF renderer, the app creates a GL context on its window before the first frame, which makes GTK3 run every frame on GL and never attach the shared-memory buffer that the compositor rejects (see [tauri-apps/tauri#10702](https://github.com/tauri-apps/tauri/issues/10702)). Setting `WEBKIT_DISABLE_DMABUF_RENDERER=1` still forces the old workaround.
+
+### Added
+
+- A troubleshooting guide for the Wayland/Nvidia startup failure, and for the cosmetic WebKitGTK crash on KDE Plasma after closing the window.
+
 ## [1.5.3] - 2026-08-23
 
 ### Fixed

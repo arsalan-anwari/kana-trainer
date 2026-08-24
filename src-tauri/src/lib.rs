@@ -1,4 +1,6 @@
 mod reports;
+#[cfg(target_os = "linux")]
+mod wayland_nvidia;
 
 use tauri::{window::Color, Manager, Theme};
 
@@ -20,6 +22,11 @@ pub fn run() {
                 };
                 // best effort: an unsupported platform just keeps the config colour
                 let _ = window.set_background_color(Some(background));
+
+                #[cfg(target_os = "linux")]
+                if let Ok(gtk_window) = window.gtk_window() {
+                    wayland_nvidia::force_paint_gl_context(&gtk_window);
+                }
             }
             Ok(())
         })

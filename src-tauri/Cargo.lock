@@ -1665,8 +1665,9 @@ dependencies = [
 
 [[package]]
 name = "kana-trainer"
-version = "1.5.3"
+version = "1.5.4"
 dependencies = [
+ "gtk",
  "serde",
  "serde_json",
  "tauri",

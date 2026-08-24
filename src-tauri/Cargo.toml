@@ -1,6 +1,6 @@
 [package]
 name = "kana-trainer"
-version = "1.5.3"
+version = "1.5.4"
 edition = "2021"
 rust-version = "1.77.2"
 description = "Desktop trainer for hiragana and katakana with quiz, typing and audio modes"
@@ -50,6 +50,10 @@ tauri-plugin-dialog = "2.7.2"
 tauri-plugin-fs = "2.5.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# same version tauri pulls in, for the Wayland/Nvidia workaround in src/wayland_nvidia.rs
+gtk = "0.18"
 
 [profile.release]
 codegen-units = 1

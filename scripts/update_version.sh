@@ -4,7 +4,7 @@
 # depend on remembering all six places.
 #
 # Usage:
-#   scripts/update_version.sh 1.5.3
+#   scripts/update_version.sh 1.x.x
 
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
