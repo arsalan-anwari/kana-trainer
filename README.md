@@ -40,6 +40,7 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 - Chart view of every character grouped by sound type and row, tap a tile to hear it
 - Score reports saved on disk, exported and imported as `.kt-report` files holding any number of runs. Easy migration of runs to other devices. 
 - Responsive interface, the same app on a wide screen and on a phone
+- Works on Linux, Windows, MacOS and Android.
 
 ## Installing
 
