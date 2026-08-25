@@ -1,6 +1,6 @@
 {
   "name": "kana-trainer",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Desktop trainer for hiragana and katakana",
   "type": "module",
   "private": true,

@@ -51,16 +51,27 @@ so every frame is a GL frame and no shared-memory buffer is ever attached. This
 keeps hardware acceleration; 1.5.2 and 1.5.3 fixed the crash by turning
 WebKitGTK's DMA-BUF renderer off instead, which gave up the GPU path.
 
-The workaround only runs when the session is Wayland and the Nvidia kernel
-driver is loaded (`/sys/module/nvidia_drm` exists). A session counts as Wayland
-when `WAYLAND_DISPLAY`, `WAYLAND_SOCKET` or `XDG_SESSION_TYPE=wayland` is set
-and `GDK_BACKEND` is not pointed at X11, which also covers launches that inherit
-no session environment, such as a systemd unit or `sudo`.
-
-If it still fails, fall back to the old workaround, which also disables the
-early GL context:
+The fix lives in
+[`tauri-plugin-wayland-nvidia-quirk`](https://crates.io/crates/tauri-plugin-wayland-nvidia-quirk),
+which applies it only on an affected system: an Nvidia GPU driving a Wayland
+session. To see what it decided on yours:
 
 ```sh
+TAURI_WAYLAND_NVIDIA_QUIRK_VERBOSE=1 kana-trainer
+```
+
+To turn it off, or to force it on a system the detection does not recognise:
+
+```sh
+TAURI_WAYLAND_NVIDIA_QUIRK=0 kana-trainer   # never apply
+TAURI_WAYLAND_NVIDIA_QUIRK=1 kana-trainer   # always apply
+```
+
+If it still fails, fall back in this order. Both stand the early GL context
+down, and the second also drops WebKit's GPU compositing:
+
+```sh
+__NV_DISABLE_EXPLICIT_SYNC=1 kana-trainer
 WEBKIT_DISABLE_DMABUF_RENDERER=1 kana-trainer
 ```
 

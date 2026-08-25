@@ -19,6 +19,7 @@
     <binary>kana-trainer</binary>
   </provides>
   <releases>
+    <release version="1.5.5" date="2026-08-25"/>
     <release version="1.5.4" date="2026-08-24"/>
     <release version="1.5.3" date="2026-08-23"/>
     <release version="1.5.2" date="2026-08-23"/>

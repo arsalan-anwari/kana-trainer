@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.5] - 2026-08-25
+
+### Changed
+
+- The Wayland/Nvidia startup fix now comes from the [`tauri-plugin-wayland-nvidia-quirk`](https://crates.io/crates/tauri-plugin-wayland-nvidia-quirk) crate instead of a module in this repository. The behaviour is the same, and the plugin also covers windows opened after startup. `TAURI_WAYLAND_NVIDIA_QUIRK=0` now turns it off and `TAURI_WAYLAND_NVIDIA_QUIRK_VERBOSE=1` logs what it decided; `WEBKIT_DISABLE_DMABUF_RENDERER=1` still stands the fix down and takes WebKit off the GPU path.
+
 ## [1.5.4] - 2026-08-24
 
 ### Changed
