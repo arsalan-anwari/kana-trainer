@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <title>Kana Trainer privacy policy</title>
+    <meta
+      name="description"
+      content="Kana Trainer collects nothing. Everything you do stays on your device." />
+
+    <style>
+      :root {
+        --paper: #f7f2e7;
+        --ink: #1b1915;
+        --muted: #6e6657;
+        --wire: #ded5c1;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #16150f;
+          --ink: #f3eddf;
+          --muted: #a49a84;
+          --wire: #353227;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        padding: 0 1.25rem 4rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      main {
+        max-width: 44rem;
+        margin: 0 auto;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 3rem 0 2rem;
+        text-align: center;
+      }
+
+      .mark {
+        font-family: "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP",
+          "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+        font-size: 3rem;
+        line-height: 1;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 1.75rem;
+        letter-spacing: -0.01em;
+      }
+
+      .updated {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      h2 {
+        margin: 2.5rem 0 0.5rem;
+        font-size: 1.125rem;
+      }
+
+      p,
+      li {
+        color: var(--ink);
+      }
+
+      ul {
+        padding-left: 1.25rem;
+      }
+
+      li {
+        margin: 0.35rem 0;
+      }
+
+      .lede {
+        margin-top: 0;
+        padding: 1rem 1.25rem;
+        border-left: 3px solid var(--ink);
+        background: rgb(127 127 127 / 6%);
+      }
+
+      footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--wire);
+        color: var(--muted);
+        font-size: 0.8125rem;
+        text-align: center;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      footer a {
+        text-decoration-color: var(--wire);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <div class="mark" aria-hidden="true">あ</div>
+        <h1>Privacy policy</h1>
+        <p class="updated">Kana Trainer &middot; last updated 26 August 2026</p>
+      </header>
+
+      <p class="lede">
+        Kana Trainer collects nothing, sends nothing and contains no analytics,
+        no advertising and no tracking of any kind. It has no user accounts and
+        no server. Everything the app records stays on your device.
+      </p>
+
+      <h2>What the app stores</h2>
+      <p>
+        When you finish a practice run, Kana Trainer saves a score report in its
+        own private storage on your device. A report holds the settings you
+        chose, the characters you were asked, which answers were right or wrong,
+        and how long the run took. Nothing in it identifies you.
+      </p>
+      <p>
+        You can delete any report, or all of them, from the reports screen at any
+        time. Uninstalling the app removes them along with it.
+      </p>
+
+      <h2>What leaves your device</h2>
+      <p>
+        Nothing, unless you ask for it. The app makes no network requests: the
+        kana, the audio and every other asset are bundled inside the app itself,
+        and the built-in content security policy blocks outside connections
+        outright.
+      </p>
+      <p>
+        The one way data moves is the export button, which writes your reports to
+        a <code>.kt-report</code> file at a location you pick, so you can carry
+        them to another device. That file goes where you send it and nowhere
+        else. Importing reads such a file back.
+      </p>
+
+      <h2>Permissions</h2>
+      <p>
+        The Android build asks for no runtime permissions at all. It does not
+        request your location, camera, microphone, contacts, or access to your
+        photos or files beyond the single file you choose when you export or
+        import a report.
+      </p>
+      <p>
+        Google Play will list &ldquo;full network access&rdquo; under this app's
+        permissions. That is the standard <code>INTERNET</code> permission,
+        declared by the Tauri framework the app is built on so its webview can
+        load the app's own bundled files. Kana Trainer does not use it to reach
+        the internet, and its content security policy would refuse the attempt.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        Kana Trainer is suitable for all ages. Because it collects no personal
+        information from anyone, it collects none from children either.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        If this policy ever changes, the updated version will be posted on this
+        page with a new date above. The app is open source, so any change to what
+        it does with your data is visible in its history.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy, or about the app, can go to
+        <a href="mailto:arsalan@anwari.nl">arsalan@anwari.nl</a> or to the
+        <a href="https://github.com/arsalan-anwari/kana-trainer/issues">issue
+        tracker</a>.
+      </p>
+
+      <footer>
+        <p>
+          <a href="./">Download Kana Trainer</a> &middot;
+          <a href="https://github.com/arsalan-anwari/kana-trainer">Source on GitHub</a>
+        </p>
+        <p>Free and open source under the Apache 2.0 licence.</p>
+      </footer>
+    </main>
+  </body>
+</html>
