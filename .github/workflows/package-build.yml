@@ -47,7 +47,8 @@ jobs:
             "dmg":      { "name": "dmg",      "os": "macos-14",       "kind": "tauri",   "rust": true, "bundle": "dmg",  "glob": "src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg" },
             "msix":     { "name": "msix",     "os": "windows-latest", "kind": "msix",    "rust": true, "glob": "dist/packages/*.msix" },
             "arch":     { "name": "arch",     "os": "ubuntu-24.04",   "kind": "arch",    "glob": "dist/packages/*.pkg.tar.zst" },
-            "apk":      { "name": "apk",      "os": "ubuntu-24.04",   "kind": "apk",     "rust": true, "glob": "dist/packages/*.apk" }
+            "apk":      { "name": "apk",      "os": "ubuntu-24.04",   "kind": "apk",     "rust": true, "android": true, "glob": "dist/packages/*.apk" },
+            "aab":      { "name": "aab",      "os": "ubuntu-24.04",   "kind": "aab",     "rust": true, "android": true, "glob": "dist/packages/*.aab" }
           }
           JSON
 
@@ -104,7 +105,7 @@ jobs:
         run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
 
       - name: Add the android targets
-        if: matrix.kind == 'apk'
+        if: matrix.android
         run: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 
       - name: Cache the cargo registry and build
@@ -147,7 +148,6 @@ jobs:
       # msix, the package the microsoft store takes. Tauri has no msix bundler,
       # so the release binary is staged into a layout directory next to the
       # manifest and the store logos, and the windows sdk packs that.
-
       - name: Build the msix package
         if: matrix.kind == 'msix'
         shell: pwsh
@@ -164,13 +164,10 @@ jobs:
 
           Copy-Item 'src-tauri/target/release/kana-trainer.exe' $layout
 
-          # only the logos the manifest names, each already the size its name claims
           foreach ($logo in 'StoreLogo', 'Square44x44Logo', 'Square71x71Logo', 'Square150x150Logo', 'Square310x310Logo') {
             Copy-Item "src-tauri/icons/$logo.png" "$layout/Assets"
           }
-          # tauri generates no wide logo, and the schema rejects a DefaultTile
-          # that names the large square tile without one, so it is committed
-          # alongside the manifest rather than coming from src-tauri/icons
+
           Copy-Item 'packaging/msix/Assets/Wide310x150Logo.png' "$layout/Assets"
 
           $manifest = Get-Content 'packaging/msix/AppxManifest.xml.in' -Raw
@@ -211,35 +208,32 @@ jobs:
           "
           cp dist/arch/*.pkg.tar.zst dist/packages/
 
-      # apk
+      # apk and aab
 
       - uses: actions/setup-java@v4
-        if: matrix.kind == 'apk'
+        if: matrix.android
         with:
           distribution: temurin
           java-version: '17'
 
       - uses: android-actions/setup-android@v3
-        if: matrix.kind == 'apk'
+        if: matrix.android
 
+      # Google Play Store requires new submissions to target api 36 from 31 august 2026
       - name: Install the android ndk
-        if: matrix.kind == 'apk'
+        if: matrix.android
         run: |
-          sdkmanager --install "ndk;27.2.12479018" "platforms;android-34" "build-tools;34.0.0"
+          sdkmanager --install "ndk;27.2.12479018" "platforms;android-36" "build-tools;36.0.0"
           echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/27.2.12479018" >> "$GITHUB_ENV"
 
-      - name: Build the apk
-        if: matrix.kind == 'apk'
+      # matrix.kind is apk or aab, which is also the flag tauri wants
+      - name: Build the ${{ matrix.kind }}
+        if: matrix.android
         run: |
           npx tauri android init --skip-targets-install
           sh scripts/android-icons.sh
-          npx tauri android build --apk
+          npx tauri android build --${{ matrix.kind }}
 
-      # Android will not install an unsigned release apk, and it refuses to
-      # update an installed one whose signing certificate has changed, so every
-      # release has to be signed with the same key. That key lives in the
-      # repository secrets. Builds without it fall back to a throwaway key,
-      # which side loads fine but can only ever be installed fresh.
       - name: Sign the apk
         if: matrix.kind == 'apk'
         env:
@@ -279,16 +273,51 @@ jobs:
           unsigned="$(find src-tauri/gen/android -name '*.apk' -path '*release*' | head -1)"
           [ -n "$unsigned" ] || { echo "tauri produced no release apk" >&2; exit 1; }
 
-          tools="$ANDROID_SDK_ROOT/build-tools/34.0.0"
+          tools="$ANDROID_SDK_ROOT/build-tools/36.0.0"
           mkdir -p dist/packages
           out="dist/packages/kana-trainer-$VERSION.apk"
           "$tools/zipalign" -p -f 4 "$unsigned" aligned.apk
           "$tools/apksigner" sign --ks keystore.jks --ks-pass env:STOREPASS \
             --ks-key-alias "$alias" --key-pass env:KEYPASS --out "$out" aligned.apk
-          # the fingerprint has to match every previous release, print it so a
-          # mismatch can be spotted in the log
+
           "$tools/apksigner" verify --print-certs "$out"
           rm -f keystore.jks aligned.apk
+
+      - name: Sign the aab
+        if: matrix.kind == 'aab'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          set -eu
+
+          if [ -z "${KEYSTORE_BASE64:-}" ] || [ -z "${KEYSTORE_PASSWORD:-}" ]; then
+            echo "an aab is only useful signed with the upload key, so set the" >&2
+            echo "ANDROID_KEYSTORE_BASE64 and ANDROID_KEYSTORE_PASSWORD secrets" >&2
+            exit 1
+          fi
+
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > keystore.jks
+          alias="${KEY_ALIAS:-kanatrainer}"
+          STOREPASS="$KEYSTORE_PASSWORD"
+          KEYPASS="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
+          export STOREPASS KEYPASS
+
+          unsigned="$(find src-tauri/gen/android -name '*.aab' -path '*release*' | head -1)"
+          [ -n "$unsigned" ] || { echo "tauri produced no release aab" >&2; exit 1; }
+
+          mkdir -p dist/packages
+          out="dist/packages/kana-trainer-$VERSION.aab"
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore keystore.jks -storepass:env STOREPASS -keypass:env KEYPASS \
+            -signedjar "$out" "$unsigned" "$alias"
+
+          jarsigner -verify -verbose:summary -certs "$out" > verify.txt
+          head -20 verify.txt
+          rm -f keystore.jks verify.txt
 
       - name: Collect the package
         shell: bash
