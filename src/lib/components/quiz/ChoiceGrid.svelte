@@ -16,7 +16,9 @@
   }
 </script>
 
-<div class="grid w-full max-w-lg grid-cols-2 gap-3 sm:gap-4">
+<!-- capped against the viewport too, so a short phone shrinks the tiles
+     instead of pushing them off the bottom -->
+<div class="grid w-full max-w-[min(17rem,36dvh)] grid-cols-2 gap-2.5 sm:max-w-md sm:gap-3">
   {#each question.choices as choice, index (choice.kanaId)}
     <ChoiceTile
       slot={index + 1}

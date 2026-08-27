@@ -225,7 +225,9 @@ export function seedPayload(options: SeedOptions = {}): SeedPayload {
     keys: { reports: REPORT_KEY, settings: SETTINGS_KEY, prefs: PREFS_KEY },
     reports: history(options.now ?? Date.now()),
     settings,
-    prefs: { effects: options.effects ?? true, theme: "light" }
+    // pinned rather than left to the defaults, so a recording never picks up
+    // a zoom level or a palette from somewhere else
+    prefs: { effects: options.effects ?? true, theme: "light", contrast: false, zoom: 1 }
   };
 }
 

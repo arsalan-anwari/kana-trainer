@@ -48,5 +48,26 @@
     <path d="M3.5 5.5h17l-6.5 7.6v5.6l-4 2.3v-7.9z" />
   {:else if name === "chevron-down"}
     <path d="M6 9.5l6 6 6-6" />
+  {:else if name === "sliders"}
+    <path d="M4 7h10M18 7h2M4 17h4M12 17h8" />
+    <circle cx="16" cy="7" r="2.2" />
+    <circle cx="10" cy="17" r="2.2" />
+  {:else if name === "contrast"}
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none" />
+  {:else if name === "volume-on"}
+    <path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z" />
+    <path d="M16 9a4.5 4.5 0 0 1 0 6M18.7 6.5a8 8 0 0 1 0 11" />
+  {:else if name === "volume-off"}
+    <path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z" />
+    <path d="M16.5 9.8l4.5 4.4M21 9.8l-4.5 4.4" />
+  {:else if name === "zoom-in"}
+    <circle cx="11" cy="11" r="6.5" />
+    <path d="M8.5 11h5M11 8.5v5M15.8 15.8L20.5 20.5" />
+  {:else if name === "zoom-out"}
+    <circle cx="11" cy="11" r="6.5" />
+    <path d="M8.5 11h5M15.8 15.8L20.5 20.5" />
+  {:else if name === "close"}
+    <path d="M6 6l12 12M18 6L6 18" />
   {/if}
 </svg>

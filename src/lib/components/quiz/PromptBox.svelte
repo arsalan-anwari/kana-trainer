@@ -12,8 +12,8 @@
   }: { size?: "md" | "lg"; class?: string; children: Snippet } = $props();
 
   const sizes = {
-    md: "size-40 sm:size-48 lg:size-56",
-    lg: "size-48 sm:size-60 lg:size-68"
+    md: "size-[min(11rem,20dvh)] sm:size-44 lg:size-52",
+    lg: "size-36 sm:size-56 lg:size-64"
   };
 </script>
 

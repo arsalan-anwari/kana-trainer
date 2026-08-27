@@ -104,7 +104,8 @@ npm run test:e2e       # playwright
   moves on after feedback
 - `r` replays the sound in audio questions
 - `Escape` leaves the run
+- `Shift+left` and `Shift+right` move between pages.
 
 ## Credits
 
-- Character sounds from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html) (CC BY 4.0), pitch and loudness normalised with `scripts/normalize-audio.py`
+- Character sounds from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html) (CC BY 4.0), pitch and loudness normalised with `scripts/normalize-audio.py`. Upload available on [Hugging Face](https://huggingface.co/datasets/arsalan-anwari/kana-sounds).

@@ -64,10 +64,10 @@
 {/if}
 
 {#if question !== null && kana !== null}
-  <div class="flex flex-col gap-6">
+  <div class="flex min-h-[calc(100dvh-10rem)] flex-col gap-3 sm:min-h-0 sm:gap-6">
     <QuizStatusBar />
 
-    <div class="flex flex-col items-center gap-6 sm:gap-8">
+    <div class="flex flex-1 flex-col items-center gap-4 sm:gap-7">
       {#if secondsLeft !== null}
         <div class="w-full max-w-xs">
           <Progress
@@ -78,8 +78,13 @@
       {/if}
 
       {#key question.index}
-        <div class="anim-pop flex w-full flex-col items-center gap-6 sm:gap-8">
-          <QuestionPrompt {question} {kana} onreplay={() => app.replayPrompt()} />
+        <!-- prompt up top, answers down by the thumb, the gap between them takes the slack -->
+        <div
+          class="anim-pop flex w-full flex-1 flex-col items-center justify-between gap-4 sm:flex-none sm:justify-start sm:gap-7"
+        >
+          <div class="flex flex-1 items-center sm:flex-none">
+            <QuestionPrompt {question} {kana} onreplay={() => app.replayPrompt()} />
+          </div>
 
           {#if app.settings.answerStyle !== "choice"}
             <TypingAnswer {question} />

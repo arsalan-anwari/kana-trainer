@@ -3,6 +3,8 @@
     difficulties,
     difficultyLabel,
     difficultyMinPool,
+    groupFlag,
+    optionalGroups,
     perQuestionOptions,
     totalTimeOptions,
     type Difficulty
@@ -11,7 +13,14 @@
   import Card from "../../ui/Card.svelte";
   import Chip from "../../ui/Chip.svelte";
   import OptionCard from "../../ui/OptionCard.svelte";
+  import Switch from "../../ui/Switch.svelte";
   import QuestionCountPicker from "./QuestionCountPicker.svelte";
+
+  const sets = [
+    { group: optionalGroups[0], label: "Dakuon", hint: "が ざ だ ば rows" },
+    { group: optionalGroups[1], label: "Handakuon", hint: "ぱ row" },
+    { group: optionalGroups[2], label: "Yoon", hint: "きゃ しゃ ちゃ and the rest" }
+  ];
 
   const hints: Record<Difficulty, string> = {
     beginner: "Wrong answers are picked at random",
@@ -29,8 +38,22 @@
   }
 </script>
 
-<Card title="Settings" description="How long the run is and how hard it pushes.">
+<Card title="Run options" description="What is in the run, how long it is and how hard it pushes.">
   <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        Extra character sets
+      </span>
+      {#each sets as set (set.group)}
+        <Switch
+          label={set.label}
+          hint={set.hint}
+          checked={app.settings[groupFlag(set.group)] === true}
+          onchange={(value) => app.setGroup(set.group, value)}
+        />
+      {/each}
+    </div>
+
     <div class="flex flex-col gap-2">
       <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         Questions

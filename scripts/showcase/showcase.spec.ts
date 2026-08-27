@@ -8,6 +8,7 @@ import {
   discardRun,
   installShowcase,
   missed,
+  openRow,
   Showcase,
   silence,
   splash
@@ -65,15 +66,16 @@ test("record the showcase", async ({ page }, testInfo) => {
   await button("Kana to romaji").click();
   await button("Katakana").click();
   await page.getByRole("tab", { name: "Katakana" }).click();
-  await button("KA", true).click();
+  await button(/^K-row/).click();
+  await openRow(page, "K-row");
   await shots.top();
   await shots.reveal(page.getByText("Characters", { exact: true }), 44);
   await shots.shot("04_Setup_Alphabets");
 
-  // how long the run is and how hard it pushes
-  await shots.reveal(page.getByText("Settings", { exact: true }), 44);
+  // how long the run is, how hard it pushes and what is in it
+  await shots.reveal(page.getByText("Run options", { exact: true }), 44);
   await button("Advanced").click();
-  await shots.shot("05_Setup_Settings");
+  await shots.shot("05_Setup_RunOptions");
   await shots.top();
 
   // read the character, tap the reading
@@ -202,8 +204,24 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
 
   await button("Chart", true).click();
+  await expect(page.getByRole("heading", { name: /Seion/ })).toBeVisible();
+  await openRow(page, "A-row");
+  await openRow(page, "K-row");
   await shots.top();
   await shots.shot("20_Chart_Characters");
+
+  // the settings that outlive a run. a phone keeps them in a sheet of their
+  // own, a wide window has room for them in the header
+  const sheet = button("Settings", true);
+  if (await sheet.isVisible()) {
+    await sheet.click();
+    await shots.shot("21_Settings_Menu");
+    await button("Close settings", true).click();
+  } else {
+    await button("High contrast theme", true).click();
+    await shots.shot("21_Chart_HighContrast");
+    await button("High contrast theme", true).click();
+  }
 
   console.log(`  ${shots.count} stills in docs/${testInfo.project.name}`);
 });

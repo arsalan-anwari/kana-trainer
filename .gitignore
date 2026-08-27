@@ -1,3 +1,8 @@
+# Cache files
+__pycache__
+./metadata_cache
+
+# Build artifacts
 node_modules
 src-tauri/dist
 src-tauri/target
@@ -7,17 +12,24 @@ packaging/arch/src
 packaging/arch/pkg
 packaging/arch/*.pkg.tar.*
 packaging/arch/*.tar.gz
-.DS_Store
-*.log
 target-portable
 .cargo-container
-test-results
-playwright-report
+.DS_Store
 src-tauri/gen/android
 src-tauri/gen/apple
+.metadata_cache
+
+# IDE files
+.zed
+.vs
+.vscode
+.idea
+
+# Project files
 .promo
 .flatpak-builder
 .showcase
 .test_ci.log
-.zed
-__pycache__
+*.log
+test-results
+playwright-report

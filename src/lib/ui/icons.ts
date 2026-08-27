@@ -9,4 +9,11 @@ export type IconName =
   | "download"
   | "trash"
   | "filter"
-  | "chevron-down";
+  | "chevron-down"
+  | "sliders"
+  | "contrast"
+  | "volume-on"
+  | "volume-off"
+  | "zoom-in"
+  | "zoom-out"
+  | "close";

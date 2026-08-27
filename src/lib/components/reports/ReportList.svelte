@@ -86,7 +86,7 @@
   </div>
 
   <div class="flex items-center justify-between gap-2">
-    <span class="text-xs text-muted-foreground">
+    <span class="hidden text-xs text-muted-foreground sm:inline">
       {picked.length === 0 ? `${reports.length} shown` : `${picked.length} of ${reports.length}`}
     </span>
     <div class="flex items-center gap-1.5">

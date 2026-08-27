@@ -23,7 +23,7 @@
 </script>
 
 <div class="flex w-full max-w-xl flex-col gap-3">
-  <div class="grid grid-cols-1 gap-3">
+  <div class="grid grid-cols-1 gap-2 sm:gap-3">
     {#each rows as row (row.choice.kanaId)}
       {#if row.audio !== null}
         <SoundChoice

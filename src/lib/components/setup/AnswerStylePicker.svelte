@@ -7,7 +7,7 @@
 </script>
 
 <Card title="Answer style" description="Tap one of four answers or type it yourself.">
-  <div class="grid grid-cols-2 gap-3">
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
     <OptionCard
       label="Multiple choice"
       hint={audioToText ? "Answer choices are always in kana" : "Choose one of 4 options"}

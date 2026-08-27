@@ -13,7 +13,7 @@
 </script>
 
 <Card title="Alphabets" description="Pick what you want to see during the run.">
-  <div class="grid grid-cols-2 gap-3">
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
     <OptionCard
       label="Hiragana"
       hint="あ い う え お"

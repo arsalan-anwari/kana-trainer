@@ -41,158 +41,158 @@ function makeRow(id: string, label: string, group: Group, entries: Entry[]): Row
 }
 
 export const rows: Row[] = [
-  makeRow("a", "A", "seion", [
+  makeRow("a", "A-row", "seion", [
     ["a", "あ", "ア", "a", []],
     ["i", "い", "イ", "i", []],
     ["u", "う", "ウ", "u", []],
     ["e", "え", "エ", "e", []],
     ["o", "お", "オ", "o", []]
   ]),
-  makeRow("ka", "KA", "seion", [
+  makeRow("ka", "K-row", "seion", [
     ["ka", "か", "カ", "ka", []],
     ["ki", "き", "キ", "ki", []],
     ["ku", "く", "ク", "ku", []],
     ["ke", "け", "ケ", "ke", []],
     ["ko", "こ", "コ", "ko", []]
   ]),
-  makeRow("sa", "SA", "seion", [
+  makeRow("sa", "S-row", "seion", [
     ["sa", "さ", "サ", "sa", []],
     ["shi", "し", "シ", "shi", ["si"]],
     ["su", "す", "ス", "su", []],
     ["se", "せ", "セ", "se", []],
     ["so", "そ", "ソ", "so", []]
   ]),
-  makeRow("ta", "TA", "seion", [
+  makeRow("ta", "T-row", "seion", [
     ["ta", "た", "タ", "ta", []],
     ["chi", "ち", "チ", "chi", ["ti"]],
     ["tsu", "つ", "ツ", "tsu", ["tu"]],
     ["te", "て", "テ", "te", []],
     ["to", "と", "ト", "to", []]
   ]),
-  makeRow("na", "NA", "seion", [
+  makeRow("na", "N-row", "seion", [
     ["na", "な", "ナ", "na", []],
     ["ni", "に", "ニ", "ni", []],
     ["nu", "ぬ", "ヌ", "nu", []],
     ["ne", "ね", "ネ", "ne", []],
     ["no", "の", "ノ", "no", []]
   ]),
-  makeRow("ha", "HA", "seion", [
+  makeRow("ha", "H-row", "seion", [
     ["ha", "は", "ハ", "ha", []],
     ["hi", "ひ", "ヒ", "hi", []],
     ["fu", "ふ", "フ", "fu", ["hu"]],
     ["he", "へ", "ヘ", "he", []],
     ["ho", "ほ", "ホ", "ho", []]
   ]),
-  makeRow("ma", "MA", "seion", [
+  makeRow("ma", "M-row", "seion", [
     ["ma", "ま", "マ", "ma", []],
     ["mi", "み", "ミ", "mi", []],
     ["mu", "む", "ム", "mu", []],
     ["me", "め", "メ", "me", []],
     ["mo", "も", "モ", "mo", []]
   ]),
-  makeRow("ya", "YA", "seion", [
+  makeRow("ya", "Y-row", "seion", [
     ["ya", "や", "ヤ", "ya", []],
     ["yu", "ゆ", "ユ", "yu", []],
     ["yo", "よ", "ヨ", "yo", []]
   ]),
-  makeRow("ra", "RA", "seion", [
+  makeRow("ra", "R-row", "seion", [
     ["ra", "ら", "ラ", "ra", []],
     ["ri", "り", "リ", "ri", []],
     ["ru", "る", "ル", "ru", []],
     ["re", "れ", "レ", "re", []],
     ["ro", "ろ", "ロ", "ro", []]
   ]),
-  makeRow("wa", "WA", "seion", [
+  makeRow("wa", "W-row", "seion", [
     ["wa", "わ", "ワ", "wa", []],
     ["wo", "を", "ヲ", "wo", []]
   ]),
   makeRow("n", "N", "seion", [["n", "ん", "ン", "n", ["nn"]]]),
-  makeRow("ga", "GA", "dakuon", [
+  makeRow("ga", "G-row", "dakuon", [
     ["ga", "が", "ガ", "ga", []],
     ["gi", "ぎ", "ギ", "gi", []],
     ["gu", "ぐ", "グ", "gu", []],
     ["ge", "げ", "ゲ", "ge", []],
     ["go", "ご", "ゴ", "go", []]
   ]),
-  makeRow("za", "ZA", "dakuon", [
+  makeRow("za", "Z-row", "dakuon", [
     ["za", "ざ", "ザ", "za", []],
     ["ji", "じ", "ジ", "ji", ["zi"]],
     ["zu", "ず", "ズ", "zu", []],
     ["ze", "ぜ", "ゼ", "ze", []],
     ["zo", "ぞ", "ゾ", "zo", []]
   ]),
-  makeRow("da", "DA", "dakuon", [
+  makeRow("da", "D-row", "dakuon", [
     ["da", "だ", "ダ", "da", []],
     ["di", "ぢ", "ヂ", "dji", ["di", "ji"], "di"],
     ["du", "づ", "ヅ", "dzu", ["du", "zu"], "du"],
     ["de", "で", "デ", "de", []],
     ["do", "ど", "ド", "do", []]
   ]),
-  makeRow("ba", "BA", "dakuon", [
+  makeRow("ba", "B-row", "dakuon", [
     ["ba", "ば", "バ", "ba", []],
     ["bi", "び", "ビ", "bi", []],
     ["bu", "ぶ", "ブ", "bu", []],
     ["be", "べ", "ベ", "be", []],
     ["bo", "ぼ", "ボ", "bo", []]
   ]),
-  makeRow("pa", "PA", "handakuon", [
+  makeRow("pa", "P-row", "handakuon", [
     ["pa", "ぱ", "パ", "pa", []],
     ["pi", "ぴ", "ピ", "pi", []],
     ["pu", "ぷ", "プ", "pu", []],
     ["pe", "ぺ", "ペ", "pe", []],
     ["po", "ぽ", "ポ", "po", []]
   ]),
-  makeRow("kya", "KYA", "yoon", [
+  makeRow("kya", "KY-row", "yoon", [
     ["kya", "きゃ", "キャ", "kya", []],
     ["kyu", "きゅ", "キュ", "kyu", []],
     ["kyo", "きょ", "キョ", "kyo", []]
   ]),
-  makeRow("sha", "SHA", "yoon", [
+  makeRow("sha", "SH-row", "yoon", [
     ["sha", "しゃ", "シャ", "sha", ["sya", "shya"], "sya"],
     ["shu", "しゅ", "シュ", "shu", ["syu", "shyu"], "syu"],
     ["sho", "しょ", "ショ", "sho", ["syo", "shyo"], "syo"]
   ]),
-  makeRow("cha", "CHA", "yoon", [
+  makeRow("cha", "CH-row", "yoon", [
     ["cha", "ちゃ", "チャ", "cha", ["tya", "cya"], "cya"],
     ["chu", "ちゅ", "チュ", "chu", ["tyu", "cyu"], "cyu"],
     ["cho", "ちょ", "チョ", "cho", ["tyo", "cyo"], "cyo"]
   ]),
-  makeRow("nya", "NYA", "yoon", [
+  makeRow("nya", "NY-row", "yoon", [
     ["nya", "にゃ", "ニャ", "nya", []],
     ["nyu", "にゅ", "ニュ", "nyu", []],
     ["nyo", "にょ", "ニョ", "nyo", []]
   ]),
-  makeRow("hya", "HYA", "yoon", [
+  makeRow("hya", "HY-row", "yoon", [
     ["hya", "ひゃ", "ヒャ", "hya", []],
     ["hyu", "ひゅ", "ヒュ", "hyu", []],
     ["hyo", "ひょ", "ヒョ", "hyo", []]
   ]),
-  makeRow("mya", "MYA", "yoon", [
+  makeRow("mya", "MY-row", "yoon", [
     ["mya", "みゃ", "ミャ", "mya", []],
     ["myu", "みゅ", "ミュ", "myu", []],
     ["myo", "みょ", "ミョ", "myo", []]
   ]),
-  makeRow("rya", "RYA", "yoon", [
+  makeRow("rya", "RY-row", "yoon", [
     ["rya", "りゃ", "リャ", "rya", []],
     ["ryu", "りゅ", "リュ", "ryu", []],
     ["ryo", "りょ", "リョ", "ryo", []]
   ]),
-  makeRow("gya", "GYA", "yoon", [
+  makeRow("gya", "GY-row", "yoon", [
     ["gya", "ぎゃ", "ギャ", "gya", []],
     ["gyu", "ぎゅ", "ギュ", "gyu", []],
     ["gyo", "ぎょ", "ギョ", "gyo", []]
   ]),
-  makeRow("ja", "JA", "yoon", [
+  makeRow("ja", "J-row", "yoon", [
     ["ja", "じゃ", "ジャ", "ja", ["jya", "zya"], "zya"],
     ["ju", "じゅ", "ジュ", "ju", ["jyu", "zyu"], "zyu"],
     ["jo", "じょ", "ジョ", "jo", ["jyo", "zyo"], "zyo"]
   ]),
-  makeRow("bya", "BYA", "yoon", [
+  makeRow("bya", "BY-row", "yoon", [
     ["bya", "びゃ", "ビャ", "bya", []],
     ["byu", "びゅ", "ビュ", "byu", []],
     ["byo", "びょ", "ビョ", "byo", []]
   ]),
-  makeRow("pya", "PYA", "yoon", [
+  makeRow("pya", "PY-row", "yoon", [
     ["pya", "ぴゃ", "ピャ", "pya", []],
     ["pyu", "ぴゅ", "ピュ", "pyu", []],
     ["pyo", "ぴょ", "ピョ", "pyo", []]

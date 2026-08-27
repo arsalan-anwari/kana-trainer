@@ -116,7 +116,7 @@ test("record the promo", async ({ page }) => {
   // a set of characters per alphabet, behind a tab each
   await stage.caption("Each alphabet has its own set");
   await stage.tap(page.getByRole("tab", { name: "Katakana" }), 240);
-  await stage.tap(button("KA", true), 200);
+  await stage.tap(button("K-row", true), 200);
   await stage.tap(page.getByRole("tab", { name: "Hiragana" }), 260);
   stage.mark("alphabet tabs");
 
@@ -174,7 +174,7 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button("Text only"), 140);
   await stage.tap(button("Katakana"), 160);
   await stage.tap(button("Clear", true), 160);
-  await stage.tap(button("A", true), 240);
+  await stage.tap(button("A-row", true), 240);
   await stage.tap(startRun, 420);
   await stage.frame("main .anim-pop");
 
@@ -245,7 +245,8 @@ test("record the promo", async ({ page }) => {
   stage.mark("transfer");
 
   // the character chart
-  await stage.tap(button("Chart", true), 320);
+  await stage.caption("Swipe, or Shift and an arrow key, to change screen");
+  await stage.press("Shift+ArrowRight", 520);
   await stage.caption("Every character in one chart. Tap to hear it");
   await stage.tap(button("Play ka", true), 560);
   await stage.beat(200);
@@ -257,6 +258,19 @@ test("record the promo", async ({ page }) => {
   await stage.caption("Light, dark, or system default theme.");
   await stage.tap(page.getByRole("button", { name: "Theme: light" }), 700);
   await stage.tap(page.getByRole("button", { name: "Theme: dark" }), 500);
+
+  await stage.caption("Scale the whole app to fit the screen it is on");
+  const zoomOut = page.getByRole("button", { name: "Zoom out" });
+  const zoomIn = page.getByRole("button", { name: "Zoom in" });
+  await stage.tap(zoomOut, 260);
+  await stage.tap(zoomOut, 480);
+  await stage.tap(zoomIn, 260);
+  await stage.tap(zoomIn, 480);
+
+  await stage.caption("Or a high contrast palette, when that reads easier");
+  const contrast = page.getByRole("button", { name: "High contrast theme" });
+  await stage.tap(contrast, 900);
+  await stage.tap(contrast, 300);
   await stage.hideCaption();
   await stage.scroll(0, 300);
   stage.mark("chart");

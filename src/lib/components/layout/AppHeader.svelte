@@ -1,11 +1,22 @@
 <script lang="ts">
+  import { tabRoutes } from "../../core/prefs";
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
+  import IconButton from "../../ui/IconButton.svelte";
+  import AppControls from "./AppControls.svelte";
   import AppMark from "./AppMark.svelte";
-  import ThemeToggle from "./ThemeToggle.svelte";
+  import SettingsMenu from "./SettingsMenu.svelte";
+
+  const labels: Record<(typeof tabRoutes)[number], string> = {
+    setup: "Practice",
+    reports: "Reports",
+    chart: "Chart"
+  };
+
+  let menu = $state(false);
 </script>
 
-<header class="flex flex-wrap items-center justify-between gap-3">
+<header class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
   <div class="flex items-center gap-3">
     <AppMark class="size-10 text-h3 sm:size-11" />
     <div class="flex flex-col">
@@ -14,32 +25,34 @@
         Hiragana and katakana practice
       </span>
     </div>
+    <!-- the phone keeps the permanent settings behind this, out of the tabs -->
+    <IconButton
+      class="ml-auto sm:hidden"
+      icon="sliders"
+      label="Settings"
+      active={menu}
+      onclick={() => (menu = true)}
+    />
   </div>
-  <nav class="ml-auto flex items-center gap-2">
-    <Button
-      size="sm"
-      variant={app.route === "setup" ? "secondary" : "ghost"}
-      onclick={() => app.go("setup")}
-    >
-      Practice
-    </Button>
-    <Button
-      size="sm"
-      variant={app.route === "reports" ? "secondary" : "ghost"}
-      onclick={() => app.go("reports")}
-    >
-      Reports
-    </Button>
-    <Button
-      size="sm"
-      variant={app.route === "chart" ? "secondary" : "ghost"}
-      onclick={() => app.go("chart")}
-    >
-      Chart
-    </Button>
+
+  <nav class="flex items-center gap-2">
+    {#each tabRoutes as route (route)}
+      <Button
+        size="sm"
+        class="flex-1 sm:flex-none"
+        variant={app.route === route ? "secondary" : "ghost"}
+        onclick={() => app.go(route)}
+      >
+        {labels[route]}
+      </Button>
+    {/each}
     <!-- kept apart from the three screen buttons so it does not read as a fourth -->
-    <span class="ml-3 border-l border-border pl-3 sm:ml-4 sm:pl-4">
-      <ThemeToggle />
+    <span class="ml-3 hidden border-l border-border pl-3 sm:ml-4 sm:flex sm:pl-4">
+      <AppControls />
     </span>
   </nav>
 </header>
+
+{#if menu}
+  <SettingsMenu onclose={() => (menu = false)} />
+{/if}

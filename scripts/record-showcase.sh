@@ -122,3 +122,13 @@ for target in "${targets[@]}"; do
   npx playwright test --config scripts/showcase/showcase.config.ts --project="$target"
   build_gif "$dir" "$(target_gif "$target")" "$(target_width "$target")"
 done
+
+# The social card for the promo clip. The clip itself carries a cursor and a
+# caption pill in every frame, so the card is the opening still instead, on a
+# cream field at the 16:9 the link previews want.
+if [ -f docs/desktop/01_Setup_TextOnly.png ]; then
+  ffmpeg -hide_banner -loglevel error -y -i docs/desktop/01_Setup_TextOnly.png \
+    -vf "scale=1920:1080:force_original_aspect_ratio=decrease:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=0xF7F2E7" \
+    docs/promo-thumbnail.png
+  echo "==> docs/promo-thumbnail.png"
+fi

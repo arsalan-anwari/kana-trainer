@@ -11,24 +11,25 @@
   });
 </script>
 
-<div class="flex flex-col gap-3">
-  <div class="flex items-center gap-3">
+<div class="flex flex-col gap-1.5 sm:gap-3">
+  <div class="flex items-center gap-2 sm:gap-3">
     <Button size="sm" variant="ghost" onclick={() => app.askQuit()}>Quit</Button>
     <Progress value={app.progress} class="flex-1" />
     <span class="shrink-0 text-sm font-semibold tabular-nums">
       {app.index + 1} / {app.questions.length}
     </span>
-  </div>
-  <div class="flex flex-wrap items-center gap-2 text-sm">
-    <span class="rounded-md bg-secondary px-3 py-1 font-semibold">{app.score} correct</span>
     {#if totalLabel !== null}
       <span
-        class="rounded-md px-3 py-1 font-semibold tabular-nums {(app.totalRemaining ?? 0) < 15000
+        class="shrink-0 rounded-md px-2 py-1 text-xs font-semibold tabular-nums {(app.totalRemaining ?? 0) < 15000
           ? 'bg-danger-soft text-danger'
           : 'bg-secondary'}"
       >
-        {totalLabel} left
+        {totalLabel}
       </span>
     {/if}
   </div>
+  <!-- one thin line rather than a second bar of chips, the quiz needs the height -->
+  <span class="px-1 text-xs font-semibold text-muted-foreground tabular-nums">
+    {app.score} correct
+  </span>
 </div>

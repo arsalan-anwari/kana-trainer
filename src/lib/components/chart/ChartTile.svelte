@@ -12,7 +12,7 @@
   type="button"
   aria-label="Play {kana.romaji}"
   aria-pressed={playing}
-  class="group relative flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-0.5 overflow-hidden rounded-xl border transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
+  class="group relative flex aspect-[3/2] w-full cursor-pointer flex-col items-center justify-center gap-1 sm:aspect-square overflow-hidden rounded-xl border transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
     ? 'border-2 border-foreground bg-foreground/10 text-foreground'
     : 'border-border bg-surface text-foreground hover:border-foreground hover:bg-accent active:translate-y-[1px]'}"
   onclick={() => kanaAudio.play(kana.audio)}
@@ -26,10 +26,10 @@
     <PlayIcon {playing} class="size-3" />
   </span>
 
-  <span class="text-sm leading-none font-bold sm:text-h4">{kana.romaji}</span>
+  <span class="text-h3 leading-none font-bold sm:text-h4">{kana.romaji}</span>
   <span class="kana flex items-baseline gap-1 leading-none text-muted-foreground">
-    <span class="text-[10px] sm:text-xs">{kana.hira}</span>
-    <span class="text-[10px] sm:text-xs">{kana.kata}</span>
+    <span class="text-base sm:text-sm">{kana.hira}</span>
+    <span class="text-base sm:text-sm">{kana.kata}</span>
   </span>
 
   {#if playing}

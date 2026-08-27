@@ -93,7 +93,7 @@ export function statsByRow(answers: Answer[]): StatRow[] {
     (key) => {
       const row = rows.find((item) => item.id === key);
       return {
-        label: row ? `${row.label} row` : key,
+        label: row ? row.label : key,
         sub: row ? row.kana.map((kana) => kana.hira).join("") : ""
       };
     }

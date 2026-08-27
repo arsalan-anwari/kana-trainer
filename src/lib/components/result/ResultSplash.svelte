@@ -6,16 +6,38 @@
   /**
    * The moment between the last answer and the numbers: one emoji for how it
    * went, then it gets out of the way and fades into the report behind it.
+   * The bigger the run, the bigger the party, so nothing but a clean sheet
+   * gets the full treatment.
    */
 
   let { tier, summary }: { tier: ScoreTier; summary: Summary } = $props();
 
-  const HOLD = 2100;
   const FADE = 520;
 
-  let leaving = $state(false);
+  type Party = {
+    /** How long the splash holds before it starts leaving. */
+    hold: number;
+    pieces: number;
+    /** Confetti size range, in px. */
+    size: number;
+    /** Expanding rings behind the emoji. */
+    rings: number;
+    bounce: boolean;
+  };
 
-  const cheerful = $derived(tier === "perfect" || tier === "great" || tier === "good");
+  const parties: Record<ScoreTier, Party> = {
+    perfect: { hold: 3400, pieces: 90, size: 14, rings: 3, bounce: true },
+    great: { hold: 2900, pieces: 54, size: 11, rings: 2, bounce: true },
+    good: { hold: 2400, pieces: 30, size: 9, rings: 1, bounce: false },
+    fair: { hold: 2100, pieces: 14, size: 8, rings: 0, bounce: false },
+    poor: { hold: 2100, pieces: 0, size: 0, rings: 0, bounce: false }
+  };
+
+  // one splash per finished run, so the grade is read once and held
+  // svelte-ignore state_referenced_locally
+  const party = parties[tier];
+
+  let leaving = $state(false);
 
   /** The two accents the palette allows, plus a gold for the win. */
   const tones = [
@@ -27,17 +49,19 @@
   ];
 
   /** Fixed at setup so a re-render never reshuffles the confetti mid flight. */
-  const pieces = Array.from({ length: 42 }, (_, index) => ({
+  const pieces = Array.from({ length: party.pieces }, (_, index) => ({
     index,
     left: Math.random() * 100,
     delay: Math.random() * 0.7,
     duration: 1.6 + Math.random() * 1.2,
     drift: Math.round(Math.random() * 80 - 40),
     spin: Math.round(Math.random() * 540 - 270),
-    size: 7 + Math.round(Math.random() * 7),
+    size: party.size - 4 + Math.round(Math.random() * 7),
     tone: tones[index % tones.length],
     round: index % 3 === 0
   }));
+
+  const rings = Array.from({ length: party.rings }, (_, index) => index);
 
   function dismiss(): void {
     if (leaving) return;
@@ -46,7 +70,7 @@
   }
 
   $effect(() => {
-    const hold = setTimeout(dismiss, HOLD);
+    const hold = setTimeout(dismiss, party.hold);
     return () => clearTimeout(hold);
   });
 </script>
@@ -62,7 +86,7 @@
   aria-live="polite"
   onclick={dismiss}
 >
-  {#if cheerful}
+  {#if pieces.length > 0}
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       {#each pieces as piece (piece.index)}
         <span
@@ -75,8 +99,20 @@
   {/if}
 
   <div class="anim-splash-body relative flex flex-col items-center gap-3 px-6 text-center">
-    <span class="anim-splash-emoji text-[5rem] leading-none sm:text-[6.5rem]">
-      {tierEmoji(tier)}
+    <span class="relative flex items-center justify-center">
+      {#each rings as ring (ring)}
+        <span
+          class="anim-burst pointer-events-none absolute size-24 rounded-full border-2 border-gold sm:size-32"
+          style="animation-delay: {ring * 0.36}s"
+          aria-hidden="true"
+        ></span>
+      {/each}
+      <!-- the pop and the bounce are separate elements: one animation each -->
+      <span class="anim-splash-emoji relative text-[5rem] leading-none sm:text-[6.5rem]">
+        <span class="inline-block {party.bounce ? 'anim-bounce-hold' : ''}">
+          {tierEmoji(tier)}
+        </span>
+      </span>
     </span>
     <span class="text-h1 font-bold leading-tight">{tierHeadline(tier)}</span>
     <span class="text-base text-muted-foreground">{tierBlurb(tier)}</span>

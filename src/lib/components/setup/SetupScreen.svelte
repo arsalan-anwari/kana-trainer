@@ -4,7 +4,6 @@
   import AlphabetPicker from "./AlphabetPicker.svelte";
   import AnswerStylePicker from "./AnswerStylePicker.svelte";
   import DirectionPicker from "./DirectionPicker.svelte";
-  import ExtrasPanel from "./ExtrasPanel.svelte";
   import FormatPicker from "./FormatPicker.svelte";
   import KanaPicker from "./KanaPicker.svelte";
   import StartPanel from "./StartPanel.svelte";
@@ -23,7 +22,6 @@
     {#if textOnly}
       <DirectionPicker />
     {/if}
-    <ExtrasPanel />
     <SettingsPanel />
   </div>
 

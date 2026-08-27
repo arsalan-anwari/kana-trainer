@@ -23,6 +23,14 @@ import {
   type RunSettings
 } from "./core/settings";
 import { summarize, weakKanaIds, type Report, type Summary } from "./core/report";
+import {
+  clampZoom,
+  defaultPrefs,
+  mergePrefs,
+  nextTab,
+  zoomStep,
+  type Prefs
+} from "./core/prefs";
 import { scoreTier, type ScoreTier } from "./core/score";
 import { kanaAudio, setEffectsEnabled, sfx } from "./audio";
 import { listReports, loadJson, saveReport, storeJson } from "./storage";
@@ -32,11 +40,6 @@ export type Phase = "answering" | "feedback" | "done";
 
 const SETTINGS_KEY = "kana-trainer-settings";
 const PREFS_KEY = "kana-trainer-prefs";
-
-export type Prefs = {
-  effects: boolean;
-  theme: "system" | "light" | "dark";
-};
 
 function newId(): string {
   const stamp = Date.now().toString(36);
@@ -56,7 +59,7 @@ class AppState {
     ...defaultSettings,
     selections: { hiragana: startingSelection(), katakana: startingSelection() }
   });
-  prefs = $state<Prefs>({ effects: true, theme: "system" });
+  prefs = $state<Prefs>({ ...defaultPrefs });
   notes = $state<string[]>([]);
   reports = $state<Report[]>([]);
   message = $state<string>("");
@@ -128,7 +131,7 @@ class AppState {
       this.settings = result.settings;
       this.notes = result.notes;
     }
-    this.prefs = loadJson<Prefs>(PREFS_KEY, this.prefs);
+    this.prefs = mergePrefs(loadJson<Partial<Prefs> | null>(PREFS_KEY, null));
     this.applyPrefs();
     void this.refreshReports();
   }
@@ -137,8 +140,29 @@ class AppState {
     setEffectsEnabled(this.prefs.effects);
     const root = document.documentElement;
     root.classList.remove("light", "dark");
-    if (this.prefs.theme !== "system") root.classList.add(this.prefs.theme);
+    // high contrast is its own palette, so it stands in for the theme entirely
+    if (!this.prefs.contrast && this.prefs.theme !== "system") {
+      root.classList.add(this.prefs.theme);
+    }
+    root.classList.toggle("high-contrast", this.prefs.contrast);
+    // every size in the app is in rem, so the root size is the zoom control
+    root.style.fontSize = `${Math.round(this.prefs.zoom * 100)}%`;
     storeJson(PREFS_KEY, this.prefs);
+  }
+
+  setPref<K extends keyof Prefs>(key: K, value: Prefs[K]): void {
+    this.prefs[key] = value;
+    this.applyPrefs();
+  }
+
+  zoomBy(steps: number): void {
+    this.setPref("zoom", clampZoom(this.prefs.zoom + steps * zoomStep));
+  }
+
+  /** Moves one tab left or right, wrapping. Ignored off the three tabs. */
+  shiftTab(step: number): void {
+    const next = nextTab(this.route, step);
+    if (next !== null) this.go(next);
   }
 
   updateSettings(patch: Partial<RunSettings>): void {

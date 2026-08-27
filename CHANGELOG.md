@@ -5,6 +5,33 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-08-27
+
+### Added
+
+- A high contrast theme, a fixed black and white palette with a gold accent.
+- Zoom, in steps between 70% and 140%, with the current level shown as a percentage.
+- Switching tabs by swiping left and right on a touch screen, and with `Shift` + `Left`/`Right` on a keyboard. Swipes are ignored while a dialog is open or a run is in progress.
+- A full screen settings sheet on phones, opened from the button beside the app name. Theme, high contrast, zoom and sound effects moved there.
+- Sound effects can be turned on and off from the header on desktop and tablet, next to the theme button or in settings screen on mobile.
+- Different celebration animations and sfx depending the score.
+
+### Changed
+
+- Phones now show the character picker and the character chart as rows that pull down. Desktop and tablet keep the flat layout they had.
+- Row labels follow structure `{n}-row` rather than `{n}A` for characters.
+- The chart blocks are shorter on a phone and carry a larger reading.
+- The answer style and alphabet pickers sit two across on a phone rather than stacked.
+- The quiz fits on a phone screen without scrolling.
+- The audio question frame takes a share of the screen height on a phone rather than a fixed small square, and what is inside it scales with the frame instead of spilling out of the tap target.
+- The app leaves room for the notification bar and the home indicator, so the logo is no longer behind the status bar.
+- "Settings" on the practice screen is now "Run options", and it holds the dakuon, handakuon and yoon toggles.
+
+### Removed
+
+- The "Extras" card on the practice screen. Its three toggles moved into "Run options".
+- The reports toolbar drops the "n shown" count on a phone, which was squeezing the icons next to it.
+
 ## [1.5.5] - 2026-08-25
 
 ### Changed

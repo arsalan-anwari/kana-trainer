@@ -28,7 +28,7 @@
       title="{groupLabel(section.group)} {section.japanese}"
       description={section.description}
     >
-      <div class="grid grid-cols-1 gap-2 sm:gap-3 lg:grid-cols-2 lg:gap-x-8">
+      <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-x-8">
         {#each rowsInGroup(section.group) as row (row.id)}
           <ChartRow {row} columns={widest(section.group)} />
         {/each}

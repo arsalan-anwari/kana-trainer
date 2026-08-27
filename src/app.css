@@ -84,8 +84,49 @@
   --gold: #d9ab3c;
 }
 
+/* High contrast: one fixed palette that ignores light, dark and the system.
+   Pure white on black, hard borders, and the two accents pushed to their
+   loudest readable form. */
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --surface: #000000;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #e6e6e6;
+  --accent: #262626;
+  --accent-foreground: #ffffff;
+  --destructive: #ff5f4d;
+  --destructive-foreground: #000000;
+  --border: #ffffff;
+  --wire: #ffffff;
+  --input: #ffffff;
+  --ring: #ffd400;
+  --sidebar: #000000;
+  --sidebar-foreground: #ffffff;
+  --sidebar-border: #ffffff;
+  --brand: #ffd400;
+  --brand-foreground: #000000;
+  --brand-shadow: #7a6600;
+  --success: #4dff88;
+  --success-foreground: #000000;
+  --success-soft: #062d15;
+  --danger: #ff5f4d;
+  --danger-foreground: #000000;
+  --danger-soft: #350a05;
+  --chart-1: #4d4d4d;
+  --chart-2: #808080;
+  --chart-3: #b3b3b3;
+  --chart-4: #e6e6e6;
+  --chart-5: #ffffff;
+  --gold: #ffd400;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root:not(.light) {
+  :root:not(.light):not(.high-contrast) {
     --background: #16150f;
     --foreground: #f3eddf;
     --surface: #1e1c15;
@@ -268,6 +309,19 @@ body {
   100% { opacity: 0; transform: translate3d(var(--drift, 0px), 108vh, 0) rotate(var(--spin, 180deg)); }
 }
 
+/* a ring thrown outward from the emoji, one per top grade */
+@keyframes burst {
+  0% { opacity: 0.75; transform: scale(0.2); }
+  100% { opacity: 0; transform: scale(2.6); }
+}
+
+/* the winner's glyph keeps bouncing while the splash is up */
+@keyframes bounce-hold {
+  0%, 100% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-10%) scale(1.06); }
+  60% { transform: translateY(0) scale(0.98); }
+}
+
 @keyframes sheet-up {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
@@ -299,12 +353,22 @@ body {
   animation: sheet-up 0.24s ease-out both;
 }
 
+.anim-burst {
+  animation: burst 1.1s ease-out infinite;
+}
+
+.anim-bounce-hold {
+  animation: bounce-hold 1.1s ease-in-out 0.7s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .anim-pop,
   .anim-shake,
   .anim-cheer,
   .anim-splash-body,
   .anim-splash-emoji,
+  .anim-burst,
+  .anim-bounce-hold,
   .anim-sheet {
     animation: none;
   }

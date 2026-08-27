@@ -54,7 +54,7 @@
   {disabled}
   aria-pressed={state === "staged"}
   aria-label="Sound {slot}"
-  class="flex h-20 w-full cursor-pointer items-center gap-4 rounded-2xl border-2 px-4 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default sm:h-24 sm:gap-5 sm:px-5 {tones[
+  class="flex h-16 w-full cursor-pointer items-center gap-3 rounded-2xl border-2 px-3 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default sm:h-22 sm:gap-5 sm:px-5 {tones[
     state
   ]}"
   onclick={onpick}

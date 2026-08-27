@@ -15,7 +15,7 @@ async function startAndAnswer(page: import("@playwright/test").Page, howMany: nu
   await expect(page.getByRole("button", { name: "Start run" })).toBeEnabled();
   await page.getByRole("button", { name: "Start run" }).click();
   for (let index = 0; index < howMany; index += 1) {
-    const tiles = page.locator("main button.aspect-square");
+    const tiles = page.locator("main button", { hasText: /^[1-4]/ });
     await expect(tiles.first()).toBeEnabled();
     await tiles.first().click();
     await page.waitForTimeout(900);
@@ -85,7 +85,7 @@ test("a run that is finished still scores and splashes", async ({ page }) => {
   await page.getByRole("button", { name: "10", exact: true }).click();
   await startAndAnswer(page, 0);
   for (let index = 0; index < 10; index += 1) {
-    const tiles = page.locator("main button.aspect-square");
+    const tiles = page.locator("main button", { hasText: /^[1-4]/ });
     await expect(tiles.first()).toBeEnabled();
     await tiles.first().click();
     await page.waitForTimeout(900);

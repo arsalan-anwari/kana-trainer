@@ -39,7 +39,7 @@
               {#each box.rows as entry (entry.row.id)}
                 <div class="flex items-start gap-2">
                   <span
-                    class="w-9 shrink-0 pt-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground"
+                    class="w-9 shrink-0 pt-1 text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground"
                   >
                     {entry.row.label}
                   </span>
@@ -50,10 +50,10 @@
                         title="{miss.romaji}, missed {miss.misses} of {miss.total}"
                       >
                         <span class="kana text-base leading-none">{miss.glyph}</span>
-                        <span class="text-[10px] leading-none text-muted-foreground">
+                        <span class="text-[0.625rem] leading-none text-muted-foreground">
                           {miss.romaji}
                         </span>
-                        <span class="text-[10px] font-bold leading-none text-danger tabular-nums">
+                        <span class="text-[0.625rem] font-bold leading-none text-danger tabular-nums">
                           {miss.misses}
                         </span>
                       </span>

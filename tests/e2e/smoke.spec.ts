@@ -61,6 +61,10 @@ test("the chart lists every character and plays one", async ({ page }) => {
   await page.getByRole("button", { name: "Chart" }).click();
 
   await expect(page.getByRole("heading", { name: /Seion/ })).toBeVisible();
+
+  // every row starts closed, so the tiles only exist once the bars are opened
+  const closed = page.getByRole("button", { name: /^Show / });
+  for (let left = await closed.count(); left > 0; left -= 1) await closed.first().click();
   await expect(page.getByRole("button", { name: /^Play / })).toHaveCount(104);
 
   await page.getByRole("button", { name: "Play kyo" }).click();

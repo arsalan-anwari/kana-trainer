@@ -44,8 +44,8 @@
   </span>
   <span
     class="px-2 text-center font-semibold leading-none {kana
-      ? 'kana text-[3rem] sm:text-[3.75rem] lg:text-[4.25rem]'
-      : 'text-h2 sm:text-[2.5rem] lg:text-[3rem]'}"
+      ? 'kana text-[2.5rem] sm:text-[3.5rem] lg:text-[4rem]'
+      : 'text-[1.75rem] sm:text-[2.25rem] lg:text-[2.75rem]'}"
   >
     {label}
   </span>

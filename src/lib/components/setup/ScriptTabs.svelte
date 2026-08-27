@@ -35,7 +35,7 @@
         onclick={() => app.usePicker(tab.value)}
       >
         {tab.label}
-        <span class="rounded px-1.5 py-0.5 text-[10px] tabular-nums {app.pickerScript === tab.value
+        <span class="rounded px-1.5 py-0.5 text-[0.625rem] tabular-nums {app.pickerScript === tab.value
           ? 'bg-foreground text-background'
           : 'bg-border text-muted-foreground'}">
           {count}

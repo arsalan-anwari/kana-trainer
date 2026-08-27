@@ -19,11 +19,43 @@
 
   if (typeof requestIdleCallback === "function") requestIdleCallback(() => warmScreens());
   else setTimeout(warmScreens, 400);
+
+  function keydown(event: KeyboardEvent): void {
+    if (!event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    app.shiftTab(event.key === "ArrowRight" ? 1 : -1);
+  }
+
+  /** A flick across the page changes tab, the way the buttons above do. */
+  const SWIPE = 70;
+  let startX = 0;
+  let startY = 0;
+
+  function touchstart(event: TouchEvent): void {
+    const touch = event.changedTouches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+  }
+
+  function touchend(event: TouchEvent): void {
+    // a sheet or dialog owns the screen while it is up, swipes are not ours
+    if (document.querySelector('[role="dialog"], [role="alertdialog"]') !== null) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    // a scroll that wanders sideways is still a scroll, so the move has to be
+    // clearly horizontal before it counts
+    if (Math.abs(dx) < SWIPE || Math.abs(dx) < Math.abs(dy) * 2) return;
+    app.shiftTab(dx < 0 ? 1 : -1);
+  }
 </script>
+
+<svelte:window onkeydown={keydown} ontouchstart={touchstart} ontouchend={touchend} />
 
 <div class="min-h-dvh w-full">
   <main
-    class="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-5 sm:px-6 sm:py-7 lg:px-10 lg:py-9"
+    class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-[calc(env(safe-area-inset-top,0px)+1.5rem)] sm:gap-5 sm:px-6 sm:pt-7 sm:pb-7 lg:px-10 lg:py-9"
   >
     <AppHeader />
 

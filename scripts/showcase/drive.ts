@@ -63,14 +63,6 @@ export function installShowcase(init: ShowcaseInit): void {
     }
     html { scroll-behavior: auto !important; }
 
-    /*
-     * the confetti is half of what the result splash is, so rather than being
-     * killed it is held still part way down: one shared negative delay against
-     * four fall times, which drops each piece a different distance before the
-     * frame is taken. the blanket rule above zeroes the durations the app sets
-     * on each piece, so they are handed back here. four of them against the
-     * five colours it cycles through, or every band would be one colour.
-     */
     .anim-confetti {
       animation-name: confetti-fall !important;
       animation-timing-function: linear !important;
@@ -239,6 +231,15 @@ export async function discardRun(page: Page): Promise<void> {
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await page.getByRole("button", { name: "Stop and discard" }).click();
   await expect(page.getByRole("alertdialog")).toBeHidden();
+}
+
+/**
+ * Opens a pull down row by its label. Only a phone has them: a wide window
+ * shows every row flat already, so there is nothing to open there.
+ */
+export async function openRow(page: Page, label: string): Promise<void> {
+  const chevron = page.getByRole("button", { name: `Show ${label}`, exact: true });
+  if (await chevron.count()) await chevron.first().click();
 }
 
 /** The splash over a finished run, while it is still up. */
