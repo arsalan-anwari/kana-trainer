@@ -8,11 +8,6 @@
 name: pages
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'packaging/repo/**'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -37,16 +32,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/configure-pages@v5
-
-      # Ensure files are stable before archiving
-      - name: Stabilize artifacts
-        run: |
-          # Wait briefly and verify symlinks are resolved
-          sleep 2
-          # Check that packaging/repo/html exists and is readable
-          [ -d packaging/repo/html ] || { echo "Directory not found"; exit 1; }
-          # Verify key files exist
-          ls -la packaging/repo/html/
 
       - uses: actions/upload-pages-artifact@v3
         with:
