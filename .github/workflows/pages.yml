@@ -8,6 +8,11 @@
 name: pages
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'packaging/repo/**'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
