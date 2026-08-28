@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-08-28
+
+### Fixed
+
+- Selected boxes on the practice, reports and chart screens were almost invisible in high contrast. They now use the gold accent from the buttons instead of a faint fade.
+- Linter errors and warnings in the scripts and tools, and a few unused files, removed.
+
+### Changed
+
+- The content and packaging scripts are now five: `test_ci.sh`, `publish.sh`, `record.sh`, `update_version.sh` and `upload_data.sh`. Each takes flags for what to do, plus `--all`.
+- `scripts/` holds only bash. The Python, TypeScript and HTML it calls moved to `tools/`.
+- The screenshots, gifs, promo clip and download page moved from `docs/` to `packaging/repo/`.
+- The promo thumbnail is generated from the first light theme home screen still.
+- The Microsoft Store demo shots and the download page assets are symlinks to `packaging/repo/` rather than second copies.
+
+### Removed
+
+- `record-showcase.sh`, `record-promo.sh`, `build-download-page.sh`, `publish-docs.sh`, `publish-crates-io.sh` and `android-icons.sh`, folded into `record.sh` and `publish.sh`.
+
 ## [1.6.0] - 2026-08-27
 
 ### Added
@@ -187,6 +206,14 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.6.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.1
+[1.6.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.0
+[1.5.5]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.5
+[1.5.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.4
+[1.5.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.3
+[1.5.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.2
+[1.5.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.1
+[1.5.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.0
 [1.4.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.4.0
 [1.3.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.3.0
 [1.2.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.2.0

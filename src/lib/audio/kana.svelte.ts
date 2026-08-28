@@ -2,9 +2,7 @@ import { AssetStore } from "../assets/loader";
 import { shared } from "./shared";
 import { peaksFromBytes, syntheticPeaks } from "./waveform";
 
-/**
- * Playback of the recorded character sounds.
- */
+// Playback of the recorded character sounds.
 
 const store = shared(
   "kana-assets",
@@ -12,10 +10,10 @@ const store = shared(
 );
 
 class KanaAudio {
-  /** Key of the sound playing right now, `null` when silent. */
+  // key of the sound playing right now, null when silent
   playing = $state<string | null>(null);
-  
-  /** Playback position of that sound, 0 to 1. */
+
+  // playback position of that sound, 0 to 1
   progress = $state(0);
 
   peakCache = $state<Record<string, number[]>>({});
@@ -27,7 +25,7 @@ class KanaAudio {
     if (this.element !== null) return this.element;
     const element = new Audio();
     element.preload = "auto";
-    // kept in the document, hidden, so the smoke test can watch playback
+    // kept hidden in the document so tests can watch playback
     element.hidden = true;
     element.dataset.kanaAudio = "";
     document.body.append(element);
@@ -44,10 +42,7 @@ class KanaAudio {
     return element;
   }
 
-  /**
-   * Bars for the histogram next to a sound. Returns a placeholder shape while
-   * the file is still being decoded and the real one on the next read.
-   */
+  // histogram bars for a sound, a placeholder shape while it is still decoding
   peaks(name: string): number[] {
     const found = this.peakCache[name];
     if (found !== undefined) return found;
@@ -94,7 +89,7 @@ class KanaAudio {
     this.progress = 0;
   }
 
-  /** Pulls files and their waveforms into memory before a run starts. */
+  // pulls files and their waveforms into memory
   preload(names: Iterable<string>): void {
     for (const name of names) {
       store.preload([name]);
@@ -103,5 +98,5 @@ class KanaAudio {
   }
 }
 
-// one per page: see `shared` for why a hot reload must not make a second
+// one instance per page, see shared
 export const kanaAudio = shared("kana-audio", () => new KanaAudio());

@@ -3,10 +3,7 @@
   import { selectionFor } from "../../core/settings";
   import { app } from "../../state.svelte";
 
-  /**
-   * Which alphabet the picker below is editing. Only worth showing when both
-   * are switched on, since that is the only time the two lists can differ.
-   */
+  // Picks which alphabet the character picker below is editing.
 
   const tabs: { value: Script; label: string }[] = [
     { value: "hiragana", label: "Hiragana" },
@@ -30,14 +27,14 @@
         aria-selected={app.pickerScript === tab.value}
         class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors {app.pickerScript ===
         tab.value
-          ? 'bg-surface text-foreground shadow-[0_1px_0_var(--color-border)]'
+          ? 'bg-surface text-foreground ring-2 ring-selected ring-inset shadow-[0_1px_0_var(--color-border)]'
           : 'text-muted-foreground hover:text-foreground'}"
         onclick={() => app.usePicker(tab.value)}
       >
         {tab.label}
         <span class="rounded px-1.5 py-0.5 text-[0.625rem] tabular-nums {app.pickerScript === tab.value
-          ? 'bg-foreground text-background'
-          : 'bg-border text-muted-foreground'}">
+          ? 'bg-selected text-background'
+          : 'bg-secondary text-muted-foreground'}">
           {count}
         </span>
       </button>

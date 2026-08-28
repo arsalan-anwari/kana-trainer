@@ -25,7 +25,7 @@
         Hiragana and katakana practice
       </span>
     </div>
-    <!-- the phone keeps the permanent settings behind this, out of the tabs -->
+    <!-- opens the settings sheet on a phone -->
     <IconButton
       class="ml-auto sm:hidden"
       icon="sliders"
@@ -46,7 +46,7 @@
         {labels[route]}
       </Button>
     {/each}
-    <!-- kept apart from the three screen buttons so it does not read as a fourth -->
+    <!-- separated from the three screen buttons -->
     <span class="ml-3 hidden border-l border-border pl-3 sm:ml-4 sm:flex sm:pl-4">
       <AppControls />
     </span>

@@ -32,12 +32,12 @@
 {/snippet}
 
 {#if viewport.wide}
-  <!-- room for the row label beside its five characters -->
+  <!-- row label beside its five characters -->
   <div class="flex items-center gap-2 sm:gap-3">
     <button
       type="button"
       class="h-10 w-16 shrink-0 cursor-pointer rounded-lg border px-1 text-[0.6875rem] font-bold transition-colors {complete
-        ? 'border-foreground bg-foreground text-background'
+        ? 'border-selected bg-selected text-background'
         : 'border-border bg-surface text-muted-foreground hover:bg-accent'}"
       onclick={() => app.toggleRow(row.id)}
     >

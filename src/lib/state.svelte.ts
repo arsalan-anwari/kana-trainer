@@ -73,17 +73,17 @@ class AppState {
   staged = $state<Choice | null>(null);
   lastCorrect = $state(false);
   lastReport = $state<Report | null>(null);
-  /** The grade of the run just finished, while its splash is still up. */
+  // grade of the run just finished, while its splash is up
   splash = $state<ScoreTier | null>(null);
 
-  /** Which alphabet the character picker is editing when both are on. */
+  // which alphabet the character picker is editing
   pickerChoice = $state<Script>("hiragana");
 
-  /** Whether the "stop this run" question is on screen. */
+  // whether the quit confirmation is on screen
   confirmQuit = $state(false);
-  /** When the run was put on hold for that question, so it can be given back. */
+  // when the run was paused for that question
   pausedAt = 0;
-  /** Where to land once the run is abandoned. */
+  // where to go once the run is abandoned
   quitTo: Route = "setup";
 
   now = $state(0);
@@ -140,12 +140,12 @@ class AppState {
     setEffectsEnabled(this.prefs.effects);
     const root = document.documentElement;
     root.classList.remove("light", "dark");
-    // high contrast is its own palette, so it stands in for the theme entirely
+    // high contrast replaces the theme entirely
     if (!this.prefs.contrast && this.prefs.theme !== "system") {
       root.classList.add(this.prefs.theme);
     }
     root.classList.toggle("high-contrast", this.prefs.contrast);
-    // every size in the app is in rem, so the root size is the zoom control
+    // every size is in rem, so the root size drives the zoom
     root.style.fontSize = `${Math.round(this.prefs.zoom * 100)}%`;
     storeJson(PREFS_KEY, this.prefs);
   }
@@ -159,7 +159,7 @@ class AppState {
     this.setPref("zoom", clampZoom(this.prefs.zoom + steps * zoomStep));
   }
 
-  /** Moves one tab left or right, wrapping. Ignored off the three tabs. */
+  // moves one tab left or right, wrapping
   shiftTab(step: number): void {
     const next = nextTab(this.route, step);
     if (next !== null) this.go(next);
@@ -173,7 +173,7 @@ class AppState {
     storeJson(SETTINGS_KEY, this.settings);
   }
 
-  /** The picker edits one alphabet at a time, so every edit lands on that one. */
+  // switches which alphabet the picker edits
   usePicker(script: Script): void {
     sfx.click();
     this.pickerChoice = script;
@@ -204,7 +204,7 @@ class AppState {
     });
   }
 
-  /** Extra sets are a property of the run, so they land on both alphabets. */
+  // toggles an extra character set for both alphabets
   setGroup(group: OptionalGroup, value: boolean): void {
     const selections = { ...this.settings.selections };
     for (const script of scripts) {
@@ -307,10 +307,7 @@ class AppState {
     void kanaAudio.play(kana?.audio ?? null);
   }
 
-  /**
-   * Text to audio answers are staged rather than submitted: tapping a sound
-   * plays it and marks it as the pick, and the check button commits it.
-   */
+  // marks a choice as the pick without submitting it
   stageChoice(choice: Choice): void {
     if (this.phase !== "answering" || this.current === null) return;
     this.staged = choice;
@@ -400,10 +397,7 @@ class AppState {
     void saveReport(report).then(() => this.refreshReports());
   }
 
-  /**
-   * Puts the run on hold and asks. The clock stops with it, so a run cannot
-   * time out underneath the question, and thinking time is not charged for.
-   */
+  // pauses the run and its clock, then shows the quit confirmation
   askQuit(to: Route = "setup"): void {
     if (this.confirmQuit) return;
     this.stopTimer();
@@ -423,10 +417,7 @@ class AppState {
     this.startTimer();
   }
 
-  /**
-   * Abandons the run outright. A run that was not seen through is not a run:
-   * nothing is scored, nothing is saved and there is no splash for it.
-   */
+  // abandons the run without scoring or saving it
   quit(): void {
     this.stopTimer();
     kanaAudio.stop();
@@ -457,7 +448,7 @@ class AppState {
       this.message = "No mistakes found to practice.";
       return;
     }
-    // a miss belongs to the alphabet it was made in, so each side gets its own
+    // a miss belongs to the alphabet it was made in
     const selections = { hiragana: [] as string[], katakana: [] as string[] };
     for (const script of scripts) {
       const inScript = weakKanaIds(answers.filter((answer) => answer.script === script));
@@ -478,7 +469,7 @@ class AppState {
 
   go(route: Route): void {
     sfx.click();
-    // walking away from a run is stopping it, so it gets the same question
+    // leaving the quiz screen mid run asks to quit first
     if (this.route === "quiz" && route !== "quiz" && this.questions.length > 0) {
       this.askQuit(route);
       return;

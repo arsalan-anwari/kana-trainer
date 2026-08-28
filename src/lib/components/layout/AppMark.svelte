@@ -1,5 +1,5 @@
 <script lang="ts">
-  /** The あ seal used as the app mark, matching the installed icon. */
+  // The あ seal used as the app mark.
   let { class: className = "size-10" }: { class?: string } = $props();
 </script>
 

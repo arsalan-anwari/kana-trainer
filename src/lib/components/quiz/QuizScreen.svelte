@@ -19,7 +19,7 @@
 
   function keydown(event: KeyboardEvent): void {
     if (question === null) return;
-    // the run is on hold behind the dialog, which owns the keyboard until it goes
+    // the quit dialog owns the keyboard while it is open
     if (app.confirmQuit) return;
 
     if (event.key === "Escape") {
@@ -78,7 +78,7 @@
       {/if}
 
       {#key question.index}
-        <!-- prompt up top, answers down by the thumb, the gap between them takes the slack -->
+        <!-- prompt on top, answers below, with the gap taking the slack -->
         <div
           class="anim-pop flex w-full flex-1 flex-col items-center justify-between gap-4 sm:flex-none sm:justify-start sm:gap-7"
         >

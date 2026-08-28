@@ -119,9 +119,7 @@ jobs:
           key: pkg-${{ matrix.name }}-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.lock') }}
           restore-keys: pkg-${{ matrix.name }}-${{ runner.os }}-
 
-      # the cache carries src-tauri/target, and tauri writes its packages in
-      # there, so a restore brings the previous release's packages back and the
-      # collect step would upload those too
+      # the cache carries src-tauri/target, where tauri also writes its packages
       - name: Drop any packages the cache restored
         if: matrix.rust
         shell: bash
@@ -145,9 +143,7 @@ jobs:
         if: matrix.bundle == 'dmg'
         run: npx tauri build --target universal-apple-darwin --bundles dmg
 
-      # msix, the package the microsoft store takes. Tauri has no msix bundler,
-      # so the release binary is staged into a layout directory next to the
-      # manifest and the store logos, and the windows sdk packs that.
+      # msix, staged into a layout directory and packed by the windows sdk
       - name: Build the msix package
         if: matrix.kind == 'msix'
         shell: pwsh
@@ -219,19 +215,22 @@ jobs:
       - uses: android-actions/setup-android@v3
         if: matrix.android
 
-      # Google Play Store requires new submissions to target api 36 from 31 august 2026
+      # Google Play requires new submissions to target api 36 from 31 august 2026
       - name: Install the android ndk
         if: matrix.android
         run: |
           sdkmanager --install "ndk;27.2.12479018" "platforms;android-36" "build-tools;36.0.0"
           echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/27.2.12479018" >> "$GITHUB_ENV"
 
-      # matrix.kind is apk or aab, which is also the flag tauri wants
+      # matrix.kind is apk or aab, which is also the flag tauri takes
       - name: Build the ${{ matrix.kind }}
         if: matrix.android
         run: |
           npx tauri android init --skip-targets-install
-          sh scripts/android-icons.sh
+          # replace the generated placeholder launcher icons with the ones in the repo
+          res=src-tauri/gen/android/app/src/main/res
+          [ -d "$res" ] || { echo "no generated android project at $res" >&2; exit 1; }
+          cp -R src-tauri/icons/android/. "$res/"
           npx tauri android build --${{ matrix.kind }}
 
       - name: Sign the apk

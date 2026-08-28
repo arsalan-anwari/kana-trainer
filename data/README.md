@@ -56,7 +56,7 @@ is the sound of both あ and ア.
 ## Processing
 
 The source recordings drift from 149 Hz to 367 Hz and vary about 15 dB in level. Each one
-is put through [`scripts/normalize-audio.py`](https://github.com/arsalan-anwari/kana-trainer/blob/main/scripts/normalize-audio.py):
+is put through [`tools/normalize-audio.py`](https://github.com/arsalan-anwari/kana-trainer/blob/main/tools/normalize-audio.py):
 
 1. **Trim** leading and trailing silence at 35 dB below the loudest frame, keep 30 ms of head
    and 60 ms of tail padding, and apply an 8 ms fade at both ends.

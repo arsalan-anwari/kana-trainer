@@ -83,7 +83,7 @@ pub fn delete_report(app: AppHandle, id: String) -> Result<(), String> {
 }
 
 fn picked_file(path: String) -> FilePath {
-    // FromStr cannot fail: anything that is not a URL is taken as a path
+    // anything that is not a URL is taken as a path
     FilePath::from_str(&path).unwrap_or_else(|_| FilePath::Path(PathBuf::from(path)))
 }
 
@@ -125,8 +125,7 @@ mod tests {
     use super::{picked_file, read_report_file, write_report_file};
     use tauri_plugin_fs::FilePath;
 
-    // the dialog hands back whatever shape the platform uses, and only android
-    // sends a URI: a windows drive letter must not be read as a URL scheme
+    // a windows drive letter must not be read as a URL scheme
     #[test]
     fn desktop_paths_stay_paths() {
         for path in [
@@ -142,8 +141,7 @@ mod tests {
         }
     }
 
-    // the desktop half of the same story: a picked path must come back with the
-    // bytes that were written to it, through the same commands the app calls
+    // a written file must read back through the same commands the app calls
     #[test]
     fn a_written_file_reads_back_byte_for_byte() {
         let app = tauri::test::mock_builder()
@@ -168,7 +166,7 @@ mod tests {
             bytes
         );
 
-        // a second export over the same name must not leave a tail behind
+        // an overwrite must not leave a tail behind
         let shorter = b"KTREPORT".to_vec();
         write_report_file(app.handle().clone(), path.clone(), shorter.clone())
             .expect("the overwrite should land");

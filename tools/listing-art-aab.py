@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 """Regenerates the Google Play Console listing images from the icon and the demo shots.
 
-Google Play Console rejects anything off spec, so every size here is fixed: a 512 icon, a
-1024x500 feature graphic, phone shots at 1080x2160 and tablet shots at
-1920x1080. The recorded shots are letterboxed onto cream rather than stretched,
-so the app keeps its own aspect ratio.
-
-    python3 packaging/aab/StoreListing/make-listing-art.py
+    python3 tools/listing-art-aab.py
 """
 
 import sys
@@ -18,14 +13,13 @@ CREAM = (247, 242, 231)  # the app background, tauri.conf.json
 INK = (27, 25, 21)  # --foreground, src/app.css
 MUTED = (110, 102, 87)  # --muted-foreground
 
-ROOT = Path(__file__).resolve().parents[3]
-OUT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'packaging/aab/StoreListing'
 
 FONT_BOLD = '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf'
 FONT_REGULAR = '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf'
 
-# Eight per device type is the Google Play Console maximum, and these walk through the app in
-# the same order the readme showcase does.
+# Up to eight shots per device type, in the readme showcase order.
 SHOTS = [
     '01_Setup_TextOnly.png',
     '04_Setup_Alphabets.png',
@@ -39,15 +33,15 @@ SHOTS = [
 
 
 def mark() -> Image.Image:
-    """The あ glyph on its own, cropped out of the launcher icon."""
+    """Crops the あ glyph out of the launcher icon."""
     icon = Image.open(ROOT / 'src-tauri/icons/icon.png').convert('RGBA')
     inset = int(icon.width * 0.18)
     inner = icon.crop((inset, inset, icon.width - inset, icon.height - inset))
 
-    # the interior is cream, so anything appreciably darker than it is glyph
+    # anything appreciably darker than the cream interior is glyph
     flat = Image.new('RGB', inner.size, CREAM)
     flat.paste(inner, mask=inner.getchannel('A'))
-    box = flat.convert('L').point(lambda v: 255 if v < 128 else 0).getbbox()
+    box = flat.convert('L').point([255] * 128 + [0] * 128).getbbox()
     if box is None:
         sys.exit('no glyph found in icon.png')
 
@@ -57,19 +51,18 @@ def mark() -> Image.Image:
 
 
 def scaled_to(image: Image.Image, w: int, h: int) -> Image.Image:
-    """image resized to fit inside w by h, keeping its aspect ratio."""
+    """Resizes an image to fit inside w by h, keeping its aspect ratio."""
     factor = min(w / image.width, h / image.height)
     return image.resize(
         (max(1, round(image.width * factor)), max(1, round(image.height * factor))),
-        Image.LANCZOS,
+        Image.Resampling.LANCZOS,
     )
 
 
 def save(image: Image.Image, name: str) -> None:
     path = OUT / name
     path.parent.mkdir(parents=True, exist_ok=True)
-    # Google Play Console wants 24-bit png with no alpha on everything, which is what an RGB
-    # image is. The shots are flat colour, so optimize earns its run time.
+    # Google Play Console wants 24-bit png with no alpha
     image.save(path, 'PNG', optimize=True)
     print(f'    {path.relative_to(ROOT)}  {image.width}x{image.height}')
 
@@ -90,8 +83,7 @@ def feature_graphic(glyph: Image.Image) -> None:
     left = 96
     canvas.paste(art, (left, (h - art.height) // 2), art)
 
-    # the wordmark sits to the right of the glyph, under a hairline rule, the
-    # same paper and ink restraint the app uses instead of colour
+    # wordmark to the right of the glyph, under a hairline rule
     text = left + art.width + 80
     draw.text((text, 176), 'Kana Trainer', font=ImageFont.truetype(FONT_BOLD, 76), fill=INK)
     draw.line((text, 274, text + 300, 274), fill=INK, width=3)
@@ -119,5 +111,5 @@ def shots(src: Path, w: int, h: int, folder: str) -> None:
 glyph = mark()
 icon(glyph)
 feature_graphic(glyph)
-shots(ROOT / 'docs/phone', 1080, 2160, 'Phone')
-shots(ROOT / 'docs/desktop', 1920, 1080, 'Tablet')
+shots(ROOT / 'packaging/repo/phone', 1080, 2160, 'Phone')
+shots(ROOT / 'packaging/repo/desktop', 1920, 1080, 'Tablet')

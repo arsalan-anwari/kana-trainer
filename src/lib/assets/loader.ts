@@ -1,6 +1,4 @@
-/**
- * One place to load a file that ships inside the app bundle.
- */
+// Cached loading of files that ship inside the app bundle.
 
 export type Asset = {
   key: string;
@@ -15,7 +13,7 @@ type Entry = {
 };
 
 export type AssetStoreOptions = {
-  /** Turns a short key such as `seion/a` into a bundle path such as `audio/seion/a.mp3`. */
+  // turns a key such as seion/a into a bundle path such as audio/seion/a.mp3
   path: (key: string) => string;
 };
 
@@ -27,12 +25,12 @@ export class AssetStore {
     this.#path = options.path;
   }
 
-  /** The asset if it is already in memory, otherwise `null`. Never fetches. */
+  // returns a cached asset, or null, without fetching
   peek(key: string): Asset | null {
     return this.#entries.get(key)?.asset ?? null;
   }
 
-  /** Fetches once and caches. Resolves to `null` when the file cannot be read. */
+  // fetches once and caches, resolving to null when the file cannot be read
   load(key: string): Promise<Asset | null> {
     const existing = this.#entries.get(key);
     if (existing?.asset) return Promise.resolve(existing.asset);
@@ -63,7 +61,7 @@ export class AssetStore {
     return pending;
   }
 
-  /** Warms the cache without waiting for it. */
+  // warms the cache without waiting for it
   preload(keys: Iterable<string>): void {
     for (const key of keys) void this.load(key);
   }

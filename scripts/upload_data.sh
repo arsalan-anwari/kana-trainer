@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# Upload the contents of public/ to the kana-sounds dataset on the Hugging Face Hub.
+# Upload the contents of data/ to the kana-sounds dataset on the Hugging Face Hub.
 #
 # Requires a prior `hf auth login` (or HF_TOKEN in the environment).
 #
 # Usage:
-#   scripts/upload_data.sh                      upload public/ to the dataset
+#   scripts/upload_data.sh                      upload data/ to the dataset
 #   scripts/upload_data.sh --create-pr          open a pull request instead of committing to main
 #   scripts/upload_data.sh --exclude "*.png"    any extra flags are passed to `hf upload`
 
@@ -25,13 +25,13 @@ hf auth whoami >/dev/null 2>&1 || {
   exit 1
 }
 
-[ -d public/audio ] || {
-  echo "public/audio is missing, stopping" >&2
+[ -d data/audio ] || {
+  echo "data/audio is missing, stopping" >&2
   exit 1
 }
 
-echo "==> Uploading public/ to https://huggingface.co/datasets/$REPO_ID"
-hf upload "$REPO_ID" public . \
+echo "==> Uploading data/ to https://huggingface.co/datasets/$REPO_ID"
+hf upload "$REPO_ID" data . \
   --type dataset \
   --commit-message "Sync kana audio from kana-trainer $VERSION" \
   "$@"

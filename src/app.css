@@ -2,10 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Washi paper and sumi ink.
-   Light is a warm cream page with near black text, dark is the same idea
-   inverted: an ink ground with cream text. Only two accents break the
-   monochrome, a vermilion seal red for mistakes and a muted moss for wins. */
+/* Light theme palette. */
 
 :root {
   --background: #f7f2e7;
@@ -44,6 +41,9 @@
   --chart-4: #4b453a;
   --chart-5: #1b1915;
   --gold: #b8860b;
+  /* how a picked box reads on the setup, reports and chart screens */
+  --selected: var(--foreground);
+  --selected-soft: color-mix(in srgb, var(--selected) 8%, transparent);
 }
 
 .dark {
@@ -84,9 +84,7 @@
   --gold: #d9ab3c;
 }
 
-/* High contrast: one fixed palette that ignores light, dark and the system.
-   Pure white on black, hard borders, and the two accents pushed to their
-   loudest readable form. */
+/* High contrast palette, which replaces light and dark. */
 .high-contrast {
   --background: #000000;
   --foreground: #ffffff;
@@ -123,6 +121,8 @@
   --chart-4: #e6e6e6;
   --chart-5: #ffffff;
   --gold: #ffd400;
+  --selected: #ffd400;
+  --selected-soft: color-mix(in srgb, #ffd400 25%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -201,6 +201,8 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-gold: var(--gold);
+  --color-selected: var(--selected);
+  --color-selected-soft: var(--selected-soft);
   --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
@@ -219,7 +221,7 @@
 }
 
 html {
-  /* keeps the fixed header offset and scroll anchoring sane on mobile */
+  /* keeps the fixed header offset and scroll anchoring correct on mobile */
   -webkit-text-size-adjust: 100%;
 }
 
@@ -302,20 +304,20 @@ body {
   100% { transform: scale(1) rotate(0deg); }
 }
 
-/* falls the height of the viewport, drifting sideways and turning as it goes */
+/* confetti falling the height of the viewport */
 @keyframes confetti-fall {
   0% { opacity: 0; transform: translate3d(0, -12vh, 0) rotate(0deg); }
   8% { opacity: 1; }
   100% { opacity: 0; transform: translate3d(var(--drift, 0px), 108vh, 0) rotate(var(--spin, 180deg)); }
 }
 
-/* a ring thrown outward from the emoji, one per top grade */
+/* ring expanding out from the emoji */
 @keyframes burst {
   0% { opacity: 0.75; transform: scale(0.2); }
   100% { opacity: 0; transform: scale(2.6); }
 }
 
-/* the winner's glyph keeps bouncing while the splash is up */
+/* looping bounce of the top grade emoji */
 @keyframes bounce-hold {
   0%, 100% { transform: translateY(0) scale(1); }
   30% { transform: translateY(-10%) scale(1.06); }
@@ -373,7 +375,7 @@ body {
     animation: none;
   }
 
-  /* the overlay still needs to arrive and leave, it just does it plainly */
+  /* the overlay still fades in and out, only faster */
   .anim-splash-in,
   .anim-splash-out {
     animation-duration: 0.12s;

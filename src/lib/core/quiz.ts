@@ -16,7 +16,7 @@ export type Choice = {
   script: Script;
 };
 
-/** One character in one alphabet: what a question is actually drawn from. */
+// One character in one alphabet, the unit a question is drawn from.
 export type Candidate = {
   kana: Kana;
   script: Script;
@@ -42,13 +42,10 @@ export type Answer = {
 
 const CHOICE_COUNT = 4;
 
-/**
- * Characters that are read the same however they are written, so a sound the
- * player picks is never marked wrong for being the other spelling of it.
- */
+// Readings that map onto the same sound.
 const sameSound: Record<string, string> = { dji: "ji", dzu: "zu", wo: "o" };
 
-/** Every character in play, in the alphabet it was picked in. */
+// Every selected character, paired with the alphabet it was picked in.
 export function eligiblePairs(settings: RunSettings): Candidate[] {
   const pairs: Candidate[] = [];
   for (const script of settings.scripts) {
@@ -62,7 +59,7 @@ export function eligiblePairs(settings: RunSettings): Candidate[] {
   return pairs;
 }
 
-/** The distinct characters in play, counting a character picked in both once. */
+// The distinct characters in play, counted once across both alphabets.
 export function eligibleKana(settings: RunSettings): Kana[] {
   const seen = new Set<string>();
   const pool: Kana[] = [];
@@ -83,15 +80,11 @@ function shuffle<T>(items: T[], rng: () => number): T[] {
   return copy;
 }
 
-/**
- * Everything one option puts in front of the player. Two options that share any
- * of these read as the same answer, so only one of them may be offered: ぢ next
- * to じ is a question with two right answers and no way to tell them apart.
- */
+// Everything an option shows, used to rule out options that read the same.
 function surfaces(kana: Kana, script: Script, answer: Side): string[] {
   if (answer === "audio") return [sameSound[kana.romaji] ?? kana.romaji];
   if (answer === "romaji") return answersFor(kana);
-  // a character is one character in either alphabet, so か rules out カ as well
+  // a glyph rules out its counterpart in the other alphabet
   return [kana.hira, kana.kata];
 }
 
@@ -112,8 +105,7 @@ function buildChoices(
   );
 
   const wanted = lookAlikeCount(difficulty);
-  // the shuffle above already broke ties, and sorting is stable, so equally
-  // confusable characters still take turns from one question to the next
+  // stable sort over a shuffled list, so equal scores still vary per question
   const lookAlike =
     wanted === 0
       ? []
@@ -133,8 +125,7 @@ function buildChoices(
           .slice(0, wanted)
           .map((entry) => entry.candidate);
 
-  // the reserve only gets a look in when the selected characters cannot fill
-  // four distinguishable options on their own, which a set of じ ぢ ず づ does
+  // fallback pool, used when the selection cannot fill four distinct options
   const spare = shuffle(
     reserve.filter((candidate) => candidate.kana.id !== target.kana.id),
     rng
@@ -165,7 +156,7 @@ export function buildQuestions(
   );
   const distractors = pool.length >= CHOICE_COUNT ? pool : everything;
 
-  // too small a set has no look alikes to draw on, so the difficulty is dropped
+  // a set too small for look alikes falls back to beginner
   const difficulty: Difficulty =
     pool.length >= difficultyMinPool ? settings.difficulty : "beginner";
 

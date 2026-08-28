@@ -5,10 +5,7 @@
   import Badge from "../../ui/Badge.svelte";
   import Card from "../../ui/Card.svelte";
 
-  /**
-   * Which characters were actually missed, filed by group and row and kept
-   * apart by alphabet.
-   */
+  // The missed characters, listed by group and row per alphabet.
 
   let { answers }: { answers: Answer[] } = $props();
 

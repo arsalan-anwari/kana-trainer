@@ -4,7 +4,7 @@
   import IconButton from "../../ui/IconButton.svelte";
   import ThemeToggle from "./ThemeToggle.svelte";
 
-  /** The permanent settings, as icons. The phone gets these in the menu instead. */
+  // The persistent settings as header icons.
 </script>
 
 <div class="flex items-center gap-1.5">

@@ -1,14 +1,13 @@
-/** Preferences that outlive a run: theme, sound, zoom. Kept apart from the
-    run settings so the popup menu and the header can share one shape. */
+// Preferences that outlive a run: theme, sound, zoom.
 
 export type Theme = "system" | "light" | "dark";
 
 export type Prefs = {
   effects: boolean;
   theme: Theme;
-  /** High contrast overrides the theme, so the theme switch goes dead. */
+  // high contrast overrides the theme
   contrast: boolean;
-  /** Root font scale. Everything is sized in rem, so this scales the app. */
+  // root font scale, which scales the whole app
   zoom: number;
 };
 
@@ -34,15 +33,12 @@ export function mergePrefs(stored: Partial<Prefs> | null): Prefs {
   return { ...merged, zoom: clampZoom(merged.zoom) };
 }
 
-/** The three screens the tabs, the swipe and the shortcut move between. */
+// The three screens the tabs, the swipe and the shortcut move between.
 export const tabRoutes = ["setup", "reports", "chart"] as const;
 
 export type TabRoute = (typeof tabRoutes)[number];
 
-/**
- * The tab `step` places away from `route`, wrapping at both ends. Null when
- * the current screen is not a tab, so a run is never swiped out from under.
- */
+// The tab a given number of steps away, wrapping, or null when off the tabs.
 export function nextTab(route: string, step: number): TabRoute | null {
   const index = tabRoutes.indexOf(route as TabRoute);
   if (index === -1) return null;

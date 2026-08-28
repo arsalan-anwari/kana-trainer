@@ -1,9 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  /**
-   * The square wireframe frame the question sits in. 
-   */
+  // The square wireframe frame the question sits in.
 
   let {
     size = "md",

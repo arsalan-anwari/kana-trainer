@@ -1,6 +1,4 @@
-/**
- * One instance per key for the lifetime of the page.
- */
+// Keeps one instance per key for the lifetime of the page.
 
 type Registry = Map<string, unknown>;
 

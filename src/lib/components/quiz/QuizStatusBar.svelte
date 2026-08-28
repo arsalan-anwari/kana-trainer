@@ -28,7 +28,7 @@
       </span>
     {/if}
   </div>
-  <!-- one thin line rather than a second bar of chips, the quiz needs the height -->
+  <!-- running score, kept to one thin line -->
   <span class="px-1 text-xs font-semibold text-muted-foreground tabular-nums">
     {app.score} correct
   </span>

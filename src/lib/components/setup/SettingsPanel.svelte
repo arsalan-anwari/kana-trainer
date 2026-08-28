@@ -28,7 +28,7 @@
     expert: "Every wrong answer is a look alike"
   };
 
-  /** Too small a set has no look alikes to draw on, so the choice is moot. */
+  // whether the pool is large enough for the difficulty to matter
   const enoughToSort = $derived(app.eligibleCount >= difficultyMinPool);
 
   function timeLabel(seconds: number): string {

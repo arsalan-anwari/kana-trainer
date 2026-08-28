@@ -115,7 +115,7 @@ export function weakKanaIds(answers: Answer[], threshold = 1): string[] {
     .map(([key]) => key);
 }
 
-/** One character in one alphabet, and how often it was missed. */
+// One character in one alphabet, and how often it was missed.
 export type Miss = {
   key: string;
   kanaId: string;
@@ -137,10 +137,7 @@ export type MissGroup = {
   rows: MissRow[];
 };
 
-/**
- * Every miss filed under its group and row, kept apart by alphabet: getting き
- * wrong and getting キ wrong are two different things to practise.
- */
+// Groups every miss by group and row, kept apart by alphabet.
 export function missesByGroup(answers: Answer[]): MissGroup[] {
   const tally = new Map<string, Miss>();
 
@@ -217,7 +214,7 @@ function startOfDay(stamp: number): number {
 
 const DAY = 24 * 60 * 60 * 1000;
 
-/** Windows are whole local days, so "today" does not slide with the clock. */
+// Filters reports to a window of whole local days.
 export function filterWindow(
   filter: ReportFilter,
   now = Date.now()

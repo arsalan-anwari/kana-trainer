@@ -29,8 +29,7 @@
   let confirming = $state(false);
 
   function setFilter(next: ReportFilter): void {
-    // runs that fall outside the new window cannot stay picked, and keeping the
-    // ones that survive is not worth the surprise of a half kept selection
+    // changing the window clears the selection
     filter = next;
     picked = [];
     confirming = false;

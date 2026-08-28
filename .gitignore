@@ -33,3 +33,6 @@ src-tauri/gen/apple
 *.log
 test-results
 playwright-report
+
+# Python dev venv
+.venv

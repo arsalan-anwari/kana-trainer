@@ -4,6 +4,7 @@
 import sys
 from math import hypot
 from pathlib import Path
+from typing import cast
 
 from PIL import Image, ImageDraw
 
@@ -34,44 +35,40 @@ SOURCE = ROOT / "src-tauri" / "icons" / "icon.png"
 OUT = ROOT / "src-tauri" / "icons" / "android"
 
 
-def load_artwork():
+def load_artwork() -> Image.Image:
     im = Image.open(SOURCE).convert("RGBA")
     if im.width != im.height:
         sys.exit(f"{SOURCE} must be square, got {im.width}x{im.height}")
     return im
 
 
-def fill_colour(im):
-    """The artwork's own fill, sampled at its centre."""
-    return im.getpixel((im.width // 2, im.height // 2))[:3]
+def fill_colour(im: Image.Image) -> tuple[int, int, int]:
+    """The artwork's fill colour, sampled at its centre."""
+    pixel = cast(tuple[int, int, int, int], im.getpixel((im.width // 2, im.height // 2)))
+    return pixel[:3]
 
 
-def content_radius(im):
-    """Distance from centre to the artwork's furthest opaque pixel, as a
-    fraction of half the canvas -- 1.0 for a circle, sqrt(2) for a full square."""
-    alpha = im.getchannel("A").load()
+def content_radius(im: Image.Image) -> float:
+    """Distance from centre to the furthest opaque pixel, as a fraction of half the canvas."""
+    alpha = im.getchannel("A").tobytes()
     centre = (im.width - 1) / 2
     furthest = 0.0
     for y in range(im.height):
+        row = y * im.width
         for x in range(im.width):
-            if alpha[x, y] > 128:
+            if alpha[row + x] > 128:
                 furthest = max(furthest, hypot(x - centre, y - centre))
     return furthest / centre
 
 
-def flatten_transparent(im, colour):
-    """Give fully transparent pixels the fill colour so downscaling cannot
-    bleed their black RGB into the artwork's edge."""
-    out = im.copy()
-    px = out.load()
-    for y in range(out.height):
-        for x in range(out.width):
-            if px[x, y][3] == 0:
-                px[x, y] = colour + (0,)
+def flatten_transparent(im: Image.Image, colour: tuple[int, int, int]) -> Image.Image:
+    """Gives fully transparent pixels the fill colour, so downscaling cannot bleed."""
+    out = Image.new("RGBA", im.size, colour + (0,))
+    out.paste(im, mask=im.getchannel("A").point([0] + [255] * 255))
     return out
 
 
-def circle_mask(size):
+def circle_mask(size: int) -> Image.Image:
     """An antialiased circle filling the whole canvas."""
     edge = size * SUPERSAMPLE
     big = Image.new("L", (edge, edge), 0)
@@ -79,27 +76,26 @@ def circle_mask(size):
     return big.resize((size, size), Image.Resampling.LANCZOS)
 
 
-def write_background_colour(colour):
+def write_background_colour(colour: tuple[int, int, int]) -> None:
     path = OUT / "values" / "ic_launcher_background.xml"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        '<?xml version="1.0" encoding="utf-8"?>\n'
-        "<resources>\n"
-        '  <color name="ic_launcher_background">#%02x%02x%02x</color>\n'
-        "</resources>" % colour
-    )
-    print(f"background colour #%02x%02x%02x -> {path.relative_to(ROOT)}" % colour)
+    red, green, blue = colour
+    hex_colour = f"#{red:02x}{green:02x}{blue:02x}"
+    _ = path.write_text(f"""<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="ic_launcher_background">{hex_colour}</color>
+</resources>""")
+    print(f"background colour {hex_colour} -> {path.relative_to(ROOT)}")
 
 
-def main():
+def main() -> None:
     artwork = load_artwork()
     colour = fill_colour(artwork)
     radius = content_radius(artwork)
 
-    # Shrink until the furthest corner of the artwork sits on the safe circle.
+    # shrink until the furthest corner of the artwork sits on the safe circle
     scale = 2 * SAFE_RADIUS / radius
-    print(f"artwork extends to {radius:.3f} of its half-width; "
-          f"scaling to {scale:.1%} of the foreground canvas")
+    print(f"artwork extends to {radius:.3f} of its half-width; scaling to {scale:.1%} of the foreground canvas")
 
     flattened = flatten_transparent(artwork, colour)
 
@@ -125,8 +121,7 @@ def main():
 
         path = OUT / f"mipmap-{density}" / "ic_launcher_round.png"
         icon.save(path)
-        print(f"{path.relative_to(ROOT)}: {side}px artwork "
-              f"inscribed in {size}px circle")
+        print(f"{path.relative_to(ROOT)}: {side}px artwork inscribed in {size}px circle")
 
     write_background_colour(colour)
 

@@ -6,7 +6,7 @@ export type Direction = "kana-romaji" | "romaji-kana" | "mixed";
 export type Side = "kana" | "romaji" | "audio";
 export type Difficulty = "beginner" | "advanced" | "expert";
 
-/** One selected set of characters per alphabet, so the two can differ. */
+// One selected set of characters per alphabet.
 export type Selections = Record<Script, string[]>;
 
 export type RunSettings = {
@@ -26,7 +26,7 @@ export type RunSettings = {
 
 export type LegacySettings = Partial<Omit<RunSettings, "selections">> & {
   includeDakuten?: boolean;
-  /** Pre-1.3 runs kept a single list shared by both alphabets. */
+  // pre-1.3 runs kept a single list shared by both alphabets
   selection?: string[];
   selections?: Partial<Selections>;
 };
@@ -38,7 +38,7 @@ export type OptionalGroup = (typeof optionalGroups)[number];
 export const perQuestionOptions = [0, 5, 10, 15, 30];
 export const totalTimeOptions = [0, 60, 120, 300, 600];
 
-/** Laid out as the two rows of five the setup screen draws. */
+// Preset counts, as the two rows of five the setup screen draws.
 export const questionCountRows = [
   [10, 20, 30, 40, 50],
   [60, 80, 100, 150, 200]
@@ -56,10 +56,7 @@ export const customCountValues = Array.from(
 
 export const difficulties = ["beginner", "advanced", "expert"] as const;
 
-/**
- * Below this many characters in play there are not enough look alikes to draw
- * from, so the difficulty is ignored and choices stay random.
- */
+// Below this pool size the difficulty is ignored and choices stay random.
 export const difficultyMinPool = 15;
 
 export const defaultSettings: RunSettings = {
@@ -100,7 +97,7 @@ export function enabledGroups(settings: RunSettings): Group[] {
   return enabled;
 }
 
-/** The characters picked for one alphabet, whether or not it is switched on. */
+// The characters picked for one alphabet, switched on or not.
 export function selectionFor(settings: RunSettings, script: Script): string[] {
   return settings.selections[script] ?? [];
 }
@@ -192,7 +189,7 @@ export function clampCustomCount(value: number): number {
   return Math.min(customCountMax, Math.max(customCountMin, stepped));
 }
 
-/** A count that is neither one pass nor one of the preset chips. */
+// Whether a count is neither one pass nor one of the presets.
 export function isCustomCount(count: number): boolean {
   return count > 0 && !questionCountOptions.includes(count);
 }
@@ -219,7 +216,7 @@ export function difficultyLabel(difficulty: Difficulty): string {
   return "Beginner";
 }
 
-/** How many of the three wrong answers should be look alikes. */
+// How many of the three wrong answers should be look alikes.
 export function lookAlikeCount(difficulty: Difficulty): number {
   if (difficulty === "expert") return 3;
   if (difficulty === "advanced") return 1;

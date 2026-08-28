@@ -68,7 +68,7 @@ function at(iso: string, kanaId = "a", correct = false): Report {
 }
 
 describe("report filters", () => {
-  // a fixed local noon, so no window lands on a day boundary
+  // fixed local noon, so no window lands on a day boundary
   const now = new Date(2026, 7, 20, 12, 0, 0).getTime();
   const day = 24 * 60 * 60 * 1000;
 

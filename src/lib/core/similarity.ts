@@ -1,12 +1,9 @@
-/**
- * How easily two characters are mistaken for each other, used to make the wrong
- * answers harder as the difficulty goes up.
- */
+// Scores how easily two characters are mistaken for each other.
 
 import { glyph, type Kana, type Script } from "./kana";
 import type { Side } from "./settings";
 
-/** Groups of characters learners routinely mix up, by alphabet. */
+// Groups of characters learners routinely mix up, by alphabet.
 const lookAlikes: Record<Script, string[][]> = {
   hiragana: [
     ["a", "o", "me", "nu"],
@@ -62,7 +59,7 @@ const confusable: Record<Script, Set<string>> = {
   katakana: pairsOf("katakana")
 };
 
-/** The character with its voiced or half voiced mark taken off. */
+// Strips the voiced and half voiced marks off a character.
 function stripMarks(value: string): string {
   return value
     .normalize("NFD")
@@ -70,7 +67,7 @@ function stripMarks(value: string): string {
     .normalize("NFC");
 }
 
-/** The consonant part of a reading: everything before the final vowel. */
+// The consonant part of a reading, everything before the final vowel.
 function onset(romaji: string): string {
   return romaji.slice(0, -1);
 }
@@ -79,7 +76,7 @@ function coda(romaji: string): string {
   return romaji.slice(-1);
 }
 
-/** Whether two readings are one character apart, so they read almost the same. */
+// Whether two readings are at most one character apart.
 function nearReadings(left: string, right: string): boolean {
   if (Math.abs(left.length - right.length) > 1) return false;
   const [short, long] = left.length <= right.length ? [left, right] : [right, left];
@@ -97,12 +94,7 @@ function nearReadings(left: string, right: string): boolean {
   return true;
 }
 
-/**
- * Higher means easier to confuse. Zero means the two are plainly different.
- *
- * Which side the player answers on decides what "similar" means: a kana answer
- * is confused by shape, a romaji or audio answer by sound.
- */
+// Confusability score, higher is easier to confuse and zero is plainly distinct.
 export function similarity(
   target: Kana,
   targetScript: Script,
@@ -113,7 +105,7 @@ export function similarity(
   if (target.id === other.id) return 0;
 
   if (answer === "kana") {
-    // shape only: が against か, or びゃ against ひゃ, is one mark and nothing else
+    // kana answers are compared by shape
     const shown = stripMarks(glyph(target, targetScript));
     const rival = stripMarks(glyph(other, otherScript));
     const sameAlphabet = targetScript === otherScript;
@@ -126,8 +118,7 @@ export function similarity(
     return 0;
   }
 
-  // romaji and audio answers, where only the reading is on show and the
-  // alphabet a character happens to be drawn in makes no difference
+  // romaji and audio answers are compared by reading, ignoring the alphabet
   const shown = stripMarks(target.hira);
   const rival = stripMarks(other.hira);
 

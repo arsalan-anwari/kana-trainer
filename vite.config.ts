@@ -5,16 +5,15 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [svelte(), tailwindcss()],
   clearScreen: false,
+  publicDir: "data",
   optimizeDeps: {
-    // Only reached through `import()` inside storage.ts. Naming them pins them
-    // to the startup pre-bundle, so a scan that misses them can never trigger a
-    // mid-session re-optimise and the full page reload that comes with it.
+    // only reached through import() in storage.ts, so pin them to the pre-bundle
     include: ["@tauri-apps/api/core", "@tauri-apps/plugin-dialog"]
   },
   server: {
     port: 1420,
     strictPort: true,
-    // transform the first screen while the window is still opening
+    // renders the first screen while the window is still opening
     warmup: {
       clientFiles: ["./src/main.ts", "./src/App.svelte", "./src/lib/components/setup/*.svelte"]
     },

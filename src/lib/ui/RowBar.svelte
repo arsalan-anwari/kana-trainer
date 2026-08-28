@@ -3,11 +3,7 @@
   import { sfx } from "../audio";
   import Icon from "./Icon.svelte";
 
-  /**
-   * A full width bar that opens onto its own content. The bar itself carries an
-   * action of its own, so opening it is a separate button on the right: on a
-   * phone this keeps rows to five blocks across instead of six.
-   */
+  // A full width bar with its own action and a separate open button on the right.
 
   let {
     label,
@@ -21,7 +17,7 @@
     hint?: string;
     active?: boolean;
     open?: boolean;
-    /** What tapping the bar does. Without one, it opens and closes it. */
+    // what tapping the bar does, defaults to opening and closing it
     onpress?: () => void;
     children: Snippet;
   } = $props();
@@ -42,7 +38,7 @@
 
 <div
   class="overflow-hidden rounded-lg border transition-colors {active
-    ? 'border-foreground bg-foreground/5'
+    ? 'border-selected bg-selected-soft'
     : 'border-border bg-surface'}"
 >
   <div class="flex items-stretch">

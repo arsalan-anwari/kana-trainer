@@ -27,7 +27,7 @@
   </div>
 {:else}
   <RowBar label={row.label} hint="{row.kana.length} sounds">
-    <!-- three across on a phone, any tighter and the tiles stop being tappable -->
+    <!-- three tiles across on a phone -->
     <div class="grid grid-cols-3 gap-1.5">
       {@render tiles()}
     </div>

@@ -6,10 +6,7 @@
   import SoundChoice from "./SoundChoice.svelte";
   import { choiceState } from "./choiceState";
 
-  /**
-   * The text to audio answer: four sounds stacked in one column, played and
-   * picked one at a time, then committed with the check button below them.
-   */
+  // The four stacked sound tiles of a text to audio question.
 
   let { question }: { question: Question } = $props();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  /** The line icons used around the app, drawn on one 24 unit grid. */
+  // Line icons, drawn on one 24 unit grid.
 
   import type { IconName } from "./icons";
 

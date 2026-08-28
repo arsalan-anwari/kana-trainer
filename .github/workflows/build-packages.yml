@@ -43,7 +43,7 @@ jobs:
           if [ -n "${DISPATCH_TARGETS:-}" ]; then
             raw="$(echo "$DISPATCH_TARGETS" | tr ',' ' ')"
           else
-            # build-pkg-rpm-apk -> rpm apk
+            # build-pkg-rpm-apk becomes "rpm apk"
             raw="$(echo "${GITHUB_REF_NAME#build-pkg-}" | tr '-' ' ')"
           fi
 

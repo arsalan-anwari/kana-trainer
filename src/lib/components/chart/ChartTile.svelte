@@ -13,8 +13,8 @@
   aria-label="Play {kana.romaji}"
   aria-pressed={playing}
   class="group relative flex aspect-[3/2] w-full cursor-pointer flex-col items-center justify-center gap-1 sm:aspect-square overflow-hidden rounded-xl border transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
-    ? 'border-2 border-foreground bg-foreground/10 text-foreground'
-    : 'border-border bg-surface text-foreground hover:border-foreground hover:bg-accent active:translate-y-[1px]'}"
+    ? 'border-2 border-selected bg-selected-soft text-foreground'
+    : 'border-border bg-surface text-foreground hover:border-selected hover:bg-accent active:translate-y-[1px]'}"
   onclick={() => kanaAudio.play(kana.audio)}
 >
   <span
@@ -35,7 +35,7 @@
   {#if playing}
     <span class="absolute inset-x-0 bottom-0 h-1 bg-border" aria-hidden="true">
       <span
-        class="block h-full bg-foreground transition-[width] duration-100"
+        class="block h-full bg-selected transition-[width] duration-100"
         style="width: {Math.round(kanaAudio.progress * 100)}%"
       ></span>
     </span>

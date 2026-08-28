@@ -8,7 +8,7 @@
 
   let panel = $state<HTMLDivElement | null>(null);
 
-  // on a phone the answers fill the screen, so bring the verdict into view
+  // scroll the verdict into view
   $effect(() => {
     panel?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });

@@ -4,11 +4,7 @@
   import Waveform from "../../ui/Waveform.svelte";
   import type { ChoiceState } from "./choiceState";
 
-  /**
-   * One wide sound tile: a play control, a histogram of the clip and the slot
-   * number. Pressing it plays the sound and marks it as the current pick, it
-   * does not submit anything on its own.
-   */
+  // One sound tile: play control, clip histogram and slot number.
 
   let {
     slot,

@@ -2,17 +2,14 @@
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
 
-  /**
-   * The way out of a run, with the cost of it spelled out. Only a run that was
-   * seen through is scored, so stopping here throws the answers away.
-   */
+  // Confirmation shown before an unfinished run is discarded.
 
   let keep = $state<HTMLDivElement | null>(null);
 
   const answered = $derived(app.answers.length);
   const left = $derived(Math.max(0, app.questions.length - answered));
 
-  // the safe option takes the focus, never the one that throws work away
+  // focus the keep button rather than the discard button
   $effect(() => {
     keep?.querySelector("button")?.focus();
   });

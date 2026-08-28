@@ -1,4 +1,4 @@
-/** Short synthesised interface sounds. No files, no assets, just oscillators. */
+// Short interface sounds, synthesised from oscillators.
 
 import type { ScoreTier } from "../core/score";
 import { shared } from "./shared";
@@ -7,16 +7,12 @@ let enabled = true;
 
 type Step = [frequency: number, duration: number, type: OscillatorType, volume: number, delay: number];
 
-/**
- * Nodes are scheduled a hair into the future. WebKitGTK mixes audio in fairly
- * large blocks, so a ramp starting inside the block that is already being
- * rendered gets cut off part way, which is what turns a soft blip into a click.
- */
+// How far ahead nodes are scheduled, so a ramp is not cut off mid block.
 const LEAD_SECONDS = 0.02;
 
 type Bus = {
   context: AudioContext;
-  /** Everything meets here, so the destination only ever has one input. */
+  // single input into the destination
   master: GainNode;
 };
 
@@ -42,8 +38,7 @@ function tone(target: Bus, step: Step, base: number): void {
   gain.gain.exponentialRampToValueAtTime(volume, start + 0.012);
   gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
   oscillator.connect(gain).connect(target.master);
-  // an oscillator that is never unhooked stays in the graph and keeps costing
-  // render time, which piles up over a session of clicking
+  // unhook the nodes so they leave the graph
   oscillator.onended = (): void => {
     oscillator.disconnect();
     gain.disconnect();
@@ -65,9 +60,7 @@ function play(steps: Step[]): void {
     schedule(target, steps);
     return;
   }
-  // A suspended context has a frozen clock, so work queued against it lands in
-  // the past and is either dropped or fired late in one clump. Wait for the
-  // resume and schedule against the clock that is really running.
+  // a suspended context has a frozen clock, so schedule only after it resumes
   void target.context
     .resume()
     .then(() => schedule(target, steps))
@@ -78,10 +71,7 @@ export function setEffectsEnabled(value: boolean): void {
   enabled = value;
 }
 
-/**
- * One flourish per grade. A clean run gets the full rising run with a sparkle
- * on top, a poor one gets something short and kind rather than a raspberry.
- */
+// One flourish per grade.
 const fanfares: Record<ScoreTier, Step[]> = {
   perfect: [
     [523, 0.12, "sine", 0.11, 0],
@@ -133,11 +123,11 @@ export const sfx = {
       [659, 0.1, "sine", 0.1, 0.09],
       [784, 0.18, "sine", 0.1, 0.18]
     ]),
-  /** The splash sound at the end of a run, picked from how the run went. */
+  // the splash sound at the end of a run, picked by grade
   score: (tier: ScoreTier): void => play(fanfares[tier])
 };
 
-/** Shared with the waveform code so both use one decoder context. */
+// The shared audio context, also used by the waveform code.
 export function audioContext(): AudioContext | null {
   return bus()?.context ?? null;
 }

@@ -14,11 +14,11 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 <table>
   <tr>
     <td align="center" valign="bottom">
-      <img src="docs/showcase.gif" width="420"
+      <img src="packaging/repo/showcase.gif" width="420"
            alt="Kana Trainer on a desktop window, walking through the practice setup, the three question formats, a character set per alphabet, the run length and difficulty, a run stopped and a run scored, the reports screen and the character chart">
     </td>
     <td align="center" valign="bottom">
-      <img src="docs/showcase-phone.gif" width="160"
+      <img src="packaging/repo/showcase-phone.gif" width="160"
            alt="The same walkthrough of Kana Trainer on a phone screen">
     </td>
   </tr>
@@ -108,4 +108,4 @@ npm run test:e2e       # playwright
 
 ## Credits
 
-- Character sounds from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html) (CC BY 4.0), pitch and loudness normalised with `scripts/normalize-audio.py`. Upload available on [Hugging Face](https://huggingface.co/datasets/arsalan-anwari/kana-sounds).
+- Character sounds from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html) (CC BY 4.0), pitch and loudness normalised with `tools/normalize-audio.py`. Upload available on [Hugging Face](https://huggingface.co/datasets/arsalan-anwari/kana-sounds).

@@ -108,15 +108,13 @@ function pickFileInBrowser(): Promise<Uint8Array | null> {
 }
 
 export type ImportResult = {
-  /** Runs the app did not hold yet, now written. */
+  // runs written
   added: number;
-  /** Runs already held under the same id, left alone. */
+  // runs already held under the same id
   skipped: number;
 };
 
-/**
- * Reads a .kt-report file and folds its runs into the ones already held.
- */
+// Reads a .kt-report file and merges its runs into the ones already held.
 export async function importReports(): Promise<ImportResult | null> {
   let bytes: Uint8Array | null;
   if (inTauri()) {

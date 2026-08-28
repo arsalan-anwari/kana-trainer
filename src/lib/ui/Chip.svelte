@@ -39,7 +39,7 @@
   class="inline-flex cursor-pointer items-center justify-center font-semibold transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-30 {sizes[
     size
   ]} {className} {active
-    ? 'border-2 border-foreground bg-foreground/10 text-foreground'
+    ? 'border-2 border-selected bg-selected-soft text-foreground'
     : 'border border-border bg-surface text-muted-foreground hover:bg-accent hover:text-foreground active:translate-y-[1px]'}"
   onclick={handle}
 >

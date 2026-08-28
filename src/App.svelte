@@ -27,7 +27,7 @@
     app.shiftTab(event.key === "ArrowRight" ? 1 : -1);
   }
 
-  /** A flick across the page changes tab, the way the buttons above do. */
+  // minimum horizontal distance in px for a swipe to change tab
   const SWIPE = 70;
   let startX = 0;
   let startY = 0;
@@ -39,13 +39,12 @@
   }
 
   function touchend(event: TouchEvent): void {
-    // a sheet or dialog owns the screen while it is up, swipes are not ours
+    // an open sheet or dialog owns the screen
     if (document.querySelector('[role="dialog"], [role="alertdialog"]') !== null) return;
     const touch = event.changedTouches[0];
     const dx = touch.clientX - startX;
     const dy = touch.clientY - startY;
-    // a scroll that wanders sideways is still a scroll, so the move has to be
-    // clearly horizontal before it counts
+    // the move must be clearly horizontal to count as a swipe
     if (Math.abs(dx) < SWIPE || Math.abs(dx) < Math.abs(dy) * 2) return;
     app.shiftTab(dx < 0 ? 1 : -1);
   }

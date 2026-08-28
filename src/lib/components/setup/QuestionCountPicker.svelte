@@ -12,11 +12,7 @@
   import Chip from "../../ui/Chip.svelte";
   import NumberRoller from "../../ui/NumberRoller.svelte";
 
-  /**
-   * Ten preset lengths over two rows, then a free choice and a single pass.
-   * The free choice is an input where there is a keyboard and a wheel where
-   * there is a thumb.
-   */
+  // Ten preset run lengths, a custom count and a single pass.
 
   let custom = $state(isCustomCount(app.settings.questionCount));
   let rolling = $state(false);
@@ -76,7 +72,7 @@
   <div class="grid grid-cols-2 gap-2">
     {#if custom && !touch}
       <label
-        class="flex h-9 items-center gap-2 rounded-md border-2 border-foreground bg-foreground/10 px-2 text-xs font-semibold"
+        class="flex h-9 items-center gap-2 rounded-md border-2 border-selected bg-selected-soft px-2 text-xs font-semibold"
       >
         <span class="sr-only">Number of questions</span>
         <input

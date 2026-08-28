@@ -54,7 +54,7 @@ runs:
         TRIM_SOURCES: ${{ inputs.trim-sources }}
       run: |
         set -eu
-        
+
         for unit in apt-daily.service apt-daily-upgrade.service unattended-upgrades.service; do
           sudo systemctl stop "$unit" 2>/dev/null || true
         done
@@ -72,8 +72,6 @@ runs:
           sudo rm -rf "$cache"
         fi
 
-        # Bounded rather than unbounded: a dead mirror now costs a minute, not
-        # the whole job.
         opts="-o Acquire::Retries=3
               -o Acquire::http::Timeout=15
               -o Acquire::https::Timeout=15
@@ -121,13 +119,11 @@ runs:
           fetch
         fi
 
-        # Nothing to install only means the image already carried the whole set.
         if ls "$cache"/*.deb >/dev/null 2>&1; then
           sudo dpkg -i "$cache"/*.deb || sudo apt-get install -y -f $opts
         else
           echo "every requested package was already installed"
         fi
 
-        # actions/cache runs unprivileged, and the lock files are not worth keeping.
         sudo rm -rf "$cache/partial" "$cache/lock" "$cache/lock-frontend"
         sudo chown -R "$(id -u):$(id -g)" "$cache"

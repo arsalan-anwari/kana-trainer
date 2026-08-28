@@ -3,7 +3,7 @@
   import Icon from "./Icon.svelte";
   import type { IconName } from "./icons";
 
-  /** A square button carrying one icon. The label is what a screen reader gets. */
+  // A square button carrying one icon, labelled for screen readers.
 
   let {
     icon,
@@ -53,7 +53,7 @@
   class="inline-flex shrink-0 cursor-pointer items-center justify-center transition-colors duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40 {sizes[
     size
   ]} {className} {active
-    ? 'border-2 border-foreground bg-foreground/10 text-foreground'
+    ? 'border-2 border-selected bg-selected-soft text-foreground'
     : variants[variant]}"
   onclick={handle}
 >

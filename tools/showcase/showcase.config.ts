@@ -1,11 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 
-/**
- * A standalone playwright config for the readme stills. Two projects, one
- * script: the same scenes are shot at a desktop window and at a phone, and the
- * project name decides which folder under docs/ they land in.
- */
+// Standalone playwright config for the readme stills, one project per size.
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
 const port = Number(process.env.SHOWCASE_PORT ?? 4181);
@@ -21,7 +17,7 @@ export default defineConfig({
   use: {
     baseURL: `http://127.0.0.1:${port}`,
     colorScheme: "light",
-    // the reports list prints timestamps, so the machine's locale is pinned too
+    // pinned so the timestamps in the reports list do not vary by machine
     locale: "en-US",
     timezoneId: "UTC",
     launchOptions: {
@@ -39,7 +35,7 @@ export default defineConfig({
     },
     {
       name: "phone",
-      // pixel 7 at a round scale factor, 2.625 makes for awkward png sizes
+      // pixel 7 at a round scale factor
       use: { ...devices["Pixel 7"], deviceScaleFactor: 2 }
     }
   ],

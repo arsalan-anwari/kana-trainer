@@ -1,15 +1,10 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { allKana } from "../../src/lib/core/kana";
 
-/**
- * The machinery behind the showcase stills: a page pinned to one clock and one
- * random sequence, and the small vocabulary the scene script drives it with.
- */
-
 export type ShowcaseInit = {
-  /** Seed of the generator that stands in for Math.random. */
+  // seed for the stand in Math.random
   randomSeed: number;
-  /** Epoch the held clock starts at. */
+  // epoch the held clock starts at
   clockStart: number;
 };
 
@@ -19,13 +14,8 @@ declare global {
   }
 }
 
-/**
- * Runs in the page before the app boots. Nothing in here may vary between
- * recordings: a still that shifts by a pixel or a second is a diff in the repo
- * every time somebody runs the script.
- */
+// Pins randomness, the clock and animations in the page before the app boots.
 export function installShowcase(init: ShowcaseInit): void {
-  // the same question order, the same distractors and the same slots, always
   let state = init.randomSeed;
   Math.random = (): number => {
     state |= 0;
@@ -35,8 +25,7 @@ export function installShowcase(init: ShowcaseInit): void {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 
-  // a clock that only moves when the scene script moves it, so answer times and
-  // run durations read like a real session without being one
+  // clock that only moves when the scene script moves it
   let current = init.clockStart;
   const RealDate = Date;
   window.Date = new Proxy(RealDate, {
@@ -54,7 +43,7 @@ export function installShowcase(init: ShowcaseInit): void {
     }
   };
 
-  // no motion, so no frame is ever caught halfway through an animation
+  // stops all motion and pins the confetti to fixed frames
   const css = `
     *, *::before, *::after {
       animation: none !important;
@@ -87,7 +76,7 @@ export function installShowcase(init: ShowcaseInit): void {
   else paint();
 }
 
-/** The node side remote control. */
+// Node side remote control for the page.
 export class Showcase {
   private taken = 0;
 
@@ -96,7 +85,7 @@ export class Showcase {
     private readonly dir: string
   ) {}
 
-  /** Moves the held clock forward, in milliseconds of pretend thinking time. */
+  // moves the held clock forward by the given milliseconds
   async advance(ms: number): Promise<void> {
     await this.page.evaluate((value) => window.__showcase.advance(value), ms);
   }
@@ -105,11 +94,7 @@ export class Showcase {
     await this.page.evaluate(() => window.scrollTo(0, 0));
   }
 
-/**
-   * Brings an element into view when it sits off screen, and leaves the page
-   * where it is when it does not. A phone needs the scroll that a desktop
-   * window would only use to push the header out of frame.
-   */
+  // scrolls an element into view only when it sits off screen
   async reveal(target: Locator, offset = 20): Promise<void> {
     await target.first().evaluate((element, gap) => {
       const box = element.getBoundingClientRect();
@@ -118,11 +103,7 @@ export class Showcase {
     }, offset);
   }
 
-  /**
-   * Waits for the page to stop changing. Sound waveforms are decoded in the
-   * background and screens are loaded on demand, so a fixed pause is either too
-   * short or wasted time.
-   */
+  // waits for the page markup to stop changing
   async settle(): Promise<void> {
     await this.page.waitForLoadState("networkidle").catch(() => undefined);
     let previous = "";
@@ -139,12 +120,7 @@ export class Showcase {
     await this.snap(name);
   }
 
-  /**
-   * A still of something that will not wait to be shot. The result splash is
-   * only up for a moment before it clears itself, and settling would spend it.
-   * Leaving the animations alone keeps the confetti where the css above pinned
-   * it, since playwright finishes off every animation it is asked to disable.
-   */
+  // takes a screenshot without settling first
   async snap(name: string, animations: "disabled" | "allow" = "disabled"): Promise<void> {
     await this.page.screenshot({
       path: `${this.dir}/${name}.png`,
@@ -160,11 +136,7 @@ export class Showcase {
   }
 }
 
-/**
- * Waits for the shared audio element to fall quiet. A clip that is still
- * playing keeps its corner of the page on its own compositing layer, and the
- * edges rasterised there land a pixel off from one recording to the next.
- */
+// Waits for the shared audio element to stop playing.
 export async function silence(page: Page): Promise<void> {
   await page.waitForFunction(() => {
     const element = document.querySelector<HTMLAudioElement>("audio[data-kana-audio]");
@@ -172,7 +144,7 @@ export async function silence(page: Page): Promise<void> {
   });
 }
 
-/** The character behind a glyph or a romaji reading shown on screen. */
+// Looks up the kana behind a glyph or romaji reading.
 export function resolve(text: string) {
   const value = text.trim();
   const found = allKana.find(
@@ -182,14 +154,14 @@ export function resolve(text: string) {
   return found;
 }
 
-/** What the prompt frame is showing, empty for an audio prompt. */
+// Reads the prompt frame text, empty for an audio prompt.
 export async function promptText(page: Page): Promise<string> {
   return (await page.locator("main .border-wire").first().innerText()).trim();
 }
 
 export const tiles = (page: Page): Locator => page.locator("main button.aspect-square");
 
-/** The label under the slot number of each multiple choice tile. */
+// Reads the label under the slot number of each choice tile.
 async function tileLabels(page: Page): Promise<string[]> {
   const texts = await tiles(page).allInnerTexts();
   return texts.map((text) => text.trim().split("\n").filter(Boolean).pop()?.trim() ?? "");
@@ -202,15 +174,12 @@ function slotOf(labels: string[], reading: string): number {
   );
 }
 
-/** Waits until the question on screen is the one being answered. */
+// Waits until the choice tiles accept input.
 export async function answering(page: Page): Promise<void> {
   await expect(tiles(page).first()).toBeEnabled();
 }
 
-/**
- * Answers the multiple choice question on screen, right or wrong on purpose,
- * and leaves the run on the next question.
- */
+// Answers the multiple choice question, right or wrong, and moves on.
 export async function answerChoice(page: Page, correct: boolean, wait = true): Promise<void> {
   await answering(page);
   const labels = await tileLabels(page);
@@ -218,39 +187,30 @@ export async function answerChoice(page: Page, correct: boolean, wait = true): P
   const index = correct ? right : labels.findIndex((_, slot) => slot !== right);
   await tiles(page).nth(index).click();
 
-  // a right answer walks on by itself, a wrong one waits to be read
+  // a wrong answer holds until Continue is pressed
   if (!correct) await page.getByRole("button", { name: "Continue" }).click();
   else if (wait) await page.waitForTimeout(850);
 }
 
-/**
- * Walks out of a half finished run. Only a finished run is scored, so this
- * throws the answers away rather than filing a one question report.
- */
+// Confirms the stop dialog and discards the run.
 export async function discardRun(page: Page): Promise<void> {
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await page.getByRole("button", { name: "Stop and discard" }).click();
   await expect(page.getByRole("alertdialog")).toBeHidden();
 }
 
-/**
- * Opens a pull down row by its label. Only a phone has them: a wide window
- * shows every row flat already, so there is nothing to open there.
- */
+// Opens a collapsible row by its label, if one is present.
 export async function openRow(page: Page, label: string): Promise<void> {
   const chevron = page.getByRole("button", { name: `Show ${label}`, exact: true });
   if (await chevron.count()) await chevron.first().click();
 }
 
-/** The splash over a finished run, while it is still up. */
+// Locates the splash over a finished run.
 export function splash(page: Page): Locator {
   return page.getByText("Tap anywhere to skip");
 }
 
-/**
- * Whether the answer just given was the wrong one. A right answer clears itself
- * after a moment, so the verdict is polled rather than waited for.
- */
+// Polls the verdict of the last answer and reports whether it was wrong.
 export async function missed(page: Page): Promise<boolean> {
   for (let attempt = 0; attempt < 80; attempt += 1) {
     const text = await page.evaluate(() => document.body.innerText);

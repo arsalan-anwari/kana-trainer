@@ -1,11 +1,10 @@
 import { allKana, seionRows, type Script } from "../../src/lib/core/kana";
 import type { Answer } from "../../src/lib/core/quiz";
+import type { Prefs } from "../../src/lib/core/prefs";
 import type { Report } from "../../src/lib/core/report";
 import type { AnswerStyle, Format, RunSettings } from "../../src/lib/core/settings";
 
-/**
- * A believable history behind the reports screen.
- */
+// Seeded report history and settings for the recordings.
 const REPORT_KEY = "kana-trainer-reports";
 const SETTINGS_KEY = "kana-trainer-settings";
 const PREFS_KEY = "kana-trainer-prefs";
@@ -43,16 +42,16 @@ const settings: RunSettings = {
 };
 
 type Session = {
-  /** Days back from the day the recording pretends to happen on. */
+  // days back from the day the recording runs on
   daysAgo: number;
-  /** The hour of that day the run sat down at. */
+  // hour of that day the run started at
   hour: number;
   questions: number;
   accuracy: number;
   scripts: Script[];
   format: Format;
   answerStyle: AnswerStyle;
-  /** Whether the run reached past the basic characters. */
+  // whether the run included the non seion characters
   extras: boolean;
 };
 
@@ -65,11 +64,7 @@ function startOfDay(stamp: number): number {
   return date.getTime();
 }
 
-/**
- * Spread over the calendar on purpose: every window the reports screen filters
- * by has runs in it, and the accuracy climbs towards today so the charts read
- * as somebody getting better.
- */
+// Runs spread over the calendar, with accuracy climbing towards today.
 const sessions: Session[] = [
   {
     daysAgo: 0,
@@ -153,11 +148,7 @@ const sessions: Session[] = [
   }
 ];
 
-/**
- * When a seeded run happened. Recording at ten in the morning would otherwise
- * put this evening's practice in the future, so a run that has not happened yet
- * is pulled back behind the clock instead.
- */
+// Timestamp of a seeded run, clamped to before the current clock.
 function stampOf(session: Session, index: number, now: number): string {
   const sat = startOfDay(now) - session.daysAgo * DAY + session.hour * HOUR;
   return new Date(Math.min(sat, now - (index + 1) * 45 * 60 * 1000)).toISOString();
@@ -211,11 +202,11 @@ export type SeedPayload = {
   keys: { reports: string; settings: string; prefs: string };
   reports: Report[];
   settings: RunSettings;
-  prefs: { effects: boolean; theme: string };
+  prefs: Prefs;
 };
 
 export type SeedOptions = {
-  /** What the seeded history counts back from, pin it to keep stills stable. */
+  // what the seeded history counts back from
   now?: number;
   effects?: boolean;
 };
@@ -225,13 +216,12 @@ export function seedPayload(options: SeedOptions = {}): SeedPayload {
     keys: { reports: REPORT_KEY, settings: SETTINGS_KEY, prefs: PREFS_KEY },
     reports: history(options.now ?? Date.now()),
     settings,
-    // pinned rather than left to the defaults, so a recording never picks up
-    // a zoom level or a palette from somewhere else
+    // pinned so a recording never picks up a local theme or zoom level
     prefs: { effects: options.effects ?? true, theme: "light", contrast: false, zoom: 1 }
   };
 }
 
-/** Runs in the page before the app boots. */
+// Writes the seeded state to local storage before the app boots.
 export function applySeed(payload: SeedPayload): void {
   localStorage.setItem(payload.keys.reports, JSON.stringify(payload.reports));
   localStorage.setItem(payload.keys.settings, JSON.stringify(payload.settings));

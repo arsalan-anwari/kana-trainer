@@ -3,10 +3,7 @@
   import { sfx } from "../audio";
   import Button from "./Button.svelte";
 
-  /**
-   * The phone side of a numeric choice: a wheel of values that snaps to the one
-   * under the centre band, the way a native picker reads.
-   */
+  // A wheel of numbers that snaps to the value under the centre band.
 
   let {
     values,
@@ -22,14 +19,13 @@
     onclose: () => void;
   } = $props();
 
-  /** Must match the h-11 on each row below. */
+  // row height in px, must match the h-11 on each row below
   const ITEM = 44;
 
   let wheel = $state<HTMLDivElement | null>(null);
   let current = $state(0);
 
-  // one shot: park the wheel on the value it opened with. Untracked, so the
-  // scroll it causes does not feed back in and fight the finger on the wheel.
+  // parks the wheel on its opening value once, untracked so the scroll does not feed back
   $effect(() => {
     const element = wheel;
     if (element === null) return;
@@ -73,7 +69,7 @@
     <span class="text-center text-sm font-semibold">{title}</span>
 
     <div class="relative h-[220px] overflow-hidden">
-      <!-- the band the picked value sits in -->
+      <!-- centre band holding the picked value -->
       <div
         class="pointer-events-none absolute inset-x-2 top-1/2 h-11 -translate-y-1/2 rounded-lg border-2 border-foreground/25 bg-foreground/5"
         aria-hidden="true"

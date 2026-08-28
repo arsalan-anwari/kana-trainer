@@ -1,10 +1,5 @@
 import type { Locator, Page } from "@playwright/test";
 
-/**
- * The presentation layer of the promo recording: a fake cursor, a caption pill,
- * full screen title cards and a smooth scroll helper.
- */
-
 export type Card = { title: string; lines: string[] };
 
 type StageApi = {
@@ -21,8 +16,7 @@ declare global {
   }
 }
 
-// Should be in seperate css file but inline works as well I guess. 
-// Nobody will see this, nobody cares...
+// Injects the cursor, caption, card and scroll layer into the page.
 export function installStage(intro: Card): void {
   const css = `
     #promo-layer, #promo-layer * { box-sizing: border-box; }
@@ -148,7 +142,7 @@ export function installStage(intro: Card): void {
       }
     };
 
-    // the intro card covers the app while it mounts
+    // show the intro card while the app mounts
     paint(intro);
     card.classList.add("on");
     card.style.transition = "none";
@@ -164,13 +158,13 @@ export function installStage(intro: Card): void {
   }
 }
 
-/** The node side remote control for the stage. */
+// Node side remote control for the stage.
 export class Stage {
   private readonly started = Date.now();
 
   constructor(private readonly page: Page) {}
 
-  /** Where a beat lands on the timeline, printed while tuning the script. */
+  // prints where a beat lands on the timeline
   mark(label: string): void {
     console.log(`  ${((Date.now() - this.started) / 1000).toFixed(1)}s  ${label}`);
   }
@@ -198,7 +192,7 @@ export class Stage {
     await this.beat(340);
   }
 
-  /** Scrolls the window with an eased animation and waits for it to land. */
+  // scrolls the window with an eased animation and waits for it to land
   async scroll(y: number, ms = 520): Promise<void> {
     await this.page.evaluate(
       ({ target, duration }) => window.__promo.scrollTo(target, duration),
@@ -207,10 +201,7 @@ export class Stage {
     await this.beat(ms + 80);
   }
 
-  /**
-   * Brings a target into the middle of the screen when it sits off it, and
-   * hands back where it ended up. 
-   */
+  // centres a target that sits off screen and returns its centre point
   private async reveal(target: Locator): Promise<{ x: number; y: number } | null> {
     const view = this.page.viewportSize();
     let box = await target.boundingBox();
@@ -226,9 +217,7 @@ export class Stage {
     return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
   }
 
-  /**
-   * Puts an element at the top of the screen.
-   */
+  // scrolls an element to the top of the screen
   async frame(selector: string, offset = 14, ms = 240): Promise<void> {
     const y = await this.page.evaluate(
       ({ target, top }) => {
@@ -241,7 +230,7 @@ export class Stage {
     await this.scroll(Math.max(0, y), ms);
   }
 
-  /** Glides the cursor onto a target and clicks it, `pin` keeps the page still. */
+  // moves the cursor onto a target and clicks it, pin skips the scroll
   async tap(target: Locator, settle = 220, pin = false): Promise<void> {
     const point = pin ? await this.centre(target) : await this.reveal(target);
     if (point !== null) await this.page.mouse.move(point.x, point.y, { steps: 5 });
@@ -254,13 +243,13 @@ export class Stage {
     return box === null ? null : { x: box.x + box.width / 2, y: box.y + box.height / 2 };
   }
 
-  /** Brings a target into view without touching it, for a beat to read it. */
+  // brings a target into view without clicking it
   async show(target: Locator, settle = 260): Promise<void> {
     await this.reveal(target);
     await this.beat(settle);
   }
 
-  /** Glides the cursor onto a target without pressing it. */
+  // moves the cursor onto a target without clicking it
   async hover(target: Locator, settle = 220): Promise<void> {
     const point = await this.reveal(target);
     if (point === null) return;

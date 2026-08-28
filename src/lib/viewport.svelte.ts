@@ -1,7 +1,4 @@
-/**
- * Where the layout has room to spread out. The pull down bars exist because a
- * phone is narrow, so anything from the sm breakpoint up gets the flat layout.
- */
+// Tracks whether the viewport is wide enough for the flat layout.
 
 const WIDE = "(min-width: 640px)";
 

@@ -1,11 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
-/**
- * The reports screen keeps a history that has to survive leaving the machine:
- * export the picked runs to one .kt-report file, wipe them, import the file
- * back and find the same runs.
- */
+// Exports runs to a .kt-report file, removes them and imports them back.
 
 type Seed = { id: string; createdAt: string };
 
@@ -62,7 +58,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
   await expect(page.getByText("Removed 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual([]);
 
-  // the picker input never enters the page, so the file goes through the chooser
+  // the file goes through the chooser rather than a page input
   const chooser = await Promise.all([
     page.waitForEvent("filechooser"),
     page.getByRole("button", { name: /^Import runs/ }).click()
@@ -71,8 +67,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
   await expect(page.getByText("Imported 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 
-  // importing the same file again is a no op, which is what keeps two devices
-  // in step rather than piling up copies
+  // importing the same file again is a no op
   const again = await Promise.all([
     page.waitForEvent("filechooser"),
     page.getByRole("button", { name: /^Import runs/ }).click()

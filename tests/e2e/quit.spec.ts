@@ -1,9 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-/**
- * Only a run that was seen through counts. Quitting throws the answers away,
- * and it always asks before it does.
- */
+// Quitting a run asks first and discards the answers.
 
 const reportCount = (page: import("@playwright/test").Page) =>
   page.evaluate(
@@ -49,7 +46,7 @@ test("confirming throws the run away without scoring it", async ({ page }) => {
   await page.getByRole("button", { name: "Quit" }).click();
   await page.getByRole("button", { name: "Stop and discard" }).click();
 
-  // straight back to setup: no splash, no result screen
+  // back to setup, with no splash and no result screen
   await expect(page.getByRole("heading", { level: 3, name: "Alphabets" })).toBeVisible();
   await expect(page.getByRole("status")).toHaveCount(0);
   await expect(page.getByText("Run it again")).toHaveCount(0);

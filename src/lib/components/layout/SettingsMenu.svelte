@@ -6,10 +6,7 @@
   import IconButton from "../../ui/IconButton.svelte";
   import Switch from "../../ui/Switch.svelte";
 
-  /**
-   * The permanent settings on a phone: a full screen sheet, so there is room
-   * for more of them later without another tab.
-   */
+  // Full screen settings sheet, shown on a phone.
 
   let { onclose }: { onclose: () => void } = $props();
 

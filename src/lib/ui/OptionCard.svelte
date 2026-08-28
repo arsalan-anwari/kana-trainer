@@ -26,13 +26,13 @@
   {disabled}
   aria-pressed={active}
   class="flex h-full w-full cursor-pointer flex-col items-start gap-1 rounded-xl border-2 p-3 text-left transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40 sm:p-4 {active
-    ? 'border-foreground bg-foreground/5'
+    ? 'border-selected bg-selected-soft'
     : 'border-border bg-surface hover:bg-accent'} active:translate-y-[1px]"
   onclick={handle}
 >
   <span class="flex items-center gap-2 text-sm font-semibold leading-tight">
     <span
-      class="inline-block size-2 rounded-full {active ? 'bg-foreground' : 'bg-border'}"
+      class="inline-block size-2 rounded-full {active ? 'bg-selected' : 'bg-border'}"
       aria-hidden="true"
     ></span>
     {label}

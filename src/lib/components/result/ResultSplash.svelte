@@ -3,24 +3,19 @@
   import type { Summary } from "../../core/report";
   import { app } from "../../state.svelte";
 
-  /**
-   * The moment between the last answer and the numbers: one emoji for how it
-   * went, then it gets out of the way and fades into the report behind it.
-   * The bigger the run, the bigger the party, so nothing but a clean sheet
-   * gets the full treatment.
-   */
+  // Grade emoji and confetti shown briefly before the score report.
 
   let { tier, summary }: { tier: ScoreTier; summary: Summary } = $props();
 
   const FADE = 520;
 
   type Party = {
-    /** How long the splash holds before it starts leaving. */
+    // how long the splash holds before it starts leaving
     hold: number;
     pieces: number;
-    /** Confetti size range, in px. */
+    // confetti size range, in px
     size: number;
-    /** Expanding rings behind the emoji. */
+    // expanding rings behind the emoji
     rings: number;
     bounce: boolean;
   };
@@ -33,13 +28,13 @@
     poor: { hold: 2100, pieces: 0, size: 0, rings: 0, bounce: false }
   };
 
-  // one splash per finished run, so the grade is read once and held
+  // the grade is read once and held for the life of the splash
   // svelte-ignore state_referenced_locally
   const party = parties[tier];
 
   let leaving = $state(false);
 
-  /** The two accents the palette allows, plus a gold for the win. */
+  // confetti colours
   const tones = [
     "var(--color-danger)",
     "var(--color-success)",
@@ -48,7 +43,7 @@
     "var(--color-foreground)"
   ];
 
-  /** Fixed at setup so a re-render never reshuffles the confetti mid flight. */
+  // fixed at setup so a re-render never reshuffles the confetti
   const pieces = Array.from({ length: party.pieces }, (_, index) => ({
     index,
     left: Math.random() * 100,
@@ -107,7 +102,7 @@
           aria-hidden="true"
         ></span>
       {/each}
-      <!-- the pop and the bounce are separate elements: one animation each -->
+      <!-- pop and bounce are separate elements, one animation each -->
       <span class="anim-splash-emoji relative text-[5rem] leading-none sm:text-[6.5rem]">
         <span class="inline-block {party.bounce ? 'anim-bounce-hold' : ''}">
           {tierEmoji(tier)}

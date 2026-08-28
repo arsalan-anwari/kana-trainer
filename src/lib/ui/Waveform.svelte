@@ -1,5 +1,5 @@
 <script lang="ts">
-  /** Bar histogram of a sound, filled up to the current playback position. */
+  // Bar histogram of a sound, filled up to the playback position.
 
   let {
     peaks,

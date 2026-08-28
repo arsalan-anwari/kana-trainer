@@ -1,4 +1,4 @@
-/** The line icons available to Icon.svelte. */
+// The line icons available to Icon.svelte.
 export type IconName =
   | "sun"
   | "moon"

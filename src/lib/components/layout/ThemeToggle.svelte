@@ -19,7 +19,7 @@
   }
 </script>
 
-<!-- high contrast is its own palette, so the theme has nothing left to say -->
+<!-- disabled while high contrast is on -->
 <IconButton
   {size}
   icon={current.icon}

@@ -9,7 +9,7 @@
 
   const shown = $derived(rows.slice(0, limit));
 
-  /** Ink density carries accuracy, with the seal red kept for the worst rows. */
+  // picks a bar colour from the accuracy
   function color(accuracy: number): string {
     if (accuracy >= 0.9) return "var(--color-chart-5)";
     if (accuracy >= 0.7) return "var(--color-chart-4)";

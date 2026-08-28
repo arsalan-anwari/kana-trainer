@@ -1,11 +1,9 @@
 # Cuts a github release from a v1.2.3 tag.
 #
 #   1. builds every package in a matrix
-#   2. runs the playwright smoke test against the same frontend the packages carry
-#   3. creates the release, with the changelog entry as the description and
-#      every package plus a checksum file attached
-#   4. repoints the github pages download page at the new assets and commits it,
-#      which triggers the pages workflow
+#   2. runs the playwright smoke test against the built frontend
+#   3. creates the release, with the changelog entry and every package attached
+#   4. repoints the github pages download page at the new assets
 
 name: release
 
@@ -32,8 +30,7 @@ jobs:
     secrets: inherit
     with:
       targets: '["deb","rpm","arch","exe","dmg","apk"]'
-      # a release apk signed with anything but the real key cannot update an
-      # installed copy, so the build stops rather than shipping one
+      # stop the build rather than ship an apk signed with the wrong key
       require_signing_key: true
 
   smoke:
@@ -143,12 +140,10 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
-      # the push below is authored by GITHUB_TOKEN, and github never triggers a
-      # workflow from those, so the pages deploy has to be dispatched by hand
+      # needed to dispatch the pages deploy, which a GITHUB_TOKEN push cannot trigger
       actions: write
     steps:
-      # the release job runs against the tag, and the page is committed to
-      # main, so check that out instead
+      # check out main, since the page is committed there and not to the tag
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -163,23 +158,23 @@ jobs:
           fi
           echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-      - name: Rebuild docs/html from the release assets
+      - name: Rebuild the download page from the release assets
         env:
           GH_TOKEN: ${{ github.token }}
-        run: scripts/build-download-page.sh "${{ steps.version.outputs.tag }}"
+        run: scripts/publish.sh --pages "${{ steps.version.outputs.tag }}"
 
       - name: Commit it
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- docs/html; then
+          if git diff --quiet -- packaging/repo/html; then
             echo "the download page already points at ${{ steps.version.outputs.tag }}"
             exit 0
           fi
 
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/html
+          git add packaging/repo/html
           git commit -m 'Point the download page at ${{ steps.version.outputs.tag }}'
           git push origin main
           gh workflow run pages.yml --ref main

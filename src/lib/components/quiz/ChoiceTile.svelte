@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ChoiceState } from "./choiceState";
 
-  /** A square multiple choice answer. Square keeps the tap target large on phones. */
+  // A square multiple choice answer tile.
 
   let {
     slot,

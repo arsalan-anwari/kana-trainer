@@ -1,10 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-/**
- * Smoke test for the built frontend, the same bundle the desktop and mobile
- * packages embed. It checks that the app opens, that a run starts and that a
- * character sound actually plays.
- */
+// Playwright config for the smoke test over the built frontend.
 export default defineConfig({
   testDir: "tests/e2e",
   timeout: 30_000,

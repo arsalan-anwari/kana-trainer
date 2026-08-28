@@ -4,7 +4,7 @@ import { buildQuestions, checkTyped, eligibleKana, eligiblePairs } from "../src/
 import { similarity } from "../src/lib/core/similarity";
 import { defaultSettings, type RunSettings } from "../src/lib/core/settings";
 
-/** The same characters picked in both alphabets, which is the common case. */
+// The same characters picked in both alphabets.
 function both(ids: string[]): Pick<RunSettings, "selections"> {
   return { selections: { hiragana: ids, katakana: ids } };
 }
@@ -180,7 +180,7 @@ describe("choices that can be told apart", () => {
         const kana = kanaById(choice.kanaId);
         return kana === undefined ? [] : [kana.romaji, ...kana.alt];
       });
-      // ぢ reads "ji" as well as "dji", so it may not sit next to じ
+      // ぢ reads "ji" as well as "dji", so it may not sit beside じ
       expect(new Set(readings).size).toBe(readings.length);
     }
   });
@@ -258,8 +258,7 @@ describe("difficulty", () => {
 
 describe("filling four options", () => {
   it("reaches past the selection when the picked characters read alike", () => {
-    // じ ぢ ず づ are two readings between the four of them, so on their own
-    // they cannot make four options that can be told apart
+    // じ ぢ ず づ carry two readings between them, so they cannot fill four options
     const alike = settings({
       questionCount: 12,
       includeDakuon: true,

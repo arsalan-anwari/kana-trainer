@@ -1,4 +1,4 @@
-/** How a finished run is graded, shared by the splash, the headline and the sound. */
+// Grading of a finished run.
 
 export const scoreTiers = ["perfect", "great", "good", "fair", "poor"] as const;
 

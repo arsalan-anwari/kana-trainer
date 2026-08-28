@@ -39,7 +39,7 @@ describe("kana data", () => {
 
   it("ships an audio file for every character", () => {
     for (const kana of allKana) {
-      expect(existsSync(`public/audio/${kana.audio}.mp3`)).toBe(true);
+      expect(existsSync(`data/audio/${kana.audio}.mp3`)).toBe(true);
     }
   });
 

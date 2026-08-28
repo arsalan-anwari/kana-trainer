@@ -20,7 +20,7 @@
   type="button"
   aria-pressed={picked}
   class="flex w-full cursor-pointer flex-col items-start gap-1 rounded-lg border p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {picked
-    ? 'border-foreground bg-foreground/5'
+    ? 'border-selected bg-selected-soft'
     : 'border-border bg-surface hover:bg-accent'}"
   onclick={ontoggle}
 >

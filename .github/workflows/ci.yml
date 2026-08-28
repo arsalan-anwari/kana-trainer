@@ -1,10 +1,5 @@
-# The checks that used to live in scripts/test.sh: the svelte type check, the
-# vitest suite, the playwright smoke test, rust formatting, cargo check and the
-# rust tests.
-#
-# The frontend and the rust checks are separate jobs on purpose. Only the rust
-# side needs the webkitgtk headers, so the fast checks no longer queue behind
-# apt.
+# Runs the svelte type check, vitest, the playwright smoke test, rust
+# formatting, cargo check and the rust tests.
 
 name: ci
 
@@ -69,8 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Only what pkg-config needs to resolve the tauri crate. The icon and
-      # tray libraries are a bundling concern, so they live in package-build.
+      # only what pkg-config needs to resolve the tauri crate
       - name: Install the libraries tauri builds against
         timeout-minutes: 10
         uses: ./.github/actions/apt-deps

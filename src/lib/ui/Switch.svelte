@@ -38,7 +38,7 @@
   </span>
   <span
     class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors {checked
-      ? 'border-foreground bg-foreground'
+      ? 'border-selected bg-selected'
       : 'border-border bg-secondary'}"
   >
     <span

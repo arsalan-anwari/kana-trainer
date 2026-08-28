@@ -1,0 +1,30 @@
+# Dev-only: the tools/ scripts run on the system python (see scripts/record.sh).
+# This venv exists so the editor's type checker and linter resolve their imports.
+[project]
+name = "kana-trainer-tools"
+version = "0"
+requires-python = ">=3.12"
+dependencies = ["pillow"]
+
+[dependency-groups]
+# numpy is never imported; Pillow's stubs need it to type resize() and point()
+dev = ["basedpyright", "numpy", "ruff"]
+
+[tool.uv]
+package = false
+
+[tool.basedpyright]
+include = ["tools"]
+# these one-shot scripts do not earn full strict-mode annotation
+reportAny = false
+reportExplicitAny = false
+reportMissingParameterType = false
+reportUnknownArgumentType = false
+reportUnknownMemberType = false
+reportUnknownParameterType = false
+reportUnknownVariableType = false
+reportUnusedCallResult = false
+reportImplicitStringConcatenation = false
+
+[tool.ruff]
+target-version = "py312"

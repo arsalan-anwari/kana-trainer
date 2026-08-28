@@ -8,8 +8,7 @@ const DARK_BACKGROUND: Color = Color(0x16, 0x15, 0x0f, 0xff);
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        // first start wayland nvidia quirk fix,
-        // so the window has its GL context before the first frame
+        // gives the window its GL context before the first frame
         .plugin(tauri_plugin_wayland_nvidia_quirk::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
@@ -21,7 +20,7 @@ pub fn run() {
                 } else {
                     LIGHT_BACKGROUND
                 };
-                // best effort: an unsupported platform just keeps the config colour
+                // an unsupported platform keeps the config colour
                 let _ = window.set_background_color(Some(background));
             }
             Ok(())
