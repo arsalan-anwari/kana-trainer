@@ -231,6 +231,14 @@ jobs:
           res=src-tauri/gen/android/app/src/main/res
           [ -d "$res" ] || { echo "no generated android project at $res" >&2; exit 1; }
           cp -R src-tauri/icons/android/. "$res/"
+          # the wrapper download from services.gradle.org resets often enough to
+          # break the build, so fetch the distribution first and retry it alone
+          # rather than the whole cargo+gradle assemble
+          for i in 1 2 3 4 5; do
+            src-tauri/gen/android/gradlew --project-dir src-tauri/gen/android --version && break
+            echo "gradle wrapper download failed (attempt $i), retrying"
+            sleep $((i * 15))
+          done
           npx tauri android build --${{ matrix.kind }}
 
       - name: Sign the apk
