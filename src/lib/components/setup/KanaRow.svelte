@@ -13,6 +13,11 @@
 
   const taken = $derived(row.kana.filter((kana) => selected.has(kana.id)).length);
   const complete = $derived(taken === row.kana.length);
+
+  // Tracks in rem, so raising the zoom drops chips per row rather than
+  // shrinking them until the character stops fitting. auto-fill keeps the
+  // empty tracks so short rows stay lined up with full ones.
+  const tracks = "repeat(auto-fill, minmax(3.25rem, 1fr))";
 </script>
 
 {#snippet chips()}
@@ -43,7 +48,7 @@
     >
       {row.label}
     </button>
-    <div class="grid min-w-0 flex-1 grid-cols-5 gap-1.5 sm:gap-2">
+    <div class="grid min-w-0 flex-1 gap-1.5 sm:gap-2" style="grid-template-columns: {tracks}">
       {@render chips()}
     </div>
   </div>
@@ -54,7 +59,7 @@
     active={complete}
     onpress={() => app.toggleRow(row.id)}
   >
-    <div class="grid grid-cols-5 gap-1.5">
+    <div class="grid gap-1.5" style="grid-template-columns: {tracks}">
       {@render chips()}
     </div>
   </RowBar>

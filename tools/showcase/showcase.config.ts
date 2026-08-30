@@ -35,8 +35,14 @@ export default defineConfig({
     },
     {
       name: "phone",
-      // pixel 7 at a round scale factor
-      use: { ...devices["Pixel 7"], deviceScaleFactor: 2 }
+      // pixel 7 at a round scale factor. The viewport is the whole screen, not
+      // the browser one with its chrome taken off, because the app runs full
+      // screen on a phone: 412x915 is what the user actually sees.
+      use: {
+        ...devices["Pixel 7"],
+        viewport: { width: 412, height: 915 },
+        deviceScaleFactor: 2
+      }
     }
   ],
   webServer: {

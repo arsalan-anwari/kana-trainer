@@ -91,7 +91,8 @@ test("record the promo", async ({ page }) => {
   const button = (name: string | RegExp, exact = false) =>
     page.getByRole("button", { name, exact });
   const startRun = button("Start run");
-  const backToSetup = button("Practice", true);
+  // the header tabs are hidden during a run, so leaving one goes through Quit
+  const backToSetup = button("Quit", true);
   const discard = button("Stop and discard");
 
   // leaves a half finished run and discards the answers
@@ -210,7 +211,7 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button("Reports", true), 300);
   await stage.caption("Every run kept, on your machine only");
   await stage.beat(420);
-  await stage.caption("Look back a day, a week or a month");
+  await stage.caption("Look back a day, a week or any range you pick");
   await stage.tap(button("Last week", true), 320);
   await stage.tap(page.getByRole("button", { name: "Select every run shown" }), 380);
   await stage.caption("See which rows trip you up");

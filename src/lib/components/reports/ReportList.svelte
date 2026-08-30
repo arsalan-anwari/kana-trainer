@@ -1,10 +1,18 @@
 <script lang="ts">
-  import { reportFilterLabel, reportFilters, type Report, type ReportFilter } from "../../core/report";
+  import {
+    isDateRange,
+    reportFilterLabel,
+    reportFilters,
+    type Report,
+    type ReportFilter
+  } from "../../core/report";
   import { app } from "../../state.svelte";
   import { deleteReport, exportReports, fileLabel, importReports } from "../../storage";
   import Chip from "../../ui/Chip.svelte";
   import ConfirmDialog from "../../ui/ConfirmDialog.svelte";
+  import Icon from "../../ui/Icon.svelte";
   import IconButton from "../../ui/IconButton.svelte";
+  import DateRangePicker from "./DateRangePicker.svelte";
   import ReportListItem from "./ReportListItem.svelte";
 
   let {
@@ -27,12 +35,16 @@
   );
 
   let confirming = $state(false);
+  let picking = $state(false);
+
+  const range = $derived(isDateRange(filter) ? filter : null);
 
   function setFilter(next: ReportFilter): void {
     // changing the window clears the selection
     filter = next;
     picked = [];
     confirming = false;
+    picking = false;
   }
 
   function toggle(id: string): void {
@@ -76,12 +88,34 @@
 </script>
 
 <div class="flex flex-col gap-3">
-  <div class="flex flex-wrap items-center gap-1.5">
+  <!-- relative so the range panel can hang under the whole filter strip -->
+  <div class="relative flex flex-wrap items-center gap-1.5">
     {#each reportFilters as option (option)}
       <Chip size="sm" active={filter === option} onclick={() => setFilter(option)}>
         {reportFilterLabel(option)}
       </Chip>
     {/each}
+    <Chip
+      size="sm"
+      active={range !== null}
+      title={range === null ? "Pick a date range" : reportFilterLabel(range)}
+      onclick={() => (picking = true)}
+    >
+      <span class="flex items-center gap-1.5">
+        <Icon name="calendar" class="size-4" />
+        {#if range !== null}
+          <span class="tabular-nums">{reportFilterLabel(range)}</span>
+        {/if}
+      </span>
+    </Chip>
+
+    {#if picking}
+      <DateRangePicker
+        current={range}
+        onpick={(next) => setFilter(next)}
+        onclose={() => (picking = false)}
+      />
+    {/if}
   </div>
 
   <div class="flex items-center justify-between gap-2">
@@ -126,7 +160,7 @@
     </div>
   </div>
 
-  <div class="flex max-h-[26rem] flex-col gap-2 overflow-y-auto lg:max-h-[34rem]">
+  <div class="flex max-h-104 flex-col gap-2 overflow-y-auto lg:max-h-136">
     {#each reports as report (report.id)}
       <ReportListItem
         {report}

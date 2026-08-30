@@ -194,15 +194,40 @@ export function reportTitle(report: Report): string {
   return date.toLocaleString();
 }
 
-export const reportFilters = ["all", "today", "yesterday", "week", "month"] as const;
+export const reportFilters = ["all", "today", "yesterday", "week"] as const;
 
-export type ReportFilter = (typeof reportFilters)[number];
+// A window the reader picked by hand, both ends inclusive whole local days,
+// each written as YYYY-MM-DD the way an <input type="date"> reports it.
+export type DateRange = { from: string; to: string };
+
+export type ReportFilter = (typeof reportFilters)[number] | DateRange;
+
+export function isDateRange(filter: ReportFilter): filter is DateRange {
+  return typeof filter !== "string";
+}
+
+// YYYY-MM-DD for the local day a stamp falls in.
+export function dayKey(stamp: number): string {
+  const date = new Date(stamp);
+  const pad = (value: number): string => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+// Local midnight of a YYYY-MM-DD key. Date.parse would read it as UTC, which
+// slides the window by a day either side of the meridian.
+function dayStart(key: string): number {
+  const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
+  if (parts === null) return Number.NaN;
+  return new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])).getTime();
+}
 
 export function reportFilterLabel(filter: ReportFilter): string {
+  if (isDateRange(filter)) {
+    return filter.from === filter.to ? filter.from : `${filter.from} to ${filter.to}`;
+  }
   if (filter === "today") return "Today";
   if (filter === "yesterday") return "Yesterday";
   if (filter === "week") return "Last week";
-  if (filter === "month") return "Last month";
   return "All";
 }
 
@@ -214,16 +239,24 @@ function startOfDay(stamp: number): number {
 
 const DAY = 24 * 60 * 60 * 1000;
 
+// How far back the hand picked window may reach.
+export const rangeDays = 365;
+
 // Filters reports to a window of whole local days.
 export function filterWindow(
   filter: ReportFilter,
   now = Date.now()
 ): { from: number; to: number } | null {
+  if (isDateRange(filter)) {
+    const from = dayStart(filter.from);
+    const to = dayStart(filter.to);
+    if (!Number.isFinite(from) || !Number.isFinite(to)) return null;
+    return { from: Math.min(from, to), to: Math.max(from, to) + DAY };
+  }
   const today = startOfDay(now);
   if (filter === "today") return { from: today, to: today + DAY };
   if (filter === "yesterday") return { from: today - DAY, to: today };
   if (filter === "week") return { from: today - 6 * DAY, to: today + DAY };
-  if (filter === "month") return { from: today - 29 * DAY, to: today + DAY };
   return null;
 }
 

@@ -36,7 +36,7 @@
               {#each box.rows as entry (entry.row.id)}
                 <div class="flex items-start gap-2">
                   <span
-                    class="w-9 shrink-0 pt-1 text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground"
+                    class="w-14 shrink-0 whitespace-nowrap pt-1 text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground"
                   >
                     {entry.row.label}
                   </span>

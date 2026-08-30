@@ -88,11 +88,26 @@ describe("report filters", () => {
     expect(filterReports(reports, "today", now)).toHaveLength(1);
     expect(filterReports(reports, "yesterday", now)).toHaveLength(1);
     expect(filterReports(reports, "week", now)).toHaveLength(3);
-    expect(filterReports(reports, "month", now)).toHaveLength(4);
+  });
+
+  it("takes a hand picked window with both ends included", () => {
+    // 2026-07-22 through 2026-08-20 is the 30 day window the month chip used
+    const range = { from: "2026-07-22", to: "2026-08-20" };
+    expect(filterReports(reports, range, now)).toHaveLength(4);
+    // the run 20 days back, on its own day, both ends inclusive
+    expect(filterReports(reports, { from: "2026-07-31", to: "2026-07-31" }, now)).toHaveLength(1);
+    // ends the wrong way round still name the same window
+    expect(filterReports(reports, { from: range.to, to: range.from }, now)).toHaveLength(4);
+  });
+
+  it("keeps everything when a hand picked window is unreadable", () => {
+    expect(filterReports(reports, { from: "nope", to: "2026-08-20" }, now)).toHaveLength(5);
   });
 
   it("drops runs with an unreadable date", () => {
-    expect(filterReports([at("not a date")], "month", now)).toHaveLength(0);
+    expect(
+      filterReports([at("not a date")], { from: "2026-07-22", to: "2026-08-20" }, now)
+    ).toHaveLength(0);
   });
 });
 

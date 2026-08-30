@@ -19,7 +19,7 @@ export const defaultPrefs: Prefs = {
 };
 
 export const zoomMin = 0.7;
-export const zoomMax = 1.4;
+export const zoomMax = 1.2;
 export const zoomStep = 0.05;
 
 export function clampZoom(value: number): number {

@@ -5,6 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.3] - 2026-08-30
+
+### Fixed
+
+- Two character readings like the yoon rows, overflowed the center box in quizes so text now scales against the container. 
+- A run needed vertical scrolling on a phone so content is now more aligned to center vertically so it fits one screen
+- The typing field sat low enough for the virtual keyboard to cover it so verticall padding from bottom added.
+- The fifth report filter jumped between the first and second row at some widths.
+- Row labels in "Mistakes by group" wrapped onto two lines.
+- The character chart and the practice picker kept the same number of columns at high zoom, so the boxes overlapped and their text vanished. So they now scale the number of columns down to keep the boxes and text readable.
+
+### Changed
+
+- The layout was reworked against extra small phone viewports at large accessibility font sizes, and holds together in those cases.
+- The three tabs are hidden during a run.
+- The prompt frame is larger on a phone, and there is less space above it.
+- Zoom stops at 120% rather than 140% (on small phone 140% is nearly imposible to use).
+
+### Removed
+
+- The "Last month" report filter, replaced by a calendar button that picks any range up to a year back.
+
 ## [1.6.2] - 2026-08-30
 
 ### Fixed
@@ -218,6 +240,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.6.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.3
 [1.6.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.2
 [1.6.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.1
 [1.6.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.0

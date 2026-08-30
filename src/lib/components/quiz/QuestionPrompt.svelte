@@ -20,6 +20,17 @@
   });
 
   const playing = $derived(kana.audio !== null && kanaAudio.playing === kana.audio);
+
+  const text = $derived(question.prompt === "kana" ? glyph(kana, question.script) : kana.romaji);
+
+  // The glyph is measured against the frame, not the viewport, so a two
+  // character yoon reading stays inside the box at any size or zoom.
+  // Kana are full width, romaji roughly half, hence the two budgets.
+  const fontSize = $derived.by(() => {
+    const budget = question.prompt === "kana" ? 88 : 150;
+    const cap = question.prompt === "kana" ? 60 : 42;
+    return `${Math.min(cap, budget / Math.max(1, text.length))}cqi`;
+  });
 </script>
 
 <div class="flex flex-col items-center gap-2 sm:gap-3">
@@ -47,13 +58,14 @@
           />
         </span>
       </button>
-    {:else if question.prompt === "kana"}
-      <span class="kana text-[4.5rem] font-medium leading-none sm:text-[6.5rem] lg:text-[8rem]">
-        {glyph(kana, question.script)}
-      </span>
     {:else}
-      <span class="text-[2.75rem] font-bold leading-none sm:text-[4rem] lg:text-[5rem]">
-        {kana.romaji}
+      <span
+        class="whitespace-nowrap leading-none {question.prompt === 'kana'
+          ? 'kana font-medium'
+          : 'font-bold'}"
+        style="font-size: {fontSize}"
+      >
+        {text}
       </span>
     {/if}
   </PromptBox>

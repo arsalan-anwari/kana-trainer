@@ -9,6 +9,7 @@ export type IconName =
   | "download"
   | "trash"
   | "filter"
+  | "calendar"
   | "chevron-down"
   | "sliders"
   | "contrast"

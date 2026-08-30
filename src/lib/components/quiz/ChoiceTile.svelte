@@ -19,6 +19,12 @@
     onpick: () => void;
   } = $props();
 
+  // Sized against the tile, not the viewport, so a two character yoon reading
+  // fits at any tile size or zoom. Kana are full width, romaji roughly half.
+  const fontSize = $derived(
+    `${Math.min(kana ? 46 : 34, (kana ? 78 : 130) / Math.max(1, label.length))}cqi`
+  );
+
   const tones: Record<ChoiceState, string> = {
     idle: "border-border bg-surface hover:border-foreground hover:bg-accent active:translate-y-[2px]",
     staged: "border-foreground bg-foreground/5",
@@ -31,7 +37,7 @@
 <button
   type="button"
   {disabled}
-  class="relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-2xl border-2 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default {tones[
+  class="@container relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-2xl border-2 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default {tones[
     state
   ]}"
   onclick={onpick}
@@ -43,9 +49,8 @@
     {slot}
   </span>
   <span
-    class="px-2 text-center font-semibold leading-none {kana
-      ? 'kana text-[2.5rem] sm:text-[3.5rem] lg:text-[4rem]'
-      : 'text-[1.75rem] sm:text-[2.25rem] lg:text-[2.75rem]'}"
+    class="whitespace-nowrap text-center font-semibold leading-none {kana ? 'kana' : ''}"
+    style="font-size: {fontSize}"
   >
     {label}
   </span>

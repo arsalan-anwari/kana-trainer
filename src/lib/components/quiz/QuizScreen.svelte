@@ -68,10 +68,15 @@
 {/if}
 
 {#if question !== null && kana !== null}
-  <div class="flex min-h-[calc(100dvh-10rem)] flex-col gap-3 sm:min-h-0 sm:gap-6">
+  <!-- one screen, no scrolling, with the verdict on the bottom edge -->
+  <div class="flex min-h-0 flex-1 flex-col gap-2 sm:gap-6">
     <QuizStatusBar />
 
-    <div class="flex flex-1 flex-col items-center gap-4 sm:gap-7">
+    <!-- on a phone the run rides up against the progress bar, so the virtual
+         keyboard has the whole lower half to itself -->
+    <div
+      class="flex min-h-0 flex-1 flex-col items-center justify-start gap-3 sm:justify-center sm:gap-7"
+    >
       {#if secondsLeft !== null}
         <div class="w-full max-w-xs">
           <Progress
@@ -82,13 +87,9 @@
       {/if}
 
       {#key question.index}
-        <!-- prompt on top, answers below, with the gap taking the slack -->
-        <div
-          class="anim-pop flex w-full flex-1 flex-col items-center justify-between gap-4 sm:flex-none sm:justify-start sm:gap-7"
-        >
-          <div class="flex flex-1 items-center sm:flex-none">
-            <QuestionPrompt {question} {kana} onreplay={() => app.replayPrompt()} />
-          </div>
+        <!-- prompt on top, answers below -->
+        <div class="anim-pop flex w-full flex-col items-center gap-3 sm:gap-7">
+          <QuestionPrompt {question} {kana} onreplay={() => app.replayPrompt()} />
 
           {#if app.settings.answerStyle !== "choice"}
             <TypingAnswer {question} />
@@ -99,12 +100,12 @@
           {/if}
         </div>
       {/key}
-
-      {#if app.phase === "feedback"}
-        <div class="w-full max-w-xl">
-          <FeedbackPanel {question} {kana} />
-        </div>
-      {/if}
     </div>
+
+    {#if app.phase === "feedback"}
+      <div class="mx-auto w-full max-w-xl">
+        <FeedbackPanel {question} {kana} />
+      </div>
+    {/if}
   </div>
 {/if}

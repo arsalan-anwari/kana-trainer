@@ -63,16 +63,18 @@ test("escape asks the same question", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Quit" })).toBeVisible();
 });
 
-test("leaving by the header asks, then lands where it was going", async ({ page }) => {
-    await startAndAnswer(page, 2);
-  const before = await reportCount(page);
+test("a run hides the tabs and gets them back on the way out", async ({ page }) => {
+    await page.goto("/");
+  await expect(page.getByRole("button", { name: "Chart", exact: true })).toBeVisible();
 
-  await page.getByRole("button", { name: "Chart", exact: true }).click();
-  await expect(page.getByRole("alertdialog")).toBeVisible();
+  await startAndAnswer(page, 2);
+  // the run owns the screen, so the tabs step aside and give back the height
+  await expect(page.getByRole("button", { name: "Chart", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Reports", exact: true })).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Quit" }).click();
   await page.getByRole("button", { name: "Stop and discard" }).click();
-
-  await expect(page.getByRole("heading", { name: /Seion/ })).toBeVisible();
-  expect(await reportCount(page)).toBe(before);
+  await expect(page.getByRole("button", { name: "Chart", exact: true })).toBeVisible();
 });
 
 test("a run that is finished still scores and splashes", async ({ page }) => {

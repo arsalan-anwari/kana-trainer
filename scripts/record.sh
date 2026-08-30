@@ -61,7 +61,7 @@ target_gif() {
 target_width() {
   case "$1" in
     desktop) echo "${SHOWCASE_WIDTH:-800}" ;;
-    phone) echo "${SHOWCASE_PHONE_WIDTH:-300}" ;;
+    phone) echo "${SHOWCASE_PHONE_WIDTH:-360}" ;;
     *) echo 800 ;;
   esac
 }
@@ -178,28 +178,32 @@ promo() {
   echo "==> encoding $out"
   mkdir -p "$(dirname "$out")"
 
-  # fedora ships ffmpeg without libx264, so fall back to openh264
-  local encoders codec
+  # partner center rejects the constrained baseline stream openh264 produces,
+  # so libx264 is required rather than a fallback. Held in a variable because
+  # grep would close the pipe early and pipefail would read that as a failure.
+  local encoders
   encoders="$(ffmpeg -hide_banner -encoders 2>/dev/null)"
-  if grep -q ' libx264 ' <<<"$encoders"; then
-    codec=(-c:v libx264 -preset slow -crf 20)
-  elif grep -q ' libopenh264 ' <<<"$encoders"; then
-    codec=(-c:v libopenh264 -b:v 4M)
-  else
-    echo "no h264 encoder in ffmpeg, install one (libx264 or libopenh264)" >&2
+  grep -q ' libx264 ' <<<"$encoders" || {
+    echo "ffmpeg has no libx264, partner center will not take the upload" >&2
+    echo "install it (dnf install ffmpeg, or a build with --enable-libx264)" >&2
     exit 1
-  fi
+  }
+
+  # exactly 1920x1080, whatever the recording came out as
+  local fit="scale=1920:1080:force_original_aspect_ratio=decrease:flags=lanczos"
+  fit="$fit,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=0xF7F2E7"
 
   local speed="${PROMO_SPEED:-1.1}"
   ffmpeg -hide_banner -loglevel error -y \
     -ss "${PROMO_TRIM:-0.6}" -i "$webm" \
-    -vf "setpts=PTS/${speed},fps=30,format=yuv420p" \
-    -an "${codec[@]}" -movflags +faststart \
+    -vf "setpts=PTS/${speed},fps=30,$fit,format=yuv420p" \
+    -an -c:v libx264 -preset slow -crf 20 \
+    -profile:v high -level:v 4.0 -movflags +faststart \
     "$out"
 
   local seconds
   seconds="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$out" 2>/dev/null || echo '?')"
-  echo "==> done: $out (${seconds}s, $(du -h "$out" | cut -f1))"
+  echo "==> done: $out ($(frame_size "$out" | tr ',' 'x'), ${seconds}s, $(du -h "$out" | cut -f1))"
 }
 
 # store art

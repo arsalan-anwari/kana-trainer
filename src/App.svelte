@@ -52,9 +52,9 @@
 
 <svelte:window onkeydown={keydown} ontouchstart={touchstart} ontouchend={touchend} />
 
-<div class="min-h-dvh w-full">
+<div class="flex min-h-dvh w-full flex-col">
   <main
-    class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-[calc(env(safe-area-inset-top,0px)+1.5rem)] sm:gap-5 sm:px-6 sm:pt-7 sm:pb-7 lg:px-10 lg:py-9"
+    class="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] pt-[calc(env(safe-area-inset-top,0px)+0.75rem)] sm:gap-5 sm:px-6 sm:pt-7 sm:pb-7 lg:px-10 lg:py-9"
   >
     <AppHeader />
 

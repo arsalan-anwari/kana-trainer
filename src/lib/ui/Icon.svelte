@@ -46,6 +46,9 @@
     <path d="M10.3 10.5v6M13.7 10.5v6" />
   {:else if name === "filter"}
     <path d="M3.5 5.5h17l-6.5 7.6v5.6l-4 2.3v-7.9z" />
+  {:else if name === "calendar"}
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
+    <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
   {:else if name === "chevron-down"}
     <path d="M6 9.5l6 6 6-6" />
   {:else if name === "sliders"}

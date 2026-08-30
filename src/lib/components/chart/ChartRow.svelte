@@ -4,7 +4,13 @@
   import RowBar from "../../ui/RowBar.svelte";
   import ChartTile from "./ChartTile.svelte";
 
-  let { row, columns }: { row: Row; columns: number } = $props();
+  let { row }: { row: Row } = $props();
+
+  // Tracks are sized in rem, so raising the zoom drops columns per row instead
+  // of squeezing the tiles until the text stops fitting. auto-fill, not
+  // auto-fit, so a short row keeps its empty tracks and stays aligned with the
+  // rows above and below it.
+  const tracks = "repeat(auto-fill, minmax(5.5rem, 1fr))";
 </script>
 
 {#snippet tiles()}
@@ -18,17 +24,14 @@
     <span class="w-16 shrink-0 text-xs font-bold tracking-tight text-muted-foreground">
       {row.label}
     </span>
-    <div
-      class="grid min-w-0 flex-1 gap-2"
-      style="grid-template-columns: repeat({columns}, minmax(0, 6rem))"
-    >
+    <div class="grid min-w-0 flex-1 gap-2" style="grid-template-columns: {tracks}">
       {@render tiles()}
     </div>
   </div>
 {:else}
   <RowBar label={row.label} hint="{row.kana.length} sounds">
-    <!-- three tiles across on a phone -->
-    <div class="grid grid-cols-3 gap-1.5">
+    <!-- as many tiles across as the zoom leaves room for -->
+    <div class="grid gap-1.5" style="grid-template-columns: {tracks}">
       {@render tiles()}
     </div>
   </RowBar>

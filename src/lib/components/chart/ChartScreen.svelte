@@ -9,10 +9,6 @@
     { group: "handakuon", japanese: "半濁音", description: "Half voiced は row." },
     { group: "yoon", japanese: "拗音", description: "Contracted with a small ゃ ゅ ょ." }
   ];
-
-  function widest(group: Group): number {
-    return Math.max(...rowsInGroup(group).map((row) => row.kana.length));
-  }
 </script>
 
 <div class="flex flex-col gap-5">
@@ -30,7 +26,7 @@
     >
       <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-x-8">
         {#each rowsInGroup(section.group) as row (row.id)}
-          <ChartRow {row} columns={widest(section.group)} />
+          <ChartRow {row} />
         {/each}
       </div>
     </Card>

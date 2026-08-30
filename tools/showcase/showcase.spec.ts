@@ -36,9 +36,10 @@ test("record the showcase", async ({ page }, testInfo) => {
     page.getByRole("button", { name, exact });
   const startRun = button("Start run");
 
-  // leaves a half finished run and returns to the setup screen
+  // leaves a half finished run and returns to the setup screen. The header
+  // tabs are hidden during a run, so this goes out through Quit.
   const backToSetup = async (): Promise<void> => {
-    await button("Practice", true).click();
+    await button("Quit", true).click();
     await discardRun(page);
     await expect(startRun).toBeEnabled();
   };

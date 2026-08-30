@@ -35,17 +35,20 @@
     />
   </div>
 
-  <nav class="flex items-center gap-2">
-    {#each tabRoutes as route (route)}
-      <Button
-        size="sm"
-        class="flex-1 sm:flex-none"
-        variant={app.route === route ? "secondary" : "ghost"}
-        onclick={() => app.go(route)}
-      >
-        {labels[route]}
-      </Button>
-    {/each}
+  <nav class="items-center gap-2 {app.route === 'quiz' ? 'hidden sm:flex' : 'flex'}">
+    <!-- a run owns the screen, so the tabs step aside and give back the height -->
+    {#if app.route !== "quiz"}
+      {#each tabRoutes as route (route)}
+        <Button
+          size="sm"
+          class="flex-1 sm:flex-none"
+          variant={app.route === route ? "secondary" : "ghost"}
+          onclick={() => app.go(route)}
+        >
+          {labels[route]}
+        </Button>
+      {/each}
+    {/if}
     <!-- separated from the three screen buttons -->
     <span class="ml-3 hidden border-l border-border pl-3 sm:ml-4 sm:flex sm:pl-4">
       <AppControls />

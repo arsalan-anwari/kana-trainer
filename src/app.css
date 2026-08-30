@@ -44,9 +44,12 @@
   /* how a picked box reads on the setup, reports and chart screens */
   --selected: var(--foreground);
   --selected-soft: color-mix(in srgb, var(--selected) 8%, transparent);
+  /* native controls, the date picker among them, follow the chosen theme */
+  color-scheme: light;
 }
 
 .dark {
+  color-scheme: dark;
   --background: #16150f;
   --foreground: #f3eddf;
   --surface: #1e1c15;
@@ -86,6 +89,7 @@
 
 /* High contrast palette, which replaces light and dark. */
 .high-contrast {
+  color-scheme: dark;
   --background: #000000;
   --foreground: #ffffff;
   --surface: #000000;
@@ -127,6 +131,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light):not(.high-contrast) {
+    color-scheme: dark;
     --background: #16150f;
     --foreground: #f3eddf;
     --surface: #1e1c15;
