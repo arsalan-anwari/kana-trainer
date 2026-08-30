@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-08-30
+
+### Fixed
+
+- A wrong typed answer showed no verdict: pressing Enter submitted the answer and dismissed the feedback panel in the same keystroke.
+- The text in the answer field sat a line low on WebKit and Firefox.
+
+### Changed
+
+- Each grade now gets its own end of run particle effect: fireworks, confetti, rising sparkles, drifting dust or grey drizzle.
+- The grade fanfares and emoji animations differ per grade, with a deflating slide for the lowest one.
+
 ## [1.6.1] - 2026-08-28
 
 ### Fixed
@@ -206,6 +218,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.6.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.2
 [1.6.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.1
 [1.6.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.0
 [1.5.5]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.5.5

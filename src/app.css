@@ -311,6 +311,37 @@ body {
   100% { opacity: 0; transform: translate3d(var(--drift, 0px), 108vh, 0) rotate(var(--spin, 180deg)); }
 }
 
+/* a spark thrown out from a firework burst, gravity pulling it down at the end */
+@keyframes firework {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.6); }
+  6% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  60% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--dx, 0px), calc(var(--dy, 0px) + 46px), 0) scale(0.7); }
+}
+
+/* a mote of light rising off the bottom of the screen */
+@keyframes sparkle-rise {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.3); }
+  20% { opacity: 1; transform: translate3d(0, -18vh, 0) scale(1); }
+  70% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate3d(var(--drift, 0px), -85vh, 0) scale(0.5); }
+}
+
+/* dust drifting sideways as it sinks */
+@keyframes drift-float {
+  0% { opacity: 0; transform: translate3d(0, -6vh, 0); }
+  15% { opacity: 0.85; }
+  50% { transform: translate3d(var(--drift, 0px), 45vh, 0); }
+  100% { opacity: 0; transform: translate3d(calc(var(--drift, 0px) * -1), 104vh, 0); }
+}
+
+/* a fast, straight drizzle streak */
+@keyframes rain-fall {
+  0% { opacity: 0; transform: translate3d(0, -14vh, 0); }
+  12% { opacity: 0.65; }
+  100% { opacity: 0.1; transform: translate3d(var(--drift, 0px), 112vh, 0); }
+}
+
 /* ring expanding out from the emoji */
 @keyframes burst {
   0% { opacity: 0.75; transform: scale(0.2); }
@@ -322,6 +353,39 @@ body {
   0%, 100% { transform: translateY(0) scale(1); }
   30% { transform: translateY(-10%) scale(1.06); }
   60% { transform: translateY(0) scale(0.98); }
+}
+
+/* the top grade gets a full spin on the way in */
+@keyframes splash-emoji-spin {
+  0% { transform: scale(0.15) rotate(-200deg); opacity: 0; }
+  50% { transform: scale(1.4) rotate(14deg); opacity: 1; }
+  72% { transform: scale(0.9) rotate(-8deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* idle motion, one per grade, calmer the lower it goes */
+@keyframes nod {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  35% { transform: rotate(8deg) translateY(-5%); }
+  70% { transform: rotate(-6deg) translateY(0); }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+
+/* the bottom grade droops instead of celebrating */
+@keyframes slump {
+  0% { transform: translateY(-8%) rotate(0deg); }
+  55% { transform: translateY(7%) rotate(-10deg); }
+  100% { transform: translateY(5%) rotate(-7deg); }
+}
+
+/* halo behind the emoji on the two top grades */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.15); }
 }
 
 @keyframes sheet-up {
@@ -351,6 +415,35 @@ body {
   animation-fill-mode: both;
 }
 
+/* the repeating particle effects, one per grade, each fed by inline vars */
+.anim-firework {
+  animation-name: firework;
+  animation-timing-function: cubic-bezier(0.12, 0.72, 0.3, 1);
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.anim-sparkle {
+  animation-name: sparkle-rise;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.anim-drift {
+  animation-name: drift-float;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.anim-rain {
+  animation-name: rain-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
 .anim-sheet {
   animation: sheet-up 0.24s ease-out both;
 }
@@ -363,14 +456,39 @@ body {
   animation: bounce-hold 1.1s ease-in-out 0.7s infinite;
 }
 
+.anim-splash-emoji-spin {
+  animation: splash-emoji-spin 0.95s cubic-bezier(0.22, 1.4, 0.36, 1) 0.08s both;
+}
+
+.anim-nod {
+  animation: nod 1.7s ease-in-out 0.8s infinite;
+}
+
+.anim-wobble {
+  animation: wobble 2.6s ease-in-out 0.8s infinite;
+}
+
+.anim-slump {
+  animation: slump 0.9s ease-out 0.5s both;
+}
+
+.anim-glow {
+  animation: glow-pulse 1.9s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .anim-pop,
   .anim-shake,
   .anim-cheer,
   .anim-splash-body,
   .anim-splash-emoji,
+  .anim-splash-emoji-spin,
   .anim-burst,
   .anim-bounce-hold,
+  .anim-nod,
+  .anim-wobble,
+  .anim-slump,
+  .anim-glow,
   .anim-sheet {
     animation: none;
   }
@@ -381,7 +499,11 @@ body {
     animation-duration: 0.12s;
   }
 
-  .anim-confetti {
+  .anim-confetti,
+  .anim-firework,
+  .anim-sparkle,
+  .anim-drift,
+  .anim-rain {
     display: none;
   }
 }

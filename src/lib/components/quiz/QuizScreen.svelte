@@ -27,6 +27,10 @@
       return;
     }
 
+    // the answer field owns every other key while it has focus, so submitting
+    // with Enter does not also bubble up and skip past the verdict
+    if (event.target instanceof HTMLInputElement) return;
+
     if (app.phase === "feedback") {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();

@@ -90,6 +90,11 @@ test("a run that is finished still scores and splashes", async ({ page }) => {
     if (await cont.count()) await cont.click({ timeout: 3000 }).catch(() => undefined);
   }
   await expect(page.getByRole("status")).toBeVisible({ timeout: 5000 });
+  // whichever grade it lands on, that grade's particle effect is on screen
+  const particles = page.locator(
+    ".anim-firework, .anim-confetti, .anim-sparkle, .anim-drift, .anim-rain"
+  );
+  expect(await particles.count()).toBeGreaterThan(10);
   await page.waitForTimeout(900);
   expect(await reportCount(page)).toBe(before + 1);
 });

@@ -73,33 +73,48 @@ export function setEffectsEnabled(value: boolean): void {
 
 // One flourish per grade.
 const fanfares: Record<ScoreTier, Step[]> = {
+  // a full run up the scale, landing on a held major chord with a sparkle over it
   perfect: [
-    [523, 0.12, "sine", 0.11, 0],
-    [659, 0.12, "sine", 0.11, 0.1],
-    [784, 0.12, "sine", 0.11, 0.2],
-    [1047, 0.16, "sine", 0.12, 0.3],
-    [1319, 0.3, "sine", 0.11, 0.44],
-    [1568, 0.4, "triangle", 0.07, 0.5],
-    [2093, 0.22, "sine", 0.05, 0.66]
+    [523, 0.11, "sine", 0.11, 0],
+    [659, 0.11, "sine", 0.11, 0.09],
+    [784, 0.11, "sine", 0.11, 0.18],
+    [1047, 0.14, "sine", 0.12, 0.27],
+    [784, 0.09, "sine", 0.08, 0.42],
+    [1047, 0.09, "sine", 0.09, 0.49],
+    [1319, 0.38, "sine", 0.12, 0.57],
+    [1047, 0.5, "triangle", 0.07, 0.57],
+    [1568, 0.5, "sine", 0.06, 0.6],
+    [2093, 0.28, "sine", 0.05, 0.8],
+    [2637, 0.22, "sine", 0.035, 0.94]
   ],
+  // four notes up, held over a chord tone, no sparkle tail
   great: [
-    [523, 0.12, "sine", 0.11, 0],
-    [784, 0.12, "sine", 0.11, 0.11],
-    [1047, 0.16, "sine", 0.11, 0.22],
-    [1319, 0.3, "sine", 0.1, 0.36]
+    [587, 0.11, "sine", 0.11, 0],
+    [784, 0.11, "sine", 0.11, 0.1],
+    [988, 0.13, "sine", 0.11, 0.2],
+    [1175, 0.34, "sine", 0.11, 0.32],
+    [784, 0.34, "triangle", 0.06, 0.32],
+    [1568, 0.18, "sine", 0.04, 0.48]
   ],
+  // plain three note lift
   good: [
     [523, 0.13, "sine", 0.1, 0],
     [659, 0.13, "sine", 0.1, 0.12],
     [880, 0.26, "sine", 0.1, 0.24]
   ],
+  // a small step up, flat and unfussy
   fair: [
-    [440, 0.14, "sine", 0.09, 0],
-    [587, 0.24, "sine", 0.09, 0.13]
+    [392, 0.14, "triangle", 0.09, 0],
+    [440, 0.14, "triangle", 0.09, 0.13],
+    [523, 0.3, "triangle", 0.08, 0.26]
   ],
+  // a deflating slide down, over a low buzz
   poor: [
-    [392, 0.16, "sine", 0.08, 0],
-    [330, 0.28, "sine", 0.07, 0.15]
+    [311, 0.17, "sawtooth", 0.075, 0],
+    [294, 0.17, "sawtooth", 0.075, 0.15],
+    [247, 0.19, "sawtooth", 0.075, 0.3],
+    [185, 0.5, "sawtooth", 0.07, 0.48],
+    [92, 0.5, "triangle", 0.05, 0.48]
   ]
 };
 

@@ -56,6 +56,21 @@ test("a character sound plays in the text to audio run", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Continue" })).toBeVisible();
 });
 
+test("a wrong typed answer holds the red verdict", async ({ page }) => {
+  await openApp(page);
+  await page.getByRole("button", { name: "Typing" }).click();
+  await page.getByRole("button", { name: "Start run" }).click();
+
+  const field = page.locator("input[type=text]");
+  await field.fill("zzz");
+  // submitting with Enter must not also count as dismissing the verdict
+  await field.press("Enter");
+
+  await expect(page.getByText("Not quite")).toBeVisible();
+  await expect(field).toHaveClass(/border-danger/);
+  await expect(page.getByRole("button", { name: "Continue" })).toBeVisible();
+});
+
 test("the chart lists every character and plays one", async ({ page }) => {
   await openApp(page);
   await page.getByRole("button", { name: "Chart" }).click();

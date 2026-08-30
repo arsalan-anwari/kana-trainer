@@ -13,6 +13,11 @@
         ? "Type the kana"
         : "Type the romaji"
   );
+
+  // the field carries the verdict until the next question
+  const tone = $derived(
+    app.phase === "answering" ? "idle" : app.lastCorrect ? "correct" : "wrong"
+  );
 </script>
 
 <div class="flex w-full max-w-md flex-col gap-3">
@@ -21,6 +26,7 @@
     big
     focusOnMount
     {placeholder}
+    {tone}
     disabled={app.phase !== "answering"}
     onenter={() => app.submitTyped()}
   />
