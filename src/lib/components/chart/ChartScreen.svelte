@@ -7,7 +7,12 @@
     { group: "seion", japanese: "清音", description: "The 46 basic characters." },
     { group: "dakuon", japanese: "濁音", description: "Voiced か さ た は rows." },
     { group: "handakuon", japanese: "半濁音", description: "Half voiced は row." },
-    { group: "yoon", japanese: "拗音", description: "Contracted with a small ゃ ゅ ょ." }
+    { group: "yoon", japanese: "拗音", description: "Contracted with a small ゃ ゅ ょ." },
+    {
+      group: "tokushon",
+      japanese: "特殊音",
+      description: "Borrowed sounds, written in katakana only."
+    }
   ];
 </script>
 
@@ -15,7 +20,7 @@
   <div class="flex flex-col gap-1 rounded-xl border border-border bg-sidebar p-5">
     <span class="text-h2 font-bold leading-tight">Character chart</span>
     <span class="text-sm text-muted-foreground">
-      All 104 characters, grouped and split by row. Tap one to hear it.
+      All 147 characters, grouped and split by row. Tap one to hear it.
     </span>
   </div>
 

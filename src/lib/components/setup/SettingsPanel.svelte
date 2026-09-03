@@ -19,8 +19,16 @@
   const sets = [
     { group: optionalGroups[0], label: "Dakuon", hint: "が ざ だ ば rows" },
     { group: optionalGroups[1], label: "Handakuon", hint: "ぱ row" },
-    { group: optionalGroups[2], label: "Yoon", hint: "きゃ しゃ ちゃ and the rest" }
+    { group: optionalGroups[2], label: "Yoon", hint: "きゃ しゃ ちゃ and the rest" },
+    { group: optionalGroups[3], label: "Tokushon", hint: "ファ ティ ヴァ, katakana only" }
   ];
+
+  // tokushon has no hiragana form, so it is offered only once katakana is in the run
+  const shownSets = $derived(
+    sets.filter(
+      (set) => set.group !== "tokushon" || app.settings.scripts.includes("katakana")
+    )
+  );
 
   const hints: Record<Difficulty, string> = {
     beginner: "Wrong answers are picked at random",
@@ -44,7 +52,7 @@
       <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         Extra character sets
       </span>
-      {#each sets as set (set.group)}
+      {#each shownSets as set (set.group)}
         <Switch
           label={set.label}
           hint={set.hint}

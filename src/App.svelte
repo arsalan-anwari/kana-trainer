@@ -38,6 +38,9 @@
     startY = touch.clientY;
   }
 
+  // measured so the setup sidebar can stick clear of the app header
+  let headerHeight = $state(0);
+
   function touchend(event: TouchEvent): void {
     // an open sheet or dialog owns the screen
     if (document.querySelector('[role="dialog"], [role="alertdialog"]') !== null) return;
@@ -52,12 +55,23 @@
 
 <svelte:window onkeydown={keydown} ontouchstart={touchstart} ontouchend={touchend} />
 
-<div class="flex min-h-dvh w-full flex-col">
-  <main
-    class="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] pt-[calc(env(safe-area-inset-top,0px)+0.75rem)] sm:gap-5 sm:px-6 sm:pt-7 sm:pb-7 lg:px-10 lg:py-9"
+<!-- --edge-x/y are the plain page margins; every edge adds the matching system
+     inset on top so nothing sits under a status bar or navigation strip -->
+<div
+  class="flex min-h-dvh w-full flex-col [--edge-x:1rem] [--edge-y:0.75rem] pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] sm:[--edge-x:1.5rem] sm:[--edge-y:1.75rem] lg:[--edge-x:2.5rem] lg:[--edge-y:2.25rem]"
+  style="--header-height: {headerHeight}px"
+>
+  <!-- sticky, so a scrolled page never draws into the status bar band -->
+  <div
+    bind:clientHeight={headerHeight}
+    class="sticky top-0 z-20 mx-auto w-full max-w-6xl bg-background pt-[calc(env(safe-area-inset-top,0px)+var(--edge-y))] pb-3 sm:pb-5"
   >
     <AppHeader />
+  </div>
 
+  <main
+    class="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 pb-[calc(env(safe-area-inset-bottom,0px)+var(--edge-y))] sm:gap-5"
+  >
     {#if app.route === "setup"}
       <SetupScreen />
     {:else}

@@ -244,10 +244,10 @@ test("record the promo", async ({ page }) => {
   await stage.caption("Swipe, or Shift and an arrow key, to change screen");
   await stage.press("Shift+ArrowRight", 520);
   await stage.caption("Every character in one chart. Tap to hear it");
-  await stage.tap(button("Play ka", true), 560);
+  await stage.tap(button(/^Play ka /), 560);
   await stage.beat(200);
   await stage.caption("Voiced and contracted rows too");
-  await stage.tap(button("Play kyo", true), 560);
+  await stage.tap(button(/^Play kyo /), 560);
   await stage.beat(320);
 
   // theme, zoom and contrast, from the header

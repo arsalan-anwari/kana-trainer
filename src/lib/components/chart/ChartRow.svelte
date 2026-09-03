@@ -10,7 +10,7 @@
   // of squeezing the tiles until the text stops fitting. auto-fill, not
   // auto-fit, so a short row keeps its empty tracks and stays aligned with the
   // rows above and below it.
-  const tracks = "repeat(auto-fill, minmax(5.5rem, 1fr))";
+  const tracks = "repeat(auto-fill, minmax(4.25rem, 1fr))";
 </script>
 
 {#snippet tiles()}

@@ -1,4 +1,4 @@
-import { allKana, answersFor, kanaById, type Kana, type Script } from "./kana";
+import { allKana, answersFor, groupInScript, kanaById, type Kana, type Script } from "./kana";
 import { similarity } from "./similarity";
 import {
   difficultyMinPool,
@@ -53,6 +53,7 @@ export function eligiblePairs(settings: RunSettings): Candidate[] {
     for (const kana of allKana) {
       if (!selected.has(kana.id)) continue;
       if (!groupEnabled(settings, kana.group)) continue;
+      if (!groupInScript(kana.group, script)) continue;
       pairs.push({ kana, script });
     }
   }
@@ -84,8 +85,8 @@ function shuffle<T>(items: T[], rng: () => number): T[] {
 function surfaces(kana: Kana, script: Script, answer: Side): string[] {
   if (answer === "audio") return [sameSound[kana.romaji] ?? kana.romaji];
   if (answer === "romaji") return answersFor(kana);
-  // a glyph rules out its counterpart in the other alphabet
-  return [kana.hira, kana.kata];
+  // a glyph rules out its counterpart in the other alphabet, tokushon has no hiragana
+  return [kana.hira, kana.kata].filter((value) => value !== "");
 }
 
 function buildChoices(
@@ -151,7 +152,7 @@ export function buildQuestions(
 
   const everything: Candidate[] = settings.scripts.flatMap((script) =>
     allKana
-      .filter((kana) => groupEnabled(settings, kana.group))
+      .filter((kana) => groupEnabled(settings, kana.group) && groupInScript(kana.group, script))
       .map((kana) => ({ kana, script }))
   );
   const distractors = pool.length >= CHOICE_COUNT ? pool : everything;

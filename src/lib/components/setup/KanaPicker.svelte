@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { rows } from "../../core/kana";
+  import { groupInScript, rows } from "../../core/kana";
   import { groupEnabled } from "../../core/settings";
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
@@ -7,7 +7,12 @@
   import ScriptTabs from "./ScriptTabs.svelte";
 
   const selected = $derived(new Set(app.selection));
-  const shownRows = $derived(rows.filter((row) => groupEnabled(app.settings, row.group)));
+  const shownRows = $derived(
+    rows.filter(
+      (row) =>
+        groupEnabled(app.settings, row.group) && groupInScript(row.group, app.pickerScript)
+    )
+  );
 
   function selectAll(): void {
     app.setSelection(shownRows.flatMap((row) => row.kana.map((kana) => kana.id)));

@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { Answer } from "../src/lib/core/quiz";
 import {
+  dayInputText,
+  dayKeyFromInput,
   filterReports,
+  maskDay,
   missesByGroup,
   statsByKana,
   statsByRow,
@@ -126,7 +129,8 @@ describe("mistakes by group", () => {
       "seion",
       "dakuon",
       "handakuon",
-      "yoon"
+      "yoon",
+      "tokushon"
     ]);
   });
 
@@ -149,5 +153,41 @@ describe("mistakes by group", () => {
     expect(boxes[0].misses).toBe(3);
     expect(boxes[1].misses).toBe(1);
     expect(boxes[3].misses).toBe(0);
+  });
+});
+
+describe("typed date fields", () => {
+  it("slots slashes in as digits arrive and drops them as they go", () => {
+    expect(maskDay("0")).toBe("0");
+    expect(maskDay("03")).toBe("03");
+    expect(maskDay("039")).toBe("03/9");
+    expect(maskDay("03/09/2026")).toBe("03/09/2026");
+    expect(maskDay("03/0")).toBe("03/0");
+    expect(maskDay("03/")).toBe("03");
+    expect(maskDay("")).toBe("");
+  });
+
+  it("keeps only digits and stops at a whole date", () => {
+    expect(maskDay("3a9b2026x")).toBe("39/20/26");
+    expect(maskDay("030920261234")).toBe("03/09/2026");
+  });
+
+  it("reads a finished field as a day key", () => {
+    expect(dayKeyFromInput("03/09/2026")).toBe("2026-09-03");
+    expect(dayKeyFromInput("29/02/2024")).toBe("2024-02-29");
+  });
+
+  it("refuses days that are unfinished or do not exist", () => {
+    expect(dayKeyFromInput("03/09/20")).toBe("");
+    expect(dayKeyFromInput("31/02/2026")).toBe("");
+    expect(dayKeyFromInput("00/09/2026")).toBe("");
+    expect(dayKeyFromInput("03/13/2026")).toBe("");
+    expect(dayKeyFromInput("")).toBe("");
+  });
+
+  it("writes a day key back the way the field shows it", () => {
+    expect(dayInputText("2026-09-03")).toBe("03/09/2026");
+    expect(dayKeyFromInput(dayInputText("2025-12-31"))).toBe("2025-12-31");
+    expect(dayInputText("nope")).toBe("");
   });
 });

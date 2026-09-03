@@ -1,6 +1,6 @@
 export type Script = "hiragana" | "katakana";
 
-export type Group = "seion" | "dakuon" | "handakuon" | "yoon";
+export type Group = "seion" | "dakuon" | "handakuon" | "yoon" | "tokushon";
 
 export type Kana = {
   id: string;
@@ -196,15 +196,86 @@ export const rows: Row[] = [
     ["pya", "ぴゃ", "ピャ", "pya", []],
     ["pyu", "ぴゅ", "ピュ", "pyu", []],
     ["pyo", "ぴょ", "ピョ", "pyo", []]
+  ]),
+  // Tokushon is only relevant for katakana.
+  makeRow("tye", "YE-row", "tokushon", [
+    ["t-ye", "", "イェ", "ye", []],
+    ["t-kye", "", "キェ", "kye", []],
+    ["t-nye", "", "ニェ", "nye", []],
+    ["t-hye", "", "ヒェ", "hye", []]
+  ]),
+  makeRow("twi", "WI-row", "tokushon", [
+    ["t-wi", "", "ウィ", "wi", []],
+    ["t-we", "", "ウェ", "we", []],
+    ["t-wo", "", "ウォ", "wo", []]
+  ]),
+  makeRow("tkwa", "KW-row", "tokushon", [
+    ["t-kwa", "", "クァ", "kwa", []],
+    ["t-kwi", "", "クィ", "kwi", []],
+    ["t-kwe", "", "クェ", "kwe", []],
+    ["t-kwo", "", "クォ", "kwo", []]
+  ]),
+  makeRow("tgwa", "GW-row", "tokushon", [
+    ["t-gwa", "", "グァ", "gwa", []],
+    ["t-gwi", "", "グィ", "gwi", []],
+    ["t-gwe", "", "グェ", "gwe", []],
+    ["t-gwo", "", "グォ", "gwo", []]
+  ]),
+  makeRow("tsi", "SI-row", "tokushon", [
+    ["t-si", "", "スィ", "si", []],
+    ["t-she", "", "シェ", "she", ["sye"]]
+  ]),
+  makeRow("tzi", "ZI-row", "tokushon", [
+    ["t-zi", "", "ズィ", "zi", []],
+    ["t-je", "", "ジェ", "je", ["zye", "jye"]]
+  ]),
+  makeRow("tti", "TI-row", "tokushon", [
+    ["t-ti", "", "ティ", "ti", []],
+    ["t-tu", "", "トゥ", "tu", []],
+    ["t-tyu", "", "テュ", "tyu", []],
+    ["t-che", "", "チェ", "che", ["tye", "cye"]]
+  ]),
+  makeRow("ttsa", "TS-row", "tokushon", [
+    ["t-tsa", "", "ツァ", "tsa", []],
+    ["t-tsi", "", "ツィ", "tsi", []],
+    ["t-tse", "", "ツェ", "tse", []],
+    ["t-tso", "", "ツォ", "tso", []]
+  ]),
+  makeRow("tdi", "DI-row", "tokushon", [
+    ["t-di", "", "ディ", "di", []],
+    ["t-du", "", "ドゥ", "du", []],
+    ["t-dyu", "", "デュ", "dyu", []]
+  ]),
+  makeRow("tfa", "F-row", "tokushon", [
+    ["t-fa", "", "ファ", "fa", []],
+    ["t-fi", "", "フィ", "fi", []],
+    ["t-fe", "", "フェ", "fe", []],
+    ["t-fo", "", "フォ", "fo", []]
+  ]),
+  makeRow("tfyu", "FY-row", "tokushon", [
+    ["t-fyu", "", "フュ", "fyu", []],
+    ["t-fyo", "", "フョ", "fyo", []]
+  ]),
+  makeRow("tva", "V-row", "tokushon", [
+    ["t-va", "", "ヴァ", "va", []],
+    ["t-vi", "", "ヴィ", "vi", []],
+    ["t-vu", "", "ヴ", "vu", []],
+    ["t-ve", "", "ヴェ", "ve", []],
+    ["t-vo", "", "ヴォ", "vo", []]
+  ]),
+  makeRow("tvyu", "VY-row", "tokushon", [
+    ["t-vyu", "", "ヴュ", "vyu", []],
+    ["t-vyo", "", "ヴョ", "vyo", []]
   ])
 ];
 
-export const groups: Group[] = ["seion", "dakuon", "handakuon", "yoon"];
+export const groups: Group[] = ["seion", "dakuon", "handakuon", "yoon", "tokushon"];
 
 export const seionRows = rows.filter((row) => row.group === "seion");
 export const dakuonRows = rows.filter((row) => row.group === "dakuon");
 export const handakuonRows = rows.filter((row) => row.group === "handakuon");
 export const yoonRows = rows.filter((row) => row.group === "yoon");
+export const tokushonRows = rows.filter((row) => row.group === "tokushon");
 export const allKana: Kana[] = rows.flatMap((row) => row.kana);
 
 const byId = new Map(allKana.map((kana) => [kana.id, kana]));
@@ -225,7 +296,13 @@ export function groupLabel(group: Group): string {
   if (group === "dakuon") return "Dakuon";
   if (group === "handakuon") return "Handakuon";
   if (group === "yoon") return "Yoon";
+  if (group === "tokushon") return "Tokushon";
   return "Seion";
+}
+
+// Tokushon only exists in katakana, so it is out of play in a hiragana run.
+export function groupInScript(group: Group, script: Script): boolean {
+  return script === "katakana" || group !== "tokushon";
 }
 
 export function glyph(kana: Kana, script: Script): string {

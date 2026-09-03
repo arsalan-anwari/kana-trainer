@@ -118,9 +118,10 @@ export function similarity(
     return 0;
   }
 
-  // romaji and audio answers are compared by reading, ignoring the alphabet
-  const shown = stripMarks(target.hira);
-  const rival = stripMarks(other.hira);
+  // romaji and audio answers are compared by reading, ignoring the alphabet.
+  // Tokushon has no hiragana, so it is compared through its katakana instead.
+  const shown = stripMarks(target.hira || target.kata);
+  const rival = stripMarks(other.hira || other.kata);
 
   if (shown === rival) return 5;
   if (nearReadings(target.romaji, other.romaji)) return 4;

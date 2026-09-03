@@ -5,6 +5,29 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-09-03
+
+### Added
+
+- Tokushon (特殊音), the 43 borrowed sound katakana such as ファ, ティ and ヴァ, bringing the app to 147 characters.
+- Tokushon is offered only once katakana is in the run, and never turns up in a hiragana one.
+- A layout test for the header and the side insets.
+
+### Changed
+
+- The character sounds were re-recorded from [FUN Japanese Learning](https://funjapaneselearning.com), one reader over all 147 clips.
+- The header holds the top of the page while the content scrolls under it.
+- The header picks its layout from its own width, so it holds at every zoom level.
+- The verdict is pinned to the bottom edge over a band held free all run, so nothing shifts when it appears.
+- Every screen edge leaves room for the side and bottom system insets.
+- Chart tiles are narrower and carry both alphabets, and the spoken label names the katakana too.
+- The boxes in "Mistakes by group" flow as columns, so a short one no longer holds open the row beside it.
+- The reports header names the active date filter instead of saying "All runs".
+- The custom date range is typed as DD/MM/YYYY on desktop, where the webview's calendar popup is too cramped to use, and keeps the native picker on touch devices. The slashes fill in and drop out as the digits are typed or erased.
+- The custom date range opens with an empty From, applies on Enter and closes on Escape.
+- The recordings seed a katakana run with tokushon in it.
+- Datepicker in reports is typed for desktop with autocomplete. Mobile remain os-native datepickers.
+
 ## [1.6.3] - 2026-08-30
 
 ### Fixed
@@ -240,6 +263,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.7.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.0
 [1.6.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.3
 [1.6.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.2
 [1.6.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.6.1

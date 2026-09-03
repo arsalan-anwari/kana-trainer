@@ -25,7 +25,7 @@
     <SettingsPanel />
   </div>
 
-  <div class="flex flex-col gap-4 lg:sticky lg:top-6">
+  <div class="flex flex-col gap-4 lg:sticky lg:top-[calc(var(--header-height,0px)+0.75rem)]">
     <Card title="Characters" description="Tap a row label to take the whole row.">
       <KanaPicker />
     </Card>

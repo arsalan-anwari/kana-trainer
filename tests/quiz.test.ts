@@ -33,16 +33,42 @@ describe("quiz building", () => {
     expect(eligibleKana(settings({ includeYoon: true }))).toHaveLength(79);
   });
 
+  it("only puts tokushon in play for katakana", () => {
+    const on = { includeTokushon: true };
+    expect(eligibleKana(settings({ ...on, scripts: ["hiragana"] }))).toHaveLength(46);
+    expect(eligibleKana(settings({ ...on, scripts: ["katakana"] }))).toHaveLength(89);
+    // in a both alphabets run only the katakana half carries them
+    const pairs = eligiblePairs(settings({ ...on, scripts: ["hiragana", "katakana"] }));
+    const tokushon = pairs.filter((pair) => pair.kana.group === "tokushon");
+    expect(tokushon).toHaveLength(43);
+    expect(tokushon.every((pair) => pair.script === "katakana")).toBe(true);
+  });
+
+  it("never offers a tokushon character in a hiragana question", () => {
+    const questions = buildQuestions(
+      settings({ includeTokushon: true, scripts: ["hiragana", "katakana"], questionCount: 120 }),
+      seeded(11)
+    );
+    for (const question of questions) {
+      for (const choice of [{ kanaId: question.kanaId, script: question.script }, ...question.choices]) {
+        if (kanaById(choice.kanaId)?.group !== "tokushon") continue;
+        expect(choice.script).toBe("katakana");
+      }
+    }
+  });
+
   it("gives every character in an audio run a clip", () => {
     const pool = eligibleKana(
       settings({
         format: "audio-text",
         includeDakuon: true,
         includeHandakuon: true,
-        includeYoon: true
+        includeYoon: true,
+        includeTokushon: true,
+        scripts: ["katakana"]
       })
     );
-    expect(pool).toHaveLength(104);
+    expect(pool).toHaveLength(147);
   });
 
   it("builds the asked number of questions", () => {

@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     filterReports,
+    reportFilterLabel,
     statsByKana,
     statsByRow,
     statsByScript,
@@ -34,7 +35,13 @@
     >
       <div class="flex flex-col gap-1">
         <span class="text-h2 font-bold leading-tight">
-          {picked.length === 0 ? "All runs" : `${picked.length} runs selected`}
+          {#if picked.length > 0}
+            {picked.length} runs selected
+          {:else if filter === "all"}
+            All runs
+          {:else}
+            {reportFilterLabel(filter)}
+          {/if}
         </span>
         <span class="text-sm text-muted-foreground">
           {summary.correct} of {summary.total} correct, {Math.round(summary.accuracy * 100)}% overall

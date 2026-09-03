@@ -17,6 +17,7 @@ export type RunSettings = {
   includeDakuon: boolean;
   includeHandakuon: boolean;
   includeYoon: boolean;
+  includeTokushon: boolean;
   selections: Selections;
   questionCount: number;
   difficulty: Difficulty;
@@ -31,7 +32,7 @@ export type LegacySettings = Partial<Omit<RunSettings, "selections">> & {
   selections?: Partial<Selections>;
 };
 
-export const optionalGroups = ["dakuon", "handakuon", "yoon"] as const;
+export const optionalGroups = ["dakuon", "handakuon", "yoon", "tokushon"] as const;
 
 export type OptionalGroup = (typeof optionalGroups)[number];
 
@@ -67,6 +68,7 @@ export const defaultSettings: RunSettings = {
   includeDakuon: false,
   includeHandakuon: false,
   includeYoon: false,
+  includeTokushon: false,
   selections: { hiragana: [], katakana: [] },
   questionCount: 20,
   difficulty: "beginner",
@@ -77,7 +79,8 @@ export const defaultSettings: RunSettings = {
 const groupFlags: Record<OptionalGroup, keyof RunSettings> = {
   dakuon: "includeDakuon",
   handakuon: "includeHandakuon",
-  yoon: "includeYoon"
+  yoon: "includeYoon",
+  tokushon: "includeTokushon"
 };
 
 export function groupFlag(group: OptionalGroup): keyof RunSettings {

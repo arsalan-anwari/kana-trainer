@@ -14,16 +14,17 @@ tags:
 - katakana
 - pronunciation
 - language-learning
+- tokushon
 size_categories:
 - n<1K
 ---
 
 # Kana Sounds
 
-104 short spoken clips, one for every hiragana and katakana character used by
+147 short spoken clips, one for every hiragana and katakana character used by
 [Kana Trainer](https://github.com/arsalan-anwari/kana-trainer): the 46 seion, 20 dakuon,
-5 handakuon and 33 yoon. Every clip is trimmed, pitch corrected and loudness normalised
-to a single voice level, so a set can be played back to back without any jump in volume.
+5 handakuon, 33 yoon and 43 tokushon. They come from a single reader on
+[FUN Japanese Learning](https://funjapaneselearning.com). 
 
 ## Dataset structure
 
@@ -33,12 +34,11 @@ audio/
   dakuon/      20 clips   ga.mp3, za.mp3, ji.mp3, ... bo.mp3
   handakuon/    5 clips   pa.mp3, pi.mp3, pu.mp3, pe.mp3, po.mp3
   yoon/        33 clips   kya.mp3, sya.mp3, cya.mp3, ... pyo.mp3
+  tokushon/    43 clips   ye.mp3, fa.mp3, ti.mp3, ... vyo.mp3
 favicon.png    the Kana Trainer icon
 ```
 
-A clip is addressed by its group and romaji, `audio/<group>/<romaji>.mp3`. Hiragana and
-katakana share a clip, because the two scripts are read out the same way: `audio/seion/a.mp3`
-is the sound of both あ and ア.
+A clip is addressed by its group and romaji, `audio/<group>/<romaji>.mp3`. 
 
 ## Audio format
 
@@ -47,28 +47,17 @@ is the sound of both あ and ア.
 | Format | MP3 (LAME), 128 kbps |
 | Channels | mono |
 | Sample rate | 44.1 kHz |
-| Clips | 104 |
-| Duration | 0.39 s to 1.54 s, 0.77 s median, 81 s in total |
-| Loudness | -20 dBFS RMS, peaks held under -1 dBFS |
-| Pitch | shifted towards 330 Hz where the source allowed it |
-| Total size | 1.6 MB |
-
-## Processing
-
-The source recordings drift from 149 Hz to 367 Hz and vary about 15 dB in level. Each one
-is put through [`tools/normalize-audio.py`](https://github.com/arsalan-anwari/kana-trainer/blob/main/tools/normalize-audio.py):
-
-1. **Trim** leading and trailing silence at 35 dB below the loudest frame, keep 30 ms of head
-   and 60 ms of tail padding, and apply an 8 ms fade at both ends.
-2. **Pitch** estimate the fundamental by autocorrelation and shift towards 330 Hz with `sox`,
-   clamped to 6 semitones so a badly off source is not mangled.
-3. **Level** scale to -20 dBFS RMS, then pull the whole clip down if any peak passes -1 dBFS.
-4. **Encode** back to mono 128 kbps MP3 with `ffmpeg`.
+| Clips | 147 |
+| Loudness | as recorded, one reader at an even level, not normalised |
+| Pitch | as recorded, not shifted |
+| Total size | 1.8 MB |
 
 ## Naming
 
-File names follow the romaji spelling Kana Trainer shows, with four exceptions where the
-clip keeps the kunrei style name of the source recording:
+File names follow the romaji spelling Kana Trainer shows, with the exceptions below, where
+the clip keeps the kunrei style name of the source recording. Tokushon file names match the
+source exactly, so `audio/tokushon/wo.mp3` (ウォ) and `audio/seion/wo.mp3` (を) are different
+sounds under the same name in different folders:
 
 | Kana | Shown as | File |
 | --- | --- | --- |
@@ -97,7 +86,7 @@ path = hf_hub_download("arsalan-anwari/kana-sounds", "audio/seion/a.mp3", repo_t
 ## Character map
 
 <details>
-<summary>All 104 characters and the clip each one plays</summary>
+<summary>All 147 characters and the clip each one plays</summary>
 
 #### Seion (basic sounds)
 
@@ -223,13 +212,62 @@ path = hf_hub_download("arsalan-anwari/kana-sounds", "audio/seion/a.mp3", repo_t
 | PYA | ぴゅ | ピュ | pyu | `audio/yoon/pyu.mp3` |
 | PYA | ぴょ | ピョ | pyo | `audio/yoon/pyo.mp3` |
 
+#### Tokushon (borrowed sounds, katakana only)
+
+| Row | Katakana | Romaji | File |
+| --- | --- | --- | --- |
+| YE | イェ | ye | `audio/tokushon/ye.mp3` |
+| YE | キェ | kye | `audio/tokushon/kye.mp3` |
+| YE | ニェ | nye | `audio/tokushon/nye.mp3` |
+| YE | ヒェ | hye | `audio/tokushon/hye.mp3` |
+| WI | ウィ | wi | `audio/tokushon/wi.mp3` |
+| WI | ウェ | we | `audio/tokushon/we.mp3` |
+| WI | ウォ | wo | `audio/tokushon/wo.mp3` |
+| KW | クァ | kwa | `audio/tokushon/kwa.mp3` |
+| KW | クィ | kwi | `audio/tokushon/kwi.mp3` |
+| KW | クェ | kwe | `audio/tokushon/kwe.mp3` |
+| KW | クォ | kwo | `audio/tokushon/kwo.mp3` |
+| GW | グァ | gwa | `audio/tokushon/gwa.mp3` |
+| GW | グィ | gwi | `audio/tokushon/gwi.mp3` |
+| GW | グェ | gwe | `audio/tokushon/gwe.mp3` |
+| GW | グォ | gwo | `audio/tokushon/gwo.mp3` |
+| SI | スィ | si | `audio/tokushon/si.mp3` |
+| SI | シェ | she | `audio/tokushon/she.mp3` |
+| ZI | ズィ | zi | `audio/tokushon/zi.mp3` |
+| ZI | ジェ | je | `audio/tokushon/je.mp3` |
+| TI | ティ | ti | `audio/tokushon/ti.mp3` |
+| TI | トゥ | tu | `audio/tokushon/tu.mp3` |
+| TI | テュ | tyu | `audio/tokushon/tyu.mp3` |
+| TI | チェ | che | `audio/tokushon/che.mp3` |
+| TS | ツァ | tsa | `audio/tokushon/tsa.mp3` |
+| TS | ツィ | tsi | `audio/tokushon/tsi.mp3` |
+| TS | ツェ | tse | `audio/tokushon/tse.mp3` |
+| TS | ツォ | tso | `audio/tokushon/tso.mp3` |
+| DI | ディ | di | `audio/tokushon/di.mp3` |
+| DI | ドゥ | du | `audio/tokushon/du.mp3` |
+| DI | デュ | dyu | `audio/tokushon/dyu.mp3` |
+| F | ファ | fa | `audio/tokushon/fa.mp3` |
+| F | フィ | fi | `audio/tokushon/fi.mp3` |
+| F | フェ | fe | `audio/tokushon/fe.mp3` |
+| F | フォ | fo | `audio/tokushon/fo.mp3` |
+| FY | フュ | fyu | `audio/tokushon/fyu.mp3` |
+| FY | フョ | fyo | `audio/tokushon/fyo.mp3` |
+| V | ヴァ | va | `audio/tokushon/va.mp3` |
+| V | ヴィ | vi | `audio/tokushon/vi.mp3` |
+| V | ヴ | vu | `audio/tokushon/vu.mp3` |
+| V | ヴェ | ve | `audio/tokushon/ve.mp3` |
+| V | ヴォ | vo | `audio/tokushon/vo.mp3` |
+| VY | ヴュ | vyu | `audio/tokushon/vyu.mp3` |
+| VY | ヴョ | vyo | `audio/tokushon/vyo.mp3` |
+
 </details>
 
 ## Licence and credits
 
-The recordings come from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html)
-and are used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the normalised
-clips in this dataset carry the same licence. Please keep the attribution when you reuse them.
+The recordings come from the katakana course on
+[FUN Japanese Learning](https://funjapaneselearning.com) and are used under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the clips in this dataset carry
+the same licence. 
 
 The Kana Trainer application itself is Apache-2.0 and lives at
 [github.com/arsalan-anwari/kana-trainer](https://github.com/arsalan-anwari/kana-trainer).
@@ -241,6 +279,6 @@ The Kana Trainer application itself is Apache-2.0 and lives at
   title  = {Kana Sounds},
   author = {Anwari, Arsalan},
   url    = {https://huggingface.co/datasets/arsalan-anwari/kana-sounds},
-  note   = {Recordings from Learn Japanese Adventure, CC BY 4.0}
+  note   = {Recordings from FUN Japanese Learning, CC BY 4.0}
 }
 ```

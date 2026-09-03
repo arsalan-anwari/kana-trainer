@@ -34,7 +34,7 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 
 ## Features
 
-- Hiragana, katakana or both, in either direction, from single characters up to all 104 including the dakuon, handakuon and yoon rows
+- Hiragana, katakana or both, in either direction, from single characters up to all 147 including the dakuon, handakuon and yoon rows, plus the katakana only tokushon
 - Three question formats (text to text, audio to text, text to audio) and answers by multiple choice or typing
 - Runs of 10 to 500 questions or one pass over the set, at three difficulty levels that decide how look alike the wrong answers are
 - Optional time trial, per question and for the whole run.
@@ -53,10 +53,9 @@ Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 sudo dnf install ./kana-trainer-*.rpm            # fedora, opensuse
 sudo apt install ./kana-trainer_*.deb            # debian 13+, ubuntu 24.04+
 sudo pacman -U ./kana-trainer-*.pkg.tar.zst      # arch
-adb install ./kana-trainer-*.apk                 # android
 ```
 
-Or run exe/dmg package with your OS package installer. 
+Or run apk/exe/dmg package with your OS package installer. 
 
 ### From crates.io
 
@@ -108,4 +107,4 @@ npm run test:e2e       # playwright
 
 ## Credits
 
-- Character sounds from [Learn Japanese Adventure](https://www.learn-japanese-adventure.com/learn-how-to-speak-japanese.html) (CC BY 4.0), pitch and loudness normalised with `tools/normalize-audio.py`. Upload available on [Hugging Face](https://huggingface.co/datasets/arsalan-anwari/kana-sounds).
+- Character sounds from [FUN Japanese Learning](https://funjapaneselearning.com) (CC BY 4.0). Upload available on [Hugging Face](https://huggingface.co/datasets/arsalan-anwari/kana-sounds).

@@ -7,6 +7,7 @@ import {
   kanaById,
   rows,
   seionRows,
+  tokushonRows,
   yoonRows
 } from "../src/lib/core/kana";
 
@@ -21,7 +22,8 @@ describe("kana data", () => {
     expect(dakuonRows.flatMap((row) => row.kana)).toHaveLength(20);
     expect(handakuonRows.flatMap((row) => row.kana)).toHaveLength(5);
     expect(yoonRows.flatMap((row) => row.kana)).toHaveLength(33);
-    expect(allKana).toHaveLength(104);
+    expect(tokushonRows.flatMap((row) => row.kana)).toHaveLength(43);
+    expect(allKana).toHaveLength(147);
   });
 
   it("keeps hiragana and katakana in step", () => {
@@ -46,6 +48,17 @@ describe("kana data", () => {
   it("uses every clip in the dataset exactly once", () => {
     const clips = allKana.map((kana) => kana.audio);
     expect(new Set(clips).size).toBe(clips.length);
+  });
+
+  it("leaves tokushon without a hiragana form", () => {
+    for (const kana of tokushonRows.flatMap((row) => row.kana)) {
+      expect(kana.hira).toBe("");
+      expect(kana.kata.length).toBeGreaterThan(0);
+    }
+    // every other group has one
+    for (const kana of allKana.filter((entry) => entry.group !== "tokushon")) {
+      expect(kana.hira.length).toBeGreaterThan(0);
+    }
   });
 
   it("looks characters up by id", () => {

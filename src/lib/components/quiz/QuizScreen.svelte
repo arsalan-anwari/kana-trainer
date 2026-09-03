@@ -73,9 +73,12 @@
     <QuizStatusBar />
 
     <!-- on a phone the run rides up against the progress bar, so the virtual
-         keyboard has the whole lower half to itself -->
+         keyboard has the whole lower half to itself. pb-32 is the band the
+         pinned verdict bar sits in; it is held free the whole run so nothing
+         shifts when the verdict arrives, and it is in rem so it grows with the
+         zoom control the same way the bar does -->
     <div
-      class="flex min-h-0 flex-1 flex-col items-center justify-start gap-3 sm:justify-center sm:gap-7"
+      class="flex min-h-0 flex-1 flex-col items-center justify-start gap-3 pb-24 sm:justify-center sm:gap-7"
     >
       {#if secondsLeft !== null}
         <div class="w-full max-w-xs">
@@ -103,9 +106,7 @@
     </div>
 
     {#if app.phase === "feedback"}
-      <div class="mx-auto w-full max-w-xl">
-        <FeedbackPanel {question} {kana} />
-      </div>
+      <FeedbackPanel {question} {kana} />
     {/if}
   </div>
 {/if}

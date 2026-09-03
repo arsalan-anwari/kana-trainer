@@ -221,6 +221,30 @@ function dayStart(key: string): number {
   return new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])).getTime();
 }
 
+// DD/MM/YYYY as it is typed. Digits carry the value, the slashes only appear
+// between groups that exist, so erasing a digit takes its slash with it.
+export function maskDay(raw: string): string {
+  const digits = raw.replace(/\D/g, "").slice(0, 8);
+  return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4)]
+    .filter((part) => part !== "")
+    .join("/");
+}
+
+// The day key a finished DD/MM/YYYY names, or "" when it names no real day.
+export function dayKeyFromInput(text: string): string {
+  const parts = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(text);
+  if (parts === null) return "";
+  const key = `${parts[3]}-${parts[2]}-${parts[1]}`;
+  // a rolled over date (31/02) comes back as a different day
+  return dayKey(dayStart(key)) === key ? key : "";
+}
+
+// A day key written the way the typed field shows it.
+export function dayInputText(key: string): string {
+  const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
+  return parts === null ? "" : `${parts[3]}/${parts[2]}/${parts[1]}`;
+}
+
 export function reportFilterLabel(filter: ReportFilter): string {
   if (isDateRange(filter)) {
     return filter.from === filter.to ? filter.from : `${filter.from} to ${filter.to}`;

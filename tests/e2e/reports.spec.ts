@@ -85,3 +85,18 @@ test("cancelling the delete dialog keeps the runs", async ({ page }) => {
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 });
+
+test("the summary heading follows the date filter", async ({ page }) => {
+  await openReports(page, seed);
+
+  const heading = page.locator("span.text-h2");
+  await expect(heading).toHaveText("All runs");
+
+  // the seeded runs are from today, so yesterday holds none of them and the
+  // heading must not keep claiming it covers everything
+  await page.getByRole("button", { name: "Yesterday", exact: true }).click();
+  await expect(heading).toHaveText("Yesterday");
+
+  await page.getByRole("button", { name: "All", exact: true }).click();
+  await expect(heading).toHaveText("All runs");
+});

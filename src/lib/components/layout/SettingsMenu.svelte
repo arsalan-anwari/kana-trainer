@@ -24,7 +24,7 @@
 <svelte:window onkeydown={keydown} />
 
 <div
-  class="fixed inset-0 z-50 flex flex-col bg-background pt-[env(safe-area-inset-top,0px)]"
+  class="fixed inset-0 z-50 flex flex-col bg-background pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
   role="dialog"
   aria-modal="true"
   aria-label="Settings"
@@ -34,7 +34,9 @@
     <IconButton icon="close" label="Close settings" onclick={onclose} />
   </header>
 
-  <div class="flex flex-1 flex-col gap-5 overflow-y-auto px-4 py-5">
+  <div
+    class="flex flex-1 flex-col gap-5 overflow-y-auto px-4 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)]"
+  >
     <div class="flex flex-col gap-2">
       <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         Theme

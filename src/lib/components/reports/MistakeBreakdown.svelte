@@ -18,9 +18,13 @@
     title="Mistakes by group"
     description="Every character you missed, filed by set, row and alphabet."
   >
-    <div class="grid grid-cols-1 items-start gap-3 sm:grid-cols-2">
+    <!-- multi column rather than a grid, so a short box does not hold open the
+         row beside it. -mb-3 swallows the trailing margin of the last box. -->
+    <div class="-mb-3 columns-1 gap-3 sm:columns-2">
       {#each boxes as box (box.group)}
-        <div class="flex flex-col gap-2 rounded-lg border border-border bg-background p-3">
+        <div
+          class="mb-3 flex break-inside-avoid flex-col gap-2 rounded-lg border border-border bg-background p-3"
+        >
           <div class="flex items-center justify-between gap-2">
             <span class="text-sm font-semibold">{groupLabel(box.group)}</span>
             <Badge tone={box.misses === 0 ? "outline" : "danger"}>

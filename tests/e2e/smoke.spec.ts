@@ -80,11 +80,11 @@ test("the chart lists every character and plays one", async ({ page }) => {
   // rows start closed, so open them before the tiles exist
   const closed = page.getByRole("button", { name: /^Show / });
   for (let left = await closed.count(); left > 0; left -= 1) await closed.first().click();
-  await expect(page.getByRole("button", { name: /^Play / })).toHaveCount(104);
+  await expect(page.getByRole("button", { name: /^Play / })).toHaveCount(147);
 
-  await page.getByRole("button", { name: "Play kyo" }).click();
+  await page.getByRole("button", { name: /^Play kyo/ }).click();
   await expect.poll(() => playedSeconds(page), { timeout: 15_000 }).toBeGreaterThan(0);
-  await expect(page.getByRole("button", { name: "Play kyo" })).toHaveAttribute(
+  await expect(page.getByRole("button", { name: /^Play kyo/ })).toHaveAttribute(
     "aria-pressed",
     "true"
   );

@@ -10,7 +10,7 @@
 
 <button
   type="button"
-  aria-label="Play {kana.romaji}"
+  aria-label="Play {kana.romaji} {kana.kata}"
   aria-pressed={playing}
   class="group relative flex aspect-[3/2] w-full cursor-pointer flex-col items-center justify-center gap-1 sm:aspect-square overflow-hidden rounded-xl border transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
     ? 'border-2 border-selected bg-selected-soft text-foreground'
@@ -27,8 +27,11 @@
   </span>
 
   <span class="text-h3 leading-none font-bold sm:text-h4">{kana.romaji}</span>
-  <span class="kana flex items-baseline gap-1 leading-none text-muted-foreground">
-    <span class="text-base sm:text-sm">{kana.hira}</span>
+  <span class="kana flex items-baseline gap-0.5 leading-none text-muted-foreground">
+    {#if kana.hira !== ""}
+      <span class="text-base sm:text-sm">{kana.hira}</span>
+      <span class="text-[0.625rem] opacity-50" aria-hidden="true">·</span>
+    {/if}
     <span class="text-base sm:text-sm">{kana.kata}</span>
   </span>
 

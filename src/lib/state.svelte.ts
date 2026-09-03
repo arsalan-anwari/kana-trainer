@@ -1,4 +1,12 @@
-import { allKana, kanaById, rows, rowsInGroup, seionRows, type Script } from "./core/kana";
+import {
+  allKana,
+  groupInScript,
+  kanaById,
+  rows,
+  rowsInGroup,
+  seionRows,
+  type Script
+} from "./core/kana";
 import {
   buildQuestions,
   checkChoice,
@@ -208,6 +216,7 @@ class AppState {
   setGroup(group: OptionalGroup, value: boolean): void {
     const selections = { ...this.settings.selections };
     for (const script of scripts) {
+      if (!groupInScript(group, script)) continue;
       const selection = new Set(selections[script]);
       for (const row of rowsInGroup(group)) {
         for (const kana of row.kana) {

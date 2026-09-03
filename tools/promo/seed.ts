@@ -10,7 +10,9 @@ const SETTINGS_KEY = "kana-trainer-settings";
 const PREFS_KEY = "kana-trainer-prefs";
 
 const seion = seionRows.flatMap((row) => row.kana);
-const extras = allKana.filter((kana) => kana.group !== "seion");
+// tokushon is katakana only, so it is held back for the katakana runs
+const extras = allKana.filter((kana) => kana.group !== "seion" && kana.group !== "tokushon");
+const tokushon = allKana.filter((kana) => kana.group === "tokushon");
 
 function random(seed: number): () => number {
   let state = seed;
@@ -31,6 +33,7 @@ const settings: RunSettings = {
   includeDakuon: false,
   includeHandakuon: false,
   includeYoon: false,
+  includeTokushon: false,
   selections: {
     hiragana: seion.map((kana) => kana.id),
     katakana: seion.map((kana) => kana.id)
@@ -104,7 +107,7 @@ const sessions: Session[] = [
     scripts: ["katakana"],
     format: "text-text",
     answerStyle: "choice",
-    extras: false
+    extras: true
   },
   {
     daysAgo: 4,
@@ -158,7 +161,10 @@ function history(now: number): Report[] {
   const roll = random(20260819);
 
   return sessions.map((session, index) => {
-    const pool = session.extras ? [...seion, ...extras] : seion;
+    const katakanaOnly = session.scripts.length === 1 && session.scripts[0] === "katakana";
+    const pool = session.extras
+      ? [...seion, ...extras, ...(katakanaOnly ? tokushon : [])]
+      : seion;
     const answers: Answer[] = [];
 
     for (let question = 0; question < session.questions; question += 1) {
@@ -191,7 +197,8 @@ function history(now: number): Report[] {
         questionCount: session.questions,
         includeDakuon: session.extras,
         includeHandakuon: session.extras,
-        includeYoon: session.extras
+        includeYoon: session.extras,
+        includeTokushon: session.extras && katakanaOnly
       },
       answers
     };
