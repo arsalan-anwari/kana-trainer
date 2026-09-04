@@ -9,7 +9,8 @@
 #   scripts/record.sh --store-art              # the play and partner center art
 #
 #   SKIP_BUILD=1 ...              reuse the current dist/
-#   SHOWCASE_ONLY=phone ...       one size only
+#   SHOWCASE_ONLY=phone ...       one size only, of desktop phone tablet7
+#                                 tablet10 chromebook
 #   SHOWCASE_HOLD=2.4 ...         a slower slideshow
 #   PROMO_SPEED=1 ...             no speed up
 #   PROMO_TRIM=0.8 ...            cut more off the front of the clip
@@ -51,10 +52,13 @@ frame_size() {
 
 # showcase
 
+# Only the two readme sizes turn into a gif. The play console sizes are shot
+# for their stills alone, so they answer with nothing here and get skipped.
 target_gif() {
   case "$1" in
     desktop) echo "$REPO/showcase.gif" ;;
-    *) echo "$REPO/showcase-$1.gif" ;;
+    phone) echo "$REPO/showcase-phone.gif" ;;
+    *) echo "" ;;
   esac
 }
 
@@ -129,17 +133,18 @@ showcase() {
 
   build_once
 
-  local targets=(desktop phone)
+  local targets=(desktop phone tablet7 tablet10 chromebook)
   [ -z "${SHOWCASE_ONLY:-}" ] || targets=("$SHOWCASE_ONLY")
 
   for target in "${targets[@]}"; do
-    local dir="$REPO/$target"
+    local dir="$REPO/$target" gif
     echo "==> shooting $target"
     mkdir -p "$dir"
     # drop stale stills before recording
     rm -f "$dir"/*.png
     npx playwright test --config tools/showcase/showcase.config.ts --project="$target"
-    build_gif "$dir" "$(target_gif "$target")" "$(target_width "$target")"
+    gif="$(target_gif "$target")"
+    [ -z "$gif" ] || build_gif "$dir" "$gif" "$(target_width "$target")"
   done
 }
 

@@ -22,6 +22,26 @@ TAG = 'v' + json.loads((ROOT / 'package.json').read_text())['version'].replace('
 FONT_BOLD = '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf'
 FONT_REGULAR = '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf'
 
+# One play console screenshot slot per row: the showcase folder the stills come
+# from, the panel the device actually has, and the folder to write. The sizes
+# are the real hardware, not a house style, so a listing shot is what somebody
+# holding that device would see:
+#
+#   pixel 7         1080x2400   20:9 portrait
+#   nexus 7         1200x1920   16:10 portrait
+#   pixel tablet    2560x1600   16:10 landscape
+#   chromebook      1920x1080   16:9 landscape
+#
+# Every one is inside the console's 320..3840 px per side limit and its 16:9 to
+# 9:16 aspect window. The stills come off viewports of the same shape, so the
+# fit below is a rounding nudge rather than a real rescale.
+DEVICES = [
+    ('phone', 1080, 2400, 'Phone'),
+    ('tablet7', 1200, 1920, 'Tablet7'),
+    ('tablet10', 2560, 1600, 'Tablet10'),
+    ('chromebook', 1920, 1080, 'Chromebook'),
+]
+
 # Up to eight shots per device type, in the readme showcase order.
 SHOTS = [
     '01_Setup_TextOnly.png',
@@ -131,5 +151,5 @@ def shots(src: Path, w: int, h: int, folder: str) -> None:
 glyph = mark()
 icon(glyph)
 feature_graphic(glyph)
-shots(ROOT / 'packaging/repo/phone', 1080, 2160, 'Phone')
-shots(ROOT / 'packaging/repo/desktop', 1920, 1080, 'Tablet')
+for stills, width, height, folder in DEVICES:
+    shots(ROOT / 'packaging/repo' / stills, width, height, folder)

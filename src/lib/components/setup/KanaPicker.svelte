@@ -2,7 +2,8 @@
   import { groupInScript, rows } from "../../core/kana";
   import { groupEnabled } from "../../core/settings";
   import { app } from "../../state.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
+  import Button from "../../ui/Button.svelte";
+  import Icon from "../../ui/Icon.svelte";
   import KanaRow from "./KanaRow.svelte";
   import PresetPicker from "./PresetPicker.svelte";
   import ScriptTabs from "./ScriptTabs.svelte";
@@ -21,17 +22,21 @@
 </script>
 
 <div class="flex flex-col gap-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <PresetPicker />
+  </div>
+
   <ScriptTabs />
 
   <div class="flex flex-wrap items-center gap-2">
-    <IconButton icon="select-all" size="sm" label="Select all" onclick={selectAll} />
-    <IconButton
-      icon="select-none"
-      size="sm"
-      label="Clear"
-      onclick={() => app.setSelection([])}
-    />
-    <PresetPicker />
+    <Button size="sm" variant="outline" onclick={selectAll}>
+      <Icon name="select-all" />
+      Select all
+    </Button>
+    <Button size="sm" variant="outline" onclick={() => app.setSelection([])}>
+      <Icon name="select-none" />
+      Clear
+    </Button>
   </div>
 
   <div class="flex flex-col gap-2 sm:gap-3">

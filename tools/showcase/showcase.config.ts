@@ -43,6 +43,36 @@ export default defineConfig({
         viewport: { width: 412, height: 915 },
         deviceScaleFactor: 2
       }
+    },
+    // The three remaining play console screenshot slots. Each viewport times
+    // its scale factor is the device's real panel, so the stills land in the
+    // listing at native size with nothing rescaled or letterboxed.
+    {
+      name: "tablet7",
+      // nexus 7, 1200x1920 portrait
+      use: {
+        viewport: { width: 600, height: 960 },
+        deviceScaleFactor: 2,
+        hasTouch: true
+      }
+    },
+    {
+      name: "tablet10",
+      // pixel tablet, 2560x1600 landscape
+      use: {
+        viewport: { width: 1280, height: 800 },
+        deviceScaleFactor: 2,
+        hasTouch: true
+      }
+    },
+    {
+      name: "chromebook",
+      // 1920x1080 landscape, the panel on most chromebooks
+      use: {
+        viewport: { width: 1920, height: 1080 },
+        deviceScaleFactor: 1,
+        hasTouch: true
+      }
     }
   ],
   webServer: {
