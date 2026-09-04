@@ -11,6 +11,8 @@
 Trainer for the hiragana and katakana alphabets, on desktop, tablet and phone.
 Built with Tauri 2 and Svelte 5, in cream paper and black ink.
 
+See the [roadmap](ROADMAP.md) for planned features and improvements.
+
 <table>
   <tr>
     <td align="center" valign="bottom">
