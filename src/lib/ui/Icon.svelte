@@ -44,6 +44,15 @@
     <path d="M9.5 6.5V4.8a1.3 1.3 0 0 1 1.3-1.3h2.4a1.3 1.3 0 0 1 1.3 1.3v1.7" />
     <path d="M6.3 6.5l.9 12.2a2 2 0 0 0 2 1.8h5.6a2 2 0 0 0 2-1.8l.9-12.2" />
     <path d="M10.3 10.5v6M13.7 10.5v6" />
+  {:else if name === "plus"}
+    <path d="M12 5v14M5 12h14" />
+  {:else if name === "save"}
+    <path d="M4.5 6.5A2.5 2.5 0 0 1 7 4h9l4 4v9.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4.5 17.5z" />
+    <path d="M8.5 4v5h6" />
+    <rect x="8" y="13.5" width="8" height="6.5" rx="1" />
+  {:else if name === "restore"}
+    <path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.4" />
+    <path d="M3.5 3.8v4.9h4.9" />
   {:else if name === "filter"}
     <path d="M3.5 5.5h17l-6.5 7.6v5.6l-4 2.3v-7.9z" />
   {:else if name === "calendar"}

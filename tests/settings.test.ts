@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   clampCustomCount,
+  copySelections,
   customCountMax,
   customCountMin,
   customCountValues,
@@ -10,6 +11,7 @@ import {
   isCustomCount,
   lookAlikeCount,
   migrateSettings,
+  withPreset,
   normalizeSettings,
   questionCountOptions,
   sidesFor
@@ -177,5 +179,25 @@ describe("difficulty", () => {
     expect(lookAlikeCount("beginner")).toBe(0);
     expect(lookAlikeCount("advanced")).toBe(1);
     expect(lookAlikeCount("expert")).toBe(3);
+  });
+});
+
+describe("presets", () => {
+  const set = (name: string) => ({ name, selections: copySelections({ hiragana: [name] }) });
+
+  it("keeps one preset per name, sorted", () => {
+    const list = withPreset(withPreset([set("b")], set("a")), {
+      name: "b",
+      selections: copySelections({ katakana: ["ka"] })
+    });
+    expect(list.map((preset) => preset.name)).toEqual(["a", "b"]);
+    expect(list[1].selections).toEqual({ hiragana: [], katakana: ["ka"] });
+  });
+
+  it("copies the arrays it stores", () => {
+    const selections = { hiragana: ["a"], katakana: ["ka"] };
+    const copy = copySelections(selections);
+    copy.hiragana.push("i");
+    expect(selections.hiragana).toEqual(["a"]);
   });
 });

@@ -212,6 +212,9 @@ promo() {
 store_art() {
   need python3 "install it from your package manager"
   echo "==> play console listing art"
+  # the file names carry the version, so a rerun would leave the previous
+  # release's art sitting beside the new set
+  rm -rf packaging/aab/StoreListing
   python3 tools/listing-art-aab.py
   echo "==> partner center listing art"
   python3 tools/listing-art-msix.py

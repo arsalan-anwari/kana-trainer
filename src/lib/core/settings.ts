@@ -225,3 +225,23 @@ export function lookAlikeCount(difficulty: Difficulty): number {
   if (difficulty === "advanced") return 1;
   return 0;
 }
+
+// A named character selection, saved from the picker.
+export type Preset = {
+  name: string;
+  selections: Selections;
+};
+
+export function copySelections(selections: Partial<Selections>): Selections {
+  return {
+    hiragana: [...(selections.hiragana ?? [])],
+    katakana: [...(selections.katakana ?? [])]
+  };
+}
+
+// Adds a preset, or replaces the one already held under that name.
+export function withPreset(presets: Preset[], preset: Preset): Preset[] {
+  return [...presets.filter((item) => item.name !== preset.name), preset].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+}

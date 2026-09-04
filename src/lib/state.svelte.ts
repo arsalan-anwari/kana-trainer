@@ -18,6 +18,7 @@ import {
   type Question
 } from "./core/quiz";
 import {
+  copySelections,
   defaultSettings,
   groupFlag,
   migrateSettings,
@@ -25,9 +26,11 @@ import {
   optionalGroups,
   selectionFor,
   usesAudio,
+  withPreset,
   withSelection,
   type LegacySettings,
   type OptionalGroup,
+  type Preset,
   type RunSettings
 } from "./core/settings";
 import { summarize, weakKanaIds, type Report, type Summary } from "./core/report";
@@ -48,6 +51,7 @@ export type Phase = "answering" | "feedback" | "done";
 
 const SETTINGS_KEY = "kana-trainer-settings";
 const PREFS_KEY = "kana-trainer-prefs";
+const PRESETS_KEY = "kana-trainer-presets";
 
 function newId(): string {
   const stamp = Date.now().toString(36);
@@ -68,6 +72,7 @@ class AppState {
     selections: { hiragana: startingSelection(), katakana: startingSelection() }
   });
   prefs = $state<Prefs>({ ...defaultPrefs });
+  presets = $state<Preset[]>([]);
   notes = $state<string[]>([]);
   reports = $state<Report[]>([]);
   message = $state<string>("");
@@ -139,6 +144,8 @@ class AppState {
       this.settings = result.settings;
       this.notes = result.notes;
     }
+    const storedPresets = loadJson<Preset[]>(PRESETS_KEY, []);
+    this.presets = Array.isArray(storedPresets) ? storedPresets : [];
     this.prefs = mergePrefs(loadJson<Partial<Prefs> | null>(PREFS_KEY, null));
     this.applyPrefs();
     void this.refreshReports();
@@ -237,6 +244,31 @@ class AppState {
     this.updateSettings({
       selections: withSelection(this.settings, this.pickerScript, ids)
     });
+  }
+
+  // Saves the characters picked in both alphabets under a name, replacing any
+  // preset already held under it.
+  savePreset(name: string): void {
+    const trimmed = name.trim();
+    if (trimmed === "") return;
+    this.presets = withPreset(this.presets, {
+      name: trimmed,
+      selections: copySelections(this.settings.selections)
+    });
+    storeJson(PRESETS_KEY, this.presets);
+  }
+
+  deletePreset(name: string): void {
+    this.presets = this.presets.filter((preset) => preset.name !== name);
+    storeJson(PRESETS_KEY, this.presets);
+  }
+
+  // Loads a preset's characters, leaving every other setting alone.
+  applyPreset(name: string): void {
+    const preset = this.presets.find((item) => item.name === name);
+    if (preset === undefined) return;
+    sfx.select();
+    this.updateSettings({ selections: copySelections(preset.selections) });
   }
 
   async refreshReports(): Promise<void> {
