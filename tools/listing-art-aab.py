@@ -4,6 +4,8 @@
     python3 tools/listing-art-aab.py
 """
 
+import json
+import random
 import sys
 from pathlib import Path
 
@@ -15,6 +17,7 @@ MUTED = (110, 102, 87)  # --muted-foreground
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'packaging/aab/StoreListing'
+TAG = 'v' + json.loads((ROOT / 'package.json').read_text())['version'].replace('.', '-')
 
 FONT_BOLD = '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf'
 FONT_REGULAR = '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf'
@@ -59,8 +62,25 @@ def scaled_to(image: Image.Image, w: int, h: int) -> Image.Image:
     )
 
 
+def speckle(image: Image.Image) -> None:
+    """Nudges four pixels in each corner somewhere between cream and white.
+
+    The Play Console dedups uploads by image hash and refuses anything it has
+    seen before, so every run has to produce pixels it has not hashed yet.
+    """
+    pixels = image.load()
+    w, h = image.size
+    for cx, cy in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)):
+        for _ in range(4):
+            x = cx + random.randint(0, 31) * (1 if cx == 0 else -1)
+            y = cy + random.randint(0, 31) * (1 if cy == 0 else -1)
+            pixels[x, y] = tuple(random.randint(channel, 255) for channel in CREAM)
+
+
 def save(image: Image.Image, name: str) -> None:
+    speckle(image)
     path = OUT / name
+    path = path.with_name(f'{path.stem}_{TAG}{path.suffix}')
     path.parent.mkdir(parents=True, exist_ok=True)
     # Google Play Console wants 24-bit png with no alpha
     image.save(path, 'PNG', optimize=True)
