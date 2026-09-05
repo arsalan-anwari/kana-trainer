@@ -1,7 +1,7 @@
 <script lang="ts">
   import Chip from "./Chip.svelte";
   import NumberRoller from "./NumberRoller.svelte";
-  import { t } from "../i18n.svelte";
+  import Icon from "./Icon.svelte";
 
   // A "Custom" chip that turns into the number once it is picked: a typed field
   // on a desktop pointer, the scroll wheel on a touch one. Whether it counts as
@@ -81,7 +81,12 @@
   </label>
 {:else}
   <Chip size="sm" {active} {title} onclick={open}>
-    {active ? `${value}${unit}` : t("common.custom")}
+    {#if active}
+      {value}{unit}
+    {:else}
+      <Icon name="sliders" />
+      <span class="sr-only">{title}</span>
+    {/if}
   </Chip>
 {/if}
 

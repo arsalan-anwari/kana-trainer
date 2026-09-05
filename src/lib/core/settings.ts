@@ -37,8 +37,8 @@ export const optionalGroups = ["dakuon", "handakuon", "yoon", "tokushon"] as con
 
 export type OptionalGroup = (typeof optionalGroups)[number];
 
-export const perQuestionOptions = [0, 5, 10, 15, 30];
-export const totalTimeOptions = [0, 60, 120, 300, 600];
+export const perQuestionOptions = [0, 5, 10, 15];
+export const totalTimeOptions = [0, 60, 120, 300];
 
 // Hand picked timers reach further than the presets: 1 to 100 seconds per
 // question, 1 to 100 minutes for the whole run.

@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.4] - 2026-09-05
+
+### Fixed
+
+- Extremely small width devices cause characters in "rows" section of reports page to overflow. 
+- Some phones have an issue with rendering the down arrow for language select box, adding padding right to account for it. 
+
+### Changed
+
+- Custom button is now an icon button. 
+
+### Removed
+
+- 30s and 10m buttons are removed to make space for custom button.
+
 ## [1.7.3] - 2026-09-05
 
 ### Added
@@ -296,6 +311,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.7.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.4
 [1.7.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.3
 [1.7.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.2
 [1.7.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.1

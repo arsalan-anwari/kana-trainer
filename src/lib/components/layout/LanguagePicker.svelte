@@ -13,8 +13,8 @@
   value={app.prefs.lang === "auto" ? i18n.locale : app.prefs.lang}
   onchange={(event) => app.setPref("lang", event.currentTarget.value)}
   aria-label={t("prefs.language")}
-  class="h-8 cursor-pointer rounded-md border border-border bg-surface px-1.5 text-xs font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {full
-    ? 'h-9 w-full px-2 text-sm'
+  class="h-8 cursor-pointer rounded-md border border-border bg-surface pl-1.5 pr-2.5 text-xs font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {full
+    ? 'h-9 w-full pl-2 pr-3 text-sm'
     : ''}"
 >
   {#each locales as locale (locale.tag)}

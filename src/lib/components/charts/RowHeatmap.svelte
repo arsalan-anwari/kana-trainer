@@ -26,7 +26,7 @@
           <div class="flex min-w-0 flex-1 flex-wrap gap-1">
             {#each row.cells as cell (cell.key)}
               <span
-                class="grid size-7 place-items-center rounded-md border border-border sm:size-8"
+                class="grid h-7 min-w-7 place-items-center rounded-md border border-border px-1 sm:h-8 sm:min-w-8"
                 class:opacity-35={cell.total === 0}
                 style={cell.total === 0 ? "" : `background: ${heatFill(cell.accuracy, 30)}`}
                 title={cell.total === 0
@@ -37,7 +37,7 @@
                       total: cell.total
                     })}
               >
-                <span class="kana text-sm leading-none">{cell.glyph}</span>
+                <span class="kana whitespace-nowrap text-sm leading-none">{cell.glyph}</span>
               </span>
             {/each}
           </div>
