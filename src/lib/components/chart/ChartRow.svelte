@@ -1,5 +1,7 @@
 <script lang="ts">
   import type { Row } from "../../core/kana";
+  import { rowLabel } from "../../labels";
+  import { t } from "../../i18n.svelte";
   import { viewport } from "../../viewport.svelte";
   import RowBar from "../../ui/RowBar.svelte";
   import ChartTile from "./ChartTile.svelte";
@@ -22,14 +24,14 @@
 {#if viewport.wide}
   <div class="flex items-center gap-3">
     <span class="w-16 shrink-0 text-xs font-bold tracking-tight text-muted-foreground">
-      {row.label}
+      {rowLabel(row)}
     </span>
     <div class="grid min-w-0 flex-1 gap-2" style="grid-template-columns: {tracks}">
       {@render tiles()}
     </div>
   </div>
 {:else}
-  <RowBar label={row.label} hint="{row.kana.length} sounds">
+  <RowBar label={rowLabel(row)} hint={t("chart.sounds", { count: row.kana.length })}>
     <!-- as many tiles across as the zoom leaves room for -->
     <div class="grid gap-1.5" style="grid-template-columns: {tracks}">
       {@render tiles()}

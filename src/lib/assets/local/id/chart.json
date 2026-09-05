@@ -1,0 +1,11 @@
+{
+  "title": "Tabel huruf",
+  "description": "Semua 147 huruf per kelompok dan baris. Ketuk untuk mendengarnya.",
+  "sounds": "{count} bunyi",
+  "play": "Putar {romaji} {kata}",
+  "seion": "46 huruf dasar.",
+  "dakuon": "Baris か さ た は bersuara.",
+  "handakuon": "Baris は setengah bersuara.",
+  "yoon": "Gabungan dengan ゃ ゅ ょ kecil.",
+  "tokushon": "Bunyi serapan, hanya katakana."
+}

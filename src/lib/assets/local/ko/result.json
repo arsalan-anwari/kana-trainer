@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "만점",
+    "great": "거의 만점",
+    "good": "좋은 결과",
+    "fair": "감이 오는 중",
+    "poor": "계속 연습해요"
+  },
+  "blurb": {
+    "perfect": "하나도 안 틀렸어요.",
+    "great": "만점까지 아주 조금.",
+    "good": "대부분 맞혔어요.",
+    "fair": "윤곽은 잡혔어요.",
+    "poor": "할수록 다음이 쉬워져요."
+  },
+  "skip": "아무 곳이나 눌러 넘기기",
+  "summary": "{seconds}초에 {total}개 중 {correct}개 정답",
+  "stat": { "accuracy": "정답률", "perQuestion": "문제당", "timedOut": "시간 초과" },
+  "again": "다시 하기",
+  "practice": "틀린 것만 연습",
+  "export": "이 연습 내보내기",
+  "allReports": "전체 기록",
+  "back": "설정으로",
+  "exported": "{file} 로 내보냈습니다",
+  "characters": { "title": "문자", "description": "약한 것부터." },
+  "rows": { "title": "행", "description": "어느 행이 문제인지." },
+  "missed": {
+    "title": "틀린 문제",
+    "description": "맞히지 못한 것 전부.",
+    "none": "다 맞혔어요.",
+    "timedOut": "시간 초과",
+    "said": "{given} 라고 답함",
+    "nothing": "무응답",
+    "hiragana": "히라",
+    "katakana": "가타"
+  }
+}

@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { groupLabel } from "../../core/kana";
+  import { groupLabel, rowLabel } from "../../labels";
   import { missesByGroup } from "../../core/report";
   import type { Answer } from "../../core/quiz";
   import Badge from "../../ui/Badge.svelte";
   import Card from "../../ui/Card.svelte";
+  import { t } from "../../i18n.svelte";
 
   // The missed characters, listed by group and row per alphabet.
 
@@ -14,10 +15,7 @@
 </script>
 
 {#if total > 0}
-  <Card
-    title="Mistakes by group"
-    description="Every character you missed, filed by set, row and alphabet."
-  >
+  <Card title={t("reports.mistakes.title")} description={t("reports.mistakes.description")}>
     <!-- multi column rather than a grid, so a short box does not hold open the
          row beside it. -mb-3 swallows the trailing margin of the last box. -->
     <div class="-mb-3 columns-1 gap-3 sm:columns-2">
@@ -28,13 +26,12 @@
           <div class="flex items-center justify-between gap-2">
             <span class="text-sm font-semibold">{groupLabel(box.group)}</span>
             <Badge tone={box.misses === 0 ? "outline" : "danger"}>
-              {box.misses}
-              {box.misses === 1 ? "miss" : "misses"}
+              {t("reports.mistakes.miss", { count: box.misses })}
             </Badge>
           </div>
 
           {#if box.rows.length === 0}
-            <p class="py-2 text-xs text-muted-foreground">Nothing missed here.</p>
+            <p class="py-2 text-xs text-muted-foreground">{t("reports.mistakes.none")}</p>
           {:else}
             <div class="flex flex-col gap-2">
               {#each box.rows as entry (entry.row.id)}
@@ -42,13 +39,13 @@
                   <span
                     class="w-14 shrink-0 whitespace-nowrap pt-1 text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground"
                   >
-                    {entry.row.label}
+                    {rowLabel(entry.row)}
                   </span>
                   <div class="flex flex-wrap gap-1.5">
                     {#each entry.misses as miss (miss.key)}
                       <span
                         class="inline-flex items-center gap-1 rounded-md border border-border bg-surface px-1.5 py-1"
-                        title="{miss.romaji}, missed {miss.misses} of {miss.total}"
+                        title={t("reports.tip.missed", { romaji: miss.romaji, misses: miss.misses, total: miss.total })}
                       >
                         <span class="kana text-base leading-none">{miss.glyph}</span>
                         <span class="text-[0.625rem] leading-none text-muted-foreground">

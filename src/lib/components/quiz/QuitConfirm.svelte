@@ -1,6 +1,7 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
+  import { t } from "../../i18n.svelte";
 
   // Confirmation shown before an unfinished run is discarded.
 
@@ -28,7 +29,7 @@
   <button
     type="button"
     class="absolute inset-0 cursor-default bg-foreground/40"
-    aria-label="Keep going"
+    aria-label={t("quiz.stop.cancel")}
     onclick={() => app.cancelQuit()}
   ></button>
 
@@ -40,31 +41,21 @@
     aria-describedby="quit-body"
   >
     <div class="flex flex-col gap-2">
-      <h2 id="quit-title" class="text-h3 font-bold leading-tight">Stop this run?</h2>
+      <h2 id="quit-title" class="text-h3 font-bold leading-tight">{t("quiz.stop.title")}</h2>
       <p id="quit-body" class="text-sm leading-snug text-muted-foreground">
-        {#if answered === 0}
-          You have not answered anything yet. Nothing will be saved.
-        {:else}
-          Only a finished run is scored. Your
-          <span class="font-semibold text-foreground">
-            {answered}
-            {answered === 1 ? "answer" : "answers"}
-          </span>
-          will be thrown away, with no report and no score for it.
-        {/if}
+        {t(answered === 0 ? "quiz.stop.nothing" : "quiz.stop.discard", { count: answered })}
       </p>
       {#if left > 0 && answered > 0}
         <p class="text-sm leading-snug text-muted-foreground">
-          {left}
-          {left === 1 ? "question" : "questions"} left to go.
+          {t("quiz.stop.left", { count: left })}
         </p>
       {/if}
     </div>
 
     <div class="flex flex-col-reverse gap-2 sm:flex-row">
-      <Button variant="danger" full onclick={() => app.quit()}>Stop and discard</Button>
+      <Button variant="danger" full onclick={() => app.quit()}>{t("quiz.stop.confirm")}</Button>
       <div bind:this={keep} class="w-full">
-        <Button variant="brand" full onclick={() => app.cancelQuit()}>Keep going</Button>
+        <Button variant="brand" full onclick={() => app.cancelQuit()}>{t("quiz.stop.cancel")}</Button>
       </div>
     </div>
   </div>

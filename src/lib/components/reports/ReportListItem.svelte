@@ -2,6 +2,7 @@
   import { summarize, type Report } from "../../core/report";
   import { answerStyleLabel, formatLabel } from "../../core/settings";
   import Badge from "../../ui/Badge.svelte";
+  import { i18n, t } from "../../i18n.svelte";
 
   let {
     report,
@@ -24,9 +25,13 @@
     : 'border-border bg-surface hover:bg-accent'}"
   onclick={ontoggle}
 >
-  <span class="text-sm font-semibold">{new Date(report.createdAt).toLocaleString()}</span>
+  <span class="text-sm font-semibold">{new Date(report.createdAt).toLocaleString(i18n.locale)}</span>
   <span class="text-xs text-muted-foreground">
-    {stats.correct}/{stats.total} correct, {Math.round(stats.accuracy * 100)}%
+    {t("reports.list.score", {
+      correct: stats.correct,
+      total: stats.total,
+      percent: Math.round(stats.accuracy * 100)
+    })}
   </span>
   <div class="flex flex-wrap gap-1">
     <Badge tone="outline">{formatLabel(report.settings.format)}</Badge>

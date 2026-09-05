@@ -1,10 +1,21 @@
 <script lang="ts">
   import {
+    alphabetFilters,
+    alphabetLabel,
+    answerStyleTags,
+    anyQuery,
+    formatTags,
     isDateRange,
+    isEmptyQuery,
+    queryTagCount,
     reportFilterLabel,
     reportFilters,
+    tagLabel,
+    type AlphabetFilter,
     type Report,
-    type ReportFilter
+    type ReportFilter,
+    type ReportQuery,
+    type ReportTag
   } from "../../core/report";
   import { app } from "../../state.svelte";
   import { deleteReport, exportReports, fileLabel, importReports } from "../../storage";
@@ -14,12 +25,13 @@
   import IconButton from "../../ui/IconButton.svelte";
   import DateRangePicker from "./DateRangePicker.svelte";
   import ReportListItem from "./ReportListItem.svelte";
+  import { t } from "../../i18n.svelte";
 
   let {
     reports,
     picked = $bindable<string[]>([]),
-    filter = $bindable<ReportFilter>("all")
-  }: { reports: Report[]; picked?: string[]; filter?: ReportFilter } = $props();
+    query = $bindable<ReportQuery>({ ...anyQuery })
+  }: { reports: Report[]; picked?: string[]; query?: ReportQuery } = $props();
 
   const allPicked = $derived(
     reports.length > 0 && reports.every((report) => picked.includes(report.id))
@@ -30,21 +42,40 @@
   );
   const targetLabel = $derived(
     picked.length === 0
-      ? `${reports.length === 1 ? "the run" : `all ${reports.length} runs`} shown`
-      : `${picked.length === 1 ? "1 selected run" : `${picked.length} selected runs`}`
+      ? t("reports.target.shown", { count: reports.length })
+      : t("reports.target.picked", { count: picked.length })
   );
 
   let confirming = $state(false);
   let picking = $state(false);
 
-  const range = $derived(isDateRange(filter) ? filter : null);
+  const range = $derived(isDateRange(query.window) ? query.window : null);
+  const active = $derived(queryTagCount(query));
 
-  function setFilter(next: ReportFilter): void {
-    // changing the window clears the selection
-    filter = next;
+  // Any change to what is shown drops the selection, it named runs that may no
+  // longer be in view.
+  function apply(next: Partial<ReportQuery>): void {
+    query = { ...query, ...next };
     picked = [];
     confirming = false;
     picking = false;
+  }
+
+  function setWindow(next: ReportFilter): void {
+    apply({ window: next });
+  }
+
+  function toggleTag(tag: ReportTag): void {
+    apply({
+      tags: query.tags.includes(tag)
+        ? query.tags.filter((item) => item !== tag)
+        : [...query.tags, tag]
+    });
+  }
+
+  function setAlphabet(next: AlphabetFilter): void {
+    // clicking the picked one again drops back to any
+    apply({ alphabet: query.alphabet === next ? "any" : next });
   }
 
   function toggle(id: string): void {
@@ -57,17 +88,17 @@
     for (const id of ids) await deleteReport(id);
     picked = picked.filter((item) => !ids.includes(item));
     await app.refreshReports();
-    app.message = ids.length === 1 ? "Removed 1 run." : `Removed ${ids.length} runs.`;
+    app.message = t("reports.deleted", { count: ids.length });
   }
 
   async function save(): Promise<void> {
     try {
       const path = await exportReports(target);
       if (path === null) return;
-      const count = target.length === 1 ? "1 run" : `${target.length} runs`;
-      app.message = `Exported ${count} to ${fileLabel(path)}`;
+      const runs = t("reports.runs", { count: target.length });
+      app.message = t("reports.exported", { runs, file: fileLabel(path) });
     } catch (error) {
-      app.message = error instanceof Error ? error.message : "That file could not be written.";
+      app.message = error instanceof Error ? error.message : t("common.file.writeFailed");
     }
   }
 
@@ -76,13 +107,13 @@
       const result = await importReports();
       if (result === null) return;
       await app.refreshReports();
-      const added = result.added === 1 ? "1 run" : `${result.added} runs`;
+      const runs = t("reports.runs", { count: result.added });
       app.message =
         result.skipped === 0
-          ? `Imported ${added}.`
-          : `Imported ${added}, ${result.skipped} already here.`;
+          ? t("reports.imported", { runs })
+          : t("reports.importedSome", { runs, skipped: result.skipped });
     } catch (error) {
-      app.message = error instanceof Error ? error.message : "That file could not be read.";
+      app.message = error instanceof Error ? error.message : t("common.file.readFailed");
     }
   }
 </script>
@@ -91,14 +122,14 @@
   <!-- relative so the range panel can hang under the whole filter strip -->
   <div class="relative flex flex-wrap items-center gap-1.5">
     {#each reportFilters as option (option)}
-      <Chip size="sm" active={filter === option} onclick={() => setFilter(option)}>
+      <Chip size="sm" active={query.window === option} onclick={() => setWindow(option)}>
         {reportFilterLabel(option)}
       </Chip>
     {/each}
     <Chip
       size="sm"
       active={range !== null}
-      title={range === null ? "Pick a date range" : reportFilterLabel(range)}
+      title={range === null ? t("reports.range.pick") : reportFilterLabel(range)}
       onclick={() => (picking = true)}
     >
       <span class="flex items-center gap-1.5">
@@ -112,49 +143,121 @@
     {#if picking}
       <DateRangePicker
         current={range}
-        onpick={(next) => setFilter(next)}
+        onpick={(next) => setWindow(next)}
         onclose={() => (picking = false)}
       />
     {/if}
   </div>
 
+  <!-- The tags each run card already carries, turned into filters. Folded away
+       by default, the window chips above are the everyday control. -->
+  <details class="rounded-lg border border-border bg-surface">
+    <summary
+      class="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground [&::-webkit-details-marker]:hidden"
+    >
+      <Icon name="filter" class="size-4" />
+      <span>{t("reports.filters.title")}</span>
+      {#if active > 0}
+        <span
+          class="inline-flex min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[0.625rem] text-brand-foreground tabular-nums"
+        >
+          {active}
+        </span>
+      {/if}
+      <Icon name="chevron-down" class="ml-auto size-4" />
+    </summary>
+
+    <div class="flex flex-col gap-3 border-t border-border px-3 py-3">
+      <div class="flex flex-col gap-1.5">
+        <span class="text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground">
+          {t("reports.filters.format")}
+        </span>
+        <div class="flex flex-wrap gap-1.5">
+          {#each formatTags as tag (tag)}
+            <Chip size="sm" active={query.tags.includes(tag)} onclick={() => toggleTag(tag)}>
+              {tagLabel(tag)}
+            </Chip>
+          {/each}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <span class="text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground">
+          {t("reports.filters.answering")}
+        </span>
+        <div class="flex flex-wrap gap-1.5">
+          {#each answerStyleTags as tag (tag)}
+            <Chip size="sm" active={query.tags.includes(tag)} onclick={() => toggleTag(tag)}>
+              {tagLabel(tag)}
+            </Chip>
+          {/each}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <span class="text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground">
+          {t("reports.filters.alphabet")}
+        </span>
+        <div class="flex flex-wrap gap-1.5">
+          {#each alphabetFilters.filter((option) => option !== "any") as option (option)}
+            <Chip size="sm" active={query.alphabet === option} onclick={() => setAlphabet(option)}>
+              {alphabetLabel(option)}
+            </Chip>
+          {/each}
+        </div>
+      </div>
+
+      {#if active > 0}
+        <button
+          type="button"
+          class="self-start text-xs font-semibold text-muted-foreground underline underline-offset-2 hover:text-foreground"
+          onclick={() => apply({ tags: [], alphabet: "any" })}
+        >
+          {t("reports.filters.clear")}
+        </button>
+      {/if}
+    </div>
+  </details>
+
   <div class="flex items-center justify-between gap-2">
     <span class="hidden text-xs text-muted-foreground sm:inline">
-      {picked.length === 0 ? `${reports.length} shown` : `${picked.length} of ${reports.length}`}
+      {picked.length === 0
+        ? t("reports.list.shown", { count: reports.length })
+        : t("reports.list.pickedOf", { picked: picked.length, total: reports.length })}
     </span>
     <div class="flex items-center gap-1.5">
       <IconButton
         size="sm"
         icon="select-all"
-        label="Select every run shown"
+        label={t("reports.list.selectAll")}
         disabled={reports.length === 0 || allPicked}
         onclick={() => (picked = reports.map((report) => report.id))}
       />
       <IconButton
         size="sm"
         icon="select-none"
-        label="Clear the selection"
+        label={t("reports.list.clearSelection")}
         disabled={picked.length === 0}
         onclick={() => (picked = [])}
       />
       <IconButton
         size="sm"
         icon="trash"
-        label="Remove {targetLabel}"
+        label={t("reports.list.remove", { target: targetLabel })}
         disabled={target.length === 0}
         onclick={() => (confirming = true)}
       />
       <IconButton
         size="sm"
         icon="download"
-        label="Export {targetLabel} to a .kt-report file"
+        label={t("reports.list.export", { target: targetLabel })}
         disabled={target.length === 0}
         onclick={save}
       />
       <IconButton
         size="sm"
         icon="folder-open"
-        label="Import runs from a .kt-report file"
+        label={t("reports.list.import")}
         onclick={load}
       />
     </div>
@@ -169,9 +272,7 @@
       />
     {:else}
       <p class="py-8 text-center text-sm text-muted-foreground">
-        {filter === "all"
-          ? "No reports yet. Finish a run and it lands here."
-          : "No runs in this window."}
+        {t(isEmptyQuery(query) ? "reports.list.empty" : "reports.list.noMatch")}
       </p>
     {/each}
   </div>
@@ -179,13 +280,12 @@
 
 {#if confirming}
   <ConfirmDialog
-    title={target.length === 1 ? "Remove this run?" : `Remove ${target.length} runs?`}
-    confirmLabel={target.length === 1 ? "Remove the run" : `Remove ${target.length} runs`}
-    cancelLabel={target.length === 1 ? "Keep it" : "Keep them"}
+    title={t("reports.confirm.title", { count: target.length })}
+    confirmLabel={t("reports.confirm.yes", { count: target.length })}
+    cancelLabel={t("reports.confirm.no", { count: target.length })}
     onconfirm={removeTarget}
     oncancel={() => (confirming = false)}
   >
-    This throws away {picked.length === 0 ? "every run in view" : "the runs you picked"} for
-    good. Export them to a .kt-report file first if you want to keep a copy.
+    {t(picked.length === 0 ? "reports.confirm.bodyShown" : "reports.confirm.bodyPicked")}
   </ConfirmDialog>
 {/if}

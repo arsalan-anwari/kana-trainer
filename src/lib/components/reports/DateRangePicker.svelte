@@ -11,6 +11,7 @@
   import { viewport } from "../../viewport.svelte";
   import Button from "../../ui/Button.svelte";
   import IconButton from "../../ui/IconButton.svelte";
+  import { t } from "../../i18n.svelte";
 
   // Picks the window by hand. Full screen on a phone, an overlay hanging under
   // the filters on anything wider.
@@ -91,7 +92,7 @@
 
 {#snippet body()}
   <label class="flex flex-col gap-1">
-    <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">From</span>
+    <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("reports.range.from")}</span>
     {#if touch}
       <input type="date" bind:value={from} min={earliest} max={today} class={field} />
     {:else}
@@ -101,7 +102,7 @@
         oninput={(event) => type(event, "from")}
         inputmode="numeric"
         maxlength="10"
-        placeholder="DD/MM/YYYY"
+        placeholder={t("reports.range.mask")}
         autocomplete="off"
         spellcheck="false"
         class={field}
@@ -110,7 +111,7 @@
   </label>
 
   <label class="flex flex-col gap-1">
-    <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">To</span>
+    <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("reports.range.to")}</span>
     {#if touch}
       <input type="date" bind:value={to} min={earliest} max={today} class={field} />
     {:else}
@@ -120,7 +121,7 @@
         oninput={(event) => type(event, "to")}
         inputmode="numeric"
         maxlength="10"
-        placeholder="DD/MM/YYYY"
+        placeholder={t("reports.range.mask")}
         autocomplete="off"
         spellcheck="false"
         class={field}
@@ -131,17 +132,17 @@
   {#if !valid && (from !== "" || fromText !== "")}
     <p class="text-xs font-semibold text-danger">
       {#if touch}
-        Pick a start on or before the end, no earlier than {earliest}.
+        {t("reports.range.invalidPicked", { earliest })}
       {:else}
-        Use DD/MM/YYYY, start on or before the end, no earlier than {dayInputText(earliest)}.
+        {t("reports.range.invalidTyped", { earliest: dayInputText(earliest) })}
       {/if}
     </p>
   {/if}
 
   <div class="flex gap-2">
-    <Button variant="outline" full onclick={onclose}>Cancel</Button>
+    <Button variant="outline" full onclick={onclose}>{t("common.cancel")}</Button>
     <Button variant="brand" full disabled={!valid} onclick={() => onpick({ from, to })}>
-      Apply
+      {t("common.apply")}
     </Button>
   </div>
 {/snippet}
@@ -151,7 +152,7 @@
     class="anim-pop absolute inset-x-0 top-full z-40 mt-2 flex flex-col gap-3 rounded-xl border border-border bg-surface p-4 shadow-lg"
     role="dialog"
     aria-modal="true"
-    aria-label="Pick a date range"
+    aria-label={t("reports.range.pick")}
   >
     {@render body()}
   </div>
@@ -160,11 +161,11 @@
     class="fixed inset-0 z-50 flex flex-col bg-background pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
     role="dialog"
     aria-modal="true"
-    aria-label="Pick a date range"
+    aria-label={t("reports.range.pick")}
   >
     <header class="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
-      <span class="text-h4 font-bold">Date range</span>
-      <IconButton icon="close" label="Close the date range" onclick={onclose} />
+      <span class="text-h4 font-bold">{t("reports.range.title")}</span>
+      <IconButton icon="close" label={t("reports.range.close")} onclick={onclose} />
     </header>
 
     <div

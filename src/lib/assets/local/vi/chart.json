@@ -1,0 +1,11 @@
+{
+  "title": "Bảng ký tự",
+  "description": "Toàn bộ 147 ký tự theo nhóm và hàng. Chạm để nghe.",
+  "sounds": "{count} âm",
+  "play": "Phát {romaji} {kata}",
+  "seion": "46 ký tự cơ bản.",
+  "dakuon": "Hàng か さ た は hữu thanh.",
+  "handakuon": "Hàng は bán hữu thanh.",
+  "yoon": "Ghép với ゃ ゅ ょ nhỏ.",
+  "tokushon": "Âm vay mượn, chỉ viết bằng katakana."
+}

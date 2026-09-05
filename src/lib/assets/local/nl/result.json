@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "Foutloos",
+    "great": "Bijna foutloos",
+    "good": "Sterke ronde",
+    "fair": "Je komt er",
+    "poor": "Blijf oefenen"
+  },
+  "blurb": {
+    "perfect": "Geen enkele gemist.",
+    "great": "Net geen schone lei.",
+    "good": "De meeste zaten goed.",
+    "fair": "De vorm zit er al in.",
+    "poor": "Elke ronde maakt de volgende makkelijker."
+  },
+  "skip": "Tik ergens om over te slaan",
+  "summary": "{correct} van {total} goed in {seconds} s",
+  "stat": { "accuracy": "goed", "perQuestion": "per vraag", "timedOut": "tijd om" },
+  "again": "Nog een keer",
+  "practice": "Fouten oefenen",
+  "export": "Ronde exporteren",
+  "allReports": "Hele overzicht",
+  "back": "Terug",
+  "exported": "Ronde geëxporteerd naar {file}",
+  "characters": { "title": "Tekens", "description": "De zwakste eerst." },
+  "rows": { "title": "Rijen", "description": "Waar het misgaat." },
+  "missed": {
+    "title": "Fouten",
+    "description": "Alles wat je niet goed had.",
+    "none": "Niets gemist, mooi werk.",
+    "timedOut": "tijd op",
+    "said": "je had {given}",
+    "nothing": "niets",
+    "hiragana": "hira",
+    "katakana": "kata"
+  }
+}

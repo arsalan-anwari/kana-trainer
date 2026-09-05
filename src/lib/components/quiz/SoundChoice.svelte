@@ -3,6 +3,7 @@
   import PlayIcon from "../../ui/PlayIcon.svelte";
   import Waveform from "../../ui/Waveform.svelte";
   import type { ChoiceState } from "./choiceState";
+  import { t } from "../../i18n.svelte";
 
   // One sound tile: play control, clip histogram and slot number.
 
@@ -49,7 +50,7 @@
   type="button"
   {disabled}
   aria-pressed={state === "staged"}
-  aria-label="Sound {slot}"
+  aria-label={t("quiz.soundTile", { slot })}
   class="flex h-16 w-full cursor-pointer items-center gap-3 rounded-2xl border-2 px-3 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default sm:h-22 sm:gap-5 sm:px-5 {tones[
     state
   ]}"

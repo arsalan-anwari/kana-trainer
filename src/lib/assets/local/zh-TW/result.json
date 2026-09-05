@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "滿分",
+    "great": "接近滿分",
+    "good": "表現不錯",
+    "fair": "抓到感覺了",
+    "poor": "繼續加油"
+  },
+  "blurb": {
+    "perfect": "一題都沒錯。",
+    "great": "差一點就全對。",
+    "good": "大部分都答對了。",
+    "fair": "大致的感覺已經有了。",
+    "poor": "每練一次，下次就更容易。"
+  },
+  "skip": "點任一處跳過",
+  "summary": "{seconds} 秒內答對 {correct}/{total} 題",
+  "stat": { "accuracy": "正確率", "perQuestion": "每題用時", "timedOut": "逾時" },
+  "again": "再來一次",
+  "practice": "練習錯題",
+  "export": "匯出本次練習",
+  "allReports": "全部紀錄",
+  "back": "回到設定",
+  "exported": "已匯出至 {file}",
+  "characters": { "title": "字元", "description": "最弱的排在前面。" },
+  "rows": { "title": "行", "description": "問題出在哪一行。" },
+  "missed": {
+    "title": "錯題",
+    "description": "所有答錯的題目。",
+    "none": "全對，很棒。",
+    "timedOut": "逾時",
+    "said": "你答了 {given}",
+    "nothing": "空白",
+    "hiragana": "平",
+    "katakana": "片"
+  }
+}

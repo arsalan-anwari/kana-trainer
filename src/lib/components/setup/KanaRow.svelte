@@ -1,5 +1,6 @@
 <script lang="ts">
   import { glyph, type Row, type Script } from "../../core/kana";
+  import { rowLabel } from "../../labels";
   import { app } from "../../state.svelte";
   import { viewport } from "../../viewport.svelte";
   import Chip from "../../ui/Chip.svelte";
@@ -46,7 +47,7 @@
         : 'border-border bg-surface text-muted-foreground hover:bg-accent'}"
       onclick={() => app.toggleRow(row.id)}
     >
-      {row.label}
+      {rowLabel(row)}
     </button>
     <div class="grid min-w-0 flex-1 gap-1.5 sm:gap-2" style="grid-template-columns: {tracks}">
       {@render chips()}
@@ -54,7 +55,7 @@
   </div>
 {:else}
   <RowBar
-    label={row.label}
+    label={rowLabel(row)}
     hint="{taken}/{row.kana.length}"
     active={complete}
     onpress={() => app.toggleRow(row.id)}

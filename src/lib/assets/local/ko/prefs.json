@@ -1,0 +1,26 @@
+{
+  "theme": "테마",
+  "themeSystem": "시스템",
+  "themeLight": "밝게",
+  "themeDark": "어둡게",
+  "themeIs": {
+    "system": "테마: 시스템",
+    "light": "테마: 밝게",
+    "dark": "테마: 어둡게"
+  },
+  "themeLocked": "고대비가 테마를 고정합니다",
+  "contrast": "고대비",
+  "contrastHint": "흑백 고정, 테마보다 우선",
+  "zoom": "확대",
+  "zoomIn": "확대",
+  "zoomOut": "축소",
+  "scale": "배율",
+  "scaleHint": "앱 전체 크기 조절",
+  "sound": "소리",
+  "effects": "효과음",
+  "effectsHint": "클릭과 정답 피드백",
+  "soundOn": "효과음 켬",
+  "soundOff": "효과음 끔",
+  "language": "언어",
+  "persist": "설정은 계속 유지됩니다."
+}

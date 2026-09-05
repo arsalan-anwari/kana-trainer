@@ -2,13 +2,14 @@
   import { app } from "../../state.svelte";
   import IconButton from "../../ui/IconButton.svelte";
   import type { IconName } from "../../ui/icons";
+  import { t } from "../../i18n.svelte";
 
   let { size = "sm" }: { size?: "sm" | "md" } = $props();
 
-  const themes: { value: "system" | "light" | "dark"; label: string; icon: IconName }[] = [
-    { value: "system", label: "Theme: follow the system", icon: "monitor" },
-    { value: "light", label: "Theme: light", icon: "sun" },
-    { value: "dark", label: "Theme: dark", icon: "moon" }
+  const themes: { value: "system" | "light" | "dark"; icon: IconName }[] = [
+    { value: "system", icon: "monitor" },
+    { value: "light", icon: "sun" },
+    { value: "dark", icon: "moon" }
   ];
 
   const current = $derived(themes.find((theme) => theme.value === app.prefs.theme) ?? themes[0]);
@@ -23,7 +24,7 @@
 <IconButton
   {size}
   icon={current.icon}
-  label={app.prefs.contrast ? "Theme is fixed by high contrast" : current.label}
+  label={app.prefs.contrast ? t("prefs.themeLocked") : t(`prefs.themeIs.${current.value}`)}
   disabled={app.prefs.contrast}
   onclick={cycle}
 />

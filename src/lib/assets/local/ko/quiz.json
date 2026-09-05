@@ -1,0 +1,28 @@
+{
+  "prompt": {
+    "listen": "듣고 고르세요",
+    "pickSound": "맞는 소리를 고르세요",
+    "whichRomaji": "이 글자의 로마자는",
+    "whichKana": "이 소리의 글자는",
+    "replay": "다시 듣기"
+  },
+  "typing": { "kana": "가나 입력", "romaji": "로마자 입력", "either": "가나 또는 로마자" },
+  "check": "확인",
+  "soundTile": "소리 {slot}",
+  "soundHint": "소리를 눌러 들어 보고 확인하세요.",
+  "quit": "그만두기",
+  "score": "{count}개 정답",
+  "correct": "정답",
+  "wrong": "아쉬워요",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "{list} 도 가능",
+  "continue": "계속",
+  "stop": {
+    "title": "연습을 그만둘까요?",
+    "nothing": "아직 답한 게 없어 저장할 것도 없습니다.",
+    "discard_other": "끝낸 연습만 채점됩니다. 답한 {count}개는 버려집니다.",
+    "left_other": "{count}문제 남았습니다.",
+    "confirm": "그만두고 버리기",
+    "cancel": "계속하기"
+  }
+}

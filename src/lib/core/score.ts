@@ -1,8 +1,18 @@
 // Grading of a finished run.
 
+import { t } from "../i18n.svelte";
+
 export const scoreTiers = ["perfect", "great", "good", "fair", "poor"] as const;
 
 export type ScoreTier = (typeof scoreTiers)[number];
+
+const emoji: Record<ScoreTier, string> = {
+  perfect: "🏆",
+  great: "🎉",
+  good: "👏",
+  fair: "💪",
+  poor: "📚"
+};
 
 export function scoreTier(accuracy: number, total = 1): ScoreTier {
   if (total === 0) return "poor";
@@ -13,32 +23,8 @@ export function scoreTier(accuracy: number, total = 1): ScoreTier {
   return "poor";
 }
 
-const headlines: Record<ScoreTier, string> = {
-  perfect: "Perfect",
-  great: "Nearly perfect",
-  good: "Strong run",
-  fair: "Getting there",
-  poor: "Keep practicing"
-};
-
-const emoji: Record<ScoreTier, string> = {
-  perfect: "🏆",
-  great: "🎉",
-  good: "👏",
-  fair: "💪",
-  poor: "📚"
-};
-
-const blurbs: Record<ScoreTier, string> = {
-  perfect: "Not a single one missed.",
-  great: "So close to a clean sheet.",
-  good: "Most of them landed.",
-  fair: "The shape of it is there.",
-  poor: "Every run makes the next one easier."
-};
-
 export function tierHeadline(tier: ScoreTier): string {
-  return headlines[tier];
+  return t(`result.tier.${tier}`);
 }
 
 export function tierEmoji(tier: ScoreTier): string {
@@ -46,5 +32,5 @@ export function tierEmoji(tier: ScoreTier): string {
 }
 
 export function tierBlurb(tier: ScoreTier): string {
-  return blurbs[tier];
+  return t(`result.blurb.${tier}`);
 }

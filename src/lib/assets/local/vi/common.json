@@ -1,0 +1,51 @@
+{
+  "appName": "Kana Trainer",
+  "tagline": "Luyện hiragana và katakana",
+  "settings": "Cài đặt",
+  "closeSettings": "Đóng cài đặt",
+  "cancel": "Huỷ",
+  "save": "Lưu",
+  "apply": "Áp dụng",
+  "close": "Đóng",
+  "delete": "Xoá",
+  "keep": "Giữ",
+  "hiragana": "Hiragana",
+  "katakana": "Katakana",
+  "both": "Cả hai",
+  "any": "Tất cả",
+  "off": "Tắt",
+  "custom": "Tự chọn",
+  "pickValue": "Chọn giá trị",
+  "nav": { "setup": "Luyện tập", "reports": "Lịch sử", "chart": "Bảng chữ" },
+  "group": {
+    "seion": "Seion",
+    "dakuon": "Dakuon",
+    "handakuon": "Handakuon",
+    "yoon": "Yoon",
+    "tokushon": "Tokushon"
+  },
+  "format": {
+    "text-text": "Chỉ chữ",
+    "audio-text": "Nghe rồi viết",
+    "text-audio": "Nhìn chữ chọn âm"
+  },
+  "answerStyle": { "choice": "Trắc nghiệm", "typing": "Gõ chữ" },
+  "direction": {
+    "kana-romaji": "Kana sang romaji",
+    "romaji-kana": "Romaji sang kana",
+    "mixed": "Cả hai chiều"
+  },
+  "difficulty": { "beginner": "Nhập môn", "advanced": "Nâng cao", "expert": "Thành thạo" },
+  "rowLabel": "Hàng {letter}",
+  "file": {
+    "filterName": "Phiên Kana Trainer",
+    "writeFailed": "Không ghi được tệp đó.",
+    "readFailed": "Không đọc được tệp đó.",
+    "tooShort": "Tệp quá ngắn để là tệp .kt-report.",
+    "notReport": "Đó không phải tệp .kt-report.",
+    "newer": "Tệp được ghi bởi phiên bản mới hơn (định dạng {version}).",
+    "incomplete": "Tệp .kt-report đó không đầy đủ.",
+    "damaged": "Tệp .kt-report đó bị hỏng.",
+    "badRun": "Tệp .kt-report đó chứa một phiên không đọc được."
+  }
+}

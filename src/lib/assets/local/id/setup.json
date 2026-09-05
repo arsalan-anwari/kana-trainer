@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Aksara", "description": "Pilih yang akan muncul." },
+  "format": {
+    "title": "Bentuk soal",
+    "description": "Cara soal diberikan.",
+    "text-text": "Lihat huruf, jawab dengan teks",
+    "audio-text": "Dengar bunyi, jawab dengan teks",
+    "text-audio": "Lihat huruf, pilih bunyinya"
+  },
+  "answerStyle": {
+    "title": "Cara menjawab",
+    "description": "Ketuk pilihan atau ketik sendiri.",
+    "choice": "Satu dari 4",
+    "choiceAudio": "Pilihan selalu berupa kana",
+    "typing": "Ketik jawabannya",
+    "typingAudio": "Kana atau romaji"
+  },
+  "direction": {
+    "title": "Arah",
+    "description": "Sisi mana yang kamu jawab.",
+    "kana-romaji": "Jawab dengan romaji",
+    "romaji-kana": "Jawab dengan kana",
+    "mixed": "Dua arah, acak"
+  },
+  "characters": {
+    "title": "Huruf",
+    "description": "Ketuk nama baris untuk mengambil satu baris.",
+    "editAlphabet": "Aksara yang disunting",
+    "selectAll": "Pilih semua",
+    "clear": "Kosongkan"
+  },
+  "run": { "title": "Opsi sesi", "description": "Isi sesi dan lamanya." },
+  "sets": {
+    "title": "Kelompok tambahan",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ dan lainnya",
+    "tokushon": "ファ ティ ヴァ, katakana saja"
+  },
+  "questions": { "title": "Soal", "count": "Jumlah soal", "onePass": "Satu putaran" },
+  "difficulty": {
+    "title": "Tingkat",
+    "beginner": "Pilihan salah diambil acak",
+    "advanced": "Satu pilihan salah mirip",
+    "expert": "Semua pilihan salah mirip",
+    "tooFew": "Perlu {min} huruf agar terasa bedanya.",
+    "choiceOnly": "Hanya untuk pilihan ganda."
+  },
+  "time": {
+    "perQuestion": "Per soal",
+    "wholeRun": "Seluruh sesi",
+    "seconds": "Detik per soal",
+    "minutes": "Menit per sesi"
+  },
+  "presets": {
+    "label": "Prasetel",
+    "some": "Prasetel",
+    "none": "Belum ada prasetel",
+    "update": "Perbarui prasetel",
+    "create": "Prasetel baru",
+    "restore": "Muat prasetel",
+    "delete": "Hapus prasetel",
+    "name": "Nama prasetel",
+    "confirmTitle": "Hapus prasetel ini?",
+    "confirmBody": "Menghapus prasetel \"{name}\". Pilihan hurufmu sekarang tetap."
+  },
+  "start": {
+    "inPlay": "Huruf yang dipakai",
+    "button": "Mulai",
+    "empty": "Pilih setidaknya satu huruf yang cocok untuk mode ini."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana dinyalakan, sesi butuh setidaknya satu aksara.",
+    "audioNeedsChoice": "Menjawab dengan audio memakai pilihan ganda.",
+    "audioTextDirection": "Audio ke teks tidak punya arah, ketikan menerima kana atau romaji.",
+    "textAudioDirection": "Teks ke audio selalu mulai dari hurufnya."
+  }
+}

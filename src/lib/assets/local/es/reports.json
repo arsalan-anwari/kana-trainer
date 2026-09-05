@@ -1,0 +1,98 @@
+{
+  "window": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "week": "Última semana",
+    "all": "Todo",
+    "custom": "Personalizado",
+    "range": "{from} a {to}"
+  },
+  "range": {
+    "pick": "Elegir fechas",
+    "title": "Rango de fechas",
+    "close": "Cerrar el rango",
+    "from": "Desde",
+    "to": "Hasta",
+    "mask": "DD/MM/AAAA",
+    "invalidPicked": "El inicio debe ir antes del final y no ser anterior a {earliest}.",
+    "invalidTyped": "Usa DD/MM/AAAA, con el inicio antes del final y no anterior a {earliest}."
+  },
+  "filters": {
+    "title": "Filtros",
+    "clear": "Quitar filtros",
+    "format": "Formato",
+    "answering": "Respuesta",
+    "alphabet": "Alfabeto"
+  },
+  "list": {
+    "shown": "{count} a la vista",
+    "pickedOf": "{picked} de {total}",
+    "selectAll": "Seleccionar todo lo visible",
+    "clearSelection": "Quitar la selección",
+    "remove": "Eliminar {target}",
+    "export": "Exportar {target}",
+    "import": "Importar sesiones de un archivo",
+    "score": "{correct}/{total} aciertos, {percent}%",
+    "empty": "Aún no hay historial. Termina una sesión y aparecerá aquí.",
+    "noMatch": "Ninguna sesión encaja con estos filtros."
+  },
+  "target": {
+    "shown_one": "la sesión visible",
+    "shown_other": "las {count} sesiones visibles",
+    "picked_one": "1 sesión seleccionada",
+    "picked_other": "{count} sesiones seleccionadas"
+  },
+  "confirm": {
+    "title_one": "¿Eliminar esta sesión?",
+    "title_other": "¿Eliminar {count} sesiones?",
+    "yes_one": "Eliminar la sesión",
+    "yes_other": "Eliminar {count} sesiones",
+    "no_one": "Conservarla",
+    "no_other": "Conservarlas",
+    "bodyShown": "Elimina para siempre todas las sesiones a la vista. Expórtalas antes si quieres una copia.",
+    "bodyPicked": "Elimina para siempre las sesiones que elegiste. Expórtalas antes si quieres una copia."
+  },
+  "deleted_one": "1 sesión eliminada.",
+  "deleted_other": "{count} sesiones eliminadas.",
+  "runs_one": "1 sesión",
+  "runs_other": "{count} sesiones",
+  "exported": "{runs} exportadas a {file}",
+  "imported": "{runs} importadas.",
+  "importedSome": "{runs} importadas, {skipped} ya estaban.",
+  "selected": "{count} sesiones seleccionadas",
+  "overall": "{correct} de {total} aciertos, {percent}% en total",
+  "practice": "Practicar estos fallos",
+  "noMistakes": "No hay fallos que practicar.",
+  "loadedMistakes": "Se cargaron {count} caracteres fallados.",
+  "weakest": {
+    "title": "Caracteres más flojos",
+    "description": "El color es el acierto; la barra, cuántas veces salió.",
+    "empty": "Termina una sesión para ver estadísticas."
+  },
+  "rows": {
+    "title": "Filas",
+    "description": "La tabla kana, teñida según cómo va cada fila.",
+    "empty": "Aún no hay filas."
+  },
+  "alphabets": {
+    "title": "Alfabetos",
+    "description": "Cómo va cada uno y cuánto peso llevó.",
+    "share": "{percent}% de las preguntas"
+  },
+  "mistakes": {
+    "title": "Fallos por grupo",
+    "description": "Cada carácter fallado, por grupo, fila y alfabeto.",
+    "none": "Aquí no hay fallos.",
+    "miss_one": "1 fallo",
+    "miss_other": "{count} fallos"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} de {total} bien",
+    "never": "{romaji}, no salió nunca",
+    "missed": "{romaji}, {misses} fallos de {total}",
+    "rowRight": "{correct} de {total} bien",
+    "cell": "{sub}, {correct} de {total} bien"
+  },
+  "noData": "Sin datos",
+  "ofTotal": "de {total}"
+}

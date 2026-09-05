@@ -1,0 +1,26 @@
+{
+  "theme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeIs": {
+    "system": "Theme: system",
+    "light": "Theme: light",
+    "dark": "Theme: dark"
+  },
+  "themeLocked": "Theme is fixed by high contrast",
+  "contrast": "High contrast",
+  "contrastHint": "Black and white, overrides the theme",
+  "zoom": "Zoom",
+  "zoomIn": "Zoom in",
+  "zoomOut": "Zoom out",
+  "scale": "Scale",
+  "scaleHint": "Resizes the whole app",
+  "sound": "Sound",
+  "effects": "Sound effects",
+  "effectsHint": "Clicks and answer feedback",
+  "soundOn": "Sound on",
+  "soundOff": "Sound off",
+  "language": "Language",
+  "persist": "These stay set between runs."
+}

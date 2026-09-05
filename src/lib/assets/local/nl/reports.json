@@ -1,0 +1,98 @@
+{
+  "window": {
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "week": "Afgelopen week",
+    "all": "Alles",
+    "custom": "Eigen periode",
+    "range": "{from} tot {to}"
+  },
+  "range": {
+    "pick": "Periode kiezen",
+    "title": "Periode",
+    "close": "Periode sluiten",
+    "from": "Van",
+    "to": "Tot",
+    "mask": "DD/MM/JJJJ",
+    "invalidPicked": "Het begin mag niet na het einde liggen en niet vóór {earliest}.",
+    "invalidTyped": "Gebruik DD/MM/JJJJ, begin niet na het einde en niet vóór {earliest}."
+  },
+  "filters": {
+    "title": "Filters",
+    "clear": "Filters wissen",
+    "format": "Vraagvorm",
+    "answering": "Antwoorden",
+    "alphabet": "Alfabet"
+  },
+  "list": {
+    "shown": "{count} in beeld",
+    "pickedOf": "{picked} van {total}",
+    "selectAll": "Alles in beeld selecteren",
+    "clearSelection": "Selectie wissen",
+    "remove": "{target} verwijderen",
+    "export": "{target} exporteren",
+    "import": "Rondes uit een bestand importeren",
+    "score": "{correct}/{total} goed, {percent}%",
+    "empty": "Nog geen overzicht. Maak een ronde af en die komt hier te staan.",
+    "noMatch": "Geen ronde past bij deze filters."
+  },
+  "target": {
+    "shown_one": "de ronde in beeld",
+    "shown_other": "alle {count} rondes in beeld",
+    "picked_one": "1 gekozen ronde",
+    "picked_other": "{count} gekozen rondes"
+  },
+  "confirm": {
+    "title_one": "Deze ronde verwijderen?",
+    "title_other": "{count} rondes verwijderen?",
+    "yes_one": "Ronde verwijderen",
+    "yes_other": "{count} rondes verwijderen",
+    "no_one": "Houden",
+    "no_other": "Houden",
+    "bodyShown": "Verwijdert alle rondes in beeld voorgoed. Exporteer ze eerst als je een kopie wilt.",
+    "bodyPicked": "Verwijdert de gekozen rondes voorgoed. Exporteer ze eerst als je een kopie wilt."
+  },
+  "deleted_one": "1 ronde verwijderd.",
+  "deleted_other": "{count} rondes verwijderd.",
+  "runs_one": "1 ronde",
+  "runs_other": "{count} rondes",
+  "exported": "{runs} geëxporteerd naar {file}",
+  "imported": "{runs} geïmporteerd.",
+  "importedSome": "{runs} geïmporteerd, {skipped} stonden er al.",
+  "selected": "{count} rondes gekozen",
+  "overall": "{correct} van {total} goed, {percent}% in totaal",
+  "practice": "Deze fouten oefenen",
+  "noMistakes": "Geen fouten om te oefenen.",
+  "loadedMistakes": "{count} gemiste tekens geladen.",
+  "weakest": {
+    "title": "Zwakste tekens",
+    "description": "De kleur is hoe goed het gaat, de balk hoe vaak het langskwam.",
+    "empty": "Maak een ronde af om cijfers te zien."
+  },
+  "rows": {
+    "title": "Rijen",
+    "description": "De kanatabel, gekleurd naar hoe elke rij ervoor staat.",
+    "empty": "Nog geen rijen."
+  },
+  "alphabets": {
+    "title": "Alfabetten",
+    "description": "Hoe elk ervoor staat en hoeveel werk het droeg.",
+    "share": "{percent}% van de vragen"
+  },
+  "mistakes": {
+    "title": "Fouten per groep",
+    "description": "Elk gemist teken, per groep, rij en alfabet.",
+    "none": "Hier niets gemist.",
+    "miss_one": "1 fout",
+    "miss_other": "{count} fouten"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} van {total} goed",
+    "never": "{romaji}, nooit langsgekomen",
+    "missed": "{romaji}, {misses} van {total} gemist",
+    "rowRight": "{correct} van {total} goed",
+    "cell": "{sub}, {correct} van {total} goed"
+  },
+  "noData": "Nog geen gegevens",
+  "ofTotal": "van {total}"
+}

@@ -1,0 +1,51 @@
+{
+  "appName": "Kana Trainer",
+  "tagline": "Hiragana en katakana oefenen",
+  "settings": "Instellingen",
+  "closeSettings": "Instellingen sluiten",
+  "cancel": "Annuleren",
+  "save": "Opslaan",
+  "apply": "Toepassen",
+  "close": "Sluiten",
+  "delete": "Verwijderen",
+  "keep": "Houden",
+  "hiragana": "Hiragana",
+  "katakana": "Katakana",
+  "both": "Allebei",
+  "any": "Alle",
+  "off": "Uit",
+  "custom": "Eigen waarde",
+  "pickValue": "Kies een waarde",
+  "nav": { "setup": "Oefenen", "reports": "Overzicht", "chart": "Tabel" },
+  "group": {
+    "seion": "Seion",
+    "dakuon": "Dakuon",
+    "handakuon": "Handakuon",
+    "yoon": "Yoon",
+    "tokushon": "Tokushon"
+  },
+  "format": {
+    "text-text": "Alleen tekst",
+    "audio-text": "Geluid naar tekst",
+    "text-audio": "Tekst naar geluid"
+  },
+  "answerStyle": { "choice": "Meerkeuze", "typing": "Typen" },
+  "direction": {
+    "kana-romaji": "Kana naar romaji",
+    "romaji-kana": "Romaji naar kana",
+    "mixed": "Door elkaar"
+  },
+  "difficulty": { "beginner": "Beginner", "advanced": "Gevorderd", "expert": "Expert" },
+  "rowLabel": "{letter}-rij",
+  "file": {
+    "filterName": "Kana Trainer-rondes",
+    "writeFailed": "Dat bestand kon niet worden geschreven.",
+    "readFailed": "Dat bestand kon niet worden gelezen.",
+    "tooShort": "Dat bestand is te kort voor een .kt-report-bestand.",
+    "notReport": "Dat is geen .kt-report-bestand.",
+    "newer": "Dat bestand komt uit een nieuwere versie (formaat {version}).",
+    "incomplete": "Dat .kt-report-bestand is onvolledig.",
+    "damaged": "Dat .kt-report-bestand is beschadigd.",
+    "badRun": "Dat .kt-report-bestand bevat een onleesbare ronde."
+  }
+}

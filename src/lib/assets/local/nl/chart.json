@@ -1,0 +1,11 @@
+{
+  "title": "Tekentabel",
+  "description": "Alle 147 tekens per groep en rij. Tik erop om het te horen.",
+  "sounds": "{count} klanken",
+  "play": "{romaji} {kata} afspelen",
+  "seion": "De 46 basistekens.",
+  "dakuon": "Stemhebbende か-, さ-, た- en は-rijen.",
+  "handakuon": "Halfstemhebbende は-rij.",
+  "yoon": "Samengetrokken met een kleine ゃ ゅ ょ.",
+  "tokushon": "Leenklanken, alleen in katakana."
+}

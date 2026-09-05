@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Alfabetos", "description": "Escolha o que vai aparecer." },
+  "format": {
+    "title": "Formato",
+    "description": "Como cada pergunta é feita.",
+    "text-text": "Ver um caractere, responder por texto",
+    "audio-text": "Ouvir um som, responder por texto",
+    "text-audio": "Ver um caractere, escolher o som"
+  },
+  "answerStyle": {
+    "title": "Resposta",
+    "description": "Toque numa opção ou digite.",
+    "choice": "Uma entre 4",
+    "choiceAudio": "As opções são sempre kana",
+    "typing": "Digite a resposta",
+    "typingAudio": "Kana ou romaji"
+  },
+  "direction": {
+    "title": "Direção",
+    "description": "Por qual lado você responde.",
+    "kana-romaji": "Responder em romaji",
+    "romaji-kana": "Responder em kana",
+    "mixed": "Os dois, ao acaso"
+  },
+  "characters": {
+    "title": "Caracteres",
+    "description": "Toque no nome da linha para pegar a linha toda.",
+    "editAlphabet": "Alfabeto a editar",
+    "selectAll": "Todos",
+    "clear": "Nenhum"
+  },
+  "run": { "title": "Opções", "description": "O que entra na sessão e quanto dura." },
+  "sets": {
+    "title": "Grupos extras",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ e o resto",
+    "tokushon": "ファ ティ ヴァ, só katakana"
+  },
+  "questions": { "title": "Perguntas", "count": "Número de perguntas", "onePass": "Uma volta" },
+  "difficulty": {
+    "title": "Dificuldade",
+    "beginner": "As opções erradas são ao acaso",
+    "advanced": "Uma opção errada é parecida",
+    "expert": "Todas as opções erradas são parecidas",
+    "tooFew": "Precisa de {min} caracteres para fazer diferença.",
+    "choiceOnly": "Só na múltipla escolha."
+  },
+  "time": {
+    "perQuestion": "Por pergunta",
+    "wholeRun": "Sessão toda",
+    "seconds": "Segundos por pergunta",
+    "minutes": "Minutos por sessão"
+  },
+  "presets": {
+    "label": "Predefinição",
+    "some": "Predefinições",
+    "none": "Sem predefinições",
+    "update": "Atualizar predefinição",
+    "create": "Nova predefinição",
+    "restore": "Carregar predefinição",
+    "delete": "Excluir predefinição",
+    "name": "Nome da predefinição",
+    "confirmTitle": "Excluir esta predefinição?",
+    "confirmBody": "Exclui a predefinição \"{name}\". Sua seleção atual continua igual."
+  },
+  "start": {
+    "inPlay": "Caracteres em jogo",
+    "button": "Começar",
+    "empty": "Escolha ao menos um caractere que sirva para esse modo."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana ligado: é preciso ao menos um alfabeto.",
+    "audioNeedsChoice": "Responder com áudio usa múltipla escolha.",
+    "audioTextDirection": "Áudio para texto não tem direção; aceita kana ou romaji.",
+    "textAudioDirection": "Texto para áudio sempre parte do caractere."
+  }
+}

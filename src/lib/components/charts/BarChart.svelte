@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { StatRow } from "../../core/report";
+  import { t } from "../../i18n.svelte";
 
   let {
     rows,
-    limit = 12,
-    empty = "No data yet"
-  }: { rows: StatRow[]; limit?: number; empty?: string } = $props();
+    limit = 12
+  }: { rows: StatRow[]; limit?: number } = $props();
 
   const shown = $derived(rows.slice(0, limit));
 
@@ -19,7 +19,7 @@
 </script>
 
 {#if shown.length === 0}
-  <p class="py-6 text-center text-sm text-muted-foreground">{empty}</p>
+  <p class="py-6 text-center text-sm text-muted-foreground">{t("reports.noData")}</p>
 {:else}
   <div class="flex flex-col gap-2">
     {#each shown as row (row.key)}
@@ -42,7 +42,7 @@
           class="w-14 shrink-0 text-right text-xs font-semibold tabular-nums text-muted-foreground sm:w-20"
         >
           {Math.round(row.accuracy * 100)}%
-          <span class="hidden sm:inline">of {row.total}</span>
+          <span class="hidden sm:inline">{t("reports.ofTotal", { total: row.total })}</span>
         </span>
       </div>
     {/each}

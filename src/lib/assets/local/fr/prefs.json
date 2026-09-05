@@ -1,0 +1,26 @@
+{
+  "theme": "Thème",
+  "themeSystem": "Système",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "themeIs": {
+    "system": "Thème : système",
+    "light": "Thème : clair",
+    "dark": "Thème : sombre"
+  },
+  "themeLocked": "Le contraste élevé fixe le thème",
+  "contrast": "Contraste élevé",
+  "contrastHint": "Noir et blanc, remplace le thème",
+  "zoom": "Zoom",
+  "zoomIn": "Agrandir",
+  "zoomOut": "Réduire",
+  "scale": "Échelle",
+  "scaleHint": "Change la taille de toute l'appli",
+  "sound": "Son",
+  "effects": "Effets sonores",
+  "effectsHint": "Clics et retour des réponses",
+  "soundOn": "Son activé",
+  "soundOff": "Son coupé",
+  "language": "Langue",
+  "persist": "Ces réglages sont conservés."
+}

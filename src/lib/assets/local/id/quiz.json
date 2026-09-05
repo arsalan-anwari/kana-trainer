@@ -1,0 +1,28 @@
+{
+  "prompt": {
+    "listen": "Dengar lalu pilih",
+    "pickSound": "Pilih bunyinya",
+    "whichRomaji": "Romaji apa ini",
+    "whichKana": "Huruf mana ini",
+    "replay": "Dengar lagi"
+  },
+  "typing": { "kana": "Ketik kana", "romaji": "Ketik romaji", "either": "Kana atau romaji" },
+  "check": "Periksa",
+  "soundTile": "Bunyi {slot}",
+  "soundHint": "Ketuk sebuah bunyi untuk mendengarnya, lalu periksa.",
+  "quit": "Keluar",
+  "score": "{count} benar",
+  "correct": "Benar",
+  "wrong": "Belum tepat",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "juga {list}",
+  "continue": "Lanjut",
+  "stop": {
+    "title": "Hentikan sesi ini?",
+    "nothing": "Belum ada jawaban, tidak ada yang disimpan.",
+    "discard_other": "Hanya sesi yang selesai yang dinilai. {count} jawabanmu dibuang.",
+    "left_other": "Sisa {count} soal.",
+    "confirm": "Hentikan dan buang",
+    "cancel": "Lanjutkan"
+  }
+}

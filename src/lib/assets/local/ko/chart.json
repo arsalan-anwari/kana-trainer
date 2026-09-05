@@ -1,0 +1,11 @@
+{
+  "title": "가나 표",
+  "description": "147자 전체를 그룹과 행으로. 누르면 소리가 납니다.",
+  "sounds": "{count}개 소리",
+  "play": "{romaji} {kata} 재생",
+  "seion": "기본 46자.",
+  "dakuon": "か さ た は 행의 탁음.",
+  "handakuon": "は 행의 반탁음.",
+  "yoon": "작은 ゃ ゅ ょ 와 결합.",
+  "tokushon": "외래어 소리, 가타카나 전용."
+}

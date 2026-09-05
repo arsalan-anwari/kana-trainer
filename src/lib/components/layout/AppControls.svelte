@@ -3,23 +3,26 @@
   import { app } from "../../state.svelte";
   import IconButton from "../../ui/IconButton.svelte";
   import ThemeToggle from "./ThemeToggle.svelte";
+  import { t } from "../../i18n.svelte";
+  import LanguagePicker from "./LanguagePicker.svelte";
 
   // The persistent settings as header icons.
 </script>
 
 <div class="flex items-center gap-1.5">
+  <LanguagePicker />
   <ThemeToggle />
   <IconButton
     size="sm"
     icon="contrast"
-    label="High contrast theme"
+    label={t("prefs.contrast")}
     active={app.prefs.contrast}
     onclick={() => app.setPref("contrast", !app.prefs.contrast)}
   />
   <IconButton
     size="sm"
     icon={app.prefs.effects ? "volume-on" : "volume-off"}
-    label={app.prefs.effects ? "Sound effects on" : "Sound effects off"}
+    label={app.prefs.effects ? t("prefs.soundOn") : t("prefs.soundOff")}
     active={app.prefs.effects}
     onclick={() => app.setPref("effects", !app.prefs.effects)}
   />
@@ -27,7 +30,7 @@
     <IconButton
       size="sm"
       icon="zoom-out"
-      label="Zoom out"
+      label={t("prefs.zoomOut")}
       disabled={app.prefs.zoom <= zoomMin}
       onclick={() => app.zoomBy(-1)}
     />
@@ -37,7 +40,7 @@
     <IconButton
       size="sm"
       icon="zoom-in"
-      label="Zoom in"
+      label={t("prefs.zoomIn")}
       disabled={app.prefs.zoom >= zoomMax}
       onclick={() => app.zoomBy(1)}
     />

@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Alphabete", "description": "Wähle, was drankommt." },
+  "format": {
+    "title": "Fragetyp",
+    "description": "Wie jede Frage gestellt wird.",
+    "text-text": "Zeichen sehen, per Text antworten",
+    "audio-text": "Ton hören, per Text antworten",
+    "text-audio": "Zeichen sehen, Ton wählen"
+  },
+  "answerStyle": {
+    "title": "Antwort",
+    "description": "Antwort antippen oder tippen.",
+    "choice": "Eine von 4",
+    "choiceAudio": "Auswahl ist immer Kana",
+    "typing": "Antwort eintippen",
+    "typingAudio": "Kana oder Rōmaji"
+  },
+  "direction": {
+    "title": "Richtung",
+    "description": "Womit du antwortest.",
+    "kana-romaji": "In Rōmaji antworten",
+    "romaji-kana": "In Kana antworten",
+    "mixed": "Zufällig in beide Richtungen"
+  },
+  "characters": {
+    "title": "Zeichen",
+    "description": "Tippe auf einen Reihennamen, um die ganze Reihe zu nehmen.",
+    "editAlphabet": "Alphabet zum Bearbeiten",
+    "selectAll": "Alle",
+    "clear": "Keine"
+  },
+  "run": { "title": "Optionen", "description": "Was drankommt und wie lange es dauert." },
+  "sets": {
+    "title": "Zusätzliche Gruppen",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ und der Rest",
+    "tokushon": "ファ ティ ヴァ, nur Katakana"
+  },
+  "questions": { "title": "Fragen", "count": "Anzahl der Fragen", "onePass": "Ein Durchlauf" },
+  "difficulty": {
+    "title": "Schwierigkeit",
+    "beginner": "Falsche Antworten sind zufällig",
+    "advanced": "Eine falsche Antwort sieht ähnlich aus",
+    "expert": "Alle falschen Antworten sehen ähnlich aus",
+    "tooFew": "Ab {min} Zeichen macht das einen Unterschied.",
+    "choiceOnly": "Nur bei Auswahlfragen."
+  },
+  "time": {
+    "perQuestion": "Pro Frage",
+    "wholeRun": "Ganzer Durchgang",
+    "seconds": "Sekunden pro Frage",
+    "minutes": "Minuten pro Durchgang"
+  },
+  "presets": {
+    "label": "Vorlage",
+    "some": "Vorlagen",
+    "none": "Keine Vorlagen",
+    "update": "Vorlage aktualisieren",
+    "create": "Neue Vorlage",
+    "restore": "Vorlage laden",
+    "delete": "Vorlage löschen",
+    "name": "Name der Vorlage",
+    "confirmTitle": "Diese Vorlage löschen?",
+    "confirmBody": "Löscht die Vorlage „{name}“. Deine jetzige Auswahl bleibt."
+  },
+  "start": {
+    "inPlay": "Zeichen im Spiel",
+    "button": "Starten",
+    "empty": "Wähle mindestens ein Zeichen, das zu diesem Modus passt."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana eingeschaltet, ein Alphabet wird gebraucht.",
+    "audioNeedsChoice": "Mit Ton antworten geht nur als Auswahl.",
+    "audioTextDirection": "Ton zu Text hat keine Richtung, Kana und Rōmaji werden angenommen.",
+    "textAudioDirection": "Text zu Ton geht immer vom Zeichen aus."
+  }
+}

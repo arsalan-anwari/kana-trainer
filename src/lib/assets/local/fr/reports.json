@@ -1,0 +1,98 @@
+{
+  "window": {
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "week": "7 derniers jours",
+    "all": "Tout",
+    "custom": "Personnalisé",
+    "range": "{from} à {to}"
+  },
+  "range": {
+    "pick": "Choisir des dates",
+    "title": "Plage de dates",
+    "close": "Fermer la plage de dates",
+    "from": "Du",
+    "to": "Au",
+    "mask": "JJ/MM/AAAA",
+    "invalidPicked": "Le début doit précéder la fin et ne pas être avant {earliest}.",
+    "invalidTyped": "Utilisez JJ/MM/AAAA, début avant la fin et pas avant {earliest}."
+  },
+  "filters": {
+    "title": "Filtres",
+    "clear": "Effacer les filtres",
+    "format": "Format",
+    "answering": "Réponse",
+    "alphabet": "Alphabet"
+  },
+  "list": {
+    "shown": "{count} affichées",
+    "pickedOf": "{picked} sur {total}",
+    "selectAll": "Tout sélectionner à l'écran",
+    "clearSelection": "Effacer la sélection",
+    "remove": "Supprimer {target}",
+    "export": "Exporter {target}",
+    "import": "Importer des sessions depuis un fichier",
+    "score": "{correct}/{total} bonnes, {percent}%",
+    "empty": "Pas encore d'historique. Terminez une session et elle apparaîtra ici.",
+    "noMatch": "Aucune session ne correspond à ces filtres."
+  },
+  "target": {
+    "shown_one": "la session affichée",
+    "shown_other": "les {count} sessions affichées",
+    "picked_one": "1 session sélectionnée",
+    "picked_other": "{count} sessions sélectionnées"
+  },
+  "confirm": {
+    "title_one": "Supprimer cette session ?",
+    "title_other": "Supprimer {count} sessions ?",
+    "yes_one": "Supprimer la session",
+    "yes_other": "Supprimer {count} sessions",
+    "no_one": "La garder",
+    "no_other": "Les garder",
+    "bodyShown": "Supprime définitivement toutes les sessions affichées. Exportez-les d'abord pour en garder une copie.",
+    "bodyPicked": "Supprime définitivement les sessions choisies. Exportez-les d'abord pour en garder une copie."
+  },
+  "deleted_one": "1 session supprimée.",
+  "deleted_other": "{count} sessions supprimées.",
+  "runs_one": "1 session",
+  "runs_other": "{count} sessions",
+  "exported": "{runs} exportées vers {file}",
+  "imported": "{runs} importées.",
+  "importedSome": "{runs} importées, {skipped} déjà présentes.",
+  "selected": "{count} sessions sélectionnées",
+  "overall": "{correct} sur {total}, {percent}% au total",
+  "practice": "Revoir ces erreurs",
+  "noMistakes": "Aucune erreur à revoir.",
+  "loadedMistakes": "{count} caractères manqués chargés.",
+  "weakest": {
+    "title": "Caractères les plus faibles",
+    "description": "La teinte donne la réussite, la barre la fréquence.",
+    "empty": "Terminez une session pour voir les statistiques."
+  },
+  "rows": {
+    "title": "Lignes",
+    "description": "Le tableau des kana, teinté selon l'état de chaque ligne.",
+    "empty": "Pas encore de lignes."
+  },
+  "alphabets": {
+    "title": "Alphabets",
+    "description": "L'état de chacun et la part qu'il a portée.",
+    "share": "{percent}% des questions"
+  },
+  "mistakes": {
+    "title": "Erreurs par groupe",
+    "description": "Chaque caractère manqué, par groupe, ligne et alphabet.",
+    "none": "Aucune erreur ici.",
+    "miss_one": "1 erreur",
+    "miss_other": "{count} erreurs"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} sur {total}",
+    "never": "{romaji}, jamais tombé",
+    "missed": "{romaji}, {misses} erreurs sur {total}",
+    "rowRight": "{correct} sur {total}",
+    "cell": "{sub}, {correct} sur {total}"
+  },
+  "noData": "Pas de données",
+  "ofTotal": "sur {total}"
+}

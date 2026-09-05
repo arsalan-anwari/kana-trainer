@@ -23,6 +23,11 @@ const SEED = 20260820;
 // Questions of the scored run answered wrong on purpose.
 const MISSED = new Set([3, 7]);
 
+// The language the closing still is shot in. Latin script, so it reads as
+// plainly not English in a listing that is otherwise English. Any tag from
+// src/lib/i18n.svelte works here.
+const LANGUAGE = "es";
+
 const root = fileURLToPath(new URL("../..", import.meta.url));
 
 test("record the showcase", async ({ page }, testInfo) => {
@@ -152,7 +157,7 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("13_Result_Score");
 
   // load the misses as the next practice set
-  await button("Practice my mistakes").click();
+  await button("Practice mistakes").click();
   await expect(startRun).toBeEnabled();
   await shots.top();
   await shots.reveal(page.getByText(/Loaded \d+ characters/));
@@ -180,10 +185,10 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("17_Reports_Export");
 
   // remove the selection, which asks first
-  await button(/^Remove \d+ selected/).click();
+  await button(/^Delete \d+ selected/).click();
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await shots.shot("18_Reports_RemoveConfirm");
-  await button("Remove 2 runs", true).click();
+  await button("Delete 2 runs", true).click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
 
   // import the runs back from the exported file
@@ -203,16 +208,39 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("20_Chart_Characters");
 
-  // settings, in a sheet on a phone and in the header on a wide window
+  // Settings, in a sheet on a phone and in the header on a wide window. Each
+  // branch ends on a still of the app in another language.
+  //
+  // The picker is a native select, so its open list belongs to the window
+  // manager and never lands in a screenshot. What the still shows instead is
+  // the app already switched over, with the picker naming the language.
   const sheet = button("Settings", true);
   if (await sheet.isVisible()) {
     await sheet.click();
     await shots.shot("21_Settings_Menu");
-    await button("Close settings", true).click();
+
+    // located inside the sheet rather than by label, so it still resolves once
+    // the app is no longer in English
+    const picker = page.getByRole("dialog").locator("select");
+    await picker.selectOption(LANGUAGE);
+    await shots.shot("22_Settings_Language");
+    await picker.selectOption("en");
+    await page.keyboard.press("Escape");
   } else {
-    await button("High contrast theme", true).click();
+    await button("High contrast", true).click();
     await shots.shot("21_Chart_HighContrast");
-    await button("High contrast theme", true).click();
+    await button("High contrast", true).click();
+
+    // back to the setup screen, the same frame as the opening still
+    await button("Practice", true).click();
+    await expect(startRun).toBeEnabled();
+    await shots.top();
+
+    const picker = page.getByRole("navigation").locator("select");
+    await picker.selectOption(LANGUAGE);
+    await shots.shot("22_Setup_Language");
+    await picker.selectOption("en");
+    await expect(startRun).toBeEnabled();
   }
 
   console.log(`  ${shots.count} stills in packaging/repo/${testInfo.project.name}`);

@@ -1,0 +1,88 @@
+{
+  "alphabets": {
+    "title": "문자",
+    "description": "연습에 나올 문자를 고르세요."
+  },
+  "format": {
+    "title": "문제 형식",
+    "description": "문제를 내는 방식.",
+    "text-text": "글자를 보고 글로 답하기",
+    "audio-text": "소리를 듣고 글로 답하기",
+    "text-audio": "글자를 보고 소리 고르기"
+  },
+  "answerStyle": {
+    "title": "답하는 방식",
+    "description": "골라서 답하거나 직접 입력.",
+    "choice": "4개 중 하나",
+    "choiceAudio": "선택지는 항상 가나",
+    "typing": "직접 입력",
+    "typingAudio": "가나 또는 로마자"
+  },
+  "direction": {
+    "title": "방향",
+    "description": "어느 쪽으로 답할지.",
+    "kana-romaji": "로마자로 답하기",
+    "romaji-kana": "가나로 답하기",
+    "mixed": "무작위로 양방향"
+  },
+  "characters": {
+    "title": "문자 선택",
+    "description": "행 이름을 누르면 그 행 전체를 선택합니다.",
+    "editAlphabet": "편집할 문자",
+    "selectAll": "전체 선택",
+    "clear": "해제"
+  },
+  "run": {
+    "title": "연습 옵션",
+    "description": "무엇을 얼마나 오래 연습할지."
+  },
+  "sets": {
+    "title": "추가 문자",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ 등",
+    "tokushon": "ファ ティ ヴァ, 가타카나 전용"
+  },
+  "questions": {
+    "title": "문제 수",
+    "count": "문제 수",
+    "onePass": "한 바퀴"
+  },
+  "difficulty": {
+    "title": "난이도",
+    "beginner": "오답은 무작위",
+    "advanced": "오답 하나가 비슷한 글자",
+    "expert": "오답이 모두 비슷한 글자",
+    "tooFew": "문자가 {min}개 이상이어야 의미가 있습니다.",
+    "choiceOnly": "객관식에만 적용됩니다."
+  },
+  "time": {
+    "perQuestion": "문제당",
+    "wholeRun": "전체",
+    "seconds": "문제당 초",
+    "minutes": "전체 분"
+  },
+  "presets": {
+    "label": "프리셋",
+    "some": "프리셋",
+    "none": "프리셋 없음",
+    "update": "프리셋 갱신",
+    "create": "새 프리셋",
+    "restore": "프리셋 불러오기",
+    "delete": "프리셋 삭제",
+    "name": "프리셋 이름",
+    "confirmTitle": "이 프리셋을 삭제할까요?",
+    "confirmBody": "\"{name}\" 프리셋을 삭제합니다. 지금 고른 문자는 그대로입니다."
+  },
+  "start": {
+    "inPlay": "연습에 쓰이는 문자",
+    "button": "연습 시작",
+    "empty": "이 방식에 맞는 문자를 하나 이상 고르세요."
+  },
+  "notes": {
+    "needsAlphabet": "히라가나를 켰습니다. 문자가 하나는 필요합니다.",
+    "audioNeedsChoice": "소리로 답할 때는 객관식만 됩니다.",
+    "audioTextDirection": "소리 듣고 쓰기에는 방향이 없고, 가나와 로마자 모두 됩니다.",
+    "textAudioDirection": "글자 보고 소리 고르기는 항상 글자에서 시작합니다."
+  }
+}

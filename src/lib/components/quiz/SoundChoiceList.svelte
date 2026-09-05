@@ -5,6 +5,7 @@
   import Button from "../../ui/Button.svelte";
   import SoundChoice from "./SoundChoice.svelte";
   import { choiceState } from "./choiceState";
+  import { t } from "../../i18n.svelte";
 
   // The four stacked sound tiles of a text to audio question.
 
@@ -42,9 +43,9 @@
     disabled={app.phase !== "answering" || app.staged === null}
     onclick={() => app.submitStaged()}
   >
-    Check
+    {t("quiz.check")}
   </Button>
   <p class="text-center text-xs text-muted-foreground">
-    Tap a sound to hear it and pick it, then check your answer.
+    {t("quiz.soundHint")}
   </p>
 </div>

@@ -1,0 +1,11 @@
+{
+  "title": "Tabla de caracteres",
+  "description": "Los 147 caracteres por grupo y fila. Toca uno para oírlo.",
+  "sounds": "{count} sonidos",
+  "play": "Reproducir {romaji} {kata}",
+  "seion": "Los 46 caracteres básicos.",
+  "dakuon": "Filas か さ た は sonorizadas.",
+  "handakuon": "Fila は semisonorizada.",
+  "yoon": "Contraídos con ゃ ゅ ょ pequeña.",
+  "tokushon": "Sonidos prestados, solo en katakana."
+}

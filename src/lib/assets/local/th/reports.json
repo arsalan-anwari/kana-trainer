@@ -1,0 +1,90 @@
+{
+  "window": {
+    "today": "วันนี้",
+    "yesterday": "เมื่อวาน",
+    "week": "สัปดาห์ที่แล้ว",
+    "all": "ทั้งหมด",
+    "custom": "กำหนดเอง",
+    "range": "{from} ถึง {to}"
+  },
+  "range": {
+    "pick": "เลือกช่วงวันที่",
+    "title": "ช่วงวันที่",
+    "close": "ปิดช่วงวันที่",
+    "from": "ตั้งแต่",
+    "to": "ถึง",
+    "mask": "วว/ดด/ปปปป",
+    "invalidPicked": "วันเริ่มต้องไม่หลังวันสิ้นสุด และไม่ก่อน {earliest}",
+    "invalidTyped": "ใช้รูปแบบ วว/ดด/ปปปป วันเริ่มต้องไม่หลังวันสิ้นสุด และไม่ก่อน {earliest}"
+  },
+  "filters": {
+    "title": "ตัวกรอง",
+    "clear": "ล้างตัวกรอง",
+    "format": "รูปแบบคำถาม",
+    "answering": "วิธีตอบ",
+    "alphabet": "ชุดอักษร"
+  },
+  "list": {
+    "shown": "แสดง {count} รอบ",
+    "pickedOf": "เลือก {picked} จาก {total}",
+    "selectAll": "เลือกทุกรอบที่แสดงอยู่",
+    "clearSelection": "ล้างการเลือก",
+    "remove": "ลบ{target}",
+    "export": "ส่งออก{target}",
+    "import": "นำเข้ารอบฝึกจากไฟล์",
+    "score": "ถูก {correct}/{total}, {percent}%",
+    "empty": "ยังไม่มีประวัติ ทำรอบฝึกให้จบแล้วจะมาอยู่ที่นี่",
+    "noMatch": "ไม่มีรอบใดตรงกับตัวกรองนี้"
+  },
+  "target": {
+    "shown_other": "ทุกรอบที่แสดงอยู่ {count} รอบ",
+    "picked_other": "รอบที่เลือกไว้ {count} รอบ"
+  },
+  "confirm": {
+    "title_other": "ลบ {count} รอบไหม",
+    "yes_other": "ลบ {count} รอบ",
+    "no_other": "เก็บไว้",
+    "bodyShown": "จะลบทุกรอบที่แสดงอยู่อย่างถาวร ส่งออกก่อนถ้าต้องการเก็บสำเนา",
+    "bodyPicked": "จะลบรอบที่คุณเลือกอย่างถาวร ส่งออกก่อนถ้าต้องการเก็บสำเนา"
+  },
+  "deleted_other": "ลบไปแล้ว {count} รอบ",
+  "runs_other": "{count} รอบ",
+  "exported": "ส่งออก{runs}ไปที่ {file} แล้ว",
+  "imported": "นำเข้า{runs}แล้ว",
+  "importedSome": "นำเข้า{runs}แล้ว มี {skipped} รอบที่มีอยู่แล้ว",
+  "selected": "เลือกไว้ {count} รอบ",
+  "overall": "ถูก {correct} จาก {total}, {percent}% โดยรวม",
+  "practice": "ฝึกข้อที่ผิดเหล่านี้",
+  "noMistakes": "ไม่มีข้อผิดให้ฝึก",
+  "loadedMistakes": "โหลดตัวอักษรที่ตอบผิด {count} ตัวแล้ว",
+  "weakest": {
+    "title": "ตัวอักษรที่อ่อนที่สุด",
+    "description": "สีบอกความแม่น แถบบอกว่าเจอบ่อยแค่ไหน",
+    "empty": "ทำรอบฝึกให้จบเพื่อดูสถิติ"
+  },
+  "rows": {
+    "title": "แถว",
+    "description": "ตารางคานะ ไล่สีตามผลของแต่ละแถว",
+    "empty": "ยังไม่มีข้อมูลแถว"
+  },
+  "alphabets": {
+    "title": "ชุดอักษร",
+    "description": "ผลของแต่ละชุดและสัดส่วนที่รับไป",
+    "share": "{percent}% ของคำถามทั้งหมด"
+  },
+  "mistakes": {
+    "title": "ข้อผิดแยกตามกลุ่ม",
+    "description": "ตัวอักษรที่ตอบผิดทุกตัว แยกตามกลุ่ม แถว และชุดอักษร",
+    "none": "ตรงนี้ไม่มีข้อผิด",
+    "miss_other": "ผิด {count} ครั้ง"
+  },
+  "tip": {
+    "right": "{romaji}, ถูก {correct} จาก {total}",
+    "never": "{romaji}, ยังไม่เคยออก",
+    "missed": "{romaji}, ผิด {misses} จาก {total}",
+    "rowRight": "ถูก {correct} จาก {total}",
+    "cell": "{sub}, ถูก {correct} จาก {total}"
+  },
+  "noData": "ยังไม่มีข้อมูล",
+  "ofTotal": "จาก {total}"
+}

@@ -1,0 +1,34 @@
+{
+  "prompt": {
+    "listen": "Hören und wählen",
+    "pickSound": "Wähle den Ton",
+    "whichRomaji": "Welches Rōmaji ist das",
+    "whichKana": "Welches Zeichen ist das",
+    "replay": "Noch einmal hören"
+  },
+  "typing": {
+    "kana": "Kana eintippen",
+    "romaji": "Rōmaji eintippen",
+    "either": "Kana oder Rōmaji"
+  },
+  "check": "Prüfen",
+  "soundTile": "Ton {slot}",
+  "soundHint": "Tippe einen Ton an, um ihn zu hören, dann prüfen.",
+  "quit": "Beenden",
+  "score": "{count} richtig",
+  "correct": "Richtig",
+  "wrong": "Knapp daneben",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "auch {list}",
+  "continue": "Weiter",
+  "stop": {
+    "title": "Durchgang abbrechen?",
+    "nothing": "Noch nichts beantwortet, es gibt nichts zu speichern.",
+    "discard_one": "Nur ein beendeter Durchgang zählt. Deine Antwort geht verloren.",
+    "discard_other": "Nur ein beendeter Durchgang zählt. Deine {count} Antworten gehen verloren.",
+    "left_one": "Noch 1 Frage.",
+    "left_other": "Noch {count} Fragen.",
+    "confirm": "Abbrechen und verwerfen",
+    "cancel": "Weitermachen"
+  }
+}

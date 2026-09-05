@@ -1,3 +1,4 @@
+import { t } from "../i18n.svelte";
 import type { Report } from "./report";
 
 // The .kt-report container format. Header is 24 bytes, integers little endian:
@@ -90,20 +91,20 @@ export function encodeReportFile(reports: Report[]): Uint8Array {
 
 export function decodeReportFile(bytes: Uint8Array): Report[] {
   if (bytes.length < HEADER_BYTES) {
-    throw new ReportFileError("That file is too short to be a .kt-report file.");
+    throw new ReportFileError(t("common.file.tooShort"));
   }
 
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   for (let index = 0; index < MAGIC.length; index += 1) {
     if (view.getUint8(index) !== MAGIC.charCodeAt(index)) {
-      throw new ReportFileError("That file is not a .kt-report file.");
+      throw new ReportFileError(t("common.file.notReport"));
     }
   }
 
   const version = view.getUint8(8);
   if (version !== FILE_VERSION) {
     throw new ReportFileError(
-      `That file was written by a newer version of the app (format ${version}).`
+      t("common.file.newer", { version })
     );
   }
 
@@ -111,12 +112,12 @@ export function decodeReportFile(bytes: Uint8Array): Report[] {
   const payloadBytes = view.getUint32(16, true);
   const checksum = view.getUint32(20, true);
   if (bytes.length !== HEADER_BYTES + payloadBytes) {
-    throw new ReportFileError("That .kt-report file is incomplete.");
+    throw new ReportFileError(t("common.file.incomplete"));
   }
 
   const payload = bytes.subarray(HEADER_BYTES);
   if (crc32(payload) !== checksum) {
-    throw new ReportFileError("That .kt-report file is damaged.");
+    throw new ReportFileError(t("common.file.damaged"));
   }
 
   const decoder = new TextDecoder();
@@ -124,7 +125,7 @@ export function decodeReportFile(bytes: Uint8Array): Report[] {
   let offset = 0;
   for (let index = 0; index < count; index += 1) {
     if (offset + 4 > payload.length) {
-      throw new ReportFileError("That .kt-report file is incomplete.");
+      throw new ReportFileError(t("common.file.incomplete"));
     }
     const length = new DataView(
       payload.buffer,
@@ -133,16 +134,16 @@ export function decodeReportFile(bytes: Uint8Array): Report[] {
     ).getUint32(0, true);
     offset += 4;
     if (offset + length > payload.length) {
-      throw new ReportFileError("That .kt-report file is incomplete.");
+      throw new ReportFileError(t("common.file.incomplete"));
     }
     let value: unknown;
     try {
       value = JSON.parse(decoder.decode(payload.subarray(offset, offset + length)));
     } catch {
-      throw new ReportFileError("That .kt-report file holds a run that cannot be read.");
+      throw new ReportFileError(t("common.file.badRun"));
     }
     if (!isReport(value)) {
-      throw new ReportFileError("That .kt-report file holds a run that cannot be read.");
+      throw new ReportFileError(t("common.file.badRun"));
     }
     reports.push(value);
     offset += length;

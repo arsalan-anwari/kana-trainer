@@ -1,0 +1,98 @@
+{
+  "window": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "week": "Letzte Woche",
+    "all": "Alle",
+    "custom": "Eigener Zeitraum",
+    "range": "{from} bis {to}"
+  },
+  "range": {
+    "pick": "Zeitraum wählen",
+    "title": "Zeitraum",
+    "close": "Zeitraum schließen",
+    "from": "Von",
+    "to": "Bis",
+    "mask": "TT/MM/JJJJ",
+    "invalidPicked": "Der Start darf nicht nach dem Ende und nicht vor {earliest} liegen.",
+    "invalidTyped": "TT/MM/JJJJ benutzen, Start nicht nach dem Ende und nicht vor {earliest}."
+  },
+  "filters": {
+    "title": "Filter",
+    "clear": "Filter zurücksetzen",
+    "format": "Fragetyp",
+    "answering": "Antwort",
+    "alphabet": "Alphabet"
+  },
+  "list": {
+    "shown": "{count} sichtbar",
+    "pickedOf": "{picked} von {total}",
+    "selectAll": "Alle sichtbaren Durchgänge auswählen",
+    "clearSelection": "Auswahl aufheben",
+    "remove": "{target} löschen",
+    "export": "{target} exportieren",
+    "import": "Durchgänge aus Datei importieren",
+    "score": "{correct}/{total} richtig, {percent}%",
+    "empty": "Noch kein Verlauf. Beende einen Durchgang, dann steht er hier.",
+    "noMatch": "Kein Durchgang passt zu diesen Filtern."
+  },
+  "target": {
+    "shown_one": "den sichtbaren Durchgang",
+    "shown_other": "alle {count} sichtbaren Durchgänge",
+    "picked_one": "1 ausgewählten Durchgang",
+    "picked_other": "{count} ausgewählte Durchgänge"
+  },
+  "confirm": {
+    "title_one": "Diesen Durchgang löschen?",
+    "title_other": "{count} Durchgänge löschen?",
+    "yes_one": "Durchgang löschen",
+    "yes_other": "{count} Durchgänge löschen",
+    "no_one": "Behalten",
+    "no_other": "Behalten",
+    "bodyShown": "Löscht alle sichtbaren Durchgänge endgültig. Vorher exportieren, wenn du eine Kopie willst.",
+    "bodyPicked": "Löscht die ausgewählten Durchgänge endgültig. Vorher exportieren, wenn du eine Kopie willst."
+  },
+  "deleted_one": "1 Durchgang gelöscht.",
+  "deleted_other": "{count} Durchgänge gelöscht.",
+  "runs_one": "1 Durchgang",
+  "runs_other": "{count} Durchgänge",
+  "exported": "{runs} nach {file} exportiert",
+  "imported": "{runs} importiert.",
+  "importedSome": "{runs} importiert, {skipped} waren schon da.",
+  "selected": "{count} Durchgänge ausgewählt",
+  "overall": "{correct} von {total} richtig, {percent}% insgesamt",
+  "practice": "Diese Fehler üben",
+  "noMistakes": "Keine Fehler zum Üben.",
+  "loadedMistakes": "{count} verpasste Zeichen geladen.",
+  "weakest": {
+    "title": "Schwächste Zeichen",
+    "description": "Die Färbung ist die Trefferquote, der Balken die Häufigkeit.",
+    "empty": "Beende einen Durchgang, dann gibt es Statistiken."
+  },
+  "rows": {
+    "title": "Reihen",
+    "description": "Die Kana-Tabelle, eingefärbt nach dem Stand der Reihe.",
+    "empty": "Noch keine Reihen."
+  },
+  "alphabets": {
+    "title": "Alphabete",
+    "description": "Wie es um jedes steht und wie viel es getragen hat.",
+    "share": "{percent}% der Fragen"
+  },
+  "mistakes": {
+    "title": "Fehler nach Gruppe",
+    "description": "Jedes verpasste Zeichen, nach Gruppe, Reihe und Alphabet.",
+    "none": "Hier nichts verpasst.",
+    "miss_one": "1 Fehler",
+    "miss_other": "{count} Fehler"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} von {total} richtig",
+    "never": "{romaji}, kam nie dran",
+    "missed": "{romaji}, {misses} von {total} verpasst",
+    "rowRight": "{correct} von {total} richtig",
+    "cell": "{sub}, {correct} von {total} richtig"
+  },
+  "noData": "Noch keine Daten",
+  "ofTotal": "von {total}"
+}

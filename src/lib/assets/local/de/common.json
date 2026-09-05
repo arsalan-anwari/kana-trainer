@@ -1,0 +1,51 @@
+{
+  "appName": "Kana Trainer",
+  "tagline": "Hiragana und Katakana üben",
+  "settings": "Einstellungen",
+  "closeSettings": "Einstellungen schließen",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "apply": "Übernehmen",
+  "close": "Schließen",
+  "delete": "Löschen",
+  "keep": "Behalten",
+  "hiragana": "Hiragana",
+  "katakana": "Katakana",
+  "both": "Beide",
+  "any": "Alle",
+  "off": "Aus",
+  "custom": "Eigener Wert",
+  "pickValue": "Wert wählen",
+  "nav": { "setup": "Üben", "reports": "Verlauf", "chart": "Tabelle" },
+  "group": {
+    "seion": "Seion",
+    "dakuon": "Dakuon",
+    "handakuon": "Handakuon",
+    "yoon": "Yoon",
+    "tokushon": "Tokushon"
+  },
+  "format": {
+    "text-text": "Nur Text",
+    "audio-text": "Ton zu Text",
+    "text-audio": "Text zu Ton"
+  },
+  "answerStyle": { "choice": "Auswahl", "typing": "Tippen" },
+  "direction": {
+    "kana-romaji": "Kana zu Rōmaji",
+    "romaji-kana": "Rōmaji zu Kana",
+    "mixed": "Gemischt"
+  },
+  "difficulty": { "beginner": "Anfänger", "advanced": "Fortgeschritten", "expert": "Profi" },
+  "rowLabel": "{letter}-Reihe",
+  "file": {
+    "filterName": "Kana-Trainer-Durchgänge",
+    "writeFailed": "Die Datei konnte nicht geschrieben werden.",
+    "readFailed": "Die Datei konnte nicht gelesen werden.",
+    "tooShort": "Die Datei ist zu kurz für eine .kt-report-Datei.",
+    "notReport": "Das ist keine .kt-report-Datei.",
+    "newer": "Die Datei stammt aus einer neueren Version (Format {version}).",
+    "incomplete": "Diese .kt-report-Datei ist unvollständig.",
+    "damaged": "Diese .kt-report-Datei ist beschädigt.",
+    "badRun": "Diese .kt-report-Datei enthält einen unlesbaren Durchgang."
+  }
+}

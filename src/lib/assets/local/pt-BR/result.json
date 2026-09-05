@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "Perfeito",
+    "great": "Quase perfeito",
+    "good": "Boa sessão",
+    "fair": "Chegando lá",
+    "poor": "Continue praticando"
+  },
+  "blurb": {
+    "perfect": "Nenhuma errada.",
+    "great": "Quase um placar limpo.",
+    "good": "A maioria acertou.",
+    "fair": "O jeito da coisa já está lá.",
+    "poor": "Cada sessão deixa a próxima mais fácil."
+  },
+  "skip": "Toque em qualquer lugar para pular",
+  "summary": "{correct} de {total} certas em {seconds} s",
+  "stat": { "accuracy": "acerto", "perQuestion": "por pergunta", "timedOut": "sem tempo" },
+  "again": "De novo",
+  "practice": "Praticar erros",
+  "export": "Exportar sessão",
+  "allReports": "Histórico",
+  "back": "Voltar",
+  "exported": "Sessão exportada para {file}",
+  "characters": { "title": "Caracteres", "description": "Os mais fracos primeiro." },
+  "rows": { "title": "Linhas", "description": "Onde está o problema." },
+  "missed": {
+    "title": "Erros",
+    "description": "Tudo o que você não acertou.",
+    "none": "Nenhum erro, muito bem.",
+    "timedOut": "acabou o tempo",
+    "said": "você pôs {given}",
+    "nothing": "nada",
+    "hiragana": "hira",
+    "katakana": "kata"
+  }
+}

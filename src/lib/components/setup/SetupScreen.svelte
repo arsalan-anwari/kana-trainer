@@ -8,6 +8,7 @@
   import KanaPicker from "./KanaPicker.svelte";
   import StartPanel from "./StartPanel.svelte";
   import SettingsPanel from "./SettingsPanel.svelte";
+  import { t } from "../../i18n.svelte";
 
   const textOnly = $derived(app.settings.format === "text-text");
 </script>
@@ -26,7 +27,7 @@
   </div>
 
   <div class="flex flex-col gap-4 lg:sticky lg:top-[calc(var(--header-height,0px)+0.75rem)]">
-    <Card title="Characters" description="Tap a row label to take the whole row.">
+    <Card title={t("setup.characters.title")} description={t("setup.characters.description")}>
       <KanaPicker />
     </Card>
     <StartPanel />

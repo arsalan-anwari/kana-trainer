@@ -80,6 +80,10 @@ const everyReading = seionRows.flatMap((row) => row.kana.map((kana) => kana.roma
 // Number of questions in the closing run.
 const FINALE = 5;
 
+// Languages the picker steps through, ending back on English so the outro card
+// reads the same as the intro. Any tag from src/lib/i18n.svelte works here.
+const PROMO_LANGUAGES = ["zh-CN", "es", "en"];
+
 test("record the promo", async ({ page }) => {
   const stage = new Stage(page);
 
@@ -202,7 +206,7 @@ test("record the promo", async ({ page }) => {
   await stage.scroll(430, 400);
   await stage.beat(250);
   await stage.caption("Turn your misses into the next run");
-  await stage.hover(button("Practice my mistakes"), 280);
+  await stage.hover(button("Practice mistakes"), 280);
   stage.mark("result");
 
   // reports screen
@@ -227,10 +231,10 @@ test("record the promo", async ({ page }) => {
   await stage.beat(400);
 
   await stage.caption("Removing asks first, and takes the whole selection");
-  await stage.tap(button(/^Remove \d+ selected/), 300);
+  await stage.tap(button(/^Delete \d+ selected/), 300);
   // hold on the dialog long enough to read it
   await stage.beat(950);
-  await stage.tap(button(/^Remove \d+ runs?$/), 500);
+  await stage.tap(button(/^Delete \d+ runs?$/), 500);
 
   await stage.caption("One .kt-report file moves them to another device");
   const picker = page.waitForEvent("filechooser");
@@ -264,9 +268,23 @@ test("record the promo", async ({ page }) => {
   await stage.tap(zoomIn, 480);
 
   await stage.caption("Or a high contrast palette, when that reads easier");
-  const contrast = page.getByRole("button", { name: "High contrast theme" });
+  // exact: the theme toggle reads "Theme is fixed by high contrast" once this is on
+  const contrast = page.getByRole("button", { name: "High contrast", exact: true });
   await stage.tap(contrast, 900);
   await stage.tap(contrast, 300);
+
+  // The picker is a native select, so its open list is drawn by the window
+  // manager and never lands in the recording. Switching it is the shot: every
+  // label on screen turns over at once.
+  await stage.caption("Twelve languages, the whole app at once");
+  const language = page.getByRole("navigation").locator("select");
+  await stage.hover(language, 340);
+  for (const tag of PROMO_LANGUAGES) {
+    await language.selectOption(tag);
+    await stage.beat(tag === "en" ? 420 : 950);
+  }
+  stage.mark("languages");
+
   await stage.hideCaption();
   await stage.scroll(0, 300);
   stage.mark("chart");

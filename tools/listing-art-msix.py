@@ -48,6 +48,7 @@ DEMO = [
     '13_Result_Score.png',
     '15_Reports_LastWeek.png',
     '20_Chart_Characters.png',
+    '22_Setup_Language.png',
 ]
 
 

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Report, Summary } from "../../core/report";
   import { scoreTier, tierEmoji, tierHeadline } from "../../core/score";
+  import { t } from "../../i18n.svelte";
 
   let { report, summary }: { report: Report; summary: Summary } = $props();
 
@@ -8,9 +9,9 @@
   const headline = $derived(tierHeadline(tier));
 
   const stats = $derived([
-    { value: `${Math.round(summary.accuracy * 100)}%`, label: "accuracy" },
-    { value: `${(summary.averageMs / 1000).toFixed(1)}s`, label: "per question" },
-    { value: `${summary.timedOut}`, label: "timed out" }
+    { key: "accuracy", value: `${Math.round(summary.accuracy * 100)}%` },
+    { key: "perQuestion", value: `${(summary.averageMs / 1000).toFixed(1)}s` },
+    { key: "timedOut", value: `${summary.timedOut}` }
   ]);
 </script>
 
@@ -23,15 +24,18 @@
       {headline}
     </span>
     <span class="text-sm text-muted-foreground">
-      {summary.correct} of {summary.total} correct in
-      {Math.round(report.durationMs / 1000)} seconds
+      {t("result.summary", {
+        correct: summary.correct,
+        total: summary.total,
+        seconds: Math.round(report.durationMs / 1000)
+      })}
     </span>
   </div>
   <div class="flex items-center gap-6 sm:gap-8">
-    {#each stats as stat (stat.label)}
+    {#each stats as stat (stat.key)}
       <div class="flex flex-col items-start sm:items-center">
         <span class="text-h2 font-bold leading-none tabular-nums sm:text-h1">{stat.value}</span>
-        <span class="text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</span>
+        <span class="text-xs uppercase tracking-wide text-muted-foreground">{t(`result.stat.${stat.key}`)}</span>
       </div>
     {/each}
   </div>

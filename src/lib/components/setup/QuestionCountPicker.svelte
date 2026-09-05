@@ -11,6 +11,7 @@
   import { app } from "../../state.svelte";
   import Chip from "../../ui/Chip.svelte";
   import NumberRoller from "../../ui/NumberRoller.svelte";
+  import { t } from "../../i18n.svelte";
 
   // Ten preset run lengths, a custom count and a single pass.
 
@@ -74,7 +75,7 @@
       <label
         class="flex h-9 items-center gap-2 rounded-md border-2 border-selected bg-selected-soft px-2 text-xs font-semibold"
       >
-        <span class="sr-only">Number of questions</span>
+        <span class="sr-only">{t("setup.questions.count")}</span>
         <input
           bind:this={field}
           bind:value={draft}
@@ -90,7 +91,7 @@
       </label>
     {:else}
       <Chip size="sm" class="w-full" active={custom} onclick={openCustom}>
-        {custom ? app.settings.questionCount : "Custom"}
+        {custom ? app.settings.questionCount : t("common.custom")}
       </Chip>
     {/if}
 
@@ -100,7 +101,7 @@
       active={app.settings.questionCount === 0}
       onclick={() => choose(0)}
     >
-      One pass
+      {t("setup.questions.onePass")}
     </Chip>
   </div>
 </div>
@@ -109,7 +110,7 @@
   <NumberRoller
     values={customCountValues}
     value={clampCustomCount(app.settings.questionCount || customCountMin)}
-    title="Number of questions"
+    title={t("setup.questions.count")}
     onpick={picked}
     onclose={() => (rolling = false)}
   />

@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "假名种类", "description": "选择练习中出现的假名。" },
+  "format": {
+    "title": "出题方式",
+    "description": "每道题怎么出。",
+    "text-text": "看字，用文字作答",
+    "audio-text": "听音，用文字作答",
+    "text-audio": "看字，选出读音"
+  },
+  "answerStyle": {
+    "title": "作答方式",
+    "description": "点选答案或自己输入。",
+    "choice": "四选一",
+    "choiceAudio": "选项始终为假名",
+    "typing": "输入答案",
+    "typingAudio": "假名或罗马音均可"
+  },
+  "direction": {
+    "title": "方向",
+    "description": "你要作答的那一边。",
+    "kana-romaji": "用罗马音作答",
+    "romaji-kana": "用假名作答",
+    "mixed": "随机双向"
+  },
+  "characters": {
+    "title": "字符",
+    "description": "点行标签可整行选中。",
+    "editAlphabet": "要编辑的假名种类",
+    "selectAll": "全选",
+    "clear": "清空"
+  },
+  "run": { "title": "练习选项", "description": "练习内容与时长。" },
+  "sets": {
+    "title": "附加字组",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ 等",
+    "tokushon": "ファ ティ ヴァ，仅片假名"
+  },
+  "questions": { "title": "题量", "count": "题目数量", "onePass": "全过一遍" },
+  "difficulty": {
+    "title": "难度",
+    "beginner": "错误选项随机",
+    "advanced": "有一个形近的错误选项",
+    "expert": "错误选项全是形近字",
+    "tooFew": "至少要有 {min} 个字符才有区别。",
+    "choiceOnly": "仅对选择题有效。"
+  },
+  "time": {
+    "perQuestion": "每题",
+    "wholeRun": "整场",
+    "seconds": "每题秒数",
+    "minutes": "整场分钟数"
+  },
+  "presets": {
+    "label": "预设",
+    "some": "预设",
+    "none": "暂无预设",
+    "update": "更新预设",
+    "create": "新建预设",
+    "restore": "载入预设",
+    "delete": "删除预设",
+    "name": "预设名称",
+    "confirmTitle": "删除这个预设？",
+    "confirmBody": "将删除预设“{name}”。当前选中的字符不变。"
+  },
+  "start": {
+    "inPlay": "参与练习的字符",
+    "button": "开始练习",
+    "empty": "请至少选择一个符合该模式的字符。"
+  },
+  "notes": {
+    "needsAlphabet": "已开启平假名，练习至少需要一种假名。",
+    "audioNeedsChoice": "用音频作答只能用选择题。",
+    "audioTextDirection": "听音写字没有方向设置，输入假名或罗马音均可。",
+    "textAudioDirection": "看字选音始终从字符开始。"
+  }
+}

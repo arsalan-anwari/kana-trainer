@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Bảng chữ", "description": "Chọn thứ sẽ xuất hiện." },
+  "format": {
+    "title": "Dạng câu hỏi",
+    "description": "Cách ra mỗi câu hỏi.",
+    "text-text": "Nhìn chữ, trả lời bằng chữ",
+    "audio-text": "Nghe âm, trả lời bằng chữ",
+    "text-audio": "Nhìn chữ, chọn âm"
+  },
+  "answerStyle": {
+    "title": "Cách trả lời",
+    "description": "Chạm vào đáp án hoặc tự gõ.",
+    "choice": "Một trong 4",
+    "choiceAudio": "Đáp án luôn là kana",
+    "typing": "Gõ đáp án",
+    "typingAudio": "Kana hoặc romaji"
+  },
+  "direction": {
+    "title": "Chiều",
+    "description": "Bên nào bạn trả lời.",
+    "kana-romaji": "Trả lời bằng romaji",
+    "romaji-kana": "Trả lời bằng kana",
+    "mixed": "Ngẫu nhiên cả hai"
+  },
+  "characters": {
+    "title": "Ký tự",
+    "description": "Chạm tên hàng để lấy cả hàng.",
+    "editAlphabet": "Bảng chữ đang chỉnh",
+    "selectAll": "Chọn hết",
+    "clear": "Bỏ hết"
+  },
+  "run": { "title": "Tuỳ chọn phiên", "description": "Phiên gồm gì và kéo dài bao lâu." },
+  "sets": {
+    "title": "Nhóm thêm",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ và các âm còn lại",
+    "tokushon": "ファ ティ ヴァ, chỉ katakana"
+  },
+  "questions": { "title": "Số câu", "count": "Số câu hỏi", "onePass": "Một lượt" },
+  "difficulty": {
+    "title": "Độ khó",
+    "beginner": "Đáp án sai lấy ngẫu nhiên",
+    "advanced": "Một đáp án sai trông giống",
+    "expert": "Mọi đáp án sai đều trông giống",
+    "tooFew": "Cần {min} ký tự thì mới khác biệt.",
+    "choiceOnly": "Chỉ áp dụng cho trắc nghiệm."
+  },
+  "time": {
+    "perQuestion": "Mỗi câu",
+    "wholeRun": "Cả phiên",
+    "seconds": "Số giây mỗi câu",
+    "minutes": "Số phút cả phiên"
+  },
+  "presets": {
+    "label": "Bộ chọn sẵn",
+    "some": "Bộ chọn sẵn",
+    "none": "Chưa có bộ nào",
+    "update": "Cập nhật bộ",
+    "create": "Bộ mới",
+    "restore": "Nạp lại bộ",
+    "delete": "Xoá bộ",
+    "name": "Tên bộ",
+    "confirmTitle": "Xoá bộ này?",
+    "confirmBody": "Xoá bộ \"{name}\". Các ký tự đang chọn vẫn giữ nguyên."
+  },
+  "start": {
+    "inPlay": "Ký tự đang dùng",
+    "button": "Bắt đầu",
+    "empty": "Hãy chọn ít nhất một ký tự hợp với chế độ này."
+  },
+  "notes": {
+    "needsAlphabet": "Đã bật hiragana, phiên cần ít nhất một bảng chữ.",
+    "audioNeedsChoice": "Trả lời bằng âm thanh thì dùng trắc nghiệm.",
+    "audioTextDirection": "Nghe rồi viết không có chiều, gõ kana hay romaji đều được.",
+    "textAudioDirection": "Nhìn chữ chọn âm luôn bắt đầu từ ký tự."
+  }
+}

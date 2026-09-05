@@ -8,6 +8,7 @@
   import MissedAnswers from "./MissedAnswers.svelte";
   import ResultSplash from "./ResultSplash.svelte";
   import ScoreHeadline from "./ScoreHeadline.svelte";
+  import { t } from "../../i18n.svelte";
 
   const report = $derived(app.lastReport);
   const answers = $derived(report?.answers ?? []);
@@ -18,9 +19,9 @@
     if (report === null) return;
     try {
       const path = await exportReports([report]);
-      app.message = path === null ? "" : `Exported this run to ${fileLabel(path)}`;
+      app.message = path === null ? "" : t("result.exported", { file: fileLabel(path) });
     } catch (error) {
-      app.message = error instanceof Error ? error.message : "That file could not be written.";
+      app.message = error instanceof Error ? error.message : t("common.file.writeFailed");
     }
   }
 </script>
@@ -34,18 +35,18 @@
     <ScoreHeadline {report} {summary} />
 
     <div class="flex flex-wrap gap-2 sm:gap-3">
-      <Button size="lg" variant="brand" onclick={() => app.start()}>Run it again</Button>
+      <Button size="lg" variant="brand" onclick={() => app.start()}>{t("result.again")}</Button>
       <Button
         size="lg"
         variant="secondary"
         disabled={misses.length === 0}
         onclick={() => app.practiceMistakes(answers)}
       >
-        Practice my mistakes
+        {t("result.practice")}
       </Button>
-      <Button size="lg" variant="outline" onclick={saveCopy}>Export this run</Button>
-      <Button size="lg" variant="outline" onclick={() => app.go("reports")}>All reports</Button>
-      <Button size="lg" variant="ghost" onclick={() => app.go("setup")}>Back to setup</Button>
+      <Button size="lg" variant="outline" onclick={saveCopy}>{t("result.export")}</Button>
+      <Button size="lg" variant="outline" onclick={() => app.go("reports")}>{t("result.allReports")}</Button>
+      <Button size="lg" variant="ghost" onclick={() => app.go("setup")}>{t("result.back")}</Button>
     </div>
 
     {#if app.message !== ""}
@@ -53,10 +54,10 @@
     {/if}
 
     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-      <Card title="Characters this run" description="Sorted by accuracy, weakest first.">
+      <Card title={t("result.characters.title")} description={t("result.characters.description")}>
         <BarChart rows={statsByKana(answers)} limit={10} />
       </Card>
-      <Card title="Rows this run" description="Where the trouble sits.">
+      <Card title={t("result.rows.title")} description={t("result.rows.description")}>
         <BarChart rows={statsByRow(answers)} limit={10} />
       </Card>
     </div>

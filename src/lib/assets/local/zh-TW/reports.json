@@ -1,0 +1,90 @@
+{
+  "window": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "week": "上週",
+    "all": "全部",
+    "custom": "自訂",
+    "range": "{from} 至 {to}"
+  },
+  "range": {
+    "pick": "選擇日期範圍",
+    "title": "日期範圍",
+    "close": "關閉日期範圍",
+    "from": "開始",
+    "to": "結束",
+    "mask": "日/月/年",
+    "invalidPicked": "開始不得晚於結束，且不得早於 {earliest}。",
+    "invalidTyped": "格式為 日/月/年，開始不得晚於結束，且不得早於 {earliest}。"
+  },
+  "filters": {
+    "title": "篩選",
+    "clear": "清除篩選",
+    "format": "出題方式",
+    "answering": "作答方式",
+    "alphabet": "假名種類"
+  },
+  "list": {
+    "shown": "顯示 {count} 筆",
+    "pickedOf": "已選 {picked}/{total}",
+    "selectAll": "選取顯示的全部紀錄",
+    "clearSelection": "清除選取",
+    "remove": "刪除{target}",
+    "export": "匯出{target}",
+    "import": "從檔案匯入紀錄",
+    "score": "答對 {correct}/{total}，{percent}%",
+    "empty": "尚無紀錄。完成一場練習後就會出現在這裡。",
+    "noMatch": "沒有符合篩選條件的紀錄。"
+  },
+  "target": {
+    "shown_other": "顯示的全部 {count} 筆紀錄",
+    "picked_other": "選取的 {count} 筆紀錄"
+  },
+  "confirm": {
+    "title_other": "刪除 {count} 筆紀錄？",
+    "yes_other": "刪除 {count} 筆",
+    "no_other": "保留",
+    "bodyShown": "將永久刪除目前顯示的全部紀錄。需要備份請先匯出。",
+    "bodyPicked": "將永久刪除所選紀錄。需要備份請先匯出。"
+  },
+  "deleted_other": "已刪除 {count} 筆紀錄。",
+  "runs_other": "{count} 筆紀錄",
+  "exported": "已將{runs}匯出至 {file}",
+  "imported": "已匯入{runs}。",
+  "importedSome": "已匯入{runs}，{skipped} 筆已存在。",
+  "selected": "已選取 {count} 筆紀錄",
+  "overall": "總計答對 {correct}/{total}，{percent}%",
+  "practice": "練習這些錯題",
+  "noMistakes": "沒有可練習的錯題。",
+  "loadedMistakes": "已載入 {count} 個答錯的字元。",
+  "weakest": {
+    "title": "最弱的字元",
+    "description": "底色代表正確率，長條代表出現次數。",
+    "empty": "完成一場練習後即可查看統計。"
+  },
+  "rows": {
+    "title": "行",
+    "description": "五十音表，依各行掌握情況上色。",
+    "empty": "尚無資料。"
+  },
+  "alphabets": {
+    "title": "假名種類",
+    "description": "各自的掌握情況與題數占比。",
+    "share": "占全部題目的 {percent}%"
+  },
+  "mistakes": {
+    "title": "依字組統計的錯誤",
+    "description": "所有答錯的字元，依字組、行與種類分類。",
+    "none": "這裡沒有錯題。",
+    "miss_other": "錯 {count} 次"
+  },
+  "tip": {
+    "right": "{romaji}，答對 {correct}/{total}",
+    "never": "{romaji}，從未出現",
+    "missed": "{romaji}，錯 {misses}/{total}",
+    "rowRight": "答對 {correct}/{total}",
+    "cell": "{sub}，答對 {correct}/{total}"
+  },
+  "noData": "尚無資料",
+  "ofTotal": "共 {total}"
+}

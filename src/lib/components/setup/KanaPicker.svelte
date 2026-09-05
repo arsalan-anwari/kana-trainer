@@ -7,6 +7,7 @@
   import KanaRow from "./KanaRow.svelte";
   import PresetPicker from "./PresetPicker.svelte";
   import ScriptTabs from "./ScriptTabs.svelte";
+  import { t } from "../../i18n.svelte";
 
   const selected = $derived(new Set(app.selection));
   const shownRows = $derived(
@@ -31,11 +32,11 @@
   <div class="flex flex-wrap items-center gap-2">
     <Button size="sm" variant="outline" onclick={selectAll}>
       <Icon name="select-all" />
-      Select all
+      {t("setup.characters.selectAll")}
     </Button>
     <Button size="sm" variant="outline" onclick={() => app.setSelection([])}>
       <Icon name="select-none" />
-      Clear
+      {t("setup.characters.clear")}
     </Button>
   </div>
 

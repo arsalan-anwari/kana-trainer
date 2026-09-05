@@ -1,0 +1,90 @@
+{
+  "window": {
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua",
+    "week": "Tuần trước",
+    "all": "Tất cả",
+    "custom": "Tự chọn",
+    "range": "{from} đến {to}"
+  },
+  "range": {
+    "pick": "Chọn khoảng ngày",
+    "title": "Khoảng ngày",
+    "close": "Đóng khoảng ngày",
+    "from": "Từ",
+    "to": "Đến",
+    "mask": "NN/TT/NNNN",
+    "invalidPicked": "Ngày đầu phải trước ngày cuối và không sớm hơn {earliest}.",
+    "invalidTyped": "Dùng NN/TT/NNNN, ngày đầu trước ngày cuối, không sớm hơn {earliest}."
+  },
+  "filters": {
+    "title": "Bộ lọc",
+    "clear": "Xoá bộ lọc",
+    "format": "Dạng câu hỏi",
+    "answering": "Cách trả lời",
+    "alphabet": "Bảng chữ"
+  },
+  "list": {
+    "shown": "Hiện {count}",
+    "pickedOf": "{picked} trên {total}",
+    "selectAll": "Chọn mọi phiên đang hiện",
+    "clearSelection": "Bỏ chọn",
+    "remove": "Xoá {target}",
+    "export": "Xuất {target}",
+    "import": "Nhập phiên từ tệp",
+    "score": "Đúng {correct}/{total}, {percent}%",
+    "empty": "Chưa có lịch sử. Hoàn thành một phiên là nó hiện ở đây.",
+    "noMatch": "Không có phiên nào khớp bộ lọc."
+  },
+  "target": {
+    "shown_other": "toàn bộ {count} phiên đang hiện",
+    "picked_other": "{count} phiên đã chọn"
+  },
+  "confirm": {
+    "title_other": "Xoá {count} phiên?",
+    "yes_other": "Xoá {count} phiên",
+    "no_other": "Giữ lại",
+    "bodyShown": "Xoá vĩnh viễn mọi phiên đang hiện. Hãy xuất trước nếu muốn giữ bản sao.",
+    "bodyPicked": "Xoá vĩnh viễn các phiên bạn đã chọn. Hãy xuất trước nếu muốn giữ bản sao."
+  },
+  "deleted_other": "Đã xoá {count} phiên.",
+  "runs_other": "{count} phiên",
+  "exported": "Đã xuất {runs} ra {file}",
+  "imported": "Đã nhập {runs}.",
+  "importedSome": "Đã nhập {runs}, {skipped} đã có sẵn.",
+  "selected": "Đã chọn {count} phiên",
+  "overall": "Đúng {correct}/{total}, {percent}% toàn bộ",
+  "practice": "Luyện những câu sai này",
+  "noMistakes": "Không có câu sai nào để luyện.",
+  "loadedMistakes": "Đã nạp {count} ký tự bạn làm sai.",
+  "weakest": {
+    "title": "Ký tự yếu nhất",
+    "description": "Màu là độ chính xác, thanh là số lần xuất hiện.",
+    "empty": "Hoàn thành một phiên để xem thống kê."
+  },
+  "rows": {
+    "title": "Hàng",
+    "description": "Bảng kana, tô màu theo tình hình từng hàng.",
+    "empty": "Chưa có hàng nào."
+  },
+  "alphabets": {
+    "title": "Bảng chữ",
+    "description": "Tình hình mỗi bảng và phần việc nó gánh.",
+    "share": "{percent}% số câu hỏi"
+  },
+  "mistakes": {
+    "title": "Lỗi theo nhóm",
+    "description": "Mọi ký tự làm sai, theo nhóm, hàng và bảng chữ.",
+    "none": "Ở đây không sai gì.",
+    "miss_other": "Sai {count} lần"
+  },
+  "tip": {
+    "right": "{romaji}, đúng {correct}/{total}",
+    "never": "{romaji}, chưa từng ra",
+    "missed": "{romaji}, sai {misses}/{total}",
+    "rowRight": "Đúng {correct}/{total}",
+    "cell": "{sub}, đúng {correct}/{total}"
+  },
+  "noData": "Chưa có dữ liệu",
+  "ofTotal": "trên {total}"
+}

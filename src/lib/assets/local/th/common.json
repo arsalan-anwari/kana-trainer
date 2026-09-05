@@ -1,0 +1,51 @@
+{
+  "appName": "Kana Trainer",
+  "tagline": "ฝึกฮิรางานะและคาตากานะ",
+  "settings": "ตั้งค่า",
+  "closeSettings": "ปิดการตั้งค่า",
+  "cancel": "ยกเลิก",
+  "save": "บันทึก",
+  "apply": "ใช้",
+  "close": "ปิด",
+  "delete": "ลบ",
+  "keep": "เก็บไว้",
+  "hiragana": "ฮิรางานะ",
+  "katakana": "คาตากานะ",
+  "both": "ทั้งสอง",
+  "any": "ทั้งหมด",
+  "off": "ปิด",
+  "custom": "กำหนดเอง",
+  "pickValue": "เลือกค่า",
+  "nav": { "setup": "ฝึก", "reports": "ประวัติ", "chart": "ตาราง" },
+  "group": {
+    "seion": "เซอง (清音)",
+    "dakuon": "ดากุอง (濁音)",
+    "handakuon": "ฮันดากุอง (半濁音)",
+    "yoon": "โยอง (拗音)",
+    "tokushon": "โทกุชุอง (特殊音)"
+  },
+  "format": {
+    "text-text": "ตัวอักษรอย่างเดียว",
+    "audio-text": "ฟังเสียงแล้วตอบเป็นตัวอักษร",
+    "text-audio": "ดูตัวอักษรแล้วเลือกเสียง"
+  },
+  "answerStyle": { "choice": "ปรนัย", "typing": "พิมพ์" },
+  "direction": {
+    "kana-romaji": "คานะเป็นโรมาจิ",
+    "romaji-kana": "โรมาจิเป็นคานะ",
+    "mixed": "สลับกัน"
+  },
+  "difficulty": { "beginner": "เริ่มต้น", "advanced": "ขั้นสูง", "expert": "ชำนาญ" },
+  "rowLabel": "แถว {letter}",
+  "file": {
+    "filterName": "รอบฝึกของ Kana Trainer",
+    "writeFailed": "เขียนไฟล์นั้นไม่ได้",
+    "readFailed": "อ่านไฟล์นั้นไม่ได้",
+    "tooShort": "ไฟล์สั้นเกินกว่าจะเป็นไฟล์ .kt-report",
+    "notReport": "นั่นไม่ใช่ไฟล์ .kt-report",
+    "newer": "ไฟล์นี้เขียนด้วยเวอร์ชันที่ใหม่กว่า (รูปแบบ {version})",
+    "incomplete": "ไฟล์ .kt-report นั้นไม่สมบูรณ์",
+    "damaged": "ไฟล์ .kt-report นั้นเสียหาย",
+    "badRun": "ไฟล์ .kt-report นั้นมีรอบฝึกที่อ่านไม่ได้"
+  }
+}

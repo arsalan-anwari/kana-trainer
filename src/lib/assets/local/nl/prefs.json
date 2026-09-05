@@ -1,0 +1,26 @@
+{
+  "theme": "Thema",
+  "themeSystem": "Systeem",
+  "themeLight": "Licht",
+  "themeDark": "Donker",
+  "themeIs": {
+    "system": "Thema: systeem",
+    "light": "Thema: licht",
+    "dark": "Thema: donker"
+  },
+  "themeLocked": "Hoog contrast zet het thema vast",
+  "contrast": "Hoog contrast",
+  "contrastHint": "Alleen zwart-wit, gaat boven het thema",
+  "zoom": "Zoom",
+  "zoomIn": "Inzoomen",
+  "zoomOut": "Uitzoomen",
+  "scale": "Schaal",
+  "scaleHint": "Schaalt de hele app mee",
+  "sound": "Geluid",
+  "effects": "Geluidseffecten",
+  "effectsHint": "Kliks en antwoordreacties",
+  "soundOn": "Geluid aan",
+  "soundOff": "Geluid uit",
+  "language": "Taal",
+  "persist": "Deze instellingen blijven staan."
+}

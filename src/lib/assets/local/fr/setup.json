@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Alphabets", "description": "Choisissez ce que vous verrez." },
+  "format": {
+    "title": "Format",
+    "description": "Comment chaque question est posée.",
+    "text-text": "Voir un caractère, répondre par écrit",
+    "audio-text": "Entendre un son, répondre par écrit",
+    "text-audio": "Voir un caractère, choisir le son"
+  },
+  "answerStyle": {
+    "title": "Réponse",
+    "description": "Touchez une réponse ou tapez-la.",
+    "choice": "Une parmi 4",
+    "choiceAudio": "Les choix sont toujours en kana",
+    "typing": "Tapez la réponse",
+    "typingAudio": "Kana ou rōmaji"
+  },
+  "direction": {
+    "title": "Sens",
+    "description": "Le côté par lequel vous répondez.",
+    "kana-romaji": "Répondre en rōmaji",
+    "romaji-kana": "Répondre en kana",
+    "mixed": "Les deux, au hasard"
+  },
+  "characters": {
+    "title": "Caractères",
+    "description": "Touchez le nom d'une ligne pour la prendre entière.",
+    "editAlphabet": "Alphabet à modifier",
+    "selectAll": "Tout",
+    "clear": "Rien"
+  },
+  "run": { "title": "Options", "description": "Ce que contient la session et sa durée." },
+  "sets": {
+    "title": "Groupes en plus",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ et les autres",
+    "tokushon": "ファ ティ ヴァ, katakana seulement"
+  },
+  "questions": { "title": "Questions", "count": "Nombre de questions", "onePass": "Un tour" },
+  "difficulty": {
+    "title": "Difficulté",
+    "beginner": "Les mauvaises réponses sont tirées au hasard",
+    "advanced": "Une mauvaise réponse se ressemble",
+    "expert": "Toutes les mauvaises réponses se ressemblent",
+    "tooFew": "Il faut {min} caractères pour que cela change quelque chose.",
+    "choiceOnly": "Uniquement en choix multiple."
+  },
+  "time": {
+    "perQuestion": "Par question",
+    "wholeRun": "Session entière",
+    "seconds": "Secondes par question",
+    "minutes": "Minutes par session"
+  },
+  "presets": {
+    "label": "Préréglage",
+    "some": "Préréglages",
+    "none": "Aucun préréglage",
+    "update": "Mettre à jour le préréglage",
+    "create": "Nouveau préréglage",
+    "restore": "Charger le préréglage",
+    "delete": "Supprimer le préréglage",
+    "name": "Nom du préréglage",
+    "confirmTitle": "Supprimer ce préréglage ?",
+    "confirmBody": "Supprime le préréglage « {name} ». Votre sélection actuelle ne bouge pas."
+  },
+  "start": {
+    "inPlay": "Caractères en jeu",
+    "button": "Commencer",
+    "empty": "Choisissez au moins un caractère compatible avec ce mode."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana activé : il faut au moins un alphabet.",
+    "audioNeedsChoice": "Répondre par le son se fait en choix multiple.",
+    "audioTextDirection": "Audio vers texte n'a pas de sens ; kana ou rōmaji sont acceptés.",
+    "textAudioDirection": "Texte vers audio part toujours du caractère."
+  }
+}

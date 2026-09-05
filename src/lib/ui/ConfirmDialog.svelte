@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
   import Button from "./Button.svelte";
+  import { t } from "../i18n.svelte";
 
   let {
     title,
-    confirmLabel = "Delete",
-    cancelLabel = "Cancel",
+    confirmLabel = t("common.delete"),
+    cancelLabel = t("common.cancel"),
     onconfirm,
     oncancel,
     children
@@ -38,7 +39,7 @@
   <button
     type="button"
     class="absolute inset-0 cursor-default bg-foreground/40"
-    aria-label="Close"
+    aria-label={t("common.close")}
     onclick={oncancel}
   ></button>
 

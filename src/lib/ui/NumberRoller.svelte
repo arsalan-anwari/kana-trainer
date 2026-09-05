@@ -2,13 +2,14 @@
   import { untrack } from "svelte";
   import { sfx } from "../audio";
   import Button from "./Button.svelte";
+  import { t } from "../i18n.svelte";
 
   // A wheel of numbers that snaps to the value under the centre band.
 
   let {
     values,
     value,
-    title = "Pick a value",
+    title = t("common.pickValue"),
     onpick,
     onclose
   }: {
@@ -56,7 +57,7 @@
   <button
     type="button"
     class="absolute inset-0 cursor-default bg-foreground/40"
-    aria-label="Close"
+    aria-label={t("common.close")}
     onclick={onclose}
   ></button>
 

@@ -5,6 +5,7 @@
   import PlayIcon from "../../ui/PlayIcon.svelte";
   import Waveform from "../../ui/Waveform.svelte";
   import PromptBox from "./PromptBox.svelte";
+  import { t } from "../../i18n.svelte";
 
   let {
     question,
@@ -13,10 +14,10 @@
   }: { question: Question; kana: Kana; onreplay: () => void } = $props();
 
   const label = $derived.by(() => {
-    if (question.prompt === "audio") return "Listen and pick the answer";
-    if (question.answer === "audio") return "Pick the matching sound";
-    if (question.prompt === "kana") return "Which romaji is this";
-    return "Which character is this";
+    if (question.prompt === "audio") return t("quiz.prompt.listen");
+    if (question.answer === "audio") return t("quiz.prompt.pickSound");
+    if (question.prompt === "kana") return t("quiz.prompt.whichRomaji");
+    return t("quiz.prompt.whichKana");
   });
 
   const playing = $derived(kana.audio !== null && kanaAudio.playing === kana.audio);
@@ -43,7 +44,7 @@
       <button
         type="button"
         class="flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl p-3 transition-colors sm:gap-3 sm:p-5 lg:gap-4 lg:p-6 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        aria-label="Play the sound again"
+        aria-label={t("quiz.prompt.replay")}
         onclick={onreplay}
       >
         <span

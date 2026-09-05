@@ -1,0 +1,28 @@
+{
+  "prompt": {
+    "listen": "听音选答案",
+    "pickSound": "选出对应读音",
+    "whichRomaji": "这是什么罗马音",
+    "whichKana": "这是哪个字符",
+    "replay": "再听一次"
+  },
+  "typing": { "kana": "输入假名", "romaji": "输入罗马音", "either": "假名或罗马音" },
+  "check": "确认",
+  "soundTile": "读音 {slot}",
+  "soundHint": "点一下听读音，再确认。",
+  "quit": "退出",
+  "score": "答对 {count} 题",
+  "correct": "答对了",
+  "wrong": "答错了",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "也读作 {list}",
+  "continue": "继续",
+  "stop": {
+    "title": "结束这场练习？",
+    "nothing": "还没有作答，不会保存任何内容。",
+    "discard_other": "只有完成的练习才计分。已作答的 {count} 题将被丢弃。",
+    "left_other": "还剩 {count} 题。",
+    "confirm": "结束并丢弃",
+    "cancel": "继续练习"
+  }
+}

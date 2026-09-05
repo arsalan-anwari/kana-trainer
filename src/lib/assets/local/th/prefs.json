@@ -1,0 +1,26 @@
+{
+  "theme": "ธีม",
+  "themeSystem": "ตามระบบ",
+  "themeLight": "สว่าง",
+  "themeDark": "มืด",
+  "themeIs": {
+    "system": "ธีม: ตามระบบ",
+    "light": "ธีม: สว่าง",
+    "dark": "ธีม: มืด"
+  },
+  "themeLocked": "คอนทราสต์สูงล็อกธีมไว้",
+  "contrast": "คอนทราสต์สูง",
+  "contrastHint": "ขาวดำล้วน แทนที่ธีม",
+  "zoom": "ย่อขยาย",
+  "zoomIn": "ขยาย",
+  "zoomOut": "ย่อ",
+  "scale": "ขนาด",
+  "scaleHint": "ปรับขนาดทั้งแอป",
+  "sound": "เสียง",
+  "effects": "เสียงประกอบ",
+  "effectsHint": "เสียงกดและเสียงตอบรับ",
+  "soundOn": "เปิดเสียงแล้ว",
+  "soundOff": "ปิดเสียงแล้ว",
+  "language": "ภาษา",
+  "persist": "ค่าเหล่านี้จะถูกเก็บไว้"
+}

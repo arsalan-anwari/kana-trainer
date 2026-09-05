@@ -1,0 +1,11 @@
+{
+  "title": "Character chart",
+  "description": "All 147 characters by group and row. Tap one to hear it.",
+  "sounds": "{count} sounds",
+  "play": "Play {romaji} {kata}",
+  "seion": "The 46 basic characters.",
+  "dakuon": "Voiced か さ た は rows.",
+  "handakuon": "Half voiced は row.",
+  "yoon": "Contracted with a small ゃ ゅ ょ.",
+  "tokushon": "Borrowed sounds, katakana only."
+}

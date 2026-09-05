@@ -1,0 +1,88 @@
+{
+  "alphabets": {
+    "title": "Alphabets",
+    "description": "Pick what you will see."
+  },
+  "format": {
+    "title": "Question format",
+    "description": "How each question is asked.",
+    "text-text": "See a character, answer in text",
+    "audio-text": "Hear a sound, answer in text",
+    "text-audio": "See a character, pick the sound"
+  },
+  "answerStyle": {
+    "title": "Answer style",
+    "description": "Tap an answer or type it.",
+    "choice": "Pick one of 4",
+    "choiceAudio": "Choices are always kana",
+    "typing": "Type the answer",
+    "typingAudio": "Kana or romaji"
+  },
+  "direction": {
+    "title": "Direction",
+    "description": "Which side you answer.",
+    "kana-romaji": "Answer in romaji",
+    "romaji-kana": "Answer in kana",
+    "mixed": "Both ways at random"
+  },
+  "characters": {
+    "title": "Characters",
+    "description": "Tap a row label to take the row.",
+    "editAlphabet": "Alphabet to edit",
+    "selectAll": "Select all",
+    "clear": "Clear"
+  },
+  "run": {
+    "title": "Run options",
+    "description": "What is in the run and how long it lasts."
+  },
+  "sets": {
+    "title": "Extra sets",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ and the rest",
+    "tokushon": "ファ ティ ヴァ, katakana only"
+  },
+  "questions": {
+    "title": "Questions",
+    "count": "Number of questions",
+    "onePass": "One pass"
+  },
+  "difficulty": {
+    "title": "Difficulty",
+    "beginner": "Wrong answers are random",
+    "advanced": "One wrong answer looks alike",
+    "expert": "Every wrong answer looks alike",
+    "tooFew": "Needs {min} characters in play to matter.",
+    "choiceOnly": "Multiple choice only."
+  },
+  "time": {
+    "perQuestion": "Per question",
+    "wholeRun": "Whole run",
+    "seconds": "Seconds per question",
+    "minutes": "Minutes for the whole run"
+  },
+  "presets": {
+    "label": "Preset",
+    "some": "Presets",
+    "none": "No presets",
+    "update": "Update preset",
+    "create": "New preset",
+    "restore": "Restore preset",
+    "delete": "Delete preset",
+    "name": "Preset name",
+    "confirmTitle": "Delete this preset?",
+    "confirmBody": "Deletes the \"{name}\" preset. Your current selection stays."
+  },
+  "start": {
+    "inPlay": "Characters in play",
+    "button": "Start run",
+    "empty": "Pick at least one character that fits this mode."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana turned on, a run needs one alphabet.",
+    "audioNeedsChoice": "Answering with audio uses multiple choice.",
+    "audioTextDirection": "Audio to text has no direction, typing takes kana or romaji.",
+    "textAudioDirection": "Text to audio always starts from the character."
+  }
+}

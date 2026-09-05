@@ -1,0 +1,26 @@
+{
+  "theme": "主題",
+  "themeSystem": "跟隨系統",
+  "themeLight": "淺色",
+  "themeDark": "深色",
+  "themeIs": {
+    "system": "主題：跟隨系統",
+    "light": "主題：淺色",
+    "dark": "主題：深色"
+  },
+  "themeLocked": "高對比已固定主題",
+  "contrast": "高對比",
+  "contrastHint": "純黑白，會覆蓋主題設定",
+  "zoom": "縮放",
+  "zoomIn": "放大",
+  "zoomOut": "縮小",
+  "scale": "比例",
+  "scaleHint": "整體調整介面大小",
+  "sound": "音效",
+  "effects": "音效",
+  "effectsHint": "點擊與作答回饋",
+  "soundOn": "音效已開",
+  "soundOff": "音效已關",
+  "language": "語言",
+  "persist": "這些設定會一直保留。"
+}

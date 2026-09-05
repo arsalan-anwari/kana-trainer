@@ -1,0 +1,34 @@
+{
+  "prompt": {
+    "listen": "Luister en kies",
+    "pickSound": "Kies het geluid",
+    "whichRomaji": "Welke romaji is dit",
+    "whichKana": "Welk teken is dit",
+    "replay": "Nog eens afspelen"
+  },
+  "typing": {
+    "kana": "Typ de kana",
+    "romaji": "Typ de romaji",
+    "either": "Kana of romaji"
+  },
+  "check": "Nakijken",
+  "soundTile": "Geluid {slot}",
+  "soundHint": "Tik een geluid aan om het te horen en kijk dan na.",
+  "quit": "Stoppen",
+  "score": "{count} goed",
+  "correct": "Goed",
+  "wrong": "Net niet",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "ook {list}",
+  "continue": "Verder",
+  "stop": {
+    "title": "Deze ronde stoppen?",
+    "nothing": "Nog niets beantwoord, er valt niets op te slaan.",
+    "discard_one": "Alleen een afgemaakte ronde telt. Je antwoord gaat verloren.",
+    "discard_other": "Alleen een afgemaakte ronde telt. Je {count} antwoorden gaan verloren.",
+    "left_one": "Nog 1 vraag te gaan.",
+    "left_other": "Nog {count} vragen te gaan.",
+    "confirm": "Stoppen en weggooien",
+    "cancel": "Doorgaan"
+  }
+}

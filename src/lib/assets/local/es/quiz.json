@@ -1,0 +1,34 @@
+{
+  "prompt": {
+    "listen": "Escucha y elige",
+    "pickSound": "Elige el sonido",
+    "whichRomaji": "Qué romaji es este",
+    "whichKana": "Qué carácter es este",
+    "replay": "Volver a escuchar"
+  },
+  "typing": {
+    "kana": "Escribe el kana",
+    "romaji": "Escribe el romaji",
+    "either": "Kana o romaji"
+  },
+  "check": "Comprobar",
+  "soundTile": "Sonido {slot}",
+  "soundHint": "Toca un sonido para oírlo y luego comprueba.",
+  "quit": "Salir",
+  "score": "{count} aciertos",
+  "correct": "Correcto",
+  "wrong": "Casi",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "también {list}",
+  "continue": "Continuar",
+  "stop": {
+    "title": "¿Parar esta sesión?",
+    "nothing": "Aún no has respondido nada, no hay nada que guardar.",
+    "discard_one": "Solo puntúan las sesiones terminadas. Se descarta tu respuesta.",
+    "discard_other": "Solo puntúan las sesiones terminadas. Se descartan tus {count} respuestas.",
+    "left_one": "Queda 1 pregunta.",
+    "left_other": "Quedan {count} preguntas.",
+    "confirm": "Parar y descartar",
+    "cancel": "Seguir"
+  }
+}

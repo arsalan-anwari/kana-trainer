@@ -45,6 +45,7 @@ import {
 import { scoreTier, type ScoreTier } from "./core/score";
 import { kanaAudio, setEffectsEnabled, sfx } from "./audio";
 import { listReports, loadJson, saveReport, storeJson } from "./storage";
+import { setLocale, t } from "./i18n.svelte";
 
 export type Route = "setup" | "quiz" | "result" | "reports" | "chart";
 export type Phase = "answering" | "feedback" | "done";
@@ -153,6 +154,7 @@ class AppState {
 
   applyPrefs(): void {
     setEffectsEnabled(this.prefs.effects);
+    setLocale(this.prefs.lang);
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     // high contrast replaces the theme entirely
@@ -283,7 +285,7 @@ class AppState {
 
     const questions = buildQuestions(this.settings);
     if (questions.length === 0) {
-      this.message = "Pick at least one character that fits the selected mode.";
+      this.message = t("setup.start.empty");
       return;
     }
 
@@ -486,7 +488,7 @@ class AppState {
   practiceMistakes(answers: Answer[]): void {
     const ids = weakKanaIds(answers);
     if (ids.length === 0) {
-      this.message = "No mistakes found to practice.";
+      this.message = t("reports.noMistakes");
       return;
     }
     // a miss belongs to the alphabet it was made in
@@ -505,7 +507,7 @@ class AppState {
     this.updateSettings(patch);
     this.splash = null;
     this.route = "setup";
-    this.message = `Loaded ${ids.length} characters you missed into the practice set.`;
+    this.message = t("reports.loadedMistakes", { count: ids.length });
   }
 
   go(route: Route): void {

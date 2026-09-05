@@ -1,33 +1,32 @@
 <script lang="ts">
-  import { groupLabel, rowsInGroup, type Group } from "../../core/kana";
+  import { rowsInGroup, type Group } from "../../core/kana";
+  import { groupLabel } from "../../labels";
   import Card from "../../ui/Card.svelte";
   import ChartRow from "./ChartRow.svelte";
+  import { t } from "../../i18n.svelte";
 
-  const sections: { group: Group; japanese: string; description: string }[] = [
-    { group: "seion", japanese: "清音", description: "The 46 basic characters." },
-    { group: "dakuon", japanese: "濁音", description: "Voiced か さ た は rows." },
-    { group: "handakuon", japanese: "半濁音", description: "Half voiced は row." },
-    { group: "yoon", japanese: "拗音", description: "Contracted with a small ゃ ゅ ょ." },
-    {
-      group: "tokushon",
-      japanese: "特殊音",
-      description: "Borrowed sounds, written in katakana only."
-    }
+  // the Japanese name sits beside the translated one, it is the same everywhere
+  const sections: { group: Group; japanese: string }[] = [
+    { group: "seion", japanese: "清音" },
+    { group: "dakuon", japanese: "濁音" },
+    { group: "handakuon", japanese: "半濁音" },
+    { group: "yoon", japanese: "拗音" },
+    { group: "tokushon", japanese: "特殊音" }
   ];
 </script>
 
 <div class="flex flex-col gap-5">
   <div class="flex flex-col gap-1 rounded-xl border border-border bg-sidebar p-5">
-    <span class="text-h2 font-bold leading-tight">Character chart</span>
+    <span class="text-h2 font-bold leading-tight">{t("chart.title")}</span>
     <span class="text-sm text-muted-foreground">
-      All 147 characters, grouped and split by row. Tap one to hear it.
+      {t("chart.description")}
     </span>
   </div>
 
   {#each sections as section (section.group)}
     <Card
       title="{groupLabel(section.group)} {section.japanese}"
-      description={section.description}
+      description={t(`chart.${section.group}`)}
     >
       <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-x-8">
         {#each rowsInGroup(section.group) as row (row.id)}

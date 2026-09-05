@@ -3,6 +3,7 @@
   import { app } from "../../state.svelte";
   import Card from "../../ui/Card.svelte";
   import OptionCard from "../../ui/OptionCard.svelte";
+  import { t } from "../../i18n.svelte";
 
   function toggle(script: Script): void {
     const set = new Set(app.settings.scripts);
@@ -12,16 +13,16 @@
   }
 </script>
 
-<Card title="Alphabets" description="Pick what you want to see during the run.">
+<Card title={t("setup.alphabets.title")} description={t("setup.alphabets.description")}>
   <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
     <OptionCard
-      label="Hiragana"
+      label={t("common.hiragana")}
       hint="あ い う え お"
       active={app.settings.scripts.includes("hiragana")}
       onclick={() => toggle("hiragana")}
     />
     <OptionCard
-      label="Katakana"
+      label={t("common.katakana")}
       hint="ア イ ウ エ オ"
       active={app.settings.scripts.includes("katakana")}
       onclick={() => toggle("katakana")}

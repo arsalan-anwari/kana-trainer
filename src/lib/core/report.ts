@@ -1,6 +1,23 @@
-import { groups, kanaById, rows, type Group, type Row, type Script } from "./kana";
+import {
+  glyph,
+  groupInScript,
+  groups,
+  kanaById,
+  rows,
+  type Group,
+  type Row,
+  type Script
+} from "./kana";
 import type { Answer } from "./quiz";
-import type { RunSettings } from "./settings";
+import {
+  answerStyleLabel,
+  formatLabel,
+  type AnswerStyle,
+  type Format,
+  type RunSettings
+} from "./settings";
+import { t } from "../i18n.svelte";
+import { rowLabel } from "../labels";
 
 export type Report = {
   id: string;
@@ -74,14 +91,17 @@ function toStatRows(
     .sort((a, b) => a.accuracy - b.accuracy || b.total - a.total);
 }
 
-export function statsByKana(answers: Answer[]): StatRow[] {
+// Without an alphabet both glyphs are shown side by side, with one only the
+// glyph the run actually drilled.
+export function statsByKana(answers: Answer[], script?: Script): StatRow[] {
   return toStatRows(
     tally(answers, (answer) => answer.kanaId),
     (key) => {
       const kana = kanaById(key);
+      if (kana === undefined) return { label: key, sub: key };
       return {
-        label: kana ? `${kana.hira} ${kana.kata}` : key,
-        sub: kana ? kana.romaji : key
+        label: script === undefined ? `${kana.hira} ${kana.kata}` : glyph(kana, script),
+        sub: kana.romaji
       };
     }
   );
@@ -93,17 +113,10 @@ export function statsByRow(answers: Answer[]): StatRow[] {
     (key) => {
       const row = rows.find((item) => item.id === key);
       return {
-        label: row ? row.label : key,
+        label: row ? rowLabel(row) : key,
         sub: row ? row.kana.map((kana) => kana.hira).join("") : ""
       };
     }
-  );
-}
-
-export function statsByScript(answers: Answer[]): StatRow[] {
-  return toStatRows(
-    tally(answers, (answer) => answer.script),
-    (key) => ({ label: key === "hiragana" ? "Hiragana" : "Katakana", sub: "" })
   );
 }
 
@@ -247,12 +260,11 @@ export function dayInputText(key: string): string {
 
 export function reportFilterLabel(filter: ReportFilter): string {
   if (isDateRange(filter)) {
-    return filter.from === filter.to ? filter.from : `${filter.from} to ${filter.to}`;
+    return filter.from === filter.to
+      ? filter.from
+      : t("reports.window.range", { from: filter.from, to: filter.to });
   }
-  if (filter === "today") return "Today";
-  if (filter === "yesterday") return "Yesterday";
-  if (filter === "week") return "Last week";
-  return "All";
+  return t(`reports.window.${filter}`);
 }
 
 function startOfDay(stamp: number): number {
@@ -295,4 +307,172 @@ export function filterReports(
     const stamp = new Date(report.createdAt).getTime();
     return Number.isFinite(stamp) && stamp >= window.from && stamp < window.to;
   });
+}
+
+// ---------------------------------------------------------------------------
+// Tags
+//
+// A run carries the two badges its card shows, taken straight from the settings
+// it ran with: the question format and how it was answered.
+// ---------------------------------------------------------------------------
+
+export type ReportTag = Format | AnswerStyle;
+
+export const formatTags: Format[] = ["text-text", "audio-text", "text-audio"];
+export const answerStyleTags: AnswerStyle[] = ["choice", "typing"];
+
+export function tagLabel(tag: ReportTag): string {
+  return tag === "choice" || tag === "typing" ? answerStyleLabel(tag) : formatLabel(tag);
+}
+
+export function tagsOf(report: Report): ReportTag[] {
+  return [report.settings.format, report.settings.answerStyle];
+}
+
+// Which alphabets a run had switched on. "both" is its own bucket rather than
+// hiragana plus katakana, a mixed run drills the pair against each other and
+// reads nothing like two single alphabet runs.
+export const alphabetFilters = ["any", "hiragana", "katakana", "both"] as const;
+
+export type AlphabetFilter = (typeof alphabetFilters)[number];
+
+export function alphabetLabel(filter: AlphabetFilter): string {
+  return t(`common.${filter}`);
+}
+
+export function alphabetOf(report: Report): Exclude<AlphabetFilter, "any"> {
+  const hiragana = report.settings.scripts.includes("hiragana");
+  const katakana = report.settings.scripts.includes("katakana");
+  if (hiragana && katakana) return "both";
+  return katakana ? "katakana" : "hiragana";
+}
+
+// Everything holding the report view down at once.
+export type ReportQuery = {
+  window: ReportFilter;
+  tags: ReportTag[];
+  alphabet: AlphabetFilter;
+};
+
+export const anyQuery: ReportQuery = { window: "all", tags: [], alphabet: "any" };
+
+export function isEmptyQuery(query: ReportQuery): boolean {
+  return query.window === "all" && query.tags.length === 0 && query.alphabet === "any";
+}
+
+// How many knobs are turned, for the badge on the collapsed filter panel.
+export function queryTagCount(query: ReportQuery): number {
+  return query.tags.length + (query.alphabet === "any" ? 0 : 1);
+}
+
+// Tags inside one dimension widen the match, tags across dimensions narrow it:
+// picking both audio formats keeps either of them, adding "typing" then keeps
+// only the typed ones.
+function tagsMatch(report: Report, tags: ReportTag[]): boolean {
+  const formats = tags.filter((tag): tag is Format => formatTags.includes(tag as Format));
+  const styles = tags.filter((tag): tag is AnswerStyle =>
+    answerStyleTags.includes(tag as AnswerStyle)
+  );
+  if (formats.length > 0 && !formats.includes(report.settings.format)) return false;
+  if (styles.length > 0 && !styles.includes(report.settings.answerStyle)) return false;
+  return true;
+}
+
+export function queryReports(
+  reports: Report[],
+  query: ReportQuery,
+  now = Date.now()
+): Report[] {
+  return filterReports(reports, query.window, now).filter(
+    (report) =>
+      tagsMatch(report, query.tags) &&
+      (query.alphabet === "any" || alphabetOf(report) === query.alphabet)
+  );
+}
+
+// The window on its own, for the heading. A hand picked range is only ever
+// "Custom", the dates themselves are too long to sit in a heading.
+export function windowLabel(filter: ReportFilter): string {
+  return isDateRange(filter) ? t("reports.window.custom") : reportFilterLabel(filter);
+}
+
+// Every tag holding the view down, in a fixed order rather than the order they
+// were clicked, so the same view always reads the same way. These sit under the
+// heading as boxes, the same ones a run card carries.
+export function queryLabels(query: ReportQuery): string[] {
+  return [
+    ...formatTags.filter((tag) => query.tags.includes(tag)).map(tagLabel),
+    ...answerStyleTags.filter((tag) => query.tags.includes(tag)).map(tagLabel),
+    ...(query.alphabet === "any" ? [] : [alphabetLabel(query.alphabet)])
+  ];
+}
+
+// The alphabets that actually show up in a pile of answers, so a view narrowed
+// to one of them draws one chart instead of half an empty comparison.
+export function scriptsSeen(answers: Answer[]): Script[] {
+  const order: Script[] = ["hiragana", "katakana"];
+  return order.filter((script) => answers.some((answer) => answer.script === script));
+}
+
+// ---------------------------------------------------------------------------
+// Row heat
+//
+// The gojuon table as the reader knows it: one line per row, every character in
+// the row kept in place so a gap reads as "never came up" instead of vanishing.
+// ---------------------------------------------------------------------------
+
+export type HeatCell = {
+  key: string;
+  glyph: string;
+  romaji: string;
+  total: number;
+  correct: number;
+  accuracy: number;
+};
+
+export type HeatRow = {
+  id: string;
+  label: string;
+  group: Group;
+  total: number;
+  correct: number;
+  accuracy: number;
+  cells: HeatCell[];
+};
+
+export function heatByRow(answers: Answer[], script: Script): HeatRow[] {
+  const counts = tally(
+    answers.filter((answer) => answer.script === script),
+    (answer) => answer.kanaId
+  );
+
+  const heat: HeatRow[] = [];
+  for (const row of rows) {
+    if (!groupInScript(row.group, script)) continue;
+    const cells = row.kana.map((kana) => {
+      const bucket = counts.get(kana.id) ?? { total: 0, correct: 0 };
+      return {
+        key: kana.id,
+        glyph: glyph(kana, script),
+        romaji: kana.romaji,
+        total: bucket.total,
+        correct: bucket.correct,
+        accuracy: bucket.total === 0 ? 0 : bucket.correct / bucket.total
+      };
+    });
+    const total = cells.reduce((sum, cell) => sum + cell.total, 0);
+    // a row nobody touched is an empty line, not information
+    if (total === 0) continue;
+    const correct = cells.reduce((sum, cell) => sum + cell.correct, 0);
+    heat.push({
+      id: row.id,
+      label: rowLabel(row),
+      group: row.group,
+      total,
+      correct,
+      accuracy: correct / total,
+      cells
+    });
+  }
+  return heat;
 }

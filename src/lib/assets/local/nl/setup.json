@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Alfabetten", "description": "Kies wat je te zien krijgt." },
+  "format": {
+    "title": "Vraagvorm",
+    "description": "Hoe elke vraag wordt gesteld.",
+    "text-text": "Teken zien, met tekst antwoorden",
+    "audio-text": "Geluid horen, met tekst antwoorden",
+    "text-audio": "Teken zien, het geluid kiezen"
+  },
+  "answerStyle": {
+    "title": "Antwoorden",
+    "description": "Tik een antwoord aan of typ het.",
+    "choice": "Eén uit 4",
+    "choiceAudio": "De keuzes zijn altijd kana",
+    "typing": "Typ het antwoord",
+    "typingAudio": "Kana of romaji"
+  },
+  "direction": {
+    "title": "Richting",
+    "description": "Met welke kant je antwoordt.",
+    "kana-romaji": "Antwoord in romaji",
+    "romaji-kana": "Antwoord in kana",
+    "mixed": "Willekeurig beide kanten"
+  },
+  "characters": {
+    "title": "Tekens",
+    "description": "Tik op een rijnaam om de hele rij te pakken.",
+    "editAlphabet": "Alfabet dat je bewerkt",
+    "selectAll": "Alles",
+    "clear": "Niets"
+  },
+  "run": { "title": "Opties", "description": "Wat er in de ronde zit en hoe lang die duurt." },
+  "sets": {
+    "title": "Extra groepen",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ en de rest",
+    "tokushon": "ファ ティ ヴァ, alleen katakana"
+  },
+  "questions": { "title": "Vragen", "count": "Aantal vragen", "onePass": "Eén ronde" },
+  "difficulty": {
+    "title": "Moeilijkheid",
+    "beginner": "Foute antwoorden zijn willekeurig",
+    "advanced": "Eén fout antwoord lijkt erop",
+    "expert": "Alle foute antwoorden lijken erop",
+    "tooFew": "Vanaf {min} tekens maakt dit verschil.",
+    "choiceOnly": "Alleen bij meerkeuze."
+  },
+  "time": {
+    "perQuestion": "Per vraag",
+    "wholeRun": "Hele ronde",
+    "seconds": "Seconden per vraag",
+    "minutes": "Minuten per ronde"
+  },
+  "presets": {
+    "label": "Voorkeuze",
+    "some": "Voorkeuzes",
+    "none": "Geen voorkeuzes",
+    "update": "Voorkeuze bijwerken",
+    "create": "Nieuwe voorkeuze",
+    "restore": "Voorkeuze laden",
+    "delete": "Voorkeuze verwijderen",
+    "name": "Naam van de voorkeuze",
+    "confirmTitle": "Deze voorkeuze verwijderen?",
+    "confirmBody": "Verwijdert de voorkeuze \"{name}\". Je huidige selectie blijft staan."
+  },
+  "start": {
+    "inPlay": "Tekens in het spel",
+    "button": "Starten",
+    "empty": "Kies minstens één teken dat bij deze stand past."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana aangezet, een ronde heeft één alfabet nodig.",
+    "audioNeedsChoice": "Met geluid antwoorden gaat via meerkeuze.",
+    "audioTextDirection": "Geluid naar tekst heeft geen richting, kana en romaji worden allebei goedgekeurd.",
+    "textAudioDirection": "Tekst naar geluid begint altijd bij het teken."
+  }
+}

@@ -4,6 +4,7 @@
   import ConfirmDialog from "../../ui/ConfirmDialog.svelte";
   import IconButton from "../../ui/IconButton.svelte";
   import TextField from "../../ui/TextField.svelte";
+  import { t } from "../../i18n.svelte";
 
   // Named character selections. A preset holds the characters picked in both
   // alphabets and nothing else, so loading one leaves every other setting alone.
@@ -46,11 +47,11 @@
 <select
   value={chosen}
   onchange={pick}
-  aria-label="Preset"
+  aria-label={t("setup.presets.label")}
   disabled={app.presets.length === 0}
   class="h-9 min-w-32 cursor-pointer rounded-md border border-border bg-surface px-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40"
 >
-  <option value="">{app.presets.length === 0 ? "No presets" : "Presets"}</option>
+  <option value="">{t(app.presets.length === 0 ? "setup.presets.none" : "setup.presets.some")}</option>
   {#each app.presets as preset (preset.name)}
     <option value={preset.name}>{preset.name}</option>
   {/each}
@@ -59,22 +60,22 @@
 <IconButton
   icon="save"
   size="sm"
-  label="Update preset"
+  label={t("setup.presets.update")}
   disabled={chosen === ""}
   onclick={() => app.savePreset(chosen)}
 />
-<IconButton icon="plus" size="sm" label="New preset" onclick={startNaming} />
+<IconButton icon="plus" size="sm" label={t("setup.presets.create")} onclick={startNaming} />
 <IconButton
   icon="restore"
   size="sm"
-  label="Restore preset"
+  label={t("setup.presets.restore")}
   disabled={chosen === ""}
   onclick={() => app.applyPreset(chosen)}
 />
 <IconButton
   icon="trash"
   size="sm"
-  label="Delete preset"
+  label={t("setup.presets.delete")}
   disabled={chosen === ""}
   onclick={() => (confirming = true)}
 />
@@ -82,22 +83,21 @@
 {#if naming}
   <div class="flex w-full items-center gap-2">
     <div class="min-w-0 flex-1">
-      <TextField bind:value={name} placeholder="Preset name" focusOnMount onenter={add} />
+      <TextField bind:value={name} placeholder={t("setup.presets.name")} focusOnMount onenter={add} />
     </div>
-    <Button size="sm" variant="brand" onclick={add}>Save</Button>
-    <Button size="sm" variant="outline" onclick={() => (naming = false)}>Cancel</Button>
+    <Button size="sm" variant="brand" onclick={add}>{t("common.save")}</Button>
+    <Button size="sm" variant="outline" onclick={() => (naming = false)}>{t("common.cancel")}</Button>
   </div>
 {/if}
 
 {#if confirming}
   <ConfirmDialog
-    title="Remove this preset?"
-    confirmLabel="Remove it"
-    cancelLabel="Keep it"
+    title={t("setup.presets.confirmTitle")}
+    confirmLabel={t("common.delete")}
+    cancelLabel={t("common.keep")}
     onconfirm={remove}
     oncancel={() => (confirming = false)}
   >
-    This throws away the "{chosen}" preset. The characters picked right now stay as they
-    are.
+    {t("setup.presets.confirmBody", { name: chosen })}
   </ConfirmDialog>
 {/if}

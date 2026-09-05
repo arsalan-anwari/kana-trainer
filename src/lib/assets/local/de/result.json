@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "Perfekt",
+    "great": "Fast perfekt",
+    "good": "Starker Durchgang",
+    "fair": "Wird schon",
+    "poor": "Weiter üben"
+  },
+  "blurb": {
+    "perfect": "Keine einzige daneben.",
+    "great": "Ganz knapp am Vollen vorbei.",
+    "good": "Das meiste saß.",
+    "fair": "Die Form ist schon da.",
+    "poor": "Jeder Durchgang macht den nächsten leichter."
+  },
+  "skip": "Irgendwo tippen zum Überspringen",
+  "summary": "{correct} von {total} richtig in {seconds} s",
+  "stat": { "accuracy": "Trefferquote", "perQuestion": "pro Frage", "timedOut": "Zeit um" },
+  "again": "Noch einmal",
+  "practice": "Fehler üben",
+  "export": "Durchgang exportieren",
+  "allReports": "Ganzer Verlauf",
+  "back": "Zurück",
+  "exported": "Durchgang nach {file} exportiert",
+  "characters": { "title": "Zeichen", "description": "Die schwächsten zuerst." },
+  "rows": { "title": "Reihen", "description": "Wo es hakt." },
+  "missed": {
+    "title": "Fehler",
+    "description": "Alles, was daneben ging.",
+    "none": "Kein Fehler, gut gemacht.",
+    "timedOut": "Zeit abgelaufen",
+    "said": "du hast {given} geschrieben",
+    "nothing": "nichts",
+    "hiragana": "Hira",
+    "katakana": "Kata"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "title": "假名字表",
+  "description": "全部 147 个字符，按组按行排列。点一下即可听读音。",
+  "sounds": "{count} 个音",
+  "play": "播放 {romaji} {kata}",
+  "seion": "46 个基本字符。",
+  "dakuon": "か さ た は 行的浊音。",
+  "handakuon": "は 行的半浊音。",
+  "yoon": "与小写 ゃ ゅ ょ 拼合而成。",
+  "tokushon": "外来音，仅用片假名书写。"
+}

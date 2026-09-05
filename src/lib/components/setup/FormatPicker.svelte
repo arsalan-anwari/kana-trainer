@@ -3,22 +3,19 @@
   import { app } from "../../state.svelte";
   import Card from "../../ui/Card.svelte";
   import OptionCard from "../../ui/OptionCard.svelte";
+  import { t } from "../../i18n.svelte";
 
-  const formats: { value: Format; label: string; hint: string }[] = [
-    { value: "text-text", label: "Text only", hint: "Read a character, answer with text" },
-    { value: "audio-text", label: "Audio to text", hint: "Hear a sound, answer with text" },
-    { value: "text-audio", label: "Text to audio", hint: "Read a character, pick the sound" }
-  ];
+  const formats: Format[] = ["text-text", "audio-text", "text-audio"];
 </script>
 
-<Card title="Question format" description="How each question is shown and answered.">
+<Card title={t("setup.format.title")} description={t("setup.format.description")}>
   <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-    {#each formats as format (format.value)}
+    {#each formats as format (format)}
       <OptionCard
-        label={format.label}
-        hint={format.hint}
-        active={app.settings.format === format.value}
-        onclick={() => app.updateSettings({ format: format.value })}
+        label={t(`common.format.${format}`)}
+        hint={t(`setup.format.${format}`)}
+        active={app.settings.format === format}
+        onclick={() => app.updateSettings({ format })}
       />
     {/each}
   </div>

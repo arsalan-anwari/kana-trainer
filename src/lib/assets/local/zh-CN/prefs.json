@@ -1,0 +1,26 @@
+{
+  "theme": "主题",
+  "themeSystem": "跟随系统",
+  "themeLight": "浅色",
+  "themeDark": "深色",
+  "themeIs": {
+    "system": "主题：跟随系统",
+    "light": "主题：浅色",
+    "dark": "主题：深色"
+  },
+  "themeLocked": "高对比度已固定主题",
+  "contrast": "高对比度",
+  "contrastHint": "纯黑白，覆盖主题设置",
+  "zoom": "缩放",
+  "zoomIn": "放大",
+  "zoomOut": "缩小",
+  "scale": "比例",
+  "scaleHint": "整体调整界面大小",
+  "sound": "声音",
+  "effects": "音效",
+  "effectsHint": "点击与答题反馈",
+  "soundOn": "音效已开",
+  "soundOff": "音效已关",
+  "language": "语言",
+  "persist": "这些设置会一直保留。"
+}

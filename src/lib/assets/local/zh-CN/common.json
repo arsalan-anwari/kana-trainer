@@ -1,0 +1,62 @@
+{
+  "appName": "Kana Trainer",
+  "tagline": "平假名与片假名练习",
+  "settings": "设置",
+  "closeSettings": "关闭设置",
+  "cancel": "取消",
+  "save": "保存",
+  "apply": "应用",
+  "close": "关闭",
+  "delete": "删除",
+  "keep": "保留",
+  "hiragana": "平假名",
+  "katakana": "片假名",
+  "both": "两种",
+  "any": "全部",
+  "off": "关闭",
+  "custom": "自定义",
+  "pickValue": "选择数值",
+  "nav": {
+    "setup": "练习",
+    "reports": "记录",
+    "chart": "字表"
+  },
+  "group": {
+    "seion": "清音",
+    "dakuon": "浊音",
+    "handakuon": "半浊音",
+    "yoon": "拗音",
+    "tokushon": "特殊音"
+  },
+  "format": {
+    "text-text": "纯文字",
+    "audio-text": "听音写字",
+    "text-audio": "看字选音"
+  },
+  "answerStyle": {
+    "choice": "选择题",
+    "typing": "输入"
+  },
+  "direction": {
+    "kana-romaji": "假名转罗马音",
+    "romaji-kana": "罗马音转假名",
+    "mixed": "混合"
+  },
+  "difficulty": {
+    "beginner": "入门",
+    "advanced": "进阶",
+    "expert": "高手"
+  },
+  "rowLabel": "{letter} 行",
+  "file": {
+    "filterName": "Kana Trainer 记录",
+    "writeFailed": "无法写入该文件。",
+    "readFailed": "无法读取该文件。",
+    "tooShort": "该文件太小，不是 .kt-report 文件。",
+    "notReport": "这不是 .kt-report 文件。",
+    "newer": "该文件由更新版本写入（格式 {version}）。",
+    "incomplete": "该 .kt-report 文件不完整。",
+    "damaged": "该 .kt-report 文件已损坏。",
+    "badRun": "该 .kt-report 文件中有无法读取的记录。"
+  }
+}

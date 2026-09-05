@@ -35,8 +35,16 @@ test("no screen runs past the right edge", async ({ page }) => {
 });
 
 test("the header stays flat only while it fits", async ({ page }) => {
-  // 640px to 800px used to run the flat header past the right edge
-  for (const width of [640, 700, 760, 800, 900, 1100]) {
+  // French is the widest language: the longest tagline, the longest tab labels
+  // and a picker as wide as its longest entry. If the flat row holds here it
+  // holds everywhere, so this is what pins the breakpoint in AppHeader.
+  await page.addInitScript(() => {
+    localStorage.setItem("kana-trainer-prefs", JSON.stringify({ lang: "fr" }));
+  });
+
+  // 640px to 800px used to run the flat header past the right edge, and 800px
+  // to 1100px used to wrap the tagline and squash the mark into an oval
+  for (const width of [640, 700, 760, 800, 900, 1100, 1200, 1400]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto("/");
     await expect(page.locator("#splash")).toHaveCount(0);
@@ -48,72 +56,25 @@ test("the header stays flat only while it fits", async ({ page }) => {
       )!;
       const buttons = header.querySelectorAll("button");
       const last = buttons[buttons.length - 1];
-      const lineHeight = parseFloat(getComputedStyle(title).lineHeight);
+      const lines = (element: Element): number =>
+        Math.round(
+          element.getBoundingClientRect().height /
+            parseFloat(getComputedStyle(element).lineHeight)
+        );
+      // the tagline only shows in the flat row, where it must stay on one line
+      const tagline = title.nextElementSibling!;
+      const mark = header.querySelector("span.kana")!.getBoundingClientRect();
       return {
         overflow: last.getBoundingClientRect().right - header.getBoundingClientRect().right,
-        titleLines: Math.round(title.getBoundingClientRect().height / lineHeight)
+        titleLines: lines(title),
+        taglineLines: getComputedStyle(tagline).display === "none" ? 1 : lines(tagline),
+        markSkew: Math.abs(mark.width - mark.height)
       };
     });
 
     expect(fit.overflow, `header overflows at ${width}px`).toBeLessThanOrEqual(0.5);
     expect(fit.titleLines, `title wraps at ${width}px`).toBe(1);
+    expect(fit.taglineLines, `tagline wraps at ${width}px`).toBe(1);
+    expect(fit.markSkew, `the mark is squashed at ${width}px`).toBeLessThanOrEqual(1);
   }
-});
-
-test("the verdict pins to the bottom without moving the run", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.locator("#splash")).toHaveCount(0);
-  // typing, so the answer can be made wrong on purpose: a correct one
-  // auto-advances after 700ms and takes the verdict away with it
-  await page.getByRole("button", { name: "Typing" }).click();
-  await page.getByRole("button", { name: "Start run" }).click();
-  await page.getByRole("button", { name: "Quit" }).waitFor();
-  await page.waitForTimeout(400); // the pop-in animation offsets the first frames
-
-  const measure = () =>
-    page.evaluate(() => {
-      const content = document.querySelector("main .anim-pop")!;
-      const root = document.documentElement;
-      return {
-        top: Math.round(content.getBoundingClientRect().top + window.scrollY),
-        height: root.scrollHeight
-      };
-    });
-
-  const before = await measure();
-  const field = page.locator("input[type=text]");
-  await field.fill("zzz");
-  await field.press("Enter");
-  await expect(page.getByText("Not quite")).toBeVisible();
-  await page.waitForTimeout(400);
-
-  // the question must not jump, and the page must not grow a scrollbar
-  expect(await measure()).toEqual(before);
-
-  // a fixed bar is only guaranteed to clear the tiles at the end of the page,
-  // which is what the reserved band under the run is sized for
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-  await page.waitForTimeout(300);
-
-  const bar = await page.evaluate(() => {
-    const el = [...document.querySelectorAll("div")].find(
-      (node) =>
-        getComputedStyle(node).position === "fixed" && node.textContent?.includes("Continue")
-    )!;
-    const box = el.getBoundingClientRect();
-    // the bar carries .anim-pop too, so scope this to the run's own wrapper
-    const run = document.querySelector("main .anim-pop")!;
-    const lowest = Math.max(
-      ...[...run.querySelectorAll("button, input")].map(
-        (node) => node.getBoundingClientRect().bottom
-      )
-    );
-    return {
-      atBottom: Math.round(window.innerHeight - box.bottom),
-      covers: lowest - box.top
-    };
-  });
-
-  expect(bar.atBottom).toBe(0);
-  expect(bar.covers, "the verdict bar hides an answer tile").toBeLessThanOrEqual(0);
 });

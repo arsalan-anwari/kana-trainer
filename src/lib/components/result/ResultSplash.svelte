@@ -2,6 +2,7 @@
   import { tierBlurb, tierEmoji, tierHeadline, type ScoreTier } from "../../core/score";
   import type { Summary } from "../../core/report";
   import { app } from "../../state.svelte";
+  import { t } from "../../i18n.svelte";
 
   // Grade emoji and confetti shown briefly before the score report.
 
@@ -225,7 +226,7 @@
       <span class="text-muted-foreground">· {Math.round(summary.accuracy * 100)}%</span>
     </span>
     <span class="mt-2 text-xs uppercase tracking-wide text-muted-foreground">
-      Tap anywhere to skip
+      {t("result.skip")}
     </span>
   </div>
 </div>

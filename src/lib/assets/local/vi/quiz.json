@@ -1,0 +1,28 @@
+{
+  "prompt": {
+    "listen": "Nghe rồi chọn",
+    "pickSound": "Chọn âm đúng",
+    "whichRomaji": "Romaji nào đây",
+    "whichKana": "Ký tự nào đây",
+    "replay": "Nghe lại"
+  },
+  "typing": { "kana": "Gõ kana", "romaji": "Gõ romaji", "either": "Kana hoặc romaji" },
+  "check": "Kiểm tra",
+  "soundTile": "Âm {slot}",
+  "soundHint": "Chạm một âm để nghe, rồi kiểm tra.",
+  "quit": "Thoát",
+  "score": "Đúng {count} câu",
+  "correct": "Chính xác",
+  "wrong": "Chưa đúng",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "cũng đọc {list}",
+  "continue": "Tiếp tục",
+  "stop": {
+    "title": "Dừng phiên này?",
+    "nothing": "Chưa trả lời câu nào, không có gì để lưu.",
+    "discard_other": "Chỉ phiên hoàn thành mới được chấm. {count} câu đã trả lời sẽ bị bỏ.",
+    "left_other": "Còn {count} câu.",
+    "confirm": "Dừng và bỏ",
+    "cancel": "Tiếp tục"
+  }
+}

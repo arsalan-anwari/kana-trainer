@@ -2,6 +2,7 @@
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
   import Progress from "../../ui/Progress.svelte";
+  import { t } from "../../i18n.svelte";
 
   const totalLabel = $derived.by(() => {
     if (app.totalRemaining === null) return null;
@@ -13,7 +14,7 @@
 
 <div class="flex flex-col gap-1.5 sm:gap-3">
   <div class="flex items-center gap-2 sm:gap-3">
-    <Button size="sm" variant="ghost" onclick={() => app.askQuit()}>Quit</Button>
+    <Button size="sm" variant="ghost" onclick={() => app.askQuit()}>{t("quiz.quit")}</Button>
     <Progress value={app.progress} class="flex-1" />
     <span class="shrink-0 text-sm font-semibold tabular-nums">
       {app.index + 1} / {app.questions.length}
@@ -30,6 +31,6 @@
   </div>
   <!-- running score, kept to one thin line -->
   <span class="px-1 text-xs font-semibold text-muted-foreground tabular-nums">
-    {app.score} correct
+    {t("quiz.score", { count: app.score })}
   </span>
 </div>

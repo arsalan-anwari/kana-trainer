@@ -1,0 +1,78 @@
+{
+  "alphabets": { "title": "Alfabetos", "description": "Elige lo que verás." },
+  "format": {
+    "title": "Formato",
+    "description": "Cómo se plantea cada pregunta.",
+    "text-text": "Ver un carácter, responder con texto",
+    "audio-text": "Oír un sonido, responder con texto",
+    "text-audio": "Ver un carácter, elegir el sonido"
+  },
+  "answerStyle": {
+    "title": "Respuesta",
+    "description": "Toca una opción o escríbela.",
+    "choice": "Una de 4",
+    "choiceAudio": "Las opciones siempre son kana",
+    "typing": "Escribe la respuesta",
+    "typingAudio": "Kana o romaji"
+  },
+  "direction": {
+    "title": "Dirección",
+    "description": "Con qué lado respondes.",
+    "kana-romaji": "Responde en romaji",
+    "romaji-kana": "Responde en kana",
+    "mixed": "Ambos al azar"
+  },
+  "characters": {
+    "title": "Caracteres",
+    "description": "Toca el nombre de una fila para tomarla entera.",
+    "editAlphabet": "Alfabeto a editar",
+    "selectAll": "Todos",
+    "clear": "Ninguno"
+  },
+  "run": { "title": "Opciones", "description": "Qué entra en la sesión y cuánto dura." },
+  "sets": {
+    "title": "Grupos extra",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ y el resto",
+    "tokushon": "ファ ティ ヴァ, solo katakana"
+  },
+  "questions": { "title": "Preguntas", "count": "Número de preguntas", "onePass": "Una vuelta" },
+  "difficulty": {
+    "title": "Dificultad",
+    "beginner": "Las opciones falsas son al azar",
+    "advanced": "Una opción falsa se parece",
+    "expert": "Todas las opciones falsas se parecen",
+    "tooFew": "Hacen falta {min} caracteres para que importe.",
+    "choiceOnly": "Solo en opción múltiple."
+  },
+  "time": {
+    "perQuestion": "Por pregunta",
+    "wholeRun": "Sesión entera",
+    "seconds": "Segundos por pregunta",
+    "minutes": "Minutos por sesión"
+  },
+  "presets": {
+    "label": "Preajuste",
+    "some": "Preajustes",
+    "none": "Sin preajustes",
+    "update": "Actualizar preajuste",
+    "create": "Nuevo preajuste",
+    "restore": "Cargar preajuste",
+    "delete": "Eliminar preajuste",
+    "name": "Nombre del preajuste",
+    "confirmTitle": "¿Eliminar este preajuste?",
+    "confirmBody": "Elimina el preajuste «{name}». Tu selección actual no cambia."
+  },
+  "start": {
+    "inPlay": "Caracteres en juego",
+    "button": "Empezar",
+    "empty": "Elige al menos un carácter que sirva para este modo."
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana activado: hace falta al menos un alfabeto.",
+    "audioNeedsChoice": "Responder con audio usa opción múltiple.",
+    "audioTextDirection": "Audio a texto no tiene dirección; se acepta kana o romaji.",
+    "textAudioDirection": "Texto a audio siempre parte del carácter."
+  }
+}

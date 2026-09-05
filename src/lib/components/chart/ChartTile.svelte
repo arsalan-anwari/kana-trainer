@@ -2,6 +2,7 @@
   import { kanaAudio } from "../../audio";
   import type { Kana } from "../../core/kana";
   import PlayIcon from "../../ui/PlayIcon.svelte";
+  import { t } from "../../i18n.svelte";
 
   let { kana }: { kana: Kana } = $props();
 
@@ -10,7 +11,7 @@
 
 <button
   type="button"
-  aria-label="Play {kana.romaji} {kana.kata}"
+  aria-label={t("chart.play", { romaji: kana.romaji, kata: kana.kata })}
   aria-pressed={playing}
   class="group relative flex aspect-[3/2] w-full cursor-pointer flex-col items-center justify-center gap-1 sm:aspect-square overflow-hidden rounded-xl border transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
     ? 'border-2 border-selected bg-selected-soft text-foreground'

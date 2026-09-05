@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "Sempurna",
+    "great": "Nyaris sempurna",
+    "good": "Sesi yang bagus",
+    "fair": "Mulai kelihatan",
+    "poor": "Terus berlatih"
+  },
+  "blurb": {
+    "perfect": "Tidak satu pun meleset.",
+    "great": "Tinggal sedikit lagi bersih.",
+    "good": "Sebagian besar kena.",
+    "fair": "Polanya sudah mulai terasa.",
+    "poor": "Tiap sesi membuat yang berikutnya lebih mudah."
+  },
+  "skip": "Ketuk di mana saja untuk lewat",
+  "summary": "{correct} dari {total} benar dalam {seconds} d",
+  "stat": { "accuracy": "ketepatan", "perQuestion": "per soal", "timedOut": "habis waktu" },
+  "again": "Ulangi",
+  "practice": "Latih yang salah",
+  "export": "Ekspor sesi ini",
+  "allReports": "Semua riwayat",
+  "back": "Kembali",
+  "exported": "Sesi diekspor ke {file}",
+  "characters": { "title": "Huruf", "description": "Yang terlemah dulu." },
+  "rows": { "title": "Baris", "description": "Di mana letak masalahnya." },
+  "missed": {
+    "title": "Yang salah",
+    "description": "Semua yang tidak kamu jawab benar.",
+    "none": "Tidak ada yang meleset, bagus.",
+    "timedOut": "kehabisan waktu",
+    "said": "kamu menjawab {given}",
+    "nothing": "kosong",
+    "hiragana": "hira",
+    "katakana": "kata"
+  }
+}

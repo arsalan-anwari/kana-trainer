@@ -1,5 +1,6 @@
 import { decodeReportFile, encodeReportFile, FILE_EXTENSION } from "./core/ktreport";
 import type { Report } from "./core/report";
+import { t } from "./i18n.svelte";
 
 const REPORT_KEY = "kana-trainer-reports";
 
@@ -55,7 +56,10 @@ function suggestedName(count: number): string {
   return `kana-runs-${stamp}-${count}.${FILE_EXTENSION}`;
 }
 
-const fileFilters = [{ name: "Kana Trainer runs", extensions: [FILE_EXTENSION] }];
+// built per call, the label follows the language the user picked
+const fileFilters = (): { name: string; extensions: string[] }[] => [
+  { name: t("common.file.filterName"), extensions: [FILE_EXTENSION] }
+];
 
 export function fileLabel(path: string): string {
   if (!path.startsWith("content://")) return path;
@@ -73,7 +77,7 @@ export async function exportReports(reports: Report[]): Promise<string | null> {
     const { save } = await import("@tauri-apps/plugin-dialog");
     const path = await save({
       defaultPath: suggestedName(reports.length),
-      filters: fileFilters
+      filters: fileFilters()
     });
     if (path === null) return null;
     await call<null>("write_report_file", { path, data: [...bytes] });
@@ -119,7 +123,7 @@ export async function importReports(): Promise<ImportResult | null> {
   let bytes: Uint8Array | null;
   if (inTauri()) {
     const { open } = await import("@tauri-apps/plugin-dialog");
-    const path = await open({ multiple: false, filters: fileFilters });
+    const path = await open({ multiple: false, filters: fileFilters() });
     if (path === null || Array.isArray(path)) return null;
     const data = await call<number[]>("read_report_file", { path });
     bytes = Uint8Array.from(data);

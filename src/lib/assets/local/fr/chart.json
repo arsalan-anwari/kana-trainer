@@ -1,0 +1,11 @@
+{
+  "title": "Tableau des caractères",
+  "description": "Les 147 caractères par groupe et par ligne. Touchez-en un pour l'entendre.",
+  "sounds": "{count} sons",
+  "play": "Écouter {romaji} {kata}",
+  "seion": "Les 46 caractères de base.",
+  "dakuon": "Lignes か さ た は voisées.",
+  "handakuon": "Ligne は semi-voisée.",
+  "yoon": "Contractés avec un petit ゃ ゅ ょ.",
+  "tokushon": "Sons empruntés, en katakana seulement."
+}

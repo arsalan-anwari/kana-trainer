@@ -4,6 +4,8 @@ export type Theme = "system" | "light" | "dark";
 
 export type Prefs = {
   effects: boolean;
+  // BCP-47 tag, or "auto" to follow the system
+  lang: string;
   theme: Theme;
   // high contrast overrides the theme
   contrast: boolean;
@@ -13,6 +15,7 @@ export type Prefs = {
 
 export const defaultPrefs: Prefs = {
   effects: true,
+  lang: "auto",
   theme: "system",
   contrast: false,
   zoom: 1

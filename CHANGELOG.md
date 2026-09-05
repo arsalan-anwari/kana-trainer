@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.3] - 2026-09-05
+
+### Added
+
+- Twelve languages beside English, picked from the header or left on "auto" to follow the system.
+- Charts for the reports: a per-row accuracy heatmap, an accuracy grid over every kana and a hiragana/katakana split.
+- Report filters for time window, format, answer style and alphabet.
+- A "Custom" chip in the question count picker that turns into a typed number.
+
+### Changed
+
+- Every visible string now comes from the locale files instead of being written into the components.
+
 ## [1.7.2] - 2026-09-04
 
 ### Added
@@ -283,6 +296,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.7.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.3
 [1.7.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.2
 [1.7.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.1
 [1.7.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.0

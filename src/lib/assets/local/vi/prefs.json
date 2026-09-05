@@ -1,0 +1,26 @@
+{
+  "theme": "Giao diện",
+  "themeSystem": "Theo hệ thống",
+  "themeLight": "Sáng",
+  "themeDark": "Tối",
+  "themeIs": {
+    "system": "Giao diện: hệ thống",
+    "light": "Giao diện: sáng",
+    "dark": "Giao diện: tối"
+  },
+  "themeLocked": "Tương phản cao đang khoá giao diện",
+  "contrast": "Tương phản cao",
+  "contrastHint": "Đen trắng, đè lên giao diện",
+  "zoom": "Phóng to",
+  "zoomIn": "Phóng to",
+  "zoomOut": "Thu nhỏ",
+  "scale": "Tỉ lệ",
+  "scaleHint": "Đổi kích thước cả ứng dụng",
+  "sound": "Âm thanh",
+  "effects": "Hiệu ứng âm thanh",
+  "effectsHint": "Tiếng bấm và phản hồi đáp án",
+  "soundOn": "Đã bật âm thanh",
+  "soundOff": "Đã tắt âm thanh",
+  "language": "Ngôn ngữ",
+  "persist": "Các mục này được giữ lại."
+}

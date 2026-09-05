@@ -1,0 +1,11 @@
+{
+  "title": "Zeichentabelle",
+  "description": "Alle 147 Zeichen nach Gruppe und Reihe. Zum Anhören antippen.",
+  "sounds": "{count} Laute",
+  "play": "{romaji} {kata} abspielen",
+  "seion": "Die 46 Grundzeichen.",
+  "dakuon": "Stimmhafte か- さ- た- は-Reihen.",
+  "handakuon": "Halbstimmhafte は-Reihe.",
+  "yoon": "Verschmolzen mit kleinem ゃ ゅ ょ.",
+  "tokushon": "Lehnlaute, nur in Katakana."
+}

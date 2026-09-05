@@ -1,4 +1,5 @@
 import type { Group, Script } from "./kana";
+import { t } from "../i18n.svelte";
 
 export type Format = "text-text" | "audio-text" | "text-audio";
 export type AnswerStyle = "choice" | "typing";
@@ -38,6 +39,16 @@ export type OptionalGroup = (typeof optionalGroups)[number];
 
 export const perQuestionOptions = [0, 5, 10, 15, 30];
 export const totalTimeOptions = [0, 60, 120, 300, 600];
+
+// Hand picked timers reach further than the presets: 1 to 100 seconds per
+// question, 1 to 100 minutes for the whole run.
+export const customPerQuestionMax = 100;
+export const customTotalMinutesMax = 100;
+
+// Whether a timer sits outside the presets it is shown beside.
+export function isCustomTime(seconds: number, options: number[]): boolean {
+  return seconds > 0 && !options.includes(seconds);
+}
 
 // Preset counts, as the two rows of five the setup screen draws.
 export const questionCountRows = [
@@ -156,6 +167,7 @@ export function usesAudio(format: Format): boolean {
   return format !== "text-text";
 }
 
+// Notes come back as translation keys, the screen that shows them translates.
 export function normalizeSettings(settings: RunSettings): {
   settings: RunSettings;
   notes: string[];
@@ -165,22 +177,22 @@ export function normalizeSettings(settings: RunSettings): {
 
   if (next.scripts.length === 0) {
     next.scripts = ["hiragana"];
-    notes.push("At least one alphabet is needed, hiragana was enabled.");
+    notes.push("setup.notes.needsAlphabet");
   }
 
   if (next.format === "text-audio" && next.answerStyle === "typing") {
     next.answerStyle = "choice";
-    notes.push("Answering with audio always uses multiple choice.");
+    notes.push("setup.notes.audioNeedsChoice");
   }
 
   if (next.format === "audio-text" && next.direction !== "romaji-kana") {
     next.direction = "romaji-kana";
-    notes.push("Audio to text has no direction setting, typing accepts kana or romaji.");
+    notes.push("setup.notes.audioTextDirection");
   }
 
   if (next.format === "text-audio" && next.direction !== "kana-romaji") {
     next.direction = "kana-romaji";
-    notes.push("Text to audio always starts from the kana character.");
+    notes.push("setup.notes.textAudioDirection");
   }
 
   return { settings: next, notes };
@@ -198,25 +210,19 @@ export function isCustomCount(count: number): boolean {
 }
 
 export function formatLabel(format: Format): string {
-  if (format === "audio-text") return "Audio to text";
-  if (format === "text-audio") return "Text to audio";
-  return "Text only";
+  return t(`common.format.${format}`);
 }
 
 export function answerStyleLabel(style: AnswerStyle): string {
-  return style === "typing" ? "Typing" : "Multiple choice";
+  return t(`common.answerStyle.${style}`);
 }
 
 export function directionLabel(direction: Direction): string {
-  if (direction === "romaji-kana") return "Romaji to kana";
-  if (direction === "mixed") return "Mixed";
-  return "Kana to romaji";
+  return t(`common.direction.${direction}`);
 }
 
 export function difficultyLabel(difficulty: Difficulty): string {
-  if (difficulty === "advanced") return "Advanced";
-  if (difficulty === "expert") return "Expert";
-  return "Beginner";
+  return t(`common.difficulty.${difficulty}`);
 }
 
 // How many of the three wrong answers should be look alikes.

@@ -1,0 +1,51 @@
+{
+  "appName": "Kana Trainer",
+  "tagline": "히라가나·가타카나 연습",
+  "settings": "설정",
+  "closeSettings": "설정 닫기",
+  "cancel": "취소",
+  "save": "저장",
+  "apply": "적용",
+  "close": "닫기",
+  "delete": "삭제",
+  "keep": "유지",
+  "hiragana": "히라가나",
+  "katakana": "가타카나",
+  "both": "둘 다",
+  "any": "전체",
+  "off": "끔",
+  "custom": "직접 입력",
+  "pickValue": "값 선택",
+  "nav": { "setup": "연습", "reports": "기록", "chart": "표" },
+  "group": {
+    "seion": "청음",
+    "dakuon": "탁음",
+    "handakuon": "반탁음",
+    "yoon": "요음",
+    "tokushon": "특수음"
+  },
+  "format": {
+    "text-text": "글자만",
+    "audio-text": "소리 듣고 쓰기",
+    "text-audio": "글자 보고 소리 고르기"
+  },
+  "answerStyle": { "choice": "객관식", "typing": "직접 입력" },
+  "direction": {
+    "kana-romaji": "가나 → 로마자",
+    "romaji-kana": "로마자 → 가나",
+    "mixed": "섞기"
+  },
+  "difficulty": { "beginner": "입문", "advanced": "중급", "expert": "고급" },
+  "rowLabel": "{letter}행",
+  "file": {
+    "filterName": "Kana Trainer 기록",
+    "writeFailed": "파일을 쓸 수 없습니다.",
+    "readFailed": "파일을 읽을 수 없습니다.",
+    "tooShort": "파일이 너무 짧아 .kt-report 파일이 아닙니다.",
+    "notReport": ".kt-report 파일이 아닙니다.",
+    "newer": "더 새로운 버전으로 저장된 파일입니다 (형식 {version}).",
+    "incomplete": "이 .kt-report 파일은 불완전합니다.",
+    "damaged": "이 .kt-report 파일은 손상되었습니다.",
+    "badRun": "이 .kt-report 파일에 읽을 수 없는 기록이 있습니다."
+  }
+}

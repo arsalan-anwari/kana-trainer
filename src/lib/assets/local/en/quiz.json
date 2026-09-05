@@ -1,0 +1,34 @@
+{
+  "prompt": {
+    "listen": "Listen and pick",
+    "pickSound": "Pick the sound",
+    "whichRomaji": "Which romaji is this",
+    "whichKana": "Which character is this",
+    "replay": "Play the sound again"
+  },
+  "typing": {
+    "kana": "Type the kana",
+    "romaji": "Type the romaji",
+    "either": "Kana or romaji"
+  },
+  "check": "Check",
+  "soundTile": "Sound {slot}",
+  "soundHint": "Tap a sound to hear it, then check.",
+  "quit": "Quit",
+  "score": "{count} correct",
+  "correct": "Correct",
+  "wrong": "Not quite",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "also {list}",
+  "continue": "Continue",
+  "stop": {
+    "title": "Stop this run?",
+    "nothing": "Nothing answered yet, nothing to save.",
+    "discard_one": "Only a finished run is scored. Your 1 answer is thrown away.",
+    "discard_other": "Only a finished run is scored. Your {count} answers are thrown away.",
+    "left_one": "1 question left.",
+    "left_other": "{count} questions left.",
+    "confirm": "Stop and discard",
+    "cancel": "Keep going"
+  }
+}

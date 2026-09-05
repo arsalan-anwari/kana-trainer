@@ -1,0 +1,98 @@
+{
+  "window": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "week": "Last week",
+    "all": "All",
+    "custom": "Custom",
+    "range": "{from} to {to}"
+  },
+  "range": {
+    "pick": "Pick a date range",
+    "title": "Date range",
+    "close": "Close the date range",
+    "from": "From",
+    "to": "To",
+    "mask": "DD/MM/YYYY",
+    "invalidPicked": "Start on or before the end, and no earlier than {earliest}.",
+    "invalidTyped": "Use DD/MM/YYYY, start on or before the end, no earlier than {earliest}."
+  },
+  "filters": {
+    "title": "Filters",
+    "clear": "Clear filters",
+    "format": "Question format",
+    "answering": "Answering",
+    "alphabet": "Alphabet"
+  },
+  "list": {
+    "shown": "{count} shown",
+    "pickedOf": "{picked} of {total}",
+    "selectAll": "Select every run shown",
+    "clearSelection": "Clear the selection",
+    "remove": "Delete {target}",
+    "export": "Export {target}",
+    "import": "Import runs from a file",
+    "score": "{correct}/{total} correct, {percent}%",
+    "empty": "No reports yet. Finish a run and it lands here.",
+    "noMatch": "No runs match these filters."
+  },
+  "target": {
+    "shown_one": "the run shown",
+    "shown_other": "all {count} runs shown",
+    "picked_one": "1 selected run",
+    "picked_other": "{count} selected runs"
+  },
+  "confirm": {
+    "title_one": "Delete this run?",
+    "title_other": "Delete {count} runs?",
+    "yes_one": "Delete the run",
+    "yes_other": "Delete {count} runs",
+    "no_one": "Keep it",
+    "no_other": "Keep them",
+    "bodyShown": "Deletes every run in view for good. Export them first to keep a copy.",
+    "bodyPicked": "Deletes the runs you picked for good. Export them first to keep a copy."
+  },
+  "deleted_one": "Deleted 1 run.",
+  "deleted_other": "Deleted {count} runs.",
+  "runs_one": "1 run",
+  "runs_other": "{count} runs",
+  "exported": "Exported {runs} to {file}",
+  "imported": "Imported {runs}.",
+  "importedSome": "Imported {runs}, {skipped} already here.",
+  "selected": "{count} runs selected",
+  "overall": "{correct} of {total} correct, {percent}% overall",
+  "practice": "Practice these mistakes",
+  "noMistakes": "No mistakes to practice.",
+  "loadedMistakes": "Loaded {count} characters you missed.",
+  "weakest": {
+    "title": "Weakest characters",
+    "description": "Tinted by accuracy, the bar is how often it came up.",
+    "empty": "Finish a run to see character stats."
+  },
+  "rows": {
+    "title": "Rows",
+    "description": "The kana table, tinted by how each row is going.",
+    "empty": "No rows yet."
+  },
+  "alphabets": {
+    "title": "Alphabets",
+    "description": "How each one is going and how much it carried.",
+    "share": "{percent}% of the questions"
+  },
+  "mistakes": {
+    "title": "Mistakes by group",
+    "description": "Every character you missed, by set, row and alphabet.",
+    "none": "Nothing missed here.",
+    "miss_one": "1 miss",
+    "miss_other": "{count} misses"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} of {total} right",
+    "never": "{romaji}, never came up",
+    "missed": "{romaji}, missed {misses} of {total}",
+    "rowRight": "{correct} of {total} right",
+    "cell": "{sub}, {correct} of {total} right"
+  },
+  "noData": "No data yet",
+  "ofTotal": "of {total}"
+}

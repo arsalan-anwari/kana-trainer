@@ -1,0 +1,47 @@
+{
+  "tier": {
+    "perfect": "Perfect",
+    "great": "Nearly perfect",
+    "good": "Strong run",
+    "fair": "Getting there",
+    "poor": "Keep practicing"
+  },
+  "blurb": {
+    "perfect": "Not one missed.",
+    "great": "So close to a clean sheet.",
+    "good": "Most of them landed.",
+    "fair": "The shape of it is there.",
+    "poor": "Every run makes the next one easier."
+  },
+  "skip": "Tap anywhere to skip",
+  "summary": "{correct} of {total} correct in {seconds}s",
+  "stat": {
+    "accuracy": "accuracy",
+    "perQuestion": "per question",
+    "timedOut": "timed out"
+  },
+  "again": "Run it again",
+  "practice": "Practice mistakes",
+  "export": "Export this run",
+  "allReports": "All reports",
+  "back": "Back to setup",
+  "exported": "Exported this run to {file}",
+  "characters": {
+    "title": "Characters",
+    "description": "Weakest first."
+  },
+  "rows": {
+    "title": "Rows",
+    "description": "Where the trouble sits."
+  },
+  "missed": {
+    "title": "Missed answers",
+    "description": "Everything you got wrong.",
+    "none": "Nothing missed, well done.",
+    "timedOut": "ran out of time",
+    "said": "you said {given}",
+    "nothing": "nothing",
+    "hiragana": "hira",
+    "katakana": "kata"
+  }
+}

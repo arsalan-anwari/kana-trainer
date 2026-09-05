@@ -1,18 +1,29 @@
 import { describe, expect, it } from "vitest";
 import type { Answer } from "../src/lib/core/quiz";
+import type { Script } from "../src/lib/core/kana";
 import {
+  anyQuery,
   dayInputText,
   dayKeyFromInput,
   filterReports,
+  heatByRow,
   maskDay,
   missesByGroup,
+  queryLabels,
+  queryReports,
+  scriptsSeen,
   statsByKana,
   statsByRow,
   summarize,
   weakKanaIds,
+  windowLabel,
   type Report
 } from "../src/lib/core/report";
-import { defaultSettings } from "../src/lib/core/settings";
+import {
+  defaultSettings,
+  type AnswerStyle,
+  type Format
+} from "../src/lib/core/settings";
 
 function answer(kanaId: string, correct: boolean, elapsedMs = 1000): Answer {
   return { kanaId, script: "hiragana", correct, timedOut: false, elapsedMs, given: "" };
@@ -189,5 +200,86 @@ describe("typed date fields", () => {
     expect(dayInputText("2026-09-03")).toBe("03/09/2026");
     expect(dayKeyFromInput(dayInputText("2025-12-31"))).toBe("2025-12-31");
     expect(dayInputText("nope")).toBe("");
+  });
+});
+
+describe("tag and alphabet filters", () => {
+  function run(
+    id: string,
+    format: Format,
+    answerStyle: AnswerStyle,
+    scripts: Script[]
+  ): Report {
+    const stamp = new Date().toISOString();
+    return {
+      id,
+      createdAt: stamp,
+      durationMs: 1000,
+      settings: { ...defaultSettings, format, answerStyle, scripts },
+      answers: [
+        { kanaId: "a", script: scripts[0], correct: true, timedOut: false, elapsedMs: 900, given: "a" }
+      ]
+    };
+  }
+
+  const runs = [
+    run("plain-choice", "text-text", "choice", ["hiragana"]),
+    run("plain-typing", "text-text", "typing", ["katakana"]),
+    run("audio-choice", "audio-text", "choice", ["hiragana", "katakana"])
+  ];
+
+  const ids = (query: Parameters<typeof queryReports>[1]): string[] =>
+    queryReports(runs, query).map((report) => report.id);
+
+  it("keeps everything with no tags picked", () => {
+    expect(ids(anyQuery)).toEqual(["plain-choice", "plain-typing", "audio-choice"]);
+  });
+
+  it("widens inside a dimension and narrows across them", () => {
+    expect(ids({ ...anyQuery, tags: ["text-text", "audio-text"] })).toHaveLength(3);
+    expect(ids({ ...anyQuery, tags: ["text-text", "typing"] })).toEqual(["plain-typing"]);
+  });
+
+  it("buckets a mixed run apart from the single alphabet ones", () => {
+    expect(ids({ ...anyQuery, alphabet: "hiragana" })).toEqual(["plain-choice"]);
+    expect(ids({ ...anyQuery, alphabet: "katakana" })).toEqual(["plain-typing"]);
+    expect(ids({ ...anyQuery, alphabet: "both" })).toEqual(["audio-choice"]);
+  });
+
+  it("names the window on its own, a hand picked range included", () => {
+    expect(windowLabel("all")).toBe("All");
+    expect(windowLabel("week")).toBe("Last week");
+    expect(windowLabel({ from: "2026-01-01", to: "2026-02-01" })).toBe("Custom");
+  });
+
+  it("lists the tags in a fixed order, not the order they were clicked", () => {
+    expect(queryLabels(anyQuery)).toEqual([]);
+    expect(
+      queryLabels({ ...anyQuery, tags: ["typing", "text-text"], alphabet: "both" })
+    ).toEqual(["Text only", "Typing", "Both"]);
+  });
+});
+
+describe("row heat", () => {
+  const seen: Answer[] = [
+    { kanaId: "a", script: "hiragana", correct: true, timedOut: false, elapsedMs: 1, given: "" },
+    { kanaId: "i", script: "hiragana", correct: false, timedOut: false, elapsedMs: 1, given: "" },
+    { kanaId: "ka", script: "katakana", correct: true, timedOut: false, elapsedMs: 1, given: "" }
+  ];
+
+  it("keeps only the rows the alphabet actually saw, gaps and all", () => {
+    const heat = heatByRow(seen, "hiragana");
+    expect(heat.map((row) => row.id)).toEqual(["a"]);
+    expect(heat[0].accuracy).toBe(0.5);
+    // the whole row stays in place, the untouched characters read as never seen
+    expect(heat[0].cells).toHaveLength(5);
+    expect(heat[0].cells.filter((cell) => cell.total === 0)).toHaveLength(3);
+  });
+
+  it("reports which alphabets turned up at all", () => {
+    expect(scriptsSeen(seen)).toEqual(["hiragana", "katakana"]);
+    expect(scriptsSeen(seen.filter((answer) => answer.script === "katakana"))).toEqual([
+      "katakana"
+    ]);
   });
 });

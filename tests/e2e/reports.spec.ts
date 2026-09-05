@@ -52,10 +52,10 @@ test("runs export to one file, and import back after being removed", async ({ pa
   const bytes = await readFile(file);
   expect(bytes.subarray(0, 8).toString("ascii")).toBe("KTREPORT");
 
-  await page.getByRole("button", { name: /^Remove all 2 runs shown/ }).click();
-  await expect(page.getByRole("alertdialog")).toContainText("Remove 2 runs?");
-  await page.getByRole("button", { name: "Remove 2 runs" }).click();
-  await expect(page.getByText("Removed 2 runs.")).toBeVisible();
+  await page.getByRole("button", { name: /^Delete all 2 runs shown/ }).click();
+  await expect(page.getByRole("alertdialog")).toContainText("Delete 2 runs?");
+  await page.getByRole("button", { name: "Delete 2 runs" }).click();
+  await expect(page.getByText("Deleted 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual([]);
 
   // the file goes through the chooser rather than a page input
@@ -80,17 +80,18 @@ test("runs export to one file, and import back after being removed", async ({ pa
 test("cancelling the delete dialog keeps the runs", async ({ page }) => {
   await openReports(page, seed);
 
-  await page.getByRole("button", { name: /^Remove all 2 runs shown/ }).click();
+  await page.getByRole("button", { name: /^Delete all 2 runs shown/ }).click();
   await page.getByRole("button", { name: "Keep them" }).click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 });
 
-test("the summary heading follows the date filter", async ({ page }) => {
+test("the summary heading follows the date filter and the tags", async ({ page }) => {
   await openReports(page, seed);
 
   const heading = page.locator("span.text-h2");
-  await expect(heading).toHaveText("All runs");
+  const tags = page.locator("span.text-h2 ~ div span");
+  await expect(heading).toHaveText("All");
 
   // the seeded runs are from today, so yesterday holds none of them and the
   // heading must not keep claiming it covers everything
@@ -98,5 +99,18 @@ test("the summary heading follows the date filter", async ({ page }) => {
   await expect(heading).toHaveText("Yesterday");
 
   await page.getByRole("button", { name: "All", exact: true }).click();
-  await expect(heading).toHaveText("All runs");
+  await expect(heading).toHaveText("All");
+  await expect(tags).toHaveCount(0);
+
+  // a tag lands under the window as its own box, and takes the runs it does not match
+  await page.getByText("Filters", { exact: true }).click();
+  await page.getByRole("button", { name: "Typing", exact: true }).click();
+  await expect(heading).toHaveText("All");
+  await expect(tags).toHaveText(["Typing"]);
+  await expect(page.getByText("No runs match these filters.")).toBeVisible();
+
+  // a second tag in the same dimension widens the match again
+  await page.getByRole("button", { name: "Multiple choice", exact: true }).click();
+  await expect(tags).toHaveText(["Multiple choice", "Typing"]);
+  await expect(page.getByRole("button", { name: /^Export all 2 runs shown/ })).toBeVisible();
 });

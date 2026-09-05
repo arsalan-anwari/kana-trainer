@@ -1,0 +1,90 @@
+{
+  "window": {
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "week": "Minggu lalu",
+    "all": "Semua",
+    "custom": "Sendiri",
+    "range": "{from} sampai {to}"
+  },
+  "range": {
+    "pick": "Pilih rentang tanggal",
+    "title": "Rentang tanggal",
+    "close": "Tutup rentang tanggal",
+    "from": "Dari",
+    "to": "Sampai",
+    "mask": "HH/BB/TTTT",
+    "invalidPicked": "Awal harus sebelum akhir dan tidak lebih awal dari {earliest}.",
+    "invalidTyped": "Pakai HH/BB/TTTT, awal sebelum akhir, tidak lebih awal dari {earliest}."
+  },
+  "filters": {
+    "title": "Saringan",
+    "clear": "Hapus saringan",
+    "format": "Bentuk soal",
+    "answering": "Cara menjawab",
+    "alphabet": "Aksara"
+  },
+  "list": {
+    "shown": "{count} tampil",
+    "pickedOf": "{picked} dari {total}",
+    "selectAll": "Pilih semua sesi yang tampil",
+    "clearSelection": "Batalkan pilihan",
+    "remove": "Hapus {target}",
+    "export": "Ekspor {target}",
+    "import": "Impor sesi dari berkas",
+    "score": "{correct}/{total} benar, {percent}%",
+    "empty": "Belum ada riwayat. Selesaikan satu sesi dan akan muncul di sini.",
+    "noMatch": "Tidak ada sesi yang cocok dengan saringan ini."
+  },
+  "target": {
+    "shown_other": "semua {count} sesi yang tampil",
+    "picked_other": "{count} sesi terpilih"
+  },
+  "confirm": {
+    "title_other": "Hapus {count} sesi?",
+    "yes_other": "Hapus {count} sesi",
+    "no_other": "Biarkan",
+    "bodyShown": "Menghapus semua sesi yang tampil untuk selamanya. Ekspor dulu bila ingin salinannya.",
+    "bodyPicked": "Menghapus sesi yang kamu pilih untuk selamanya. Ekspor dulu bila ingin salinannya."
+  },
+  "deleted_other": "{count} sesi dihapus.",
+  "runs_other": "{count} sesi",
+  "exported": "{runs} diekspor ke {file}",
+  "imported": "{runs} diimpor.",
+  "importedSome": "{runs} diimpor, {skipped} sudah ada.",
+  "selected": "{count} sesi terpilih",
+  "overall": "{correct} dari {total} benar, {percent}% keseluruhan",
+  "practice": "Latih kesalahan ini",
+  "noMistakes": "Tidak ada kesalahan untuk dilatih.",
+  "loadedMistakes": "{count} huruf yang salah dimuat.",
+  "weakest": {
+    "title": "Huruf terlemah",
+    "description": "Warna menandai ketepatan, batangnya seberapa sering muncul.",
+    "empty": "Selesaikan satu sesi untuk melihat statistik."
+  },
+  "rows": {
+    "title": "Baris",
+    "description": "Tabel kana, diwarnai menurut keadaan tiap baris.",
+    "empty": "Belum ada baris."
+  },
+  "alphabets": {
+    "title": "Aksara",
+    "description": "Keadaan masing-masing dan berapa banyak yang ditanggung.",
+    "share": "{percent}% dari soal"
+  },
+  "mistakes": {
+    "title": "Kesalahan per kelompok",
+    "description": "Setiap huruf yang salah, menurut kelompok, baris dan aksara.",
+    "none": "Tidak ada yang salah di sini.",
+    "miss_other": "{count} salah"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} dari {total} benar",
+    "never": "{romaji}, belum pernah muncul",
+    "missed": "{romaji}, salah {misses} dari {total}",
+    "rowRight": "{correct} dari {total} benar",
+    "cell": "{sub}, {correct} dari {total} benar"
+  },
+  "noData": "Belum ada data",
+  "ofTotal": "dari {total}"
+}

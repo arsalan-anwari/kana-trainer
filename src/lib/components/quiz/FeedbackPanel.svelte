@@ -3,6 +3,7 @@
   import type { Question } from "../../core/quiz";
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
+  import { t } from "../../i18n.svelte";
 
   let { question, kana }: { question: Question; kana: Kana } = $props();
 </script>
@@ -20,19 +21,21 @@
   <div class="mx-auto flex w-full max-w-xl items-center justify-between gap-4">
     <div class="flex min-w-0 flex-col gap-1">
       <span class="text-h4 font-bold {app.lastCorrect ? 'text-success' : 'text-danger'}">
-        {app.lastCorrect ? "Correct" : "Not quite"}
+        {t(app.lastCorrect ? "quiz.correct" : "quiz.wrong")}
       </span>
       <span class="text-sm text-foreground">
         <span class="kana">{glyph(kana, question.script)}</span>
-        is
+        =
         <span class="font-semibold">{kana.romaji}</span>
         {#if kana.alt.length > 0}
-          <span class="text-muted-foreground">(also {kana.alt.join(", ")})</span>
+          <span class="text-muted-foreground">
+            ({t("quiz.alsoReads", { list: kana.alt.join(", ") })})
+          </span>
         {/if}
       </span>
     </div>
     <span class="shrink-0">
-      <Button size="lg" variant="primary" onclick={() => app.next()}>Continue</Button>
+      <Button size="lg" variant="primary" onclick={() => app.next()}>{t("quiz.continue")}</Button>
     </span>
   </div>
 </div>

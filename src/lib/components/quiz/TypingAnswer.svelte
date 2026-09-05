@@ -3,15 +3,16 @@
   import { app } from "../../state.svelte";
   import Button from "../../ui/Button.svelte";
   import TextField from "../../ui/TextField.svelte";
+  import { t } from "../../i18n.svelte";
 
   let { question }: { question: Question } = $props();
 
   const placeholder = $derived(
     app.settings.format === "audio-text"
-      ? "Type the kana or romaji"
+      ? t("quiz.typing.either")
       : question.answer === "kana"
-        ? "Type the kana"
-        : "Type the romaji"
+        ? t("quiz.typing.kana")
+        : t("quiz.typing.romaji")
   );
 
   // the field carries the verdict until the next question
@@ -38,6 +39,6 @@
     disabled={app.phase !== "answering" || app.typed.trim() === ""}
     onclick={() => app.submitTyped()}
   >
-    Check
+    {t("quiz.check")}
   </Button>
 </div>

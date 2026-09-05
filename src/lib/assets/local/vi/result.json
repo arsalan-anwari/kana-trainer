@@ -1,0 +1,37 @@
+{
+  "tier": {
+    "perfect": "Tuyệt đối",
+    "great": "Gần như hoàn hảo",
+    "good": "Phiên tốt",
+    "fair": "Đang tiến bộ",
+    "poor": "Cứ luyện tiếp"
+  },
+  "blurb": {
+    "perfect": "Không sai câu nào.",
+    "great": "Suýt nữa là trọn vẹn.",
+    "good": "Phần lớn đều đúng.",
+    "fair": "Đã bắt được dáng của nó.",
+    "poor": "Mỗi phiên làm lần sau dễ hơn."
+  },
+  "skip": "Chạm bất kỳ đâu để bỏ qua",
+  "summary": "Đúng {correct}/{total} trong {seconds} giây",
+  "stat": { "accuracy": "độ chính xác", "perQuestion": "mỗi câu", "timedOut": "hết giờ" },
+  "again": "Làm lại",
+  "practice": "Luyện câu sai",
+  "export": "Xuất phiên này",
+  "allReports": "Toàn bộ lịch sử",
+  "back": "Quay lại",
+  "exported": "Đã xuất phiên này ra {file}",
+  "characters": { "title": "Ký tự", "description": "Yếu nhất lên trước." },
+  "rows": { "title": "Hàng", "description": "Vấn đề nằm ở đâu." },
+  "missed": {
+    "title": "Câu sai",
+    "description": "Tất cả những gì bạn trả lời sai.",
+    "none": "Không sai câu nào, giỏi lắm.",
+    "timedOut": "hết giờ",
+    "said": "bạn trả lời {given}",
+    "nothing": "bỏ trống",
+    "hiragana": "hira",
+    "katakana": "kata"
+  }
+}

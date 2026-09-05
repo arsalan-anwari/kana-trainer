@@ -1,0 +1,26 @@
+{
+  "theme": "Erscheinungsbild",
+  "themeSystem": "System",
+  "themeLight": "Hell",
+  "themeDark": "Dunkel",
+  "themeIs": {
+    "system": "Erscheinungsbild: System",
+    "light": "Erscheinungsbild: hell",
+    "dark": "Erscheinungsbild: dunkel"
+  },
+  "themeLocked": "Hoher Kontrast legt das Erscheinungsbild fest",
+  "contrast": "Hoher Kontrast",
+  "contrastHint": "Nur Schwarz und Weiß, überschreibt das Erscheinungsbild",
+  "zoom": "Zoom",
+  "zoomIn": "Vergrößern",
+  "zoomOut": "Verkleinern",
+  "scale": "Größe",
+  "scaleHint": "Skaliert die ganze App",
+  "sound": "Ton",
+  "effects": "Soundeffekte",
+  "effectsHint": "Klicks und Rückmeldung",
+  "soundOn": "Ton an",
+  "soundOff": "Ton aus",
+  "language": "Sprache",
+  "persist": "Diese Einstellungen bleiben erhalten."
+}

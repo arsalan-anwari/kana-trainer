@@ -1,0 +1,90 @@
+{
+  "window": {
+    "today": "오늘",
+    "yesterday": "어제",
+    "week": "지난주",
+    "all": "전체",
+    "custom": "직접 지정",
+    "range": "{from} ~ {to}"
+  },
+  "range": {
+    "pick": "기간 고르기",
+    "title": "기간",
+    "close": "기간 닫기",
+    "from": "시작",
+    "to": "끝",
+    "mask": "일/월/연도",
+    "invalidPicked": "시작은 끝보다 앞이어야 하고 {earliest} 이후여야 합니다.",
+    "invalidTyped": "일/월/연도 형식으로, 시작은 끝보다 앞이고 {earliest} 이후여야 합니다."
+  },
+  "filters": {
+    "title": "필터",
+    "clear": "필터 지우기",
+    "format": "문제 형식",
+    "answering": "답하는 방식",
+    "alphabet": "문자"
+  },
+  "list": {
+    "shown": "{count}개 표시",
+    "pickedOf": "{total}개 중 {picked}개",
+    "selectAll": "표시된 기록 모두 선택",
+    "clearSelection": "선택 해제",
+    "remove": "{target} 삭제",
+    "export": "{target} 내보내기",
+    "import": "파일에서 기록 가져오기",
+    "score": "{total}개 중 {correct}개 정답, {percent}%",
+    "empty": "아직 기록이 없습니다. 연습을 끝내면 여기에 남습니다.",
+    "noMatch": "조건에 맞는 기록이 없습니다."
+  },
+  "target": {
+    "shown_other": "표시된 {count}개 기록",
+    "picked_other": "선택한 {count}개 기록"
+  },
+  "confirm": {
+    "title_other": "{count}개 기록을 삭제할까요?",
+    "yes_other": "{count}개 삭제",
+    "no_other": "유지",
+    "bodyShown": "표시된 기록을 전부 영구 삭제합니다. 남기려면 먼저 내보내세요.",
+    "bodyPicked": "선택한 기록을 영구 삭제합니다. 남기려면 먼저 내보내세요."
+  },
+  "deleted_other": "기록 {count}개를 삭제했습니다.",
+  "runs_other": "기록 {count}개",
+  "exported": "{runs}를 {file} 로 내보냈습니다",
+  "imported": "{runs}를 가져왔습니다.",
+  "importedSome": "{runs}를 가져왔고 {skipped}개는 이미 있었습니다.",
+  "selected": "기록 {count}개 선택됨",
+  "overall": "전체 {total}개 중 {correct}개 정답, {percent}%",
+  "practice": "틀린 것 연습하기",
+  "noMistakes": "연습할 오답이 없습니다.",
+  "loadedMistakes": "틀린 문자 {count}개를 불러왔습니다.",
+  "weakest": {
+    "title": "약한 문자",
+    "description": "색은 정답률, 막대는 나온 횟수.",
+    "empty": "연습을 끝내면 통계가 보입니다."
+  },
+  "rows": {
+    "title": "행",
+    "description": "오십음도, 행별 상태에 따라 색이 달라집니다.",
+    "empty": "아직 데이터가 없습니다."
+  },
+  "alphabets": {
+    "title": "문자",
+    "description": "각각의 상태와 차지한 비중.",
+    "share": "전체 문제의 {percent}%"
+  },
+  "mistakes": {
+    "title": "그룹별 오답",
+    "description": "틀린 문자를 그룹·행·문자별로.",
+    "none": "여기는 틀린 게 없습니다.",
+    "miss_other": "{count}회 오답"
+  },
+  "tip": {
+    "right": "{romaji}, {total}개 중 {correct}개 정답",
+    "never": "{romaji}, 나온 적 없음",
+    "missed": "{romaji}, {total}개 중 {misses}개 오답",
+    "rowRight": "{total}개 중 {correct}개 정답",
+    "cell": "{sub}, {total}개 중 {correct}개 정답"
+  },
+  "noData": "데이터 없음",
+  "ofTotal": "/ {total}"
+}

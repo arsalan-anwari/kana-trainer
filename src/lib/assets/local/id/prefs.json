@@ -1,0 +1,26 @@
+{
+  "theme": "Tema",
+  "themeSystem": "Sistem",
+  "themeLight": "Terang",
+  "themeDark": "Gelap",
+  "themeIs": {
+    "system": "Tema: sistem",
+    "light": "Tema: terang",
+    "dark": "Tema: gelap"
+  },
+  "themeLocked": "Kontras tinggi mengunci tema",
+  "contrast": "Kontras tinggi",
+  "contrastHint": "Hitam putih, menimpa tema",
+  "zoom": "Zoom",
+  "zoomIn": "Perbesar",
+  "zoomOut": "Perkecil",
+  "scale": "Skala",
+  "scaleHint": "Mengubah ukuran seluruh aplikasi",
+  "sound": "Suara",
+  "effects": "Efek suara",
+  "effectsHint": "Klik dan tanggapan jawaban",
+  "soundOn": "Suara nyala",
+  "soundOff": "Suara mati",
+  "language": "Bahasa",
+  "persist": "Pengaturan ini tersimpan terus."
+}
