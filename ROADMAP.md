@@ -60,26 +60,26 @@ For shipped changes see the [CHANGELOG](CHANGELOG.md).
 - ✅ Character grids scale their column count by container size and zoom level
   so text never gets clipped
 - ✅ Multi-character rows (yoon, tokushon) scale against their container
-- 🚧 Continue tightening layout against real devices reported by testers
-- 📋 Full pass on screen-reader labels and focus order
+- ✅ Continue tightening layout against real devices reported by testers
+- ✅ Full pass on screen-reader labels and focus order
 - 📋 Keyboard-only navigation across every screen
 
-### External testing 🚧
+### External testing ✅
 
-- 🚧 Collect visual and layout bugs from external testers across device classes
-- 📋 Document a lightweight feedback and triage flow for testers
-- 📋 Add regression tests (unit + Playwright) for each confirmed tester bug
+- ✅ Collect visual and layout bugs from external testers across device classes
+- ✅ Document a lightweight feedback and triage flow for testers
+- ✅ Add regression tests (unit + Playwright) for each confirmed tester bug
 
-### Decouple the UI as a library 📋
+### Decouple the UI as a library 🚧
 
 Goal: extract the Svelte components, theme and layout primitives into a
 standalone package so sibling apps can share them.
 
-- 📋 Identify components that are app-agnostic vs. kana-specific
-- 📋 Move shared components, tokens and the cream-paper / black-ink theme into a
+- ✅ Identify components that are app-agnostic vs. kana-specific
+- ✅ Move shared components, tokens and the cream-paper / black-ink theme into a
   separate package
-- 📋 Define a stable public API and document it
-- 📋 Consume the library back in Kana Trainer with no visual change
+- ✅ Define a stable public API and document it
+- ✅ Consume the library back in Kana Trainer with no visual change
 - 📋 Prove reuse by adopting it in [`kanji-trainer`](#related-projects) and
   [`jlpt-trainer`](#related-projects)
 
@@ -146,6 +146,7 @@ how far off and in which direction, and coach in real time.
 | Project | Relationship |
 |---------|--------------|
 | **zinfer** | Library to benchmark and profile the **energy** cost of an AI/ML model (dense LLMs and other ML architectures). Used to run and profile every v2 model. Developed alongside Kana Trainer. |
+| **kaizen-ui** | Shared UI library for all sibling apps. |
 | **kanji-trainer** | Planned sibling app. Consumer of the shared UI library. |
 | **jlpt-trainer** | Planned sibling app. Consumer of the shared UI library. |
 
