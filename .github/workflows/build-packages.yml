@@ -36,7 +36,7 @@ jobs:
       - name: Parse the tag or the dispatch input
         id: parse
         env:
-          DISPATCH_TARGETS: ${{ inputs.targets }}
+          DISPATCH_TARGETS: ${{ github.event.inputs.targets }}
         run: |
           all='["deb","rpm","arch","exe","dmg","apk","msix","aab"]'
 

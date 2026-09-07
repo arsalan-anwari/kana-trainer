@@ -18,7 +18,7 @@
   "dependencies": {
     "@tauri-apps/api": "2.11.1",
     "@tauri-apps/plugin-dialog": "^2.7.2",
-    "kaizen-ui": "^0.2.0"
+    "kaizen-ui": "^0.2.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

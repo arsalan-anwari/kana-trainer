@@ -35,7 +35,7 @@
 <button
   type="button"
   {disabled}
-  class="@container relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-2xl border-2 transition-[transform,box-shadow,background-color,border-color,color] duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default {tones[
+  class="@container relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-2xl border-2 transition-[transform,background-color,border-color,color] duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default {tones[
     state
   ]}"
   onclick={onpick}
