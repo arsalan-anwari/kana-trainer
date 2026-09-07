@@ -1,13 +1,13 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import Card from "../../ui/Card.svelte";
-  import OptionCard from "../../ui/OptionCard.svelte";
   import { t } from "../../i18n.svelte";
+  import { Card, Icon, OptionCard } from "kaizen-ui";
 
   const audioToText = $derived(app.settings.format === "audio-text");
 </script>
 
 <Card title={t("setup.answerStyle.title")} description={t("setup.answerStyle.description")}>
+  {#snippet icon()}<Icon name="check" class="size-5" />{/snippet}
   <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
     <OptionCard
       label={t("common.answerStyle.choice")}

@@ -2,7 +2,6 @@
   "window": {
     "today": "Hoy",
     "yesterday": "Ayer",
-    "week": "Última semana",
     "all": "Todo",
     "custom": "Personalizado",
     "range": "{from} a {to}"
@@ -66,18 +65,19 @@
   "loadedMistakes": "Se cargaron {count} caracteres fallados.",
   "weakest": {
     "title": "Caracteres más flojos",
-    "description": "El color es el acierto; la barra, cuántas veces salió.",
+    "description": "Ordenado por solidez: un carácter visto dos veces nunca supera a uno demostrado.",
     "empty": "Termina una sesión para ver estadísticas."
   },
   "rows": {
     "title": "Filas",
-    "description": "La tabla kana, teñida según cómo va cada fila.",
+    "description": "La tabla de kana, teñida por la solidez de cada fila.",
     "empty": "Aún no hay filas."
   },
   "alphabets": {
     "title": "Alfabetos",
-    "description": "Cómo va cada uno y cuánto peso llevó.",
-    "share": "{percent}% de las preguntas"
+    "description": "Qué tan sólido es cada uno y cuánto trabajo llevó.",
+    "share": "{percent}% de las preguntas",
+    "shareLabel": "Parte de las preguntas"
   },
   "mistakes": {
     "title": "Fallos por grupo",
@@ -91,8 +91,29 @@
     "never": "{romaji}, no salió nunca",
     "missed": "{romaji}, {misses} fallos de {total}",
     "rowRight": "{correct} de {total} bien",
-    "cell": "{sub}, {correct} de {total} bien"
+    "cell": "{sub}, {correct} de {total} bien",
+    "strength": "{romaji}: {correct} de {total} correctos, solidez {percent}%"
   },
   "noData": "Sin datos",
-  "ofTotal": "de {total}"
+  "ofTotal": "de {total}",
+  "mastery": {
+    "new": "Nuevo",
+    "shaky": "Flojo",
+    "learning": "Aprendiendo",
+    "steady": "Sólido",
+    "mastered": "Dominado"
+  },
+  "strength": "Solidez",
+  "seen_one": "visto una vez",
+  "seen_other": "visto {count} veces",
+  "legend": {
+    "weak": "A repasar",
+    "strong": "Asentado"
+  },
+  "stat": {
+    "accuracy": "Aciertos",
+    "runs": "Rondas",
+    "answers": "Respuestas",
+    "mastered": "Dominados"
+  }
 }

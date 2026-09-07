@@ -1,16 +1,35 @@
 <script lang="ts">
-  // What the tint means, once per card.
+  import { heatColor } from "kaizen-ui";
+  import { masteryLabel, masteryLevels } from "../../core/report";
+  import { t } from "../../i18n.svelte";
+
+  // What the tint means, once per card. The words are the scale, the ramp only
+  // shows which way it runs.
+
   let { class: className = "" }: { class?: string } = $props();
+
+  // where each band sits on the ramp, so the swatch matches the tiles above
+  const marks: Record<string, number> = {
+    new: 0,
+    shaky: 0.2,
+    learning: 0.48,
+    steady: 0.7,
+    mastered: 0.95
+  };
 </script>
 
-<div
-  class="flex items-center justify-end gap-2 text-[0.625rem] text-muted-foreground {className}"
->
-  <span class="tabular-nums">0%</span>
-  <span
-    class="h-1.5 w-16 rounded-full sm:w-24"
-    style="background: linear-gradient(to right, var(--color-danger), var(--color-success))"
-    aria-hidden="true"
-  ></span>
-  <span class="tabular-nums">100%</span>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 {className}">
+  <span class="text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground">
+    {t("reports.strength")}
+  </span>
+  {#each masteryLevels as level (level)}
+    <span class="flex items-center gap-1 text-[0.625rem] text-muted-foreground">
+      <span
+        class="size-2 rounded-full border border-border"
+        style="background: {level === 'new' ? 'var(--color-secondary)' : heatColor(marks[level])}"
+        aria-hidden="true"
+      ></span>
+      {masteryLabel(level)}
+    </span>
+  {/each}
 </div>

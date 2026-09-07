@@ -4,8 +4,6 @@
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
 
-  // Picks which alphabet the character picker below is editing.
-
   const tabs: Script[] = ["hiragana", "katakana"];
 
   const shown = $derived(tabs.filter((tab) => app.settings.scripts.includes(tab)));

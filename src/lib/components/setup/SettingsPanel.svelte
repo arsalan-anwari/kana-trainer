@@ -12,13 +12,9 @@
     totalTimeOptions
   } from "../../core/settings";
   import { app } from "../../state.svelte";
-  import Card from "../../ui/Card.svelte";
-  import Chip from "../../ui/Chip.svelte";
-  import CustomNumberChip from "../../ui/CustomNumberChip.svelte";
-  import OptionCard from "../../ui/OptionCard.svelte";
-  import Switch from "../../ui/Switch.svelte";
   import QuestionCountPicker from "./QuestionCountPicker.svelte";
   import { t } from "../../i18n.svelte";
+  import { Card, Chip, CustomNumberChip, Icon, OptionCard, Switch } from "kaizen-ui";
 
   // tokushon has no hiragana form, so it is offered only once katakana is in the run
   const shownSets = $derived(
@@ -56,6 +52,7 @@
 </script>
 
 <Card title={t("setup.run.title")} description={t("setup.run.description")}>
+  {#snippet icon()}<Icon name="sliders" class="size-5" />{/snippet}
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
       <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -123,6 +120,8 @@
           max={customPerQuestionMax}
           unit="s"
           title={t("setup.time.seconds")}
+          doneLabel={t("common.apply")}
+          cancelLabel={t("common.cancel")}
           active={perQuestionCustom}
           onpick={(seconds) => setPerQuestion(seconds, true)}
         />
@@ -149,6 +148,8 @@
           max={customTotalMinutesMax}
           unit="m"
           title={t("setup.time.minutes")}
+          doneLabel={t("common.apply")}
+          cancelLabel={t("common.cancel")}
           active={totalCustom}
           onpick={(minutes) => setTotal(minutes * 60, true)}
         />

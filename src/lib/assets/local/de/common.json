@@ -16,7 +16,11 @@
   "off": "Aus",
   "custom": "Eigener Wert",
   "pickValue": "Wert wählen",
-  "nav": { "setup": "Üben", "reports": "Verlauf", "chart": "Tabelle" },
+  "nav": {
+    "setup": "Üben",
+    "reports": "Verlauf",
+    "chart": "Tabelle"
+  },
   "group": {
     "seion": "Seion",
     "dakuon": "Dakuon",
@@ -29,13 +33,20 @@
     "audio-text": "Ton zu Text",
     "text-audio": "Text zu Ton"
   },
-  "answerStyle": { "choice": "Auswahl", "typing": "Tippen" },
+  "answerStyle": {
+    "choice": "Auswahl",
+    "typing": "Tippen"
+  },
   "direction": {
     "kana-romaji": "Kana zu Rōmaji",
     "romaji-kana": "Rōmaji zu Kana",
     "mixed": "Gemischt"
   },
-  "difficulty": { "beginner": "Anfänger", "advanced": "Fortgeschritten", "expert": "Profi" },
+  "difficulty": {
+    "beginner": "Anfänger",
+    "advanced": "Fortgeschritten",
+    "expert": "Profi"
+  },
   "rowLabel": "{letter}-Reihe",
   "file": {
     "filterName": "Kana-Trainer-Durchgänge",
@@ -47,5 +58,7 @@
     "incomplete": "Diese .kt-report-Datei ist unvollständig.",
     "damaged": "Diese .kt-report-Datei ist beschädigt.",
     "badRun": "Diese .kt-report-Datei enthält einen unlesbaren Durchgang."
-  }
+  },
+  "show": "{label} anzeigen",
+  "hide": "{label} ausblenden"
 }

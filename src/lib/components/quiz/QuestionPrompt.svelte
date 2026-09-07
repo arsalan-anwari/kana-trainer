@@ -2,10 +2,8 @@
   import { glyph, type Kana } from "../../core/kana";
   import type { Question } from "../../core/quiz";
   import { kanaAudio } from "../../audio";
-  import PlayIcon from "../../ui/PlayIcon.svelte";
-  import Waveform from "../../ui/Waveform.svelte";
-  import PromptBox from "./PromptBox.svelte";
   import { t } from "../../i18n.svelte";
+  import { Board, PlayIcon, Waveform } from "kaizen-ui";
 
   let {
     question,
@@ -39,16 +37,16 @@
     {label}
   </span>
 
-  <PromptBox size={question.prompt === "audio" ? "md" : "lg"}>
+  <Board size={question.prompt === "audio" ? "md" : "lg"} guide={question.prompt !== "audio"}>
     {#if question.prompt === "audio"}
       <button
         type="button"
-        class="flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl p-3 transition-colors sm:gap-3 sm:p-5 lg:gap-4 lg:p-6 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        class="flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl p-3 transition-colors sm:gap-3 sm:p-5 lg:gap-4 lg:p-6 hover:bg-current/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
         aria-label={t("quiz.prompt.replay")}
         onclick={onreplay}
       >
         <span
-          class="flex size-[44%] shrink-0 items-center justify-center rounded-full bg-foreground text-background sm:size-16 lg:size-20"
+          class="flex size-[44%] shrink-0 items-center justify-center rounded-full bg-board-foreground text-board sm:size-16 lg:size-20"
         >
           <PlayIcon {playing} class="size-[45%] translate-x-px sm:size-7 lg:size-8" />
         </span>
@@ -56,6 +54,7 @@
           <Waveform
             peaks={kanaAudio.peaks(kana.audio ?? kana.romaji)}
             progress={playing ? kanaAudio.progress : 0}
+            tone="chalk"
           />
         </span>
       </button>
@@ -69,5 +68,5 @@
         {text}
       </span>
     {/if}
-  </PromptBox>
+  </Board>
 </div>

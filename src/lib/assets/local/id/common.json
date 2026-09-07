@@ -16,7 +16,11 @@
   "off": "Mati",
   "custom": "Sendiri",
   "pickValue": "Pilih nilai",
-  "nav": { "setup": "Latihan", "reports": "Riwayat", "chart": "Tabel" },
+  "nav": {
+    "setup": "Latihan",
+    "reports": "Riwayat",
+    "chart": "Tabel"
+  },
   "group": {
     "seion": "Seion",
     "dakuon": "Dakuon",
@@ -29,13 +33,20 @@
     "audio-text": "Audio ke teks",
     "text-audio": "Teks ke audio"
   },
-  "answerStyle": { "choice": "Pilihan ganda", "typing": "Ketik" },
+  "answerStyle": {
+    "choice": "Pilihan ganda",
+    "typing": "Ketik"
+  },
   "direction": {
     "kana-romaji": "Kana ke romaji",
     "romaji-kana": "Romaji ke kana",
     "mixed": "Campur"
   },
-  "difficulty": { "beginner": "Pemula", "advanced": "Lanjut", "expert": "Mahir" },
+  "difficulty": {
+    "beginner": "Pemula",
+    "advanced": "Lanjut",
+    "expert": "Mahir"
+  },
   "rowLabel": "Baris {letter}",
   "file": {
     "filterName": "Sesi Kana Trainer",
@@ -47,5 +58,7 @@
     "incomplete": "Berkas .kt-report itu tidak lengkap.",
     "damaged": "Berkas .kt-report itu rusak.",
     "badRun": "Berkas .kt-report itu memuat sesi yang tidak terbaca."
-  }
+  },
+  "show": "Tampilkan {label}",
+  "hide": "Sembunyikan {label}"
 }

@@ -8,10 +8,8 @@
     rangeDays,
     type DateRange
   } from "../../core/report";
-  import { viewport } from "../../viewport.svelte";
-  import Button from "../../ui/Button.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
   import { t } from "../../i18n.svelte";
+  import { Button, IconButton, viewport } from "kaizen-ui";
 
   // Picks the window by hand. Full screen on a phone, an overlay hanging under
   // the filters on anything wider.
@@ -149,7 +147,7 @@
 
 {#if viewport.wide}
   <div
-    class="anim-pop absolute inset-x-0 top-full z-40 mt-2 flex flex-col gap-3 rounded-xl border border-border bg-surface p-4 shadow-lg"
+    class="anim-pop absolute inset-x-0 top-full z-40 mt-2 flex flex-col gap-3 rounded-xl border-2 border-border bg-surface p-4 shadow-lg"
     role="dialog"
     aria-modal="true"
     aria-label={t("reports.range.pick")}
@@ -158,7 +156,7 @@
   </div>
 {:else}
   <div
-    class="fixed inset-0 z-50 flex flex-col bg-background pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
+    class="fixed inset-0 z-50 flex flex-col paper pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
     role="dialog"
     aria-modal="true"
     aria-label={t("reports.range.pick")}

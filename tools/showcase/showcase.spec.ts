@@ -165,9 +165,9 @@ test("record the showcase", async ({ page }, testInfo) => {
 
   // reports screen, filtered by window
   await button("Reports", true).click();
-  await button("Last week", true).click();
+  await button("All", true).click();
   await shots.top();
-  await shots.shot("15_Reports_LastWeek");
+  await shots.shot("15_Reports_All");
 
   await shots.reveal(page.getByText("Mistakes by group"));
   await shots.shot("16_Reports_Mistakes");

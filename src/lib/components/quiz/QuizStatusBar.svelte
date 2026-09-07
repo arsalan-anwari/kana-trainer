@@ -1,8 +1,7 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
-  import Progress from "../../ui/Progress.svelte";
   import { t } from "../../i18n.svelte";
+  import { Badge, Button, Progress } from "kaizen-ui";
 
   const totalLabel = $derived.by(() => {
     if (app.totalRemaining === null) return null;
@@ -15,7 +14,7 @@
 <div class="flex flex-col gap-1.5 sm:gap-3">
   <div class="flex items-center gap-2 sm:gap-3">
     <Button size="sm" variant="ghost" onclick={() => app.askQuit()}>{t("quiz.quit")}</Button>
-    <Progress value={app.progress} class="flex-1" />
+    <Progress value={app.progress} tone="success" size="lg" class="flex-1" />
     <span class="shrink-0 text-sm font-semibold tabular-nums">
       {app.index + 1} / {app.questions.length}
     </span>
@@ -29,8 +28,9 @@
       </span>
     {/if}
   </div>
-  <!-- running score, kept to one thin line -->
-  <span class="px-1 text-xs font-semibold text-muted-foreground tabular-nums">
-    {t("quiz.score", { count: app.score })}
+  <span class="px-1">
+    <Badge tone={app.score > 0 ? "success" : "outline"}>
+      <span class="tabular-nums">{t("quiz.score", { count: app.score })}</span>
+    </Badge>
   </span>
 </div>

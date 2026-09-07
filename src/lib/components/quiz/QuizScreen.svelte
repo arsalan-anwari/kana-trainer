@@ -1,7 +1,6 @@
 <script lang="ts">
   import { kanaById } from "../../core/kana";
   import { app } from "../../state.svelte";
-  import Progress from "../../ui/Progress.svelte";
   import ChoiceGrid from "./ChoiceGrid.svelte";
   import FeedbackPanel from "./FeedbackPanel.svelte";
   import QuestionPrompt from "./QuestionPrompt.svelte";
@@ -9,6 +8,7 @@
   import QuizStatusBar from "./QuizStatusBar.svelte";
   import SoundChoiceList from "./SoundChoiceList.svelte";
   import TypingAnswer from "./TypingAnswer.svelte";
+  import { Progress } from "kaizen-ui";
 
   const question = $derived(app.current);
   const kana = $derived(question === null ? null : (kanaById(question.kanaId) ?? null));
@@ -83,14 +83,13 @@
       {#if secondsLeft !== null}
         <div class="w-full max-w-xs">
           <Progress
-            value={(app.questionRemaining ?? 0) / (app.settings.perQuestionSeconds * 10)}
+            value={(app.questionRemaining ?? 0) / (app.settings.perQuestionSeconds * 1000)}
             tone={secondsLeft <= 3 ? "danger" : "primary"}
           />
         </div>
       {/if}
 
       {#key question.index}
-        <!-- prompt on top, answers below -->
         <div class="anim-pop flex w-full flex-col items-center gap-3 sm:gap-7">
           <QuestionPrompt {question} {kana} onreplay={() => app.replayPrompt()} />
 

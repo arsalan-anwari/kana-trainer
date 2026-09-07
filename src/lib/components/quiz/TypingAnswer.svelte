@@ -1,9 +1,8 @@
 <script lang="ts">
   import type { Question } from "../../core/quiz";
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
-  import TextField from "../../ui/TextField.svelte";
   import { t } from "../../i18n.svelte";
+  import { Button, TextField } from "kaizen-ui";
 
   let { question }: { question: Question } = $props();
 

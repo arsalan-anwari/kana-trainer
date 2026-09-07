@@ -16,7 +16,11 @@
   "off": "關閉",
   "custom": "自訂",
   "pickValue": "選擇數值",
-  "nav": { "setup": "練習", "reports": "紀錄", "chart": "字表" },
+  "nav": {
+    "setup": "練習",
+    "reports": "紀錄",
+    "chart": "字表"
+  },
   "group": {
     "seion": "清音",
     "dakuon": "濁音",
@@ -29,13 +33,20 @@
     "audio-text": "聽音寫字",
     "text-audio": "看字選音"
   },
-  "answerStyle": { "choice": "選擇題", "typing": "輸入" },
+  "answerStyle": {
+    "choice": "選擇題",
+    "typing": "輸入"
+  },
   "direction": {
     "kana-romaji": "假名轉羅馬拼音",
     "romaji-kana": "羅馬拼音轉假名",
     "mixed": "混合"
   },
-  "difficulty": { "beginner": "入門", "advanced": "進階", "expert": "高手" },
+  "difficulty": {
+    "beginner": "入門",
+    "advanced": "進階",
+    "expert": "高手"
+  },
   "rowLabel": "{letter} 行",
   "file": {
     "filterName": "Kana Trainer 紀錄",
@@ -47,5 +58,7 @@
     "incomplete": "該 .kt-report 檔案不完整。",
     "damaged": "該 .kt-report 檔案已損毀。",
     "badRun": "該 .kt-report 檔案中有無法讀取的紀錄。"
-  }
+  },
+  "show": "顯示{label}",
+  "hide": "隱藏{label}"
 }

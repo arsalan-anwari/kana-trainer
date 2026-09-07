@@ -1,6 +1,5 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import Card from "../../ui/Card.svelte";
   import AlphabetPicker from "./AlphabetPicker.svelte";
   import AnswerStylePicker from "./AnswerStylePicker.svelte";
   import DirectionPicker from "./DirectionPicker.svelte";
@@ -9,6 +8,7 @@
   import StartPanel from "./StartPanel.svelte";
   import SettingsPanel from "./SettingsPanel.svelte";
   import { t } from "../../i18n.svelte";
+  import { Card, Icon } from "kaizen-ui";
 
   const textOnly = $derived(app.settings.format === "text-text");
 </script>
@@ -28,6 +28,7 @@
 
   <div class="flex flex-col gap-4 lg:sticky lg:top-[calc(var(--header-height,0px)+0.75rem)]">
     <Card title={t("setup.characters.title")} description={t("setup.characters.description")}>
+      {#snippet icon()}<Icon name="target" class="size-5" />{/snippet}
       <KanaPicker />
     </Card>
     <StartPanel />

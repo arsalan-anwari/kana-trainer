@@ -2,12 +2,11 @@
   import { groupInScript, rows } from "../../core/kana";
   import { groupEnabled } from "../../core/settings";
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
-  import Icon from "../../ui/Icon.svelte";
   import KanaRow from "./KanaRow.svelte";
   import PresetPicker from "./PresetPicker.svelte";
   import ScriptTabs from "./ScriptTabs.svelte";
   import { t } from "../../i18n.svelte";
+  import { Button, Icon } from "kaizen-ui";
 
   const selected = $derived(new Set(app.selection));
   const shownRows = $derived(

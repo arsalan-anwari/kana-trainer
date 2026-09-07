@@ -1,11 +1,8 @@
 <script lang="ts">
   import { kanaAudio } from "../../audio";
-  import PlayIcon from "../../ui/PlayIcon.svelte";
-  import Waveform from "../../ui/Waveform.svelte";
   import type { ChoiceState } from "./choiceState";
   import { t } from "../../i18n.svelte";
-
-  // One sound tile: play control, clip histogram and slot number.
+  import { PlayIcon, Waveform } from "kaizen-ui";
 
   let {
     slot,
@@ -26,8 +23,8 @@
   const tones: Record<ChoiceState, string> = {
     idle: "border-border bg-surface hover:border-foreground hover:bg-accent",
     staged: "border-foreground bg-foreground text-background",
-    correct: "border-success bg-success-soft text-success",
-    wrong: "border-danger bg-danger-soft text-danger anim-shake",
+    correct: "border-success/50 bg-success-soft text-success",
+    wrong: "border-danger/50 bg-danger-soft text-danger anim-shake",
     dimmed: "border-border bg-surface opacity-40"
   };
 

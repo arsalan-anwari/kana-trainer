@@ -2,7 +2,6 @@
   "window": {
     "today": "Heute",
     "yesterday": "Gestern",
-    "week": "Letzte Woche",
     "all": "Alle",
     "custom": "Eigener Zeitraum",
     "range": "{from} bis {to}"
@@ -66,18 +65,19 @@
   "loadedMistakes": "{count} verpasste Zeichen geladen.",
   "weakest": {
     "title": "Schwächste Zeichen",
-    "description": "Die Färbung ist die Trefferquote, der Balken die Häufigkeit.",
+    "description": "Sortiert danach, wie sicher jedes Zeichen sitzt: zweimal gesehen schlägt nie Bewiesenes.",
     "empty": "Beende einen Durchgang, dann gibt es Statistiken."
   },
   "rows": {
     "title": "Reihen",
-    "description": "Die Kana-Tabelle, eingefärbt nach dem Stand der Reihe.",
+    "description": "Die Kana-Tabelle, eingefärbt danach, wie sicher jede Zeile sitzt.",
     "empty": "Noch keine Reihen."
   },
   "alphabets": {
     "title": "Alphabete",
-    "description": "Wie es um jedes steht und wie viel es getragen hat.",
-    "share": "{percent}% der Fragen"
+    "description": "Wie sicher jedes sitzt und wie viel Arbeit es getragen hat.",
+    "share": "{percent}% der Fragen",
+    "shareLabel": "Anteil der Fragen"
   },
   "mistakes": {
     "title": "Fehler nach Gruppe",
@@ -91,8 +91,29 @@
     "never": "{romaji}, kam nie dran",
     "missed": "{romaji}, {misses} von {total} verpasst",
     "rowRight": "{correct} von {total} richtig",
-    "cell": "{sub}, {correct} von {total} richtig"
+    "cell": "{sub}, {correct} von {total} richtig",
+    "strength": "{romaji}: {correct} von {total} richtig, Stärke {percent}%"
   },
   "noData": "Noch keine Daten",
-  "ofTotal": "von {total}"
+  "ofTotal": "von {total}",
+  "mastery": {
+    "new": "Neu",
+    "shaky": "Wacklig",
+    "learning": "Am Lernen",
+    "steady": "Sicher",
+    "mastered": "Gemeistert"
+  },
+  "strength": "Stärke",
+  "seen_one": "einmal gesehen",
+  "seen_other": "{count}-mal gesehen",
+  "legend": {
+    "weak": "Braucht Übung",
+    "strong": "Sitzt"
+  },
+  "stat": {
+    "accuracy": "Treffer",
+    "runs": "Läufe",
+    "answers": "Antworten",
+    "mastered": "Gemeistert"
+  }
 }

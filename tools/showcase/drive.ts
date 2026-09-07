@@ -156,7 +156,7 @@ export function resolve(text: string) {
 
 // Reads the prompt frame text, empty for an audio prompt.
 export async function promptText(page: Page): Promise<string> {
-  return (await page.locator("main .border-wire").first().innerText()).trim();
+  return (await page.locator("main .board").first().innerText()).trim();
 }
 
 export const tiles = (page: Page): Locator => page.locator("main button.aspect-square");

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { kanaAudio } from "../../audio";
   import type { Kana } from "../../core/kana";
-  import PlayIcon from "../../ui/PlayIcon.svelte";
   import { t } from "../../i18n.svelte";
+  import { PlayIcon } from "kaizen-ui";
 
   let { kana }: { kana: Kana } = $props();
 
@@ -13,8 +13,8 @@
   type="button"
   aria-label={t("chart.play", { romaji: kana.romaji, kata: kana.kata })}
   aria-pressed={playing}
-  class="group relative flex aspect-[3/2] w-full cursor-pointer flex-col items-center justify-center gap-1 sm:aspect-square overflow-hidden rounded-xl border transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
-    ? 'border-2 border-selected bg-selected-soft text-foreground'
+  class="group relative flex w-full cursor-pointer flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border-2 px-1.5 py-1.5 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring {playing
+    ? 'border-selected bg-selected-soft text-foreground'
     : 'border-border bg-surface text-foreground hover:border-selected hover:bg-accent active:translate-y-[1px]'}"
   onclick={() => kanaAudio.play(kana.audio)}
 >

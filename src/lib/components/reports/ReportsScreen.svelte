@@ -11,15 +11,13 @@
     type ReportQuery
   } from "../../core/report";
   import { app } from "../../state.svelte";
-  import Badge from "../../ui/Badge.svelte";
-  import Button from "../../ui/Button.svelte";
-  import Card from "../../ui/Card.svelte";
   import AccuracyGrid from "../charts/AccuracyGrid.svelte";
   import RowHeatmap from "../charts/RowHeatmap.svelte";
   import ScriptSplit from "../charts/ScriptSplit.svelte";
   import MistakeBreakdown from "./MistakeBreakdown.svelte";
   import ReportList from "./ReportList.svelte";
   import { t } from "../../i18n.svelte";
+  import { Badge, Button, Card, EmptyState, Icon, Stat } from "kaizen-ui";
 
   let picked = $state<string[]>([]);
   let query = $state<ReportQuery>({ ...anyQuery });
@@ -31,6 +29,9 @@
   const answers = $derived(chosen.flatMap((report) => report.answers));
   const summary = $derived(summarize(answers));
   const tags = $derived(queryLabels(query));
+  const mastered = $derived(
+    statsByKana(answers).filter((row) => row.mastery === "mastered").length
+  );
 
   // Every chart below follows this, so narrowing the alphabet or the tags takes
   // the charts with it rather than leaving a half empty comparison behind.
@@ -41,39 +42,44 @@
   <ReportList reports={shown} bind:picked bind:query />
 
   <div class="flex flex-col gap-5">
-    <div
-      class="flex flex-col gap-4 rounded-xl border border-border bg-sidebar p-5 sm:flex-row sm:items-center sm:justify-between"
-    >
-      <div class="flex min-w-0 flex-col gap-1">
-        <span class="text-h2 font-bold leading-tight">
-          {picked.length > 0
-            ? t("reports.selected", { count: picked.length })
-            : windowLabel(query.window)}
-        </span>
-        <span class="text-sm text-muted-foreground">
-          {t("reports.overall", {
-            correct: summary.correct,
-            total: summary.total,
-            percent: Math.round(summary.accuracy * 100)
-          })}
-        </span>
-        {#if tags.length > 0}
-          <!-- the same boxes a run card carries, so the heading stays short -->
-          <div class="mt-1 flex flex-wrap gap-1">
-            {#each tags as tag (tag)}
-              <Badge tone="outline">{tag}</Badge>
-            {/each}
-          </div>
-        {/if}
+    <div class="sheet ruled flex flex-col gap-4 rounded-2xl border-2 border-border bg-sidebar p-4 sm:p-5">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex min-w-0 flex-col gap-1">
+          <span class="text-h2 font-bold leading-tight">
+            {picked.length > 0
+              ? t("reports.selected", { count: picked.length })
+              : windowLabel(query.window)}
+          </span>
+          {#if tags.length > 0}
+            <!-- the same boxes a run card carries, so the heading stays short -->
+            <div class="flex flex-wrap gap-1">
+              {#each tags as tag (tag)}
+                <Badge tone="outline">{tag}</Badge>
+              {/each}
+            </div>
+          {/if}
+        </div>
+        <Button
+          size="lg"
+          variant="brand"
+          disabled={answers.length === 0}
+          onclick={() => app.practiceMistakes(answers)}
+        >
+          <Icon name="flame" class="size-5" />
+          {t("reports.practice")}
+        </Button>
       </div>
-      <Button
-        size="lg"
-        variant="brand"
-        disabled={answers.length === 0}
-        onclick={() => app.practiceMistakes(answers)}
-      >
-        {t("reports.practice")}
-      </Button>
+
+      <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <Stat
+          tone="brand"
+          value="{Math.round(summary.accuracy * 100)}%"
+          label={t("reports.stat.accuracy")}
+        />
+        <Stat value={chosen.length} label={t("reports.stat.runs")} />
+        <Stat value={summary.total} label={t("reports.stat.answers")} />
+        <Stat tone="success" value={mastered} label={t("reports.stat.mastered")} />
+      </div>
     </div>
 
     {#if app.message !== ""}
@@ -81,6 +87,7 @@
     {/if}
 
     <Card title={t("reports.weakest.title")} description={t("reports.weakest.description")}>
+      {#snippet icon()}<Icon name="target" class="size-5" />{/snippet}
       {#each seen as script (script)}
         {#if seen.length > 1}
           <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -97,13 +104,12 @@
           />
         </div>
       {:else}
-        <p class="py-6 text-center text-sm text-muted-foreground">
-          {t("reports.weakest.empty")}
-        </p>
+        <EmptyState icon="target" title={t("reports.weakest.empty")} />
       {/each}
     </Card>
 
     <Card title={t("reports.rows.title")} description={t("reports.rows.description")}>
+      {#snippet icon()}<Icon name="sprout" class="size-5" />{/snippet}
       {#each seen as script (script)}
         {#if seen.length > 1}
           <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -114,11 +120,12 @@
           <RowHeatmap heat={heatByRow(answers, script)} />
         </div>
       {:else}
-        <p class="py-6 text-center text-sm text-muted-foreground">{t("reports.rows.empty")}</p>
+        <EmptyState icon="sprout" title={t("reports.rows.empty")} />
       {/each}
     </Card>
 
     <Card title={t("reports.alphabets.title")} description={t("reports.alphabets.description")}>
+      {#snippet icon()}<Icon name="trophy" class="size-5" />{/snippet}
       <ScriptSplit {answers} scripts={seen} />
     </Card>
 

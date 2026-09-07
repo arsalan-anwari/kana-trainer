@@ -1,5 +1,8 @@
 {
-  "alphabets": { "title": "假名种类", "description": "选择练习中出现的假名。" },
+  "alphabets": {
+    "title": "假名种类",
+    "description": "选择练习中出现的假名。"
+  },
   "format": {
     "title": "出题方式",
     "description": "每道题怎么出。",
@@ -29,7 +32,10 @@
     "selectAll": "全选",
     "clear": "清空"
   },
-  "run": { "title": "练习选项", "description": "练习内容与时长。" },
+  "run": {
+    "title": "练习选项",
+    "description": "练习内容与时长。"
+  },
   "sets": {
     "title": "附加字组",
     "dakuon": "が ざ だ ば",
@@ -37,7 +43,11 @@
     "yoon": "きゃ しゃ ちゃ 等",
     "tokushon": "ファ ティ ヴァ，仅片假名"
   },
-  "questions": { "title": "题量", "count": "题目数量", "onePass": "全过一遍" },
+  "questions": {
+    "title": "题量",
+    "count": "题目数量",
+    "onePass": "全过一遍"
+  },
   "difficulty": {
     "title": "难度",
     "beginner": "错误选项随机",
@@ -67,7 +77,9 @@
   "start": {
     "inPlay": "参与练习的字符",
     "button": "开始练习",
-    "empty": "请至少选择一个符合该模式的字符。"
+    "empty": "请至少选择一个符合该模式的字符。",
+    "inPlayShort": "参与",
+    "questions": "题数"
   },
   "notes": {
     "needsAlphabet": "已开启平假名，练习至少需要一种假名。",

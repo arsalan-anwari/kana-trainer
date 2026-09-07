@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { ChoiceState } from "./choiceState";
 
-  // A square multiple choice answer tile.
-
   let {
     slot,
     label,
@@ -25,11 +23,14 @@
     `${Math.min(kana ? 46 : 34, (kana ? 78 : 130) / Math.max(1, label.length))}cqi`
   );
 
+  // every state sits on a lip, so a tap presses the tile into the page
   const tones: Record<ChoiceState, string> = {
-    idle: "border-border bg-surface hover:border-foreground hover:bg-accent active:translate-y-[2px]",
-    staged: "border-foreground bg-foreground/5",
-    correct: "border-success bg-success-soft text-success",
-    wrong: "border-danger bg-danger-soft text-danger anim-shake",
+    idle: "border-border bg-surface shadow-[0_4px_0_var(--color-border)] hover:border-selected hover:bg-accent active:translate-y-[4px] active:shadow-none",
+    staged: "border-selected bg-selected-soft shadow-[0_4px_0_var(--color-selected)]",
+    correct:
+      "border-success/50 bg-success-soft text-success shadow-[0_4px_0_color-mix(in_srgb,var(--success)_35%,transparent)]",
+    wrong:
+      "border-danger/50 bg-danger-soft text-danger shadow-[0_4px_0_color-mix(in_srgb,var(--danger)_35%,transparent)] anim-shake",
     dimmed: "border-border bg-surface opacity-40"
   };
 </script>
@@ -37,7 +38,7 @@
 <button
   type="button"
   {disabled}
-  class="@container relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-2xl border-2 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default {tones[
+  class="@container relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-2xl border-2 transition-[transform,box-shadow,background-color,border-color,color] duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default {tones[
     state
   ]}"
   onclick={onpick}
@@ -49,7 +50,7 @@
     {slot}
   </span>
   <span
-    class="whitespace-nowrap text-center font-semibold leading-none {kana ? 'kana' : ''}"
+    class="whitespace-nowrap text-center font-bold leading-none {kana ? 'kana' : ''}"
     style="font-size: {fontSize}"
   >
     {label}

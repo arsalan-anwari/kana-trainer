@@ -16,7 +16,11 @@
   "off": "ปิด",
   "custom": "กำหนดเอง",
   "pickValue": "เลือกค่า",
-  "nav": { "setup": "ฝึก", "reports": "ประวัติ", "chart": "ตาราง" },
+  "nav": {
+    "setup": "ฝึก",
+    "reports": "ประวัติ",
+    "chart": "ตาราง"
+  },
   "group": {
     "seion": "เซอง (清音)",
     "dakuon": "ดากุอง (濁音)",
@@ -29,13 +33,20 @@
     "audio-text": "ฟังเสียงแล้วตอบเป็นตัวอักษร",
     "text-audio": "ดูตัวอักษรแล้วเลือกเสียง"
   },
-  "answerStyle": { "choice": "ปรนัย", "typing": "พิมพ์" },
+  "answerStyle": {
+    "choice": "ปรนัย",
+    "typing": "พิมพ์"
+  },
   "direction": {
     "kana-romaji": "คานะเป็นโรมาจิ",
     "romaji-kana": "โรมาจิเป็นคานะ",
     "mixed": "สลับกัน"
   },
-  "difficulty": { "beginner": "เริ่มต้น", "advanced": "ขั้นสูง", "expert": "ชำนาญ" },
+  "difficulty": {
+    "beginner": "เริ่มต้น",
+    "advanced": "ขั้นสูง",
+    "expert": "ชำนาญ"
+  },
   "rowLabel": "แถว {letter}",
   "file": {
     "filterName": "รอบฝึกของ Kana Trainer",
@@ -47,5 +58,7 @@
     "incomplete": "ไฟล์ .kt-report นั้นไม่สมบูรณ์",
     "damaged": "ไฟล์ .kt-report นั้นเสียหาย",
     "badRun": "ไฟล์ .kt-report นั้นมีรอบฝึกที่อ่านไม่ได้"
-  }
+  },
+  "show": "แสดง {label}",
+  "hide": "ซ่อน {label}"
 }

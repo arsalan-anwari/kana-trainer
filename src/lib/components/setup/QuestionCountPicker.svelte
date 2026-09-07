@@ -9,11 +9,8 @@
     questionCountRows
   } from "../../core/settings";
   import { app } from "../../state.svelte";
-  import Chip from "../../ui/Chip.svelte";
-  import NumberRoller from "../../ui/NumberRoller.svelte";
   import { t } from "../../i18n.svelte";
-
-  // Ten preset run lengths, a custom count and a single pass.
+  import { Chip, NumberRoller } from "kaizen-ui";
 
   let custom = $state(isCustomCount(app.settings.questionCount));
   let rolling = $state(false);
@@ -111,6 +108,8 @@
     values={customCountValues}
     value={clampCustomCount(app.settings.questionCount || customCountMin)}
     title={t("setup.questions.count")}
+    doneLabel={t("common.apply")}
+    cancelLabel={t("common.cancel")}
     onpick={picked}
     onclose={() => (rolling = false)}
   />

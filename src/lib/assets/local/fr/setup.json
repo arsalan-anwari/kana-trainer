@@ -1,5 +1,8 @@
 {
-  "alphabets": { "title": "Alphabets", "description": "Choisissez ce que vous verrez." },
+  "alphabets": {
+    "title": "Alphabets",
+    "description": "Choisissez ce que vous verrez."
+  },
   "format": {
     "title": "Format",
     "description": "Comment chaque question est posée.",
@@ -29,7 +32,10 @@
     "selectAll": "Tout",
     "clear": "Rien"
   },
-  "run": { "title": "Options", "description": "Ce que contient la session et sa durée." },
+  "run": {
+    "title": "Options",
+    "description": "Ce que contient la session et sa durée."
+  },
   "sets": {
     "title": "Groupes en plus",
     "dakuon": "が ざ だ ば",
@@ -37,7 +43,11 @@
     "yoon": "きゃ しゃ ちゃ et les autres",
     "tokushon": "ファ ティ ヴァ, katakana seulement"
   },
-  "questions": { "title": "Questions", "count": "Nombre de questions", "onePass": "Un tour" },
+  "questions": {
+    "title": "Questions",
+    "count": "Nombre de questions",
+    "onePass": "Un tour"
+  },
   "difficulty": {
     "title": "Difficulté",
     "beginner": "Les mauvaises réponses sont tirées au hasard",
@@ -67,7 +77,9 @@
   "start": {
     "inPlay": "Caractères en jeu",
     "button": "Commencer",
-    "empty": "Choisissez au moins un caractère compatible avec ce mode."
+    "empty": "Choisissez au moins un caractère compatible avec ce mode.",
+    "inPlayShort": "En jeu",
+    "questions": "Questions"
   },
   "notes": {
     "needsAlphabet": "Hiragana activé : il faut au moins un alphabet.",

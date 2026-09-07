@@ -43,7 +43,8 @@ import {
   type Prefs
 } from "./core/prefs";
 import { scoreTier, type ScoreTier } from "./core/score";
-import { kanaAudio, setEffectsEnabled, sfx } from "./audio";
+import { kanaAudio } from "./audio";
+import { applyAppearance, setEffectsEnabled, sfx } from "kaizen-ui";
 import { listReports, loadJson, saveReport, storeJson } from "./storage";
 import { setLocale, t } from "./i18n.svelte";
 
@@ -93,7 +94,6 @@ class AppState {
   // which alphabet the character picker is editing
   pickerChoice = $state<Script>("hiragana");
 
-  // whether the quit confirmation is on screen
   confirmQuit = $state(false);
   // when the run was paused for that question
   pausedAt = 0;
@@ -113,8 +113,9 @@ class AppState {
   selection = $derived(selectionFor(this.settings, this.pickerScript));
 
   current = $derived(this.questions[this.index] ?? null);
+  // 0 to 1, the share of the run already answered
   progress = $derived(
-    this.questions.length === 0 ? 0 : (this.index / this.questions.length) * 100
+    this.questions.length === 0 ? 0 : this.index / this.questions.length
   );
   score = $derived(this.answers.filter((answer) => answer.correct).length);
   eligibleCount = $derived(eligiblePairs(this.settings).length);
@@ -155,15 +156,7 @@ class AppState {
   applyPrefs(): void {
     setEffectsEnabled(this.prefs.effects);
     setLocale(this.prefs.lang);
-    const root = document.documentElement;
-    root.classList.remove("light", "dark");
-    // high contrast replaces the theme entirely
-    if (!this.prefs.contrast && this.prefs.theme !== "system") {
-      root.classList.add(this.prefs.theme);
-    }
-    root.classList.toggle("high-contrast", this.prefs.contrast);
-    // every size is in rem, so the root size drives the zoom
-    root.style.fontSize = `${Math.round(this.prefs.zoom * 100)}%`;
+    applyAppearance(this.prefs);
     storeJson(PREFS_KEY, this.prefs);
   }
 
@@ -176,7 +169,6 @@ class AppState {
     this.setPref("zoom", clampZoom(this.prefs.zoom + steps * zoomStep));
   }
 
-  // moves one tab left or right, wrapping
   shiftTab(step: number): void {
     const next = nextTab(this.route, step);
     if (next !== null) this.go(next);
@@ -190,7 +182,6 @@ class AppState {
     storeJson(SETTINGS_KEY, this.settings);
   }
 
-  // switches which alphabet the picker edits
   usePicker(script: Script): void {
     sfx.click();
     this.pickerChoice = script;
@@ -221,7 +212,6 @@ class AppState {
     });
   }
 
-  // toggles an extra character set for both alphabets
   setGroup(group: OptionalGroup, value: boolean): void {
     const selections = { ...this.settings.selections };
     for (const script of scripts) {

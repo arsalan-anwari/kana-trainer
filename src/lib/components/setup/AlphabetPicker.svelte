@@ -1,9 +1,8 @@
 <script lang="ts">
   import type { Script } from "../../core/kana";
   import { app } from "../../state.svelte";
-  import Card from "../../ui/Card.svelte";
-  import OptionCard from "../../ui/OptionCard.svelte";
   import { t } from "../../i18n.svelte";
+  import { Card, Icon, OptionCard } from "kaizen-ui";
 
   function toggle(script: Script): void {
     const set = new Set(app.settings.scripts);
@@ -14,6 +13,7 @@
 </script>
 
 <Card title={t("setup.alphabets.title")} description={t("setup.alphabets.description")}>
+  {#snippet icon()}<Icon name="sprout" class="size-5" />{/snippet}
   <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
     <OptionCard
       label={t("common.hiragana")}

@@ -43,7 +43,49 @@ export type StatRow = {
   total: number;
   correct: number;
   accuracy: number;
+  strength: number;
+  mastery: Mastery;
 };
+
+// How well a character is really known, not just how it went last time.
+//
+// Plain accuracy treats 2 out of 2 as perfect and puts it above 18 out of 20,
+// which is how a character seen twice ends up looking mastered. This is the
+// lower bound of a Wilson score interval instead: 2 out of 2 scores 0.67, 18
+// out of 20 scores 0.81, and a run of right answers only pulls the score up as
+// the count behind it grows.
+//
+// z is one standard deviation rather than the textbook 1.96. The stricter bound
+// is just as good at ordering characters, but it paints a whole first session
+// red, and a screen that tells a beginner everything is wrong is a screen they
+// close.
+export function strength(correct: number, total: number): number {
+  if (total === 0) return 0;
+  const z = 1;
+  const share = correct / total;
+  const centre = share + (z * z) / (2 * total);
+  const spread = z * Math.sqrt((share * (1 - share) + (z * z) / (4 * total)) / total);
+  return Math.max(0, (centre - spread) / (1 + (z * z) / total));
+}
+
+// The strength as a word, which is what the screens actually show. A number on
+// its own invites reading 100% off two lucky answers.
+export const masteryLevels = ["new", "shaky", "learning", "steady", "mastered"] as const;
+
+export type Mastery = (typeof masteryLevels)[number];
+
+export function masteryLabel(level: Mastery): string {
+  return t(`reports.mastery.${level}`);
+}
+
+export function masteryOf(correct: number, total: number): Mastery {
+  if (total === 0) return "new";
+  const score = strength(correct, total);
+  if (score < 0.35) return "shaky";
+  if (score < 0.6) return "learning";
+  if (score < 0.85) return "steady";
+  return "mastered";
+}
 
 export function summarize(answers: Answer[]): Summary {
   const total = answers.length;
@@ -86,9 +128,12 @@ function toStatRows(
       ...label(key),
       total: bucket.total,
       correct: bucket.correct,
-      accuracy: bucket.correct / bucket.total
+      accuracy: bucket.correct / bucket.total,
+      strength: strength(bucket.correct, bucket.total),
+      mastery: masteryOf(bucket.correct, bucket.total)
     }))
-    .sort((a, b) => a.accuracy - b.accuracy || b.total - a.total);
+    // weakest first, and among equals the one with the most answers behind it
+    .sort((a, b) => a.strength - b.strength || b.total - a.total);
 }
 
 // Without an alphabet both glyphs are shown side by side, with one only the
@@ -124,7 +169,10 @@ export function weakKanaIds(answers: Answer[], threshold = 1): string[] {
   const map = tally(answers, (answer) => answer.kanaId);
   return [...map.entries()]
     .filter(([, bucket]) => bucket.total - bucket.correct >= threshold)
-    .sort((a, b) => a[1].correct / a[1].total - b[1].correct / b[1].total)
+    .sort(
+      (a, b) =>
+        strength(a[1].correct, a[1].total) - strength(b[1].correct, b[1].total)
+    )
     .map(([key]) => key);
 }
 
@@ -207,7 +255,7 @@ export function reportTitle(report: Report): string {
   return date.toLocaleString();
 }
 
-export const reportFilters = ["all", "today", "yesterday", "week"] as const;
+export const reportFilters = ["all", "today", "yesterday"] as const;
 
 // A window the reader picked by hand, both ends inclusive whole local days,
 // each written as YYYY-MM-DD the way an <input type="date"> reports it.
@@ -292,7 +340,6 @@ export function filterWindow(
   const today = startOfDay(now);
   if (filter === "today") return { from: today, to: today + DAY };
   if (filter === "yesterday") return { from: today - DAY, to: today };
-  if (filter === "week") return { from: today - 6 * DAY, to: today + DAY };
   return null;
 }
 
@@ -428,6 +475,8 @@ export type HeatCell = {
   total: number;
   correct: number;
   accuracy: number;
+  strength: number;
+  mastery: Mastery;
 };
 
 export type HeatRow = {
@@ -437,6 +486,8 @@ export type HeatRow = {
   total: number;
   correct: number;
   accuracy: number;
+  strength: number;
+  mastery: Mastery;
   cells: HeatCell[];
 };
 
@@ -457,7 +508,9 @@ export function heatByRow(answers: Answer[], script: Script): HeatRow[] {
         romaji: kana.romaji,
         total: bucket.total,
         correct: bucket.correct,
-        accuracy: bucket.total === 0 ? 0 : bucket.correct / bucket.total
+        accuracy: bucket.total === 0 ? 0 : bucket.correct / bucket.total,
+        strength: strength(bucket.correct, bucket.total),
+        mastery: masteryOf(bucket.correct, bucket.total)
       };
     });
     const total = cells.reduce((sum, cell) => sum + cell.total, 0);
@@ -471,6 +524,8 @@ export function heatByRow(answers: Answer[], script: Script): HeatRow[] {
       total,
       correct,
       accuracy: correct / total,
+      strength: strength(correct, total),
+      mastery: masteryOf(correct, total),
       cells
     });
   }

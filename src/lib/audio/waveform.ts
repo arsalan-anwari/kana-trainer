@@ -1,4 +1,4 @@
-import { audioContext } from "./sfx";
+import { audioContext } from "kaizen-ui";
 
 // Turns raw mp3 bytes into one peak value per histogram bar.
 

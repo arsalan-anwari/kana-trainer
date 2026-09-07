@@ -1,5 +1,8 @@
 {
-  "alphabets": { "title": "Bảng chữ", "description": "Chọn thứ sẽ xuất hiện." },
+  "alphabets": {
+    "title": "Bảng chữ",
+    "description": "Chọn thứ sẽ xuất hiện."
+  },
   "format": {
     "title": "Dạng câu hỏi",
     "description": "Cách ra mỗi câu hỏi.",
@@ -29,7 +32,10 @@
     "selectAll": "Chọn hết",
     "clear": "Bỏ hết"
   },
-  "run": { "title": "Tuỳ chọn phiên", "description": "Phiên gồm gì và kéo dài bao lâu." },
+  "run": {
+    "title": "Tuỳ chọn phiên",
+    "description": "Phiên gồm gì và kéo dài bao lâu."
+  },
   "sets": {
     "title": "Nhóm thêm",
     "dakuon": "が ざ だ ば",
@@ -37,7 +43,11 @@
     "yoon": "きゃ しゃ ちゃ và các âm còn lại",
     "tokushon": "ファ ティ ヴァ, chỉ katakana"
   },
-  "questions": { "title": "Số câu", "count": "Số câu hỏi", "onePass": "Một lượt" },
+  "questions": {
+    "title": "Số câu",
+    "count": "Số câu hỏi",
+    "onePass": "Một lượt"
+  },
   "difficulty": {
     "title": "Độ khó",
     "beginner": "Đáp án sai lấy ngẫu nhiên",
@@ -67,7 +77,9 @@
   "start": {
     "inPlay": "Ký tự đang dùng",
     "button": "Bắt đầu",
-    "empty": "Hãy chọn ít nhất một ký tự hợp với chế độ này."
+    "empty": "Hãy chọn ít nhất một ký tự hợp với chế độ này.",
+    "inPlayShort": "Đang dùng",
+    "questions": "Câu hỏi"
   },
   "notes": {
     "needsAlphabet": "Đã bật hiragana, phiên cần ít nhất một bảng chữ.",

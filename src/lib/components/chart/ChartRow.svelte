@@ -2,17 +2,20 @@
   import type { Row } from "../../core/kana";
   import { rowLabel } from "../../labels";
   import { t } from "../../i18n.svelte";
-  import { viewport } from "../../viewport.svelte";
-  import RowBar from "../../ui/RowBar.svelte";
   import ChartTile from "./ChartTile.svelte";
+  import { RowBar, TileGrid, viewport } from "kaizen-ui";
 
   let { row }: { row: Row } = $props();
 
-  // Tracks are sized in rem, so raising the zoom drops columns per row instead
-  // of squeezing the tiles until the text stops fitting. auto-fill, not
-  // auto-fit, so a short row keeps its empty tracks and stays aligned with the
-  // rows above and below it.
-  const tracks = "repeat(auto-fill, minmax(4.25rem, 1fr))";
+  // Yoon writes two characters in each script, so its tiles carry twice the
+  // sub text of any other row and need the extra width. Tokushon is two
+  // characters too, but katakana only, so it fits a square the same as the
+  // rest.
+  const size = $derived(
+    row.kana.some((kana) => [...kana.hira].length > 1 && [...kana.kata].length > 1)
+      ? ("extra-wide" as const)
+      : ("base" as const)
+  );
 </script>
 
 {#snippet tiles()}
@@ -26,15 +29,19 @@
     <span class="w-16 shrink-0 text-xs font-bold tracking-tight text-muted-foreground">
       {rowLabel(row)}
     </span>
-    <div class="grid min-w-0 flex-1 gap-2" style="grid-template-columns: {tracks}">
+    <TileGrid {size} class="min-w-0 flex-1 gap-2">
       {@render tiles()}
-    </div>
+    </TileGrid>
   </div>
 {:else}
-  <RowBar label={rowLabel(row)} hint={t("chart.sounds", { count: row.kana.length })}>
-    <!-- as many tiles across as the zoom leaves room for -->
-    <div class="grid gap-1.5" style="grid-template-columns: {tracks}">
+  <RowBar
+    label={rowLabel(row)}
+    hint={t("chart.sounds", { count: row.kana.length })}
+    expandLabel={t("common.show", { label: rowLabel(row) })}
+    collapseLabel={t("common.hide", { label: rowLabel(row) })}
+  >
+    <TileGrid {size} class="gap-1.5">
       {@render tiles()}
-    </div>
+    </TileGrid>
   </RowBar>
 {/if}

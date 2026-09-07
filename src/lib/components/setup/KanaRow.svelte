@@ -2,9 +2,8 @@
   import { glyph, type Row, type Script } from "../../core/kana";
   import { rowLabel } from "../../labels";
   import { app } from "../../state.svelte";
-  import { viewport } from "../../viewport.svelte";
-  import Chip from "../../ui/Chip.svelte";
-  import RowBar from "../../ui/RowBar.svelte";
+  import { t } from "../../i18n.svelte";
+  import { Chip, RowBar, viewport } from "kaizen-ui";
 
   let {
     row,
@@ -38,11 +37,10 @@
 {/snippet}
 
 {#if viewport.wide}
-  <!-- row label beside its five characters -->
   <div class="flex items-center gap-2 sm:gap-3">
     <button
       type="button"
-      class="h-10 w-16 shrink-0 cursor-pointer rounded-lg border px-1 text-[0.6875rem] font-bold transition-colors {complete
+      class="h-10 w-16 shrink-0 cursor-pointer rounded-lg border-2 px-1 text-[0.6875rem] font-bold transition-colors {complete
         ? 'border-selected bg-selected text-background'
         : 'border-border bg-surface text-muted-foreground hover:bg-accent'}"
       onclick={() => app.toggleRow(row.id)}
@@ -58,6 +56,8 @@
     label={rowLabel(row)}
     hint="{taken}/{row.kana.length}"
     active={complete}
+    expandLabel={t("common.show", { label: rowLabel(row) })}
+    collapseLabel={t("common.hide", { label: rowLabel(row) })}
     onpress={() => app.toggleRow(row.id)}
   >
     <div class="grid gap-1.5" style="grid-template-columns: {tracks}">

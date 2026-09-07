@@ -1,26 +1,44 @@
 <script lang="ts">
+  import { Button, Icon, Stat } from "kaizen-ui";
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
   import { t } from "../../i18n.svelte";
 </script>
 
-<div class="flex flex-col gap-3 rounded-xl border border-border bg-sidebar p-4">
+<div
+  class="sheet ruled flex flex-col gap-3 rounded-2xl border-2 border-border bg-sidebar p-4 sm:p-5"
+>
+  <div class="grid grid-cols-2 gap-2">
+    <Stat
+      icon="target"
+      tone="brand"
+      value={app.eligibleCount}
+      label={t("setup.start.inPlayShort")}
+    />
+    <Stat
+      icon="sprout"
+      tone="seal"
+      value={app.settings.questionCount === 0 ? app.eligibleCount : app.settings.questionCount}
+      label={t("setup.start.questions")}
+    />
+  </div>
+
   {#if app.notes.length > 0}
     <ul class="flex flex-col gap-1">
       {#each app.notes as note (note)}
-        <li class="text-xs leading-snug text-muted-foreground">{t(note)}</li>
+        <li class="flex items-start gap-1.5 text-xs leading-snug text-muted-foreground">
+          <Icon name="info" class="mt-0.5 size-3.5 shrink-0" />
+          {t(note)}
+        </li>
       {/each}
     </ul>
   {/if}
+
   {#if app.message !== ""}
-    <p class="text-xs font-semibold leading-snug text-success">{app.message}</p>
+    <p class="text-xs font-bold leading-snug text-success">{app.message}</p>
   {/if}
-  <div class="flex items-center justify-between text-sm">
-    <span class="text-muted-foreground">{t("setup.start.inPlay")}</span>
-    <span class="font-semibold">{app.eligibleCount}</span>
-  </div>
+
   <Button
-    size="lg"
+    size="xl"
     variant="brand"
     full
     disabled={app.eligibleCount === 0}

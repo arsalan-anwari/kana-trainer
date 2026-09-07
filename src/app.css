@@ -1,242 +1,12 @@
 @import "tailwindcss";
+@import "kaizen-ui/theme.css";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* Light theme palette. */
-
-:root {
-  --background: #f7f2e7;
-  --foreground: #1b1915;
-  --surface: #fffdf7;
-  --primary: #1b1915;
-  --primary-foreground: #fbf7ee;
-  --secondary: #ece5d5;
-  --secondary-foreground: #1b1915;
-  --muted: #ece5d5;
-  --muted-foreground: #6e6657;
-  --accent: #efe9db;
-  --accent-foreground: #1b1915;
-  --destructive: #ad3a2c;
-  --destructive-foreground: #fbf7ee;
-  --border: #ded5c1;
-  --wire: #d4cab3;
-  --input: #ded5c1;
-  --ring: #1b1915;
-  --sidebar: #f1ebdd;
-  --sidebar-foreground: #1b1915;
-  --sidebar-border: #ded5c1;
-  --radius: 0.75rem;
-  --brand: #1b1915;
-  --brand-foreground: #fbf7ee;
-  --brand-shadow: #4a4437;
-  --success: #4c6b4a;
-  --success-foreground: #fbf7ee;
-  --success-soft: #e8eee1;
-  --danger: #ad3a2c;
-  --danger-foreground: #fbf7ee;
-  --danger-soft: #f7e7e1;
-  --chart-1: #cfc5ae;
-  --chart-2: #a89c81;
-  --chart-3: #7b7159;
-  --chart-4: #4b453a;
-  --chart-5: #1b1915;
-  --gold: #b8860b;
-  /* how a picked box reads on the setup, reports and chart screens */
-  --selected: var(--foreground);
-  --selected-soft: color-mix(in srgb, var(--selected) 8%, transparent);
-  /* native controls, the date picker among them, follow the chosen theme */
-  color-scheme: light;
-}
-
-.dark {
-  color-scheme: dark;
-  --background: #16150f;
-  --foreground: #f3eddf;
-  --surface: #1e1c15;
-  --primary: #f3eddf;
-  --primary-foreground: #16150f;
-  --secondary: #2a281f;
-  --secondary-foreground: #f3eddf;
-  --muted: #2a281f;
-  --muted-foreground: #a49a84;
-  --accent: #2a281f;
-  --accent-foreground: #f3eddf;
-  --destructive: #dd7263;
-  --destructive-foreground: #16150f;
-  --border: #353227;
-  --wire: #403c2e;
-  --input: #353227;
-  --ring: #d8d0bc;
-  --sidebar: #1c1a14;
-  --sidebar-foreground: #f3eddf;
-  --sidebar-border: #353227;
-  --brand: #f3eddf;
-  --brand-foreground: #16150f;
-  --brand-shadow: #6d6753;
-  --success: #8fae86;
-  --success-foreground: #16150f;
-  --success-soft: #232a1e;
-  --danger: #dd7263;
-  --danger-foreground: #16150f;
-  --danger-soft: #2e1d19;
-  --chart-1: #3f3b2e;
-  --chart-2: #635c47;
-  --chart-3: #8b8267;
-  --chart-4: #b8ae90;
-  --chart-5: #f3eddf;
-  --gold: #d9ab3c;
-}
-
-/* High contrast palette, which replaces light and dark. */
-.high-contrast {
-  color-scheme: dark;
-  --background: #000000;
-  --foreground: #ffffff;
-  --surface: #000000;
-  --primary: #ffffff;
-  --primary-foreground: #000000;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #ffffff;
-  --muted: #1a1a1a;
-  --muted-foreground: #e6e6e6;
-  --accent: #262626;
-  --accent-foreground: #ffffff;
-  --destructive: #ff5f4d;
-  --destructive-foreground: #000000;
-  --border: #ffffff;
-  --wire: #ffffff;
-  --input: #ffffff;
-  --ring: #ffd400;
-  --sidebar: #000000;
-  --sidebar-foreground: #ffffff;
-  --sidebar-border: #ffffff;
-  --brand: #ffd400;
-  --brand-foreground: #000000;
-  --brand-shadow: #7a6600;
-  --success: #4dff88;
-  --success-foreground: #000000;
-  --success-soft: #062d15;
-  --danger: #ff5f4d;
-  --danger-foreground: #000000;
-  --danger-soft: #350a05;
-  --chart-1: #4d4d4d;
-  --chart-2: #808080;
-  --chart-3: #b3b3b3;
-  --chart-4: #e6e6e6;
-  --chart-5: #ffffff;
-  --gold: #ffd400;
-  --selected: #ffd400;
-  --selected-soft: color-mix(in srgb, #ffd400 25%, transparent);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light):not(.high-contrast) {
-    color-scheme: dark;
-    --background: #16150f;
-    --foreground: #f3eddf;
-    --surface: #1e1c15;
-    --primary: #f3eddf;
-    --primary-foreground: #16150f;
-    --secondary: #2a281f;
-    --secondary-foreground: #f3eddf;
-    --muted: #2a281f;
-    --muted-foreground: #a49a84;
-    --accent: #2a281f;
-    --accent-foreground: #f3eddf;
-    --destructive: #dd7263;
-    --destructive-foreground: #16150f;
-    --border: #353227;
-    --wire: #403c2e;
-    --input: #353227;
-    --ring: #d8d0bc;
-    --sidebar: #1c1a14;
-    --sidebar-foreground: #f3eddf;
-    --sidebar-border: #353227;
-    --brand: #f3eddf;
-    --brand-foreground: #16150f;
-    --brand-shadow: #6d6753;
-    --success: #8fae86;
-    --success-foreground: #16150f;
-    --success-soft: #232a1e;
-    --danger: #dd7263;
-    --danger-foreground: #16150f;
-    --danger-soft: #2e1d19;
-    --chart-1: #3f3b2e;
-    --chart-2: #635c47;
-    --chart-3: #8b8267;
-    --chart-4: #b8ae90;
-    --chart-5: #f3eddf;
-    --gold: #d9ab3c;
-  }
-}
+/* Tailwind skips node_modules when scanning for class names. */
+@source "../node_modules/kaizen-ui/src";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-wire: var(--wire);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-brand: var(--brand);
-  --color-brand-foreground: var(--brand-foreground);
-  --color-brand-shadow: var(--brand-shadow);
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-success-soft: var(--success-soft);
-  --color-danger: var(--danger);
-  --color-danger-foreground: var(--danger-foreground);
-  --color-danger-soft: var(--danger-soft);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-gold: var(--gold);
-  --color-selected: var(--selected);
-  --color-selected-soft: var(--selected-soft);
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 4px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
   --font-kana: "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Noto Sans JP",
     "Yu Gothic", Meiryo, ui-sans-serif, system-ui, sans-serif;
-  --text-ui: 0.875rem;
-  --text-ui--line-height: 1.6;
-  --text-body: 1rem;
-  --text-body--line-height: 1.7;
-  --text-h4: 1.125rem;
-  --text-h3: 1.375rem;
-  --text-h2: 1.625rem;
-  --text-h1: 2rem;
-}
-
-html {
-  /* keeps the fixed header offset and scroll anchoring correct on mobile */
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-  min-height: 100dvh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  overscroll-behavior-y: none;
 }
 
 .kana {
@@ -244,48 +14,7 @@ body {
   font-feature-settings: "palt" off;
 }
 
-::selection {
-  background: var(--foreground);
-  color: var(--background);
-}
-
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-7px); }
-  40% { transform: translateX(7px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-}
-
-@keyframes cheer {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.04); }
-  100% { transform: scale(1); }
-}
-
-.anim-pop {
-  animation: pop-in 0.22s ease-out both;
-}
-
-.anim-shake {
-  animation: shake 0.35s ease-in-out both;
-}
-
-.anim-cheer {
-  animation: cheer 0.35s ease-out both;
-}
-
+/* The run-result splash: the one screen in the app that is pure celebration. */
 @keyframes splash-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -393,11 +122,6 @@ body {
   50% { opacity: 0.65; transform: scale(1.15); }
 }
 
-@keyframes sheet-up {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-
 .anim-splash-in {
   animation: splash-in 0.24s ease-out both;
 }
@@ -449,10 +173,6 @@ body {
   animation-iteration-count: infinite;
 }
 
-.anim-sheet {
-  animation: sheet-up 0.24s ease-out both;
-}
-
 .anim-burst {
   animation: burst 1.1s ease-out infinite;
 }
@@ -482,9 +202,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .anim-pop,
-  .anim-shake,
-  .anim-cheer,
   .anim-splash-body,
   .anim-splash-emoji,
   .anim-splash-emoji-spin,
@@ -493,8 +210,7 @@ body {
   .anim-nod,
   .anim-wobble,
   .anim-slump,
-  .anim-glow,
-  .anim-sheet {
+  .anim-glow {
     animation: none;
   }
 

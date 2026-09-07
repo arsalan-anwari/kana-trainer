@@ -2,7 +2,6 @@
   "window": {
     "today": "今天",
     "yesterday": "昨天",
-    "week": "上週",
     "all": "全部",
     "custom": "自訂",
     "range": "{from} 至 {to}"
@@ -59,18 +58,19 @@
   "loadedMistakes": "已載入 {count} 個答錯的字元。",
   "weakest": {
     "title": "最弱的字元",
-    "description": "底色代表正確率，長條代表出現次數。",
+    "description": "按掌握度排序：只出現兩次的字元永遠排不到已驗證的字元前面。",
     "empty": "完成一場練習後即可查看統計。"
   },
   "rows": {
     "title": "行",
-    "description": "五十音表，依各行掌握情況上色。",
+    "description": "假名表，依每列的掌握度上色。",
     "empty": "尚無資料。"
   },
   "alphabets": {
     "title": "假名種類",
-    "description": "各自的掌握情況與題數占比。",
-    "share": "占全部題目的 {percent}%"
+    "description": "各自的掌握度，以及承擔了多少題量。",
+    "share": "占全部題目的 {percent}%",
+    "shareLabel": "題目占比"
   },
   "mistakes": {
     "title": "依字組統計的錯誤",
@@ -83,8 +83,29 @@
     "never": "{romaji}，從未出現",
     "missed": "{romaji}，錯 {misses}/{total}",
     "rowRight": "答對 {correct}/{total}",
-    "cell": "{sub}，答對 {correct}/{total}"
+    "cell": "{sub}，答對 {correct}/{total}",
+    "strength": "{romaji}：{total} 題對 {correct} 題，掌握度 {percent}%"
   },
   "noData": "尚無資料",
-  "ofTotal": "共 {total}"
+  "ofTotal": "共 {total}",
+  "mastery": {
+    "new": "新",
+    "shaky": "不穩",
+    "learning": "學習中",
+    "steady": "穩固",
+    "mastered": "精通"
+  },
+  "strength": "掌握度",
+  "seen_one": "出現 1 次",
+  "seen_other": "出現 {count} 次",
+  "legend": {
+    "weak": "需練習",
+    "strong": "扎實"
+  },
+  "stat": {
+    "accuracy": "正確率",
+    "runs": "輪次",
+    "answers": "作答",
+    "mastered": "精通"
+  }
 }

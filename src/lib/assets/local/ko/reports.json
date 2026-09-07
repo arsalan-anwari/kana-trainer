@@ -2,7 +2,6 @@
   "window": {
     "today": "오늘",
     "yesterday": "어제",
-    "week": "지난주",
     "all": "전체",
     "custom": "직접 지정",
     "range": "{from} ~ {to}"
@@ -59,18 +58,19 @@
   "loadedMistakes": "틀린 문자 {count}개를 불러왔습니다.",
   "weakest": {
     "title": "약한 문자",
-    "description": "색은 정답률, 막대는 나온 횟수.",
+    "description": "숙련도 순입니다. 두 번 본 글자가 검증된 글자를 앞지르지 않습니다.",
     "empty": "연습을 끝내면 통계가 보입니다."
   },
   "rows": {
     "title": "행",
-    "description": "오십음도, 행별 상태에 따라 색이 달라집니다.",
+    "description": "가나 표를 행별 숙련도로 물들였습니다.",
     "empty": "아직 데이터가 없습니다."
   },
   "alphabets": {
     "title": "문자",
-    "description": "각각의 상태와 차지한 비중.",
-    "share": "전체 문제의 {percent}%"
+    "description": "각 문자의 숙련도와 차지한 비중입니다.",
+    "share": "전체 문제의 {percent}%",
+    "shareLabel": "문제 비중"
   },
   "mistakes": {
     "title": "그룹별 오답",
@@ -83,8 +83,29 @@
     "never": "{romaji}, 나온 적 없음",
     "missed": "{romaji}, {total}개 중 {misses}개 오답",
     "rowRight": "{total}개 중 {correct}개 정답",
-    "cell": "{sub}, {total}개 중 {correct}개 정답"
+    "cell": "{sub}, {total}개 중 {correct}개 정답",
+    "strength": "{romaji}: {total}개 중 {correct}개 정답, 숙련도 {percent}%"
   },
   "noData": "데이터 없음",
-  "ofTotal": "/ {total}"
+  "ofTotal": "/ {total}",
+  "mastery": {
+    "new": "처음",
+    "shaky": "불안정",
+    "learning": "학습 중",
+    "steady": "안정적",
+    "mastered": "숙달"
+  },
+  "strength": "숙련도",
+  "seen_one": "1번 나옴",
+  "seen_other": "{count}번 나옴",
+  "legend": {
+    "weak": "연습 필요",
+    "strong": "탄탄함"
+  },
+  "stat": {
+    "accuracy": "정답률",
+    "runs": "회차",
+    "answers": "답변",
+    "mastered": "숙달"
+  }
 }

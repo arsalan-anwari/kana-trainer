@@ -58,5 +58,7 @@
     "incomplete": "That .kt-report file is incomplete.",
     "damaged": "That .kt-report file is damaged.",
     "badRun": "That .kt-report file holds a run that cannot be read."
-  }
+  },
+  "show": "Show {label}",
+  "hide": "Hide {label}"
 }

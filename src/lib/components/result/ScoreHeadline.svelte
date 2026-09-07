@@ -16,7 +16,7 @@
 </script>
 
 <div
-  class="anim-cheer flex flex-col gap-5 rounded-xl border border-border bg-sidebar p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6"
+  class="anim-cheer flex flex-col gap-5 rounded-xl border-2 border-border bg-sidebar p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6"
 >
   <div class="flex flex-col gap-1">
     <span class="flex items-center gap-3 text-h1 font-bold leading-tight">

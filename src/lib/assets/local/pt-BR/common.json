@@ -16,7 +16,11 @@
   "off": "Sem limite",
   "custom": "Personalizado",
   "pickValue": "Escolha um valor",
-  "nav": { "setup": "Praticar", "reports": "Histórico", "chart": "Tabela" },
+  "nav": {
+    "setup": "Praticar",
+    "reports": "Histórico",
+    "chart": "Tabela"
+  },
   "group": {
     "seion": "Seion",
     "dakuon": "Dakuon",
@@ -29,13 +33,20 @@
     "audio-text": "Áudio para texto",
     "text-audio": "Texto para áudio"
   },
-  "answerStyle": { "choice": "Múltipla escolha", "typing": "Digitar" },
+  "answerStyle": {
+    "choice": "Múltipla escolha",
+    "typing": "Digitar"
+  },
   "direction": {
     "kana-romaji": "Kana para romaji",
     "romaji-kana": "Romaji para kana",
     "mixed": "Misto"
   },
-  "difficulty": { "beginner": "Iniciante", "advanced": "Avançado", "expert": "Especialista" },
+  "difficulty": {
+    "beginner": "Iniciante",
+    "advanced": "Avançado",
+    "expert": "Especialista"
+  },
   "rowLabel": "Linha {letter}",
   "file": {
     "filterName": "Sessões do Kana Trainer",
@@ -47,5 +58,7 @@
     "incomplete": "Esse arquivo .kt-report está incompleto.",
     "damaged": "Esse arquivo .kt-report está danificado.",
     "badRun": "Esse arquivo .kt-report tem uma sessão ilegível."
-  }
+  },
+  "show": "Mostrar {label}",
+  "hide": "Ocultar {label}"
 }

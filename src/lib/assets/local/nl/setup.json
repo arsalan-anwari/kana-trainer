@@ -1,5 +1,8 @@
 {
-  "alphabets": { "title": "Alfabetten", "description": "Kies wat je te zien krijgt." },
+  "alphabets": {
+    "title": "Alfabetten",
+    "description": "Kies wat je te zien krijgt."
+  },
   "format": {
     "title": "Vraagvorm",
     "description": "Hoe elke vraag wordt gesteld.",
@@ -29,7 +32,10 @@
     "selectAll": "Alles",
     "clear": "Niets"
   },
-  "run": { "title": "Opties", "description": "Wat er in de ronde zit en hoe lang die duurt." },
+  "run": {
+    "title": "Opties",
+    "description": "Wat er in de ronde zit en hoe lang die duurt."
+  },
   "sets": {
     "title": "Extra groepen",
     "dakuon": "が ざ だ ば",
@@ -37,7 +43,11 @@
     "yoon": "きゃ しゃ ちゃ en de rest",
     "tokushon": "ファ ティ ヴァ, alleen katakana"
   },
-  "questions": { "title": "Vragen", "count": "Aantal vragen", "onePass": "Eén ronde" },
+  "questions": {
+    "title": "Vragen",
+    "count": "Aantal vragen",
+    "onePass": "Eén ronde"
+  },
   "difficulty": {
     "title": "Moeilijkheid",
     "beginner": "Foute antwoorden zijn willekeurig",
@@ -67,7 +77,9 @@
   "start": {
     "inPlay": "Tekens in het spel",
     "button": "Starten",
-    "empty": "Kies minstens één teken dat bij deze stand past."
+    "empty": "Kies minstens één teken dat bij deze stand past.",
+    "inPlayShort": "In spel",
+    "questions": "Vragen"
   },
   "notes": {
     "needsAlphabet": "Hiragana aangezet, een ronde heeft één alfabet nodig.",

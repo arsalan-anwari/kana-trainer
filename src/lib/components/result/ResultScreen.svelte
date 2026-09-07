@@ -2,13 +2,12 @@
   import { statsByKana, statsByRow, summarize } from "../../core/report";
   import { app } from "../../state.svelte";
   import { exportReports, fileLabel } from "../../storage";
-  import Button from "../../ui/Button.svelte";
-  import Card from "../../ui/Card.svelte";
   import BarChart from "../charts/BarChart.svelte";
   import MissedAnswers from "./MissedAnswers.svelte";
   import ResultSplash from "./ResultSplash.svelte";
   import ScoreHeadline from "./ScoreHeadline.svelte";
   import { t } from "../../i18n.svelte";
+  import { Button, Card } from "kaizen-ui";
 
   const report = $derived(app.lastReport);
   const answers = $derived(report?.answers ?? []);

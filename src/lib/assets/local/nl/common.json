@@ -16,7 +16,11 @@
   "off": "Uit",
   "custom": "Eigen waarde",
   "pickValue": "Kies een waarde",
-  "nav": { "setup": "Oefenen", "reports": "Overzicht", "chart": "Tabel" },
+  "nav": {
+    "setup": "Oefenen",
+    "reports": "Overzicht",
+    "chart": "Tabel"
+  },
   "group": {
     "seion": "Seion",
     "dakuon": "Dakuon",
@@ -29,13 +33,20 @@
     "audio-text": "Geluid naar tekst",
     "text-audio": "Tekst naar geluid"
   },
-  "answerStyle": { "choice": "Meerkeuze", "typing": "Typen" },
+  "answerStyle": {
+    "choice": "Meerkeuze",
+    "typing": "Typen"
+  },
   "direction": {
     "kana-romaji": "Kana naar romaji",
     "romaji-kana": "Romaji naar kana",
     "mixed": "Door elkaar"
   },
-  "difficulty": { "beginner": "Beginner", "advanced": "Gevorderd", "expert": "Expert" },
+  "difficulty": {
+    "beginner": "Beginner",
+    "advanced": "Gevorderd",
+    "expert": "Expert"
+  },
   "rowLabel": "{letter}-rij",
   "file": {
     "filterName": "Kana Trainer-rondes",
@@ -47,5 +58,7 @@
     "incomplete": "Dat .kt-report-bestand is onvolledig.",
     "damaged": "Dat .kt-report-bestand is beschadigd.",
     "badRun": "Dat .kt-report-bestand bevat een onleesbare ronde."
-  }
+  },
+  "show": "{label} tonen",
+  "hide": "{label} verbergen"
 }

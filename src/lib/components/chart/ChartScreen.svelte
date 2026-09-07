@@ -1,9 +1,9 @@
 <script lang="ts">
   import { rowsInGroup, type Group } from "../../core/kana";
   import { groupLabel } from "../../labels";
-  import Card from "../../ui/Card.svelte";
   import ChartRow from "./ChartRow.svelte";
   import { t } from "../../i18n.svelte";
+  import { Card, Icon } from "kaizen-ui";
 
   // the Japanese name sits beside the translated one, it is the same everywhere
   const sections: { group: Group; japanese: string }[] = [
@@ -16,10 +16,13 @@
 </script>
 
 <div class="flex flex-col gap-5">
-  <div class="flex flex-col gap-1 rounded-xl border border-border bg-sidebar p-5">
-    <span class="text-h2 font-bold leading-tight">{t("chart.title")}</span>
-    <span class="text-sm text-muted-foreground">
-      {t("chart.description")}
+  <div class="sheet ruled flex items-center gap-4 rounded-2xl border-2 border-border bg-sidebar p-4 sm:p-5">
+    <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand">
+      <Icon name="target" class="size-6" />
+    </span>
+    <span class="flex min-w-0 flex-col gap-0.5">
+      <span class="text-h2 font-bold leading-tight">{t("chart.title")}</span>
+      <span class="text-sm text-muted-foreground">{t("chart.description")}</span>
     </span>
   </div>
 

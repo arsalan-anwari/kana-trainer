@@ -16,7 +16,11 @@
   "off": "끔",
   "custom": "직접 입력",
   "pickValue": "값 선택",
-  "nav": { "setup": "연습", "reports": "기록", "chart": "표" },
+  "nav": {
+    "setup": "연습",
+    "reports": "기록",
+    "chart": "표"
+  },
   "group": {
     "seion": "청음",
     "dakuon": "탁음",
@@ -29,13 +33,20 @@
     "audio-text": "소리 듣고 쓰기",
     "text-audio": "글자 보고 소리 고르기"
   },
-  "answerStyle": { "choice": "객관식", "typing": "직접 입력" },
+  "answerStyle": {
+    "choice": "객관식",
+    "typing": "직접 입력"
+  },
   "direction": {
     "kana-romaji": "가나 → 로마자",
     "romaji-kana": "로마자 → 가나",
     "mixed": "섞기"
   },
-  "difficulty": { "beginner": "입문", "advanced": "중급", "expert": "고급" },
+  "difficulty": {
+    "beginner": "입문",
+    "advanced": "중급",
+    "expert": "고급"
+  },
   "rowLabel": "{letter}행",
   "file": {
     "filterName": "Kana Trainer 기록",
@@ -47,5 +58,7 @@
     "incomplete": "이 .kt-report 파일은 불완전합니다.",
     "damaged": "이 .kt-report 파일은 손상되었습니다.",
     "badRun": "이 .kt-report 파일에 읽을 수 없는 기록이 있습니다."
-  }
+  },
+  "show": "{label} 보기",
+  "hide": "{label} 숨기기"
 }

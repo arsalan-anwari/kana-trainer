@@ -1,5 +1,5 @@
 import { AssetStore } from "../assets/loader";
-import { shared } from "./shared";
+import { shared } from "kaizen-ui";
 import { peaksFromBytes, syntheticPeaks } from "./waveform";
 
 // Playback of the recorded character sounds.

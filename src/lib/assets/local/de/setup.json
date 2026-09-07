@@ -1,5 +1,8 @@
 {
-  "alphabets": { "title": "Alphabete", "description": "Wähle, was drankommt." },
+  "alphabets": {
+    "title": "Alphabete",
+    "description": "Wähle, was drankommt."
+  },
   "format": {
     "title": "Fragetyp",
     "description": "Wie jede Frage gestellt wird.",
@@ -29,7 +32,10 @@
     "selectAll": "Alle",
     "clear": "Keine"
   },
-  "run": { "title": "Optionen", "description": "Was drankommt und wie lange es dauert." },
+  "run": {
+    "title": "Optionen",
+    "description": "Was drankommt und wie lange es dauert."
+  },
   "sets": {
     "title": "Zusätzliche Gruppen",
     "dakuon": "が ざ だ ば",
@@ -37,7 +43,11 @@
     "yoon": "きゃ しゃ ちゃ und der Rest",
     "tokushon": "ファ ティ ヴァ, nur Katakana"
   },
-  "questions": { "title": "Fragen", "count": "Anzahl der Fragen", "onePass": "Ein Durchlauf" },
+  "questions": {
+    "title": "Fragen",
+    "count": "Anzahl der Fragen",
+    "onePass": "Ein Durchlauf"
+  },
   "difficulty": {
     "title": "Schwierigkeit",
     "beginner": "Falsche Antworten sind zufällig",
@@ -67,7 +77,9 @@
   "start": {
     "inPlay": "Zeichen im Spiel",
     "button": "Starten",
-    "empty": "Wähle mindestens ein Zeichen, das zu diesem Modus passt."
+    "empty": "Wähle mindestens ein Zeichen, das zu diesem Modus passt.",
+    "inPlayShort": "Im Spiel",
+    "questions": "Fragen"
   },
   "notes": {
     "needsAlphabet": "Hiragana eingeschaltet, ein Alphabet wird gebraucht.",

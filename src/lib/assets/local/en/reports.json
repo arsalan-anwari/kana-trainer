@@ -2,7 +2,6 @@
   "window": {
     "today": "Today",
     "yesterday": "Yesterday",
-    "week": "Last week",
     "all": "All",
     "custom": "Custom",
     "range": "{from} to {to}"
@@ -66,18 +65,19 @@
   "loadedMistakes": "Loaded {count} characters you missed.",
   "weakest": {
     "title": "Weakest characters",
-    "description": "Tinted by accuracy, the bar is how often it came up.",
+    "description": "Ranked by how solid each one is: a character seen twice never outranks one you have proven.",
     "empty": "Finish a run to see character stats."
   },
   "rows": {
     "title": "Rows",
-    "description": "The kana table, tinted by how each row is going.",
+    "description": "The kana table, shaded by how solid each row is.",
     "empty": "No rows yet."
   },
   "alphabets": {
     "title": "Alphabets",
-    "description": "How each one is going and how much it carried.",
-    "share": "{percent}% of the questions"
+    "description": "How solid each one is, and how much of the work it carried.",
+    "share": "{percent}% of the questions",
+    "shareLabel": "Share of questions"
   },
   "mistakes": {
     "title": "Mistakes by group",
@@ -91,8 +91,29 @@
     "never": "{romaji}, never came up",
     "missed": "{romaji}, missed {misses} of {total}",
     "rowRight": "{correct} of {total} right",
-    "cell": "{sub}, {correct} of {total} right"
+    "cell": "{sub}, {correct} of {total} right",
+    "strength": "{romaji}: {correct} of {total} right, strength {percent}%"
   },
   "noData": "No data yet",
-  "ofTotal": "of {total}"
+  "ofTotal": "of {total}",
+  "mastery": {
+    "new": "New",
+    "shaky": "Shaky",
+    "learning": "Learning",
+    "steady": "Steady",
+    "mastered": "Mastered"
+  },
+  "strength": "Strength",
+  "seen_one": "seen once",
+  "seen_other": "seen {count} times",
+  "legend": {
+    "weak": "Needs work",
+    "strong": "Solid"
+  },
+  "stat": {
+    "accuracy": "Accuracy",
+    "runs": "Runs",
+    "answers": "Answers",
+    "mastered": "Mastered"
+  }
 }

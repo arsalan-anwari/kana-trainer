@@ -1,10 +1,7 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
-  import ConfirmDialog from "../../ui/ConfirmDialog.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
-  import TextField from "../../ui/TextField.svelte";
   import { t } from "../../i18n.svelte";
+  import { Button, ConfirmDialog, IconButton, TextField } from "kaizen-ui";
 
   // Named character selections. A preset holds the characters picked in both
   // alphabets and nothing else, so loading one leaves every other setting alone.
@@ -95,6 +92,7 @@
     title={t("setup.presets.confirmTitle")}
     confirmLabel={t("common.delete")}
     cancelLabel={t("common.keep")}
+    closeLabel={t("common.close")}
     onconfirm={remove}
     oncancel={() => (confirming = false)}
   >

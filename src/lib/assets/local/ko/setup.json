@@ -77,7 +77,9 @@
   "start": {
     "inPlay": "연습에 쓰이는 문자",
     "button": "연습 시작",
-    "empty": "이 방식에 맞는 문자를 하나 이상 고르세요."
+    "empty": "이 방식에 맞는 문자를 하나 이상 고르세요.",
+    "inPlayShort": "사용 중",
+    "questions": "문제"
   },
   "notes": {
     "needsAlphabet": "히라가나를 켰습니다. 문자가 하나는 필요합니다.",

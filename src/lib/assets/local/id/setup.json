@@ -1,5 +1,8 @@
 {
-  "alphabets": { "title": "Aksara", "description": "Pilih yang akan muncul." },
+  "alphabets": {
+    "title": "Aksara",
+    "description": "Pilih yang akan muncul."
+  },
   "format": {
     "title": "Bentuk soal",
     "description": "Cara soal diberikan.",
@@ -29,7 +32,10 @@
     "selectAll": "Pilih semua",
     "clear": "Kosongkan"
   },
-  "run": { "title": "Opsi sesi", "description": "Isi sesi dan lamanya." },
+  "run": {
+    "title": "Opsi sesi",
+    "description": "Isi sesi dan lamanya."
+  },
   "sets": {
     "title": "Kelompok tambahan",
     "dakuon": "が ざ だ ば",
@@ -37,7 +43,11 @@
     "yoon": "きゃ しゃ ちゃ dan lainnya",
     "tokushon": "ファ ティ ヴァ, katakana saja"
   },
-  "questions": { "title": "Soal", "count": "Jumlah soal", "onePass": "Satu putaran" },
+  "questions": {
+    "title": "Soal",
+    "count": "Jumlah soal",
+    "onePass": "Satu putaran"
+  },
   "difficulty": {
     "title": "Tingkat",
     "beginner": "Pilihan salah diambil acak",
@@ -67,7 +77,9 @@
   "start": {
     "inPlay": "Huruf yang dipakai",
     "button": "Mulai",
-    "empty": "Pilih setidaknya satu huruf yang cocok untuk mode ini."
+    "empty": "Pilih setidaknya satu huruf yang cocok untuk mode ini.",
+    "inPlayShort": "Dipakai",
+    "questions": "Soal"
   },
   "notes": {
     "needsAlphabet": "Hiragana dinyalakan, sesi butuh setidaknya satu aksara.",

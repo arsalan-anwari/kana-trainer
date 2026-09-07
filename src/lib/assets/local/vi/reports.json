@@ -2,7 +2,6 @@
   "window": {
     "today": "Hôm nay",
     "yesterday": "Hôm qua",
-    "week": "Tuần trước",
     "all": "Tất cả",
     "custom": "Tự chọn",
     "range": "{from} đến {to}"
@@ -59,18 +58,19 @@
   "loadedMistakes": "Đã nạp {count} ký tự bạn làm sai.",
   "weakest": {
     "title": "Ký tự yếu nhất",
-    "description": "Màu là độ chính xác, thanh là số lần xuất hiện.",
+    "description": "Xếp theo độ vững: ký tự mới gặp hai lần không bao giờ vượt ký tự đã chứng minh.",
     "empty": "Hoàn thành một phiên để xem thống kê."
   },
   "rows": {
     "title": "Hàng",
-    "description": "Bảng kana, tô màu theo tình hình từng hàng.",
+    "description": "Bảng kana, tô màu theo độ vững của từng hàng.",
     "empty": "Chưa có hàng nào."
   },
   "alphabets": {
     "title": "Bảng chữ",
-    "description": "Tình hình mỗi bảng và phần việc nó gánh.",
-    "share": "{percent}% số câu hỏi"
+    "description": "Mỗi bảng vững đến đâu và gánh bao nhiêu phần việc.",
+    "share": "{percent}% số câu hỏi",
+    "shareLabel": "Tỷ lệ câu hỏi"
   },
   "mistakes": {
     "title": "Lỗi theo nhóm",
@@ -83,8 +83,29 @@
     "never": "{romaji}, chưa từng ra",
     "missed": "{romaji}, sai {misses}/{total}",
     "rowRight": "Đúng {correct}/{total}",
-    "cell": "{sub}, đúng {correct}/{total}"
+    "cell": "{sub}, đúng {correct}/{total}",
+    "strength": "{romaji}: đúng {correct}/{total}, độ vững {percent}%"
   },
   "noData": "Chưa có dữ liệu",
-  "ofTotal": "trên {total}"
+  "ofTotal": "trên {total}",
+  "mastery": {
+    "new": "Mới",
+    "shaky": "Yếu",
+    "learning": "Đang học",
+    "steady": "Vững",
+    "mastered": "Thành thạo"
+  },
+  "strength": "Độ vững",
+  "seen_one": "gặp 1 lần",
+  "seen_other": "gặp {count} lần",
+  "legend": {
+    "weak": "Cần luyện",
+    "strong": "Vững"
+  },
+  "stat": {
+    "accuracy": "Chính xác",
+    "runs": "Lượt",
+    "answers": "Câu trả lời",
+    "mastered": "Thành thạo"
+  }
 }

@@ -5,6 +5,48 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.0 - 2026-09-07
+
+### Added
+
+- `kaizen-ui`, a shared Svelte 5 UI kit, now holds every component, the theme
+  tokens, the interface sounds, the locale lookup, the appearance controls and
+  the viewport helper.
+- A strength score behind the reports: the lower bound of a Wilson interval over
+  right answers, shown as a word (New, Shaky, Learning, Steady, Mastered).
+- Summary tiles on the reports screen: accuracy, runs, answers and how many
+  characters have reached Mastered.
+- Paper texture across the app, a fine grain and a slow mottle on the page itself, 
+- and genko yoshi, the squared paper kana are practised on at school, on every panel.
+- The question now sits on a classroom board: chalk on slate in a wooden frame,
+  with the guide square chalked behind the character.
+- `Segmented`, the navigation strip, whose radius is derived from the tab radius
+  plus its padding so the corners stay concentric.
+- Fadeded header to blend with background and content. 
+
+### Fixed
+
+- Reports drew a bar from one number and printed a different one beside it, so a
+  tile could read 100% over a bar that was almost empty. Bar, tint and number
+  now all come from the same value.
+- The bar under a weakest-character tile measured how often the character came
+  up, not how well it went. It has been replaced by the strength it labels.
+- A 0% bar still drew a visible sliver.
+- The number roller's Done and Cancel buttons were hardcoded English.
+- Row expand and collapse labels were hardcoded English.
+
+### Changed
+
+- Warmer, chunkier controls throughout: bigger call-to-action buttons, pressed
+  lips on tiles and buttons, larger radii and a segmented navigation strip.
+- Controls that are not selected now carry a visible rule and a lip of their
+  own, rather than a hairline that left them reading as flat text.
+- More room everywhere: taller buttons, chips and fields, larger card padding
+  and hint text that is no longer two sizes below the label it belongs to.
+- Character rows in the reports heat map now show `right/seen` rather than a
+  second percentage.
+- More muted and faded right/wrong overlays on quizes to blend better with background. 
+
 ## [1.7.4] - 2026-09-05
 
 ### Fixed
@@ -311,6 +353,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.0
 [1.7.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.4
 [1.7.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.3
 [1.7.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.2

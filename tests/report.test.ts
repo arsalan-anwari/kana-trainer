@@ -7,6 +7,7 @@ import {
   dayKeyFromInput,
   filterReports,
   heatByRow,
+  masteryOf,
   maskDay,
   missesByGroup,
   queryLabels,
@@ -14,6 +15,7 @@ import {
   scriptsSeen,
   statsByKana,
   statsByRow,
+  strength,
   summarize,
   weakKanaIds,
   windowLabel,
@@ -101,7 +103,6 @@ describe("report filters", () => {
   it("cuts to whole local days", () => {
     expect(filterReports(reports, "today", now)).toHaveLength(1);
     expect(filterReports(reports, "yesterday", now)).toHaveLength(1);
-    expect(filterReports(reports, "week", now)).toHaveLength(3);
   });
 
   it("takes a hand picked window with both ends included", () => {
@@ -248,7 +249,7 @@ describe("tag and alphabet filters", () => {
 
   it("names the window on its own, a hand picked range included", () => {
     expect(windowLabel("all")).toBe("All");
-    expect(windowLabel("week")).toBe("Last week");
+    expect(windowLabel("yesterday")).toBe("Yesterday");
     expect(windowLabel({ from: "2026-01-01", to: "2026-02-01" })).toBe("Custom");
   });
 
@@ -281,5 +282,52 @@ describe("row heat", () => {
     expect(scriptsSeen(seen.filter((answer) => answer.script === "katakana"))).toEqual([
       "katakana"
     ]);
+  });
+});
+
+describe("strength", () => {
+  it("is zero without answers", () => {
+    expect(strength(0, 0)).toBe(0);
+  });
+
+  it("discounts a perfect score sitting on almost no answers", () => {
+    // the bug this replaced: 2 of 2 read as 100% and outranked a proven character
+    expect(strength(2, 2)).toBeLessThan(strength(18, 20));
+    expect(strength(1, 1)).toBeLessThan(strength(10, 10));
+  });
+
+  it("climbs as the same accuracy repeats", () => {
+    expect(strength(10, 10)).toBeGreaterThan(strength(5, 5));
+    expect(strength(100, 100)).toBeGreaterThan(strength(10, 10));
+  });
+
+  it("stays inside 0 and 1", () => {
+    for (const [correct, total] of [
+      [0, 1],
+      [0, 50],
+      [3, 7],
+      [999, 1000]
+    ]) {
+      const value = strength(correct, total);
+      expect(value).toBeGreaterThanOrEqual(0);
+      expect(value).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("names the band it lands in", () => {
+    expect(masteryOf(0, 0)).toBe("new");
+    expect(masteryOf(0, 8)).toBe("shaky");
+    expect(masteryOf(200, 200)).toBe("mastered");
+  });
+});
+
+describe("stat rows", () => {
+  it("ranks the weakest first, not the least seen", () => {
+    const rows = statsByKana([
+      ...Array.from({ length: 4 }, () => answer("a", true)),
+      answer("i", true),
+      ...Array.from({ length: 3 }, () => answer("u", false))
+    ]);
+    expect(rows.map((row) => row.key)).toEqual(["u", "i", "a"]);
   });
 });

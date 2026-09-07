@@ -58,5 +58,7 @@
     "incomplete": "该 .kt-report 文件不完整。",
     "damaged": "该 .kt-report 文件已损坏。",
     "badRun": "该 .kt-report 文件中有无法读取的记录。"
-  }
+  },
+  "show": "显示{label}",
+  "hide": "隐藏{label}"
 }

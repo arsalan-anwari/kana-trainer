@@ -2,7 +2,6 @@
   "window": {
     "today": "Hari ini",
     "yesterday": "Kemarin",
-    "week": "Minggu lalu",
     "all": "Semua",
     "custom": "Sendiri",
     "range": "{from} sampai {to}"
@@ -59,18 +58,19 @@
   "loadedMistakes": "{count} huruf yang salah dimuat.",
   "weakest": {
     "title": "Huruf terlemah",
-    "description": "Warna menandai ketepatan, batangnya seberapa sering muncul.",
+    "description": "Diurutkan menurut kemantapan: karakter yang baru muncul dua kali tidak pernah mengungguli yang terbukti.",
     "empty": "Selesaikan satu sesi untuk melihat statistik."
   },
   "rows": {
     "title": "Baris",
-    "description": "Tabel kana, diwarnai menurut keadaan tiap baris.",
+    "description": "Tabel kana, diwarnai menurut kemantapan tiap baris.",
     "empty": "Belum ada baris."
   },
   "alphabets": {
     "title": "Aksara",
-    "description": "Keadaan masing-masing dan berapa banyak yang ditanggung.",
-    "share": "{percent}% dari soal"
+    "description": "Seberapa mantap masing-masing dan seberapa besar porsinya.",
+    "share": "{percent}% dari soal",
+    "shareLabel": "Porsi pertanyaan"
   },
   "mistakes": {
     "title": "Kesalahan per kelompok",
@@ -83,8 +83,29 @@
     "never": "{romaji}, belum pernah muncul",
     "missed": "{romaji}, salah {misses} dari {total}",
     "rowRight": "{correct} dari {total} benar",
-    "cell": "{sub}, {correct} dari {total} benar"
+    "cell": "{sub}, {correct} dari {total} benar",
+    "strength": "{romaji}: {correct} dari {total} benar, kekuatan {percent}%"
   },
   "noData": "Belum ada data",
-  "ofTotal": "dari {total}"
+  "ofTotal": "dari {total}",
+  "mastery": {
+    "new": "Baru",
+    "shaky": "Rapuh",
+    "learning": "Belajar",
+    "steady": "Mantap",
+    "mastered": "Dikuasai"
+  },
+  "strength": "Kekuatan",
+  "seen_one": "muncul sekali",
+  "seen_other": "muncul {count} kali",
+  "legend": {
+    "weak": "Perlu latihan",
+    "strong": "Mantap"
+  },
+  "stat": {
+    "accuracy": "Akurasi",
+    "runs": "Sesi",
+    "answers": "Jawaban",
+    "mastered": "Dikuasai"
+  }
 }

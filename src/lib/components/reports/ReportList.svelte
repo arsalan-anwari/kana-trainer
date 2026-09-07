@@ -19,13 +19,10 @@
   } from "../../core/report";
   import { app } from "../../state.svelte";
   import { deleteReport, exportReports, fileLabel, importReports } from "../../storage";
-  import Chip from "../../ui/Chip.svelte";
-  import ConfirmDialog from "../../ui/ConfirmDialog.svelte";
-  import Icon from "../../ui/Icon.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
   import DateRangePicker from "./DateRangePicker.svelte";
   import ReportListItem from "./ReportListItem.svelte";
   import { t } from "../../i18n.svelte";
+  import { Chip, ConfirmDialog, EmptyState, Icon, IconButton } from "kaizen-ui";
 
   let {
     reports,
@@ -151,7 +148,7 @@
 
   <!-- The tags each run card already carries, turned into filters. Folded away
        by default, the window chips above are the everyday control. -->
-  <details class="rounded-lg border border-border bg-surface">
+  <details class="rounded-xl border-2 border-border bg-surface">
     <summary
       class="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground [&::-webkit-details-marker]:hidden"
     >
@@ -263,18 +260,23 @@
     </div>
   </div>
 
-  <div class="flex max-h-104 flex-col gap-2 overflow-y-auto lg:max-h-136">
-    {#each reports as report (report.id)}
-      <ReportListItem
-        {report}
-        picked={picked.includes(report.id)}
-        ontoggle={() => toggle(report.id)}
-      />
-    {:else}
-      <p class="py-8 text-center text-sm text-muted-foreground">
-        {t(isEmptyQuery(query) ? "reports.list.empty" : "reports.list.noMatch")}
-      </p>
-    {/each}
+  <!-- The runs live in a section of their own. Left bare, the scroll area read
+       as a stack of cards floating on the page with nothing holding them. -->
+  <div class="sheet ruled rounded-2xl border-2 border-border bg-surface p-2 sm:p-3">
+    <div class="flex max-h-100 flex-col gap-2 overflow-y-auto p-1 lg:max-h-132">
+      {#each reports as report (report.id)}
+        <ReportListItem
+          {report}
+          picked={picked.includes(report.id)}
+          ontoggle={() => toggle(report.id)}
+        />
+      {:else}
+        <EmptyState
+          icon={isEmptyQuery(query) ? "sprout" : "filter"}
+          title={t(isEmptyQuery(query) ? "reports.list.empty" : "reports.list.noMatch")}
+        />
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -283,6 +285,7 @@
     title={t("reports.confirm.title", { count: target.length })}
     confirmLabel={t("reports.confirm.yes", { count: target.length })}
     cancelLabel={t("reports.confirm.no", { count: target.length })}
+    closeLabel={t("common.close")}
     onconfirm={removeTarget}
     oncancel={() => (confirming = false)}
   >

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
   import { t } from "../../i18n.svelte";
+  import { Button } from "kaizen-ui";
 
   // Confirmation shown before an unfinished run is discarded.
 

@@ -77,7 +77,9 @@
   "start": {
     "inPlay": "Characters in play",
     "button": "Start run",
-    "empty": "Pick at least one character that fits this mode."
+    "empty": "Pick at least one character that fits this mode.",
+    "inPlayShort": "In play",
+    "questions": "Questions"
   },
   "notes": {
     "needsAlphabet": "Hiragana turned on, a run needs one alphabet.",

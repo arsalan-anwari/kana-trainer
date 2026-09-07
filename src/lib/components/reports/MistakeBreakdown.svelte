@@ -2,11 +2,8 @@
   import { groupLabel, rowLabel } from "../../labels";
   import { missesByGroup } from "../../core/report";
   import type { Answer } from "../../core/quiz";
-  import Badge from "../../ui/Badge.svelte";
-  import Card from "../../ui/Card.svelte";
   import { t } from "../../i18n.svelte";
-
-  // The missed characters, listed by group and row per alphabet.
+  import { Badge, Card, Icon } from "kaizen-ui";
 
   let { answers }: { answers: Answer[] } = $props();
 
@@ -16,12 +13,13 @@
 
 {#if total > 0}
   <Card title={t("reports.mistakes.title")} description={t("reports.mistakes.description")}>
+    {#snippet icon()}<Icon name="flame" class="size-5" />{/snippet}
     <!-- multi column rather than a grid, so a short box does not hold open the
          row beside it. -mb-3 swallows the trailing margin of the last box. -->
     <div class="-mb-3 columns-1 gap-3 sm:columns-2">
       {#each boxes as box (box.group)}
         <div
-          class="mb-3 flex break-inside-avoid flex-col gap-2 rounded-lg border border-border bg-background p-3"
+          class="mb-3 flex break-inside-avoid flex-col gap-2 rounded-lg border-2 border-border bg-background p-3"
         >
           <div class="flex items-center justify-between gap-2">
             <span class="text-sm font-semibold">{groupLabel(box.group)}</span>

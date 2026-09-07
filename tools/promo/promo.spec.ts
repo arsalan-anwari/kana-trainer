@@ -25,7 +25,7 @@ function resolve(text: string) {
 
 // Reads the prompt frame text, empty for an audio prompt.
 async function promptText(page: Page): Promise<string> {
-  return (await page.locator("main .border-wire").first().innerText()).trim();
+  return (await page.locator("main .board").first().innerText()).trim();
 }
 
 const tiles = (page: Page) => page.locator("main button.aspect-square");
@@ -215,8 +215,8 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button("Reports", true), 300);
   await stage.caption("Every run kept, on your machine only");
   await stage.beat(420);
-  await stage.caption("Look back a day, a week or any range you pick");
-  await stage.tap(button("Last week", true), 320);
+  await stage.caption("Look back a day, or any range you pick");
+  await stage.tap(button("All", true), 320);
   await stage.tap(page.getByRole("button", { name: "Select every run shown" }), 380);
   await stage.caption("See which rows trip you up");
   await stage.show(page.getByText("Mistakes by group"), 900);

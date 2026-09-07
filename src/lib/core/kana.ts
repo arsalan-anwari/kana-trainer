@@ -202,8 +202,7 @@ export const rows: Row[] = [
     ["pyu", "ぴゅ", "ピュ", "pyu", []],
     ["pyo", "ぴょ", "ピョ", "pyo", []]
   ]),
-  // Tokushon is only relevant for katakana.
-  makeRow("tye", "YE", "tokushon", [
+    makeRow("tye", "YE", "tokushon", [
     ["t-ye", "", "イェ", "ye", []],
     ["t-kye", "", "キェ", "kye", []],
     ["t-nye", "", "ニェ", "nye", []],

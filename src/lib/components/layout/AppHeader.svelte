@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { tabRoutes } from "../../core/prefs";
+  import { tabRoutes, type TabRoute } from "../../core/prefs";
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
   import AppControls from "./AppControls.svelte";
-  import AppMark from "./AppMark.svelte";
   import SettingsMenu from "./SettingsMenu.svelte";
   import { t } from "../../i18n.svelte";
+  import { AppMark, IconButton, Segmented } from "kaizen-ui";
 
   let menu = $state(false);
 </script>
@@ -23,12 +21,10 @@
 <div class="@container">
   <header class="flex flex-col gap-3 @min-[68rem]:flex-row @min-[68rem]:items-center @min-[68rem]:justify-between">
     <div class="flex items-center gap-3">
-      <AppMark class="size-10 shrink-0 text-h3 @min-[68rem]:size-11" />
+      <AppMark glyph="あ" class="size-10 shrink-0 text-h3 @min-[68rem]:size-11" />
       <div class="flex flex-col">
         <span class="text-h4 font-bold leading-tight">{t("common.appName")}</span>
-        <span class="hidden text-xs text-muted-foreground @min-[68rem]:block">
-          {t("common.tagline")}
-        </span>
+        <span class="text-xs text-muted-foreground">{t("common.tagline")}</span>
       </div>
       <!-- opens the settings sheet on a phone -->
       <IconButton
@@ -43,16 +39,15 @@
     <nav class="items-center gap-2 {app.route === 'quiz' ? 'hidden @min-[68rem]:flex' : 'flex'}">
       <!-- a run owns the screen, so the tabs step aside and give back the height -->
       {#if app.route !== "quiz"}
-        {#each tabRoutes as route (route)}
-          <Button
-            size="sm"
-            class="flex-1 @min-[68rem]:flex-none"
-            variant={app.route === route ? "secondary" : "ghost"}
-            onclick={() => app.go(route)}
-          >
-            {t(`common.nav.${route}`)}
-          </Button>
-        {/each}
+        <!-- one strip rather than three loose buttons, so the current screen
+             reads as a position rather than a pressed button -->
+        <Segmented
+          full
+          class="flex-1 @min-[68rem]:flex-none"
+          items={tabRoutes.map((route) => ({ value: route, label: t(`common.nav.${route}`) }))}
+          value={app.route as TabRoute}
+          onpick={(route) => app.go(route)}
+        />
       {/if}
       <!-- separated from the three screen buttons -->
       <span class="ml-3 hidden border-l border-border pl-3 @min-[68rem]:ml-4 @min-[68rem]:flex @min-[68rem]:pl-4">

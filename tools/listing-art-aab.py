@@ -50,7 +50,7 @@ SHOTS = [
     '08_Quiz_AudioText_Typing.png',
     '10_Quiz_TextAudio_Sounds.png',
     '13_Result_Score.png',
-    '15_Reports_LastWeek.png',
+    '15_Reports_All.png',
     '20_Chart_Characters.png',
 ]
 

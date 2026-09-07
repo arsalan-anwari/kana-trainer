@@ -1,9 +1,8 @@
 <script lang="ts">
   import { glyph, kanaById } from "../../core/kana";
   import type { Answer } from "../../core/quiz";
-  import Badge from "../../ui/Badge.svelte";
-  import Card from "../../ui/Card.svelte";
   import { t } from "../../i18n.svelte";
+  import { Badge, Card } from "kaizen-ui";
 
   let { misses }: { misses: Answer[] } = $props();
 </script>

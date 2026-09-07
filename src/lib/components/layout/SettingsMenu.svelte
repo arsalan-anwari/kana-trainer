@@ -1,12 +1,9 @@
 <script lang="ts">
   import { zoomMax, zoomMin, type Theme } from "../../core/prefs";
   import { app } from "../../state.svelte";
-  import Chip from "../../ui/Chip.svelte";
-  import Icon from "../../ui/Icon.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
-  import Switch from "../../ui/Switch.svelte";
   import LanguagePicker from "./LanguagePicker.svelte";
   import { t } from "../../i18n.svelte";
+  import { Chip, Icon, IconButton, Switch } from "kaizen-ui";
 
   // Full screen settings sheet, shown on a phone.
 
@@ -28,7 +25,7 @@
 <svelte:window onkeydown={keydown} />
 
 <div
-  class="fixed inset-0 z-50 flex flex-col bg-background pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
+  class="fixed inset-0 z-50 flex flex-col paper pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
   role="dialog"
   aria-modal="true"
   aria-label={t("common.settings")}

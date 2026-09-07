@@ -2,7 +2,6 @@
   "window": {
     "today": "Vandaag",
     "yesterday": "Gisteren",
-    "week": "Afgelopen week",
     "all": "Alles",
     "custom": "Eigen periode",
     "range": "{from} tot {to}"
@@ -66,18 +65,19 @@
   "loadedMistakes": "{count} gemiste tekens geladen.",
   "weakest": {
     "title": "Zwakste tekens",
-    "description": "De kleur is hoe goed het gaat, de balk hoe vaak het langskwam.",
+    "description": "Gerangschikt op hoe stevig elk teken zit: twee keer gezien haalt het nooit van bewezen kennis.",
     "empty": "Maak een ronde af om cijfers te zien."
   },
   "rows": {
     "title": "Rijen",
-    "description": "De kanatabel, gekleurd naar hoe elke rij ervoor staat.",
+    "description": "De kana-tabel, getint naar hoe stevig elke rij zit.",
     "empty": "Nog geen rijen."
   },
   "alphabets": {
     "title": "Alfabetten",
-    "description": "Hoe elk ervoor staat en hoeveel werk het droeg.",
-    "share": "{percent}% van de vragen"
+    "description": "Hoe stevig elk alfabet zit en hoeveel werk het droeg.",
+    "share": "{percent}% van de vragen",
+    "shareLabel": "Aandeel van de vragen"
   },
   "mistakes": {
     "title": "Fouten per groep",
@@ -91,8 +91,29 @@
     "never": "{romaji}, nooit langsgekomen",
     "missed": "{romaji}, {misses} van {total} gemist",
     "rowRight": "{correct} van {total} goed",
-    "cell": "{sub}, {correct} van {total} goed"
+    "cell": "{sub}, {correct} van {total} goed",
+    "strength": "{romaji}: {correct} van {total} goed, sterkte {percent}%"
   },
   "noData": "Nog geen gegevens",
-  "ofTotal": "van {total}"
+  "ofTotal": "van {total}",
+  "mastery": {
+    "new": "Nieuw",
+    "shaky": "Wankel",
+    "learning": "Lerend",
+    "steady": "Stabiel",
+    "mastered": "Beheerst"
+  },
+  "strength": "Sterkte",
+  "seen_one": "1 keer gezien",
+  "seen_other": "{count} keer gezien",
+  "legend": {
+    "weak": "Nodig werk",
+    "strong": "Stevig"
+  },
+  "stat": {
+    "accuracy": "Juist",
+    "runs": "Runs",
+    "answers": "Antwoorden",
+    "mastered": "Beheerst"
+  }
 }

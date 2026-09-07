@@ -2,7 +2,6 @@
   "window": {
     "today": "Hoje",
     "yesterday": "Ontem",
-    "week": "Última semana",
     "all": "Tudo",
     "custom": "Personalizado",
     "range": "{from} a {to}"
@@ -66,18 +65,19 @@
   "loadedMistakes": "{count} caracteres errados carregados.",
   "weakest": {
     "title": "Caracteres mais fracos",
-    "description": "A cor é o acerto; a barra, quantas vezes apareceu.",
+    "description": "Ordenado por solidez: um caractere visto duas vezes nunca passa à frente de um comprovado.",
     "empty": "Termine uma sessão para ver as estatísticas."
   },
   "rows": {
     "title": "Linhas",
-    "description": "A tabela kana, tingida conforme cada linha vai.",
+    "description": "A tabela de kana, tingida pela solidez de cada linha.",
     "empty": "Ainda não há linhas."
   },
   "alphabets": {
     "title": "Alfabetos",
-    "description": "Como cada um vai e quanto peso levou.",
-    "share": "{percent}% das perguntas"
+    "description": "Quão sólido cada um está e quanto do trabalho carregou.",
+    "share": "{percent}% das perguntas",
+    "shareLabel": "Parte das perguntas"
   },
   "mistakes": {
     "title": "Erros por grupo",
@@ -91,8 +91,29 @@
     "never": "{romaji}, nunca apareceu",
     "missed": "{romaji}, {misses} erros de {total}",
     "rowRight": "{correct} de {total} certas",
-    "cell": "{sub}, {correct} de {total} certas"
+    "cell": "{sub}, {correct} de {total} certas",
+    "strength": "{romaji}: {correct} de {total} certos, solidez {percent}%"
   },
   "noData": "Sem dados",
-  "ofTotal": "de {total}"
+  "ofTotal": "de {total}",
+  "mastery": {
+    "new": "Novo",
+    "shaky": "Frágil",
+    "learning": "Aprendendo",
+    "steady": "Sólido",
+    "mastered": "Dominado"
+  },
+  "strength": "Solidez",
+  "seen_one": "visto uma vez",
+  "seen_other": "visto {count} vezes",
+  "legend": {
+    "weak": "A revisar",
+    "strong": "Firme"
+  },
+  "stat": {
+    "accuracy": "Acertos",
+    "runs": "Rodadas",
+    "answers": "Respostas",
+    "mastered": "Dominados"
+  }
 }

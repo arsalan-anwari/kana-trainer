@@ -1,6 +1,8 @@
 // Preferences that outlive a run: theme, sound, zoom.
 
-export type Theme = "system" | "light" | "dark";
+import { clampZoom, type Theme } from "kaizen-ui";
+
+export { clampZoom, zoomMax, zoomMin, zoomStep, type Theme } from "kaizen-ui";
 
 export type Prefs = {
   effects: boolean;
@@ -20,16 +22,6 @@ export const defaultPrefs: Prefs = {
   contrast: false,
   zoom: 1
 };
-
-export const zoomMin = 0.7;
-export const zoomMax = 1.2;
-export const zoomStep = 0.05;
-
-export function clampZoom(value: number): number {
-  if (!Number.isFinite(value)) return 1;
-  const stepped = Math.round(value / zoomStep) * zoomStep;
-  return Math.min(zoomMax, Math.max(zoomMin, Number(stepped.toFixed(2))));
-}
 
 export function mergePrefs(stored: Partial<Prefs> | null): Prefs {
   const merged = { ...defaultPrefs, ...(stored ?? {}) };

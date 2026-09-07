@@ -59,7 +59,6 @@ const confusable: Record<Script, Set<string>> = {
   katakana: pairsOf("katakana")
 };
 
-// Strips the voiced and half voiced marks off a character.
 function stripMarks(value: string): string {
   return value
     .normalize("NFD")
@@ -76,7 +75,6 @@ function coda(romaji: string): string {
   return romaji.slice(-1);
 }
 
-// Whether two readings are at most one character apart.
 function nearReadings(left: string, right: string): boolean {
   if (Math.abs(left.length - right.length) > 1) return false;
   const [short, long] = left.length <= right.length ? [left, right] : [right, left];

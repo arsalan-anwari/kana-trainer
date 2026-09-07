@@ -2,7 +2,6 @@
   "window": {
     "today": "Aujourd'hui",
     "yesterday": "Hier",
-    "week": "7 derniers jours",
     "all": "Tout",
     "custom": "Personnalisé",
     "range": "{from} à {to}"
@@ -66,18 +65,19 @@
   "loadedMistakes": "{count} caractères manqués chargés.",
   "weakest": {
     "title": "Caractères les plus faibles",
-    "description": "La teinte donne la réussite, la barre la fréquence.",
+    "description": "Classé par solidité : un caractère vu deux fois ne passe jamais devant un acquis.",
     "empty": "Terminez une session pour voir les statistiques."
   },
   "rows": {
     "title": "Lignes",
-    "description": "Le tableau des kana, teinté selon l'état de chaque ligne.",
+    "description": "Le tableau des kana, teinté par la solidité de chaque ligne.",
     "empty": "Pas encore de lignes."
   },
   "alphabets": {
     "title": "Alphabets",
-    "description": "L'état de chacun et la part qu'il a portée.",
-    "share": "{percent}% des questions"
+    "description": "La solidité de chacun et la part du travail qu'il a portée.",
+    "share": "{percent}% des questions",
+    "shareLabel": "Part des questions"
   },
   "mistakes": {
     "title": "Erreurs par groupe",
@@ -91,8 +91,29 @@
     "never": "{romaji}, jamais tombé",
     "missed": "{romaji}, {misses} erreurs sur {total}",
     "rowRight": "{correct} sur {total}",
-    "cell": "{sub}, {correct} sur {total}"
+    "cell": "{sub}, {correct} sur {total}",
+    "strength": "{romaji} : {correct} sur {total} juste, solidité {percent}%"
   },
   "noData": "Pas de données",
-  "ofTotal": "sur {total}"
+  "ofTotal": "sur {total}",
+  "mastery": {
+    "new": "Nouveau",
+    "shaky": "Fragile",
+    "learning": "En cours",
+    "steady": "Solide",
+    "mastered": "Maîtrisé"
+  },
+  "strength": "Solidité",
+  "seen_one": "vu une fois",
+  "seen_other": "vu {count} fois",
+  "legend": {
+    "weak": "À travailler",
+    "strong": "Acquis"
+  },
+  "stat": {
+    "accuracy": "Réussite",
+    "runs": "Séries",
+    "answers": "Réponses",
+    "mastered": "Maîtrisés"
+  }
 }

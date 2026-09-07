@@ -9,7 +9,6 @@
 
   const shown = $derived(rows.slice(0, limit));
 
-  // picks a bar colour from the accuracy
   function color(accuracy: number): string {
     if (accuracy >= 0.9) return "var(--color-chart-5)";
     if (accuracy >= 0.7) return "var(--color-chart-4)";
@@ -33,7 +32,7 @@
         <div class="h-3 flex-1 overflow-hidden rounded-full bg-secondary">
           <div
             class="h-full rounded-full transition-[width] duration-500"
-            style="width: {Math.max(3, Math.round(row.accuracy * 100))}%; background: {color(
+            style="width: {row.accuracy * 100}%; background: {color(
               row.accuracy
             )}"
           ></div>

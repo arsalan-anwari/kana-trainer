@@ -1,12 +1,10 @@
 <script lang="ts">
   import { zoomMax, zoomMin } from "../../core/prefs";
   import { app } from "../../state.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
   import ThemeToggle from "./ThemeToggle.svelte";
   import { t } from "../../i18n.svelte";
   import LanguagePicker from "./LanguagePicker.svelte";
-
-  // The persistent settings as header icons.
+  import { IconButton } from "kaizen-ui";
 </script>
 
 <div class="flex items-center gap-1.5">

@@ -16,7 +16,11 @@
   "off": "Tắt",
   "custom": "Tự chọn",
   "pickValue": "Chọn giá trị",
-  "nav": { "setup": "Luyện tập", "reports": "Lịch sử", "chart": "Bảng chữ" },
+  "nav": {
+    "setup": "Luyện tập",
+    "reports": "Lịch sử",
+    "chart": "Bảng chữ"
+  },
   "group": {
     "seion": "Seion",
     "dakuon": "Dakuon",
@@ -29,13 +33,20 @@
     "audio-text": "Nghe rồi viết",
     "text-audio": "Nhìn chữ chọn âm"
   },
-  "answerStyle": { "choice": "Trắc nghiệm", "typing": "Gõ chữ" },
+  "answerStyle": {
+    "choice": "Trắc nghiệm",
+    "typing": "Gõ chữ"
+  },
   "direction": {
     "kana-romaji": "Kana sang romaji",
     "romaji-kana": "Romaji sang kana",
     "mixed": "Cả hai chiều"
   },
-  "difficulty": { "beginner": "Nhập môn", "advanced": "Nâng cao", "expert": "Thành thạo" },
+  "difficulty": {
+    "beginner": "Nhập môn",
+    "advanced": "Nâng cao",
+    "expert": "Thành thạo"
+  },
   "rowLabel": "Hàng {letter}",
   "file": {
     "filterName": "Phiên Kana Trainer",
@@ -47,5 +58,7 @@
     "incomplete": "Tệp .kt-report đó không đầy đủ.",
     "damaged": "Tệp .kt-report đó bị hỏng.",
     "badRun": "Tệp .kt-report đó chứa một phiên không đọc được."
-  }
+  },
+  "show": "Hiện {label}",
+  "hide": "Ẩn {label}"
 }

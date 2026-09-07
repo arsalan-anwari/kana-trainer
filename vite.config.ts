@@ -8,7 +8,9 @@ export default defineConfig({
   publicDir: "data",
   optimizeDeps: {
     // only reached through import() in storage.ts, so pin them to the pre-bundle
-    include: ["@tauri-apps/api/core", "@tauri-apps/plugin-dialog"]
+    include: ["@tauri-apps/api/core", "@tauri-apps/plugin-dialog"],
+    // ships Svelte source, so this app compiles it rather than pre-bundling it
+    exclude: ["kaizen-ui"]
   },
   server: {
     port: 1420,

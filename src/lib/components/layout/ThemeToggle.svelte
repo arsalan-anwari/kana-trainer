@@ -1,8 +1,8 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
-  import IconButton from "../../ui/IconButton.svelte";
-  import type { IconName } from "../../ui/icons";
   import { t } from "../../i18n.svelte";
+  import { IconButton } from "kaizen-ui";
+  import type { IconName } from "kaizen-ui";
 
   let { size = "sm" }: { size?: "sm" | "md" } = $props();
 

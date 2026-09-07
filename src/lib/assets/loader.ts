@@ -25,7 +25,6 @@ export class AssetStore {
     this.#path = options.path;
   }
 
-  // returns a cached asset, or null, without fetching
   peek(key: string): Asset | null {
     return this.#entries.get(key)?.asset ?? null;
   }
@@ -61,7 +60,6 @@ export class AssetStore {
     return pending;
   }
 
-  // warms the cache without waiting for it
   preload(keys: Iterable<string>): void {
     for (const key of keys) void this.load(key);
   }

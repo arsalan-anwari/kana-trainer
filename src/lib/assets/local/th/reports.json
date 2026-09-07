@@ -2,7 +2,6 @@
   "window": {
     "today": "วันนี้",
     "yesterday": "เมื่อวาน",
-    "week": "สัปดาห์ที่แล้ว",
     "all": "ทั้งหมด",
     "custom": "กำหนดเอง",
     "range": "{from} ถึง {to}"
@@ -59,18 +58,19 @@
   "loadedMistakes": "โหลดตัวอักษรที่ตอบผิด {count} ตัวแล้ว",
   "weakest": {
     "title": "ตัวอักษรที่อ่อนที่สุด",
-    "description": "สีบอกความแม่น แถบบอกว่าเจอบ่อยแค่ไหน",
+    "description": "เรียงตามความแม่น ตัวที่เจอแค่สองครั้งไม่มีทางแซงตัวที่พิสูจน์แล้ว",
     "empty": "ทำรอบฝึกให้จบเพื่อดูสถิติ"
   },
   "rows": {
     "title": "แถว",
-    "description": "ตารางคานะ ไล่สีตามผลของแต่ละแถว",
+    "description": "ตารางคานะ ไล่สีตามความแม่นของแต่ละแถว",
     "empty": "ยังไม่มีข้อมูลแถว"
   },
   "alphabets": {
     "title": "ชุดอักษร",
-    "description": "ผลของแต่ละชุดและสัดส่วนที่รับไป",
-    "share": "{percent}% ของคำถามทั้งหมด"
+    "description": "แต่ละชุดแม่นแค่ไหน และรับงานไปเท่าไร",
+    "share": "{percent}% ของคำถามทั้งหมด",
+    "shareLabel": "สัดส่วนคำถาม"
   },
   "mistakes": {
     "title": "ข้อผิดแยกตามกลุ่ม",
@@ -83,8 +83,29 @@
     "never": "{romaji}, ยังไม่เคยออก",
     "missed": "{romaji}, ผิด {misses} จาก {total}",
     "rowRight": "ถูก {correct} จาก {total}",
-    "cell": "{sub}, ถูก {correct} จาก {total}"
+    "cell": "{sub}, ถูก {correct} จาก {total}",
+    "strength": "{romaji}: ถูก {correct} จาก {total} ความแม่น {percent}%"
   },
   "noData": "ยังไม่มีข้อมูล",
-  "ofTotal": "จาก {total}"
+  "ofTotal": "จาก {total}",
+  "mastery": {
+    "new": "ใหม่",
+    "shaky": "ไม่แน่น",
+    "learning": "กำลังเรียน",
+    "steady": "มั่นคง",
+    "mastered": "เชี่ยวชาญ"
+  },
+  "strength": "ความแม่น",
+  "seen_one": "เจอ 1 ครั้ง",
+  "seen_other": "เจอ {count} ครั้ง",
+  "legend": {
+    "weak": "ต้องฝึก",
+    "strong": "แน่น"
+  },
+  "stat": {
+    "accuracy": "ความถูกต้อง",
+    "runs": "รอบ",
+    "answers": "คำตอบ",
+    "mastered": "เชี่ยวชาญ"
+  }
 }

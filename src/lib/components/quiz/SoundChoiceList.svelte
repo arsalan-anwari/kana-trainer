@@ -2,12 +2,10 @@
   import { kanaById } from "../../core/kana";
   import type { Question } from "../../core/quiz";
   import { app } from "../../state.svelte";
-  import Button from "../../ui/Button.svelte";
   import SoundChoice from "./SoundChoice.svelte";
   import { choiceState } from "./choiceState";
   import { t } from "../../i18n.svelte";
-
-  // The four stacked sound tiles of a text to audio question.
+  import { Button } from "kaizen-ui";
 
   let { question }: { question: Question } = $props();
 
