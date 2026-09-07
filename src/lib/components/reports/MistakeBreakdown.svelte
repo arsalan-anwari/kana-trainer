@@ -14,8 +14,7 @@
 {#if total > 0}
   <Card title={t("reports.mistakes.title")} description={t("reports.mistakes.description")}>
     {#snippet icon()}<Icon name="flame" class="size-5" />{/snippet}
-    <!-- multi column rather than a grid, so a short box does not hold open the
-         row beside it. -mb-3 swallows the trailing margin of the last box. -->
+    
     <div class="-mb-3 columns-1 gap-3 sm:columns-2">
       {#each boxes as box (box.group)}
         <div

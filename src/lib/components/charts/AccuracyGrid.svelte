@@ -4,11 +4,6 @@
   import HeatLegend from "./HeatLegend.svelte";
   import { t } from "../../i18n.svelte";
 
-  // The weakest characters as tiles. Tint, bar and word all read the same
-  // strength, so nothing on a tile can contradict anything else on it. How often
-  // a character came up is already inside the strength, and is spelled out in
-  // the tooltip rather than drawn as a second bar.
-
   let { rows, limit = 12 }: { rows: StatRow[]; limit?: number } = $props();
 
   const shown = $derived(rows.slice(0, limit));

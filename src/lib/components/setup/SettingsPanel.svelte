@@ -16,14 +16,12 @@
   import { t } from "../../i18n.svelte";
   import { Card, Chip, CustomNumberChip, Icon, OptionCard, Switch } from "kaizen-ui";
 
-  // tokushon has no hiragana form, so it is offered only once katakana is in the run
   const shownSets = $derived(
     optionalGroups.filter(
       (group) => group !== "tokushon" || app.settings.scripts.includes("katakana")
     )
   );
 
-  // whether the pool is large enough for the difficulty to matter
   const enoughToSort = $derived(app.eligibleCount >= difficultyMinPool);
 
   function timeLabel(seconds: number): string {
@@ -32,9 +30,6 @@
     return `${seconds / 60}m`;
   }
 
-  // Whether the custom chip is the one holding the timer. Held rather than
-  // derived, a hand picked 60s is the same number as the 1m preset and the chip
-  // still has to stay the one lit.
   let perQuestionCustom = $state(
     isCustomTime(app.settings.perQuestionSeconds, perQuestionOptions)
   );

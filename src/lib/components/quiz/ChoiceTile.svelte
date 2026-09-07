@@ -17,13 +17,10 @@
     onpick: () => void;
   } = $props();
 
-  // Sized against the tile, not the viewport, so a two character yoon reading
-  // fits at any tile size or zoom. Kana are full width, romaji roughly half.
   const fontSize = $derived(
     `${Math.min(kana ? 46 : 34, (kana ? 78 : 130) / Math.max(1, label.length))}cqi`
   );
 
-  // every state sits on a lip, so a tap presses the tile into the page
   const tones: Record<ChoiceState, string> = {
     idle: "border-border bg-surface shadow-[0_4px_0_var(--color-border)] hover:border-selected hover:bg-accent active:translate-y-[4px] active:shadow-none",
     staged: "border-selected bg-selected-soft shadow-[0_4px_0_var(--color-selected)]",

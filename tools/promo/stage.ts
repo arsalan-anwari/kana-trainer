@@ -16,7 +16,6 @@ declare global {
   }
 }
 
-// Injects the cursor, caption, card and scroll layer into the page.
 export function installStage(intro: Card): void {
   const css = `
     #promo-layer, #promo-layer * { box-sizing: border-box; }
@@ -142,7 +141,6 @@ export function installStage(intro: Card): void {
       }
     };
 
-    // show the intro card while the app mounts
     paint(intro);
     card.classList.add("on");
     card.style.transition = "none";
@@ -158,13 +156,11 @@ export function installStage(intro: Card): void {
   }
 }
 
-// Node side remote control for the stage.
 export class Stage {
   private readonly started = Date.now();
 
   constructor(private readonly page: Page) {}
 
-  // prints where a beat lands on the timeline
   mark(label: string): void {
     console.log(`  ${((Date.now() - this.started) / 1000).toFixed(1)}s  ${label}`);
   }
@@ -192,7 +188,6 @@ export class Stage {
     await this.beat(340);
   }
 
-  // scrolls the window with an eased animation and waits for it to land
   async scroll(y: number, ms = 520): Promise<void> {
     await this.page.evaluate(
       ({ target, duration }) => window.__promo.scrollTo(target, duration),
@@ -201,7 +196,6 @@ export class Stage {
     await this.beat(ms + 80);
   }
 
-  // centres a target that sits off screen and returns its centre point
   private async reveal(target: Locator): Promise<{ x: number; y: number } | null> {
     const view = this.page.viewportSize();
     let box = await target.boundingBox();
@@ -217,7 +211,6 @@ export class Stage {
     return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
   }
 
-  // scrolls an element to the top of the screen
   async frame(selector: string, offset = 14, ms = 240): Promise<void> {
     const y = await this.page.evaluate(
       ({ target, top }) => {
@@ -230,7 +223,6 @@ export class Stage {
     await this.scroll(Math.max(0, y), ms);
   }
 
-  // moves the cursor onto a target and clicks it, pin skips the scroll
   async tap(target: Locator, settle = 220, pin = false): Promise<void> {
     const point = pin ? await this.centre(target) : await this.reveal(target);
     if (point !== null) await this.page.mouse.move(point.x, point.y, { steps: 5 });
@@ -243,13 +235,11 @@ export class Stage {
     return box === null ? null : { x: box.x + box.width / 2, y: box.y + box.height / 2 };
   }
 
-  // brings a target into view without clicking it
   async show(target: Locator, settle = 260): Promise<void> {
     await this.reveal(target);
     await this.beat(settle);
   }
 
-  // moves the cursor onto a target without clicking it
   async hover(target: Locator, settle = 220): Promise<void> {
     const point = await this.reveal(target);
     if (point === null) return;

@@ -8,7 +8,6 @@ if (target === null) throw new Error("mount target is missing");
 function dismissSplash(): void {
   const splash = document.getElementById("splash");
   if (splash === null) return;
-  // wait two frames so the mounted markup has laid out and painted
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       splash.dataset.done = "";

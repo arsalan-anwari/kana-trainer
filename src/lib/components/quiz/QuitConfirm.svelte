@@ -3,14 +3,11 @@
   import { t } from "../../i18n.svelte";
   import { Button } from "kaizen-ui";
 
-  // Confirmation shown before an unfinished run is discarded.
-
   let keep = $state<HTMLDivElement | null>(null);
 
   const answered = $derived(app.answers.length);
   const left = $derived(Math.max(0, app.questions.length - answered));
 
-  // focus the keep button rather than the discard button
   $effect(() => {
     keep?.querySelector("button")?.focus();
   });

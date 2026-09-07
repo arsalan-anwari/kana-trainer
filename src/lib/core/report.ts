@@ -47,18 +47,6 @@ export type StatRow = {
   mastery: Mastery;
 };
 
-// How well a character is really known, not just how it went last time.
-//
-// Plain accuracy treats 2 out of 2 as perfect and puts it above 18 out of 20,
-// which is how a character seen twice ends up looking mastered. This is the
-// lower bound of a Wilson score interval instead: 2 out of 2 scores 0.67, 18
-// out of 20 scores 0.81, and a run of right answers only pulls the score up as
-// the count behind it grows.
-//
-// z is one standard deviation rather than the textbook 1.96. The stricter bound
-// is just as good at ordering characters, but it paints a whole first session
-// red, and a screen that tells a beginner everything is wrong is a screen they
-// close.
 export function strength(correct: number, total: number): number {
   if (total === 0) return 0;
   const z = 1;
@@ -68,8 +56,6 @@ export function strength(correct: number, total: number): number {
   return Math.max(0, (centre - spread) / (1 + (z * z) / total));
 }
 
-// The strength as a word, which is what the screens actually show. A number on
-// its own invites reading 100% off two lucky answers.
 export const masteryLevels = ["new", "shaky", "learning", "steady", "mastered"] as const;
 
 export type Mastery = (typeof masteryLevels)[number];
@@ -132,12 +118,9 @@ function toStatRows(
       strength: strength(bucket.correct, bucket.total),
       mastery: masteryOf(bucket.correct, bucket.total)
     }))
-    // weakest first, and among equals the one with the most answers behind it
     .sort((a, b) => a.strength - b.strength || b.total - a.total);
 }
 
-// Without an alphabet both glyphs are shown side by side, with one only the
-// glyph the run actually drilled.
 export function statsByKana(answers: Answer[], script?: Script): StatRow[] {
   return toStatRows(
     tally(answers, (answer) => answer.kanaId),
@@ -176,7 +159,6 @@ export function weakKanaIds(answers: Answer[], threshold = 1): string[] {
     .map(([key]) => key);
 }
 
-// One character in one alphabet, and how often it was missed.
 export type Miss = {
   key: string;
   kanaId: string;
@@ -198,7 +180,6 @@ export type MissGroup = {
   rows: MissRow[];
 };
 
-// Groups every miss by group and row, kept apart by alphabet.
 export function missesByGroup(answers: Answer[]): MissGroup[] {
   const tally = new Map<string, Miss>();
 
@@ -257,8 +238,6 @@ export function reportTitle(report: Report): string {
 
 export const reportFilters = ["all", "today", "yesterday"] as const;
 
-// A window the reader picked by hand, both ends inclusive whole local days,
-// each written as YYYY-MM-DD the way an <input type="date"> reports it.
 export type DateRange = { from: string; to: string };
 
 export type ReportFilter = (typeof reportFilters)[number] | DateRange;
@@ -267,23 +246,18 @@ export function isDateRange(filter: ReportFilter): filter is DateRange {
   return typeof filter !== "string";
 }
 
-// YYYY-MM-DD for the local day a stamp falls in.
 export function dayKey(stamp: number): string {
   const date = new Date(stamp);
   const pad = (value: number): string => String(value).padStart(2, "0");
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
-// Local midnight of a YYYY-MM-DD key. Date.parse would read it as UTC, which
-// slides the window by a day either side of the meridian.
 function dayStart(key: string): number {
   const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
   if (parts === null) return Number.NaN;
   return new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])).getTime();
 }
 
-// DD/MM/YYYY as it is typed. Digits carry the value, the slashes only appear
-// between groups that exist, so erasing a digit takes its slash with it.
 export function maskDay(raw: string): string {
   const digits = raw.replace(/\D/g, "").slice(0, 8);
   return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4)]
@@ -291,16 +265,13 @@ export function maskDay(raw: string): string {
     .join("/");
 }
 
-// The day key a finished DD/MM/YYYY names, or "" when it names no real day.
 export function dayKeyFromInput(text: string): string {
   const parts = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(text);
   if (parts === null) return "";
   const key = `${parts[3]}-${parts[2]}-${parts[1]}`;
-  // a rolled over date (31/02) comes back as a different day
   return dayKey(dayStart(key)) === key ? key : "";
 }
 
-// A day key written the way the typed field shows it.
 export function dayInputText(key: string): string {
   const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
   return parts === null ? "" : `${parts[3]}/${parts[2]}/${parts[1]}`;
@@ -323,10 +294,8 @@ function startOfDay(stamp: number): number {
 
 const DAY = 24 * 60 * 60 * 1000;
 
-// How far back the hand picked window may reach.
 export const rangeDays = 365;
 
-// Filters reports to a window of whole local days.
 export function filterWindow(
   filter: ReportFilter,
   now = Date.now()
@@ -356,12 +325,6 @@ export function filterReports(
   });
 }
 
-// ---------------------------------------------------------------------------
-// Tags
-//
-// A run carries the two badges its card shows, taken straight from the settings
-// it ran with: the question format and how it was answered.
-// ---------------------------------------------------------------------------
 
 export type ReportTag = Format | AnswerStyle;
 
@@ -376,9 +339,6 @@ export function tagsOf(report: Report): ReportTag[] {
   return [report.settings.format, report.settings.answerStyle];
 }
 
-// Which alphabets a run had switched on. "both" is its own bucket rather than
-// hiragana plus katakana, a mixed run drills the pair against each other and
-// reads nothing like two single alphabet runs.
 export const alphabetFilters = ["any", "hiragana", "katakana", "both"] as const;
 
 export type AlphabetFilter = (typeof alphabetFilters)[number];
@@ -394,7 +354,6 @@ export function alphabetOf(report: Report): Exclude<AlphabetFilter, "any"> {
   return katakana ? "katakana" : "hiragana";
 }
 
-// Everything holding the report view down at once.
 export type ReportQuery = {
   window: ReportFilter;
   tags: ReportTag[];
@@ -407,14 +366,10 @@ export function isEmptyQuery(query: ReportQuery): boolean {
   return query.window === "all" && query.tags.length === 0 && query.alphabet === "any";
 }
 
-// How many knobs are turned, for the badge on the collapsed filter panel.
 export function queryTagCount(query: ReportQuery): number {
   return query.tags.length + (query.alphabet === "any" ? 0 : 1);
 }
 
-// Tags inside one dimension widen the match, tags across dimensions narrow it:
-// picking both audio formats keeps either of them, adding "typing" then keeps
-// only the typed ones.
 function tagsMatch(report: Report, tags: ReportTag[]): boolean {
   const formats = tags.filter((tag): tag is Format => formatTags.includes(tag as Format));
   const styles = tags.filter((tag): tag is AnswerStyle =>
@@ -437,15 +392,11 @@ export function queryReports(
   );
 }
 
-// The window on its own, for the heading. A hand picked range is only ever
-// "Custom", the dates themselves are too long to sit in a heading.
+
 export function windowLabel(filter: ReportFilter): string {
   return isDateRange(filter) ? t("reports.window.custom") : reportFilterLabel(filter);
 }
 
-// Every tag holding the view down, in a fixed order rather than the order they
-// were clicked, so the same view always reads the same way. These sit under the
-// heading as boxes, the same ones a run card carries.
 export function queryLabels(query: ReportQuery): string[] {
   return [
     ...formatTags.filter((tag) => query.tags.includes(tag)).map(tagLabel),
@@ -454,19 +405,10 @@ export function queryLabels(query: ReportQuery): string[] {
   ];
 }
 
-// The alphabets that actually show up in a pile of answers, so a view narrowed
-// to one of them draws one chart instead of half an empty comparison.
 export function scriptsSeen(answers: Answer[]): Script[] {
   const order: Script[] = ["hiragana", "katakana"];
   return order.filter((script) => answers.some((answer) => answer.script === script));
 }
-
-// ---------------------------------------------------------------------------
-// Row heat
-//
-// The gojuon table as the reader knows it: one line per row, every character in
-// the row kept in place so a gap reads as "never came up" instead of vanishing.
-// ---------------------------------------------------------------------------
 
 export type HeatCell = {
   key: string;
@@ -514,7 +456,7 @@ export function heatByRow(answers: Answer[], script: Script): HeatRow[] {
       };
     });
     const total = cells.reduce((sum, cell) => sum + cell.total, 0);
-    // a row nobody touched is an empty line, not information
+
     if (total === 0) continue;
     const correct = cells.reduce((sum, cell) => sum + cell.correct, 0);
     heat.push({

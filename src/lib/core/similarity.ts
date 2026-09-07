@@ -1,9 +1,7 @@
-// Scores how easily two characters are mistaken for each other.
 
 import { glyph, type Kana, type Script } from "./kana";
 import type { Side } from "./settings";
 
-// Groups of characters learners routinely mix up, by alphabet.
 const lookAlikes: Record<Script, string[][]> = {
   hiragana: [
     ["a", "o", "me", "nu"],
@@ -66,7 +64,6 @@ function stripMarks(value: string): string {
     .normalize("NFC");
 }
 
-// The consonant part of a reading, everything before the final vowel.
 function onset(romaji: string): string {
   return romaji.slice(0, -1);
 }
@@ -92,7 +89,6 @@ function nearReadings(left: string, right: string): boolean {
   return true;
 }
 
-// Confusability score, higher is easier to confuse and zero is plainly distinct.
 export function similarity(
   target: Kana,
   targetScript: Script,
@@ -103,7 +99,6 @@ export function similarity(
   if (target.id === other.id) return 0;
 
   if (answer === "kana") {
-    // kana answers are compared by shape
     const shown = stripMarks(glyph(target, targetScript));
     const rival = stripMarks(glyph(other, otherScript));
     const sameAlphabet = targetScript === otherScript;
@@ -116,8 +111,6 @@ export function similarity(
     return 0;
   }
 
-  // romaji and audio answers are compared by reading, ignoring the alphabet.
-  // Tokushon has no hiragana, so it is compared through its katakana instead.
   const shown = stripMarks(target.hira || target.kata);
   const rival = stripMarks(other.hira || other.kata);
 

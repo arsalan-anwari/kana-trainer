@@ -20,7 +20,6 @@
   }
 </script>
 
-<!-- disabled while high contrast is on -->
 <IconButton
   {size}
   icon={current.icon}

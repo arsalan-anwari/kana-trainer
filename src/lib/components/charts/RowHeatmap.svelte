@@ -4,10 +4,6 @@
   import HeatLegend from "./HeatLegend.svelte";
   import { t } from "../../i18n.svelte";
 
-  // The kana table, tinted. Each line is a row of the gojuon with its characters
-  // still in their usual places, so the shape of what is weak is read the same
-  // way the alphabet was learnt. Cells wrap, which is all the narrow widths need.
-
   let { heat }: { heat: HeatRow[] } = $props();
 </script>
 
@@ -15,7 +11,7 @@
   <p class="py-6 text-center text-sm text-muted-foreground">{t("reports.rows.empty")}</p>
 {:else}
   <div class="flex flex-col gap-3">
-    <!-- the table stops widening past the point where a row is still one glance -->
+    
     <div class="flex max-w-3xl flex-col gap-1.5">
       {#each heat as row (row.id)}
         <div class="flex items-center gap-2">
@@ -43,8 +39,7 @@
               </span>
             {/each}
           </div>
-          <!-- the count, not a second percentage: a fraction cannot disagree
-               with the tint beside it -->
+          
           <span
             class="w-12 shrink-0 text-right text-xs font-bold leading-none tabular-nums"
             style="color: {heatColor(row.strength)}"

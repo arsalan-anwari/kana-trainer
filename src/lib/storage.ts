@@ -58,7 +58,6 @@ function suggestedName(count: number): string {
   return `kana-runs-${stamp}-${count}.${FILE_EXTENSION}`;
 }
 
-// built per call, the label follows the language the user picked
 const fileFilters = (): { name: string; extensions: string[] }[] => [
   { name: t("common.file.filterName"), extensions: [FILE_EXTENSION] }
 ];
@@ -114,13 +113,10 @@ function pickFileInBrowser(): Promise<Uint8Array | null> {
 }
 
 export type ImportResult = {
-  // runs written
   added: number;
-  // runs already held under the same id
   skipped: number;
 };
 
-// Reads a .kt-report file and merges its runs into the ones already held.
 export async function importReports(): Promise<ImportResult | null> {
   let bytes: Uint8Array | null;
   if (inTauri()) {

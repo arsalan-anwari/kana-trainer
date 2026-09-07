@@ -14,7 +14,6 @@
         : t("quiz.typing.romaji")
   );
 
-  // the field carries the verdict until the next question
   const tone = $derived(
     app.phase === "answering" ? "idle" : app.lastCorrect ? "correct" : "wrong"
   );

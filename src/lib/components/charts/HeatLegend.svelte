@@ -3,12 +3,8 @@
   import { masteryLabel, masteryLevels } from "../../core/report";
   import { t } from "../../i18n.svelte";
 
-  // What the tint means, once per card. The words are the scale, the ramp only
-  // shows which way it runs.
-
   let { class: className = "" }: { class?: string } = $props();
 
-  // where each band sits on the ramp, so the swatch matches the tiles above
   const marks: Record<string, number> = {
     new: 0,
     shaky: 0.2,

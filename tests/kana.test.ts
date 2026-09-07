@@ -55,7 +55,6 @@ describe("kana data", () => {
       expect(kana.hira).toBe("");
       expect(kana.kata.length).toBeGreaterThan(0);
     }
-    // every other group has one
     for (const kana of allKana.filter((entry) => entry.group !== "tokushon")) {
       expect(kana.hira.length).toBeGreaterThan(0);
     }

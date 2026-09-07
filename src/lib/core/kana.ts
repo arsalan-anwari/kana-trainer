@@ -1,7 +1,3 @@
-// The kana table itself: characters, rows and groups.
-//
-// Data only, and no import that needs Vite: the promo and showcase scripts pull
-// this straight into node. The translated names live in ../labels.
 
 export type Script = "hiragana" | "katakana";
 
@@ -296,7 +292,6 @@ export function rowsInGroup(group: Group): Row[] {
   return rows.filter((row) => row.group === group);
 }
 
-// Tokushon only exists in katakana, so it is out of play in a hiragana run.
 export function groupInScript(group: Group, script: Script): boolean {
   return script === "katakana" || group !== "tokushon";
 }

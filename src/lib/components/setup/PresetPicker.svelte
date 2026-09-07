@@ -3,15 +3,11 @@
   import { t } from "../../i18n.svelte";
   import { Button, ConfirmDialog, IconButton, TextField } from "kaizen-ui";
 
-  // Named character selections. A preset holds the characters picked in both
-  // alphabets and nothing else, so loading one leaves every other setting alone.
-
   let chosen = $state("");
   let naming = $state(false);
   let name = $state("");
   let confirming = $state(false);
 
-  // a preset removed elsewhere must not stay selected
   $effect(() => {
     if (chosen !== "" && !app.presets.some((preset) => preset.name === chosen)) chosen = "";
   });

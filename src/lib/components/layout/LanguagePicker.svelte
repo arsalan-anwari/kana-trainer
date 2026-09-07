@@ -2,10 +2,6 @@
   import { i18n, locales, t } from "../../i18n.svelte";
   import { app } from "../../state.svelte";
 
-  // A plain select: twelve languages is too many to cycle through a button, and
-  // the names stay in their own language so the entry you want reads the same
-  // whatever the app is set to right now.
-
   let { full = false }: { full?: boolean } = $props();
 </script>
 

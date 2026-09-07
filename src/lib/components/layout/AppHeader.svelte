@@ -9,26 +9,17 @@
   let menu = $state(false);
 </script>
 
-<!-- The flat row needs 64.3rem at its widest, which is French: the longest
-     tagline, the longest tab labels and a language picker as wide as its
-     longest entry. 68rem leaves a little room for fonts that set wider than
-     the ones measured on. Below that the whole strip moves into the sheet
-     behind the sliders button.
-
-     Asking the container rather than the viewport keeps this true at every
-     zoom level, since rem here follows the root font size the zoom control
-     sets. tests/e2e/layout.spec.ts holds the number honest. -->
 <div class="@container">
-  <header class="flex flex-col gap-3 @min-[68rem]:flex-row @min-[68rem]:items-center @min-[68rem]:justify-between">
+  <header class="flex flex-col gap-3 @min-[73rem]:flex-row @min-[73rem]:items-center @min-[73rem]:justify-between">
     <div class="flex items-center gap-3">
-      <AppMark glyph="あ" class="size-10 shrink-0 text-h3 @min-[68rem]:size-11" />
+      <AppMark glyph="あ" class="size-10 shrink-0 text-h3 @min-[73rem]:size-11" />
       <div class="flex flex-col">
         <span class="text-h4 font-bold leading-tight">{t("common.appName")}</span>
         <span class="text-xs text-muted-foreground">{t("common.tagline")}</span>
       </div>
-      <!-- opens the settings sheet on a phone -->
+      
       <IconButton
-        class="ml-auto @min-[68rem]:hidden"
+        class="ml-auto @min-[73rem]:hidden"
         icon="sliders"
         label={t("common.settings")}
         active={menu}
@@ -36,21 +27,20 @@
       />
     </div>
 
-    <nav class="items-center gap-2 {app.route === 'quiz' ? 'hidden @min-[68rem]:flex' : 'flex'}">
-      <!-- a run owns the screen, so the tabs step aside and give back the height -->
+    <nav class="items-center gap-2 {app.route === 'quiz' ? 'hidden @min-[73rem]:flex' : 'flex'}">
+      
       {#if app.route !== "quiz"}
-        <!-- one strip rather than three loose buttons, so the current screen
-             reads as a position rather than a pressed button -->
+        
         <Segmented
           full
-          class="flex-1 @min-[68rem]:flex-none"
+          class="flex-1 @min-[73rem]:flex-none"
           items={tabRoutes.map((route) => ({ value: route, label: t(`common.nav.${route}`) }))}
           value={app.route as TabRoute}
           onpick={(route) => app.go(route)}
         />
       {/if}
-      <!-- separated from the three screen buttons -->
-      <span class="ml-3 hidden border-l border-border pl-3 @min-[68rem]:ml-4 @min-[68rem]:flex @min-[68rem]:pl-4">
+      
+      <span class="ml-3 hidden border-l border-border pl-3 @min-[73rem]:ml-4 @min-[73rem]:flex @min-[73rem]:pl-4">
         <AppControls />
       </span>
     </nav>

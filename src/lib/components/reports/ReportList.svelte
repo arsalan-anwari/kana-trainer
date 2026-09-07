@@ -49,8 +49,6 @@
   const range = $derived(isDateRange(query.window) ? query.window : null);
   const active = $derived(queryTagCount(query));
 
-  // Any change to what is shown drops the selection, it named runs that may no
-  // longer be in view.
   function apply(next: Partial<ReportQuery>): void {
     query = { ...query, ...next };
     picked = [];
@@ -71,7 +69,6 @@
   }
 
   function setAlphabet(next: AlphabetFilter): void {
-    // clicking the picked one again drops back to any
     apply({ alphabet: query.alphabet === next ? "any" : next });
   }
 
@@ -116,7 +113,7 @@
 </script>
 
 <div class="flex flex-col gap-3">
-  <!-- relative so the range panel can hang under the whole filter strip -->
+  
   <div class="relative flex flex-wrap items-center gap-1.5">
     {#each reportFilters as option (option)}
       <Chip size="sm" active={query.window === option} onclick={() => setWindow(option)}>
@@ -146,8 +143,7 @@
     {/if}
   </div>
 
-  <!-- The tags each run card already carries, turned into filters. Folded away
-       by default, the window chips above are the everyday control. -->
+  
   <details class="rounded-xl border-2 border-border bg-surface">
     <summary
       class="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground [&::-webkit-details-marker]:hidden"
@@ -260,8 +256,7 @@
     </div>
   </div>
 
-  <!-- The runs live in a section of their own. Left bare, the scroll area read
-       as a stack of cards floating on the page with nothing holding them. -->
+  
   <div class="sheet ruled rounded-2xl border-2 border-border bg-surface p-2 sm:p-3">
     <div class="flex max-h-100 flex-col gap-2 overflow-y-auto p-1 lg:max-h-132">
       {#each reports as report (report.id)}

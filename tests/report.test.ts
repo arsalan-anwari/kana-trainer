@@ -84,7 +84,6 @@ function at(iso: string, kanaId = "a", correct = false): Report {
 }
 
 describe("report filters", () => {
-  // fixed local noon, so no window lands on a day boundary
   const now = new Date(2026, 7, 20, 12, 0, 0).getTime();
   const day = 24 * 60 * 60 * 1000;
 
@@ -106,12 +105,9 @@ describe("report filters", () => {
   });
 
   it("takes a hand picked window with both ends included", () => {
-    // 2026-07-22 through 2026-08-20 is the 30 day window the month chip used
     const range = { from: "2026-07-22", to: "2026-08-20" };
     expect(filterReports(reports, range, now)).toHaveLength(4);
-    // the run 20 days back, on its own day, both ends inclusive
     expect(filterReports(reports, { from: "2026-07-31", to: "2026-07-31" }, now)).toHaveLength(1);
-    // ends the wrong way round still name the same window
     expect(filterReports(reports, { from: range.to, to: range.from }, now)).toHaveLength(4);
   });
 
@@ -272,7 +268,6 @@ describe("row heat", () => {
     const heat = heatByRow(seen, "hiragana");
     expect(heat.map((row) => row.id)).toEqual(["a"]);
     expect(heat[0].accuracy).toBe(0.5);
-    // the whole row stays in place, the untouched characters read as never seen
     expect(heat[0].cells).toHaveLength(5);
     expect(heat[0].cells.filter((cell) => cell.total === 0)).toHaveLength(3);
   });
@@ -291,7 +286,6 @@ describe("strength", () => {
   });
 
   it("discounts a perfect score sitting on almost no answers", () => {
-    // the bug this replaced: 2 of 2 read as 100% and outranked a proven character
     expect(strength(2, 2)).toBeLessThan(strength(18, 20));
     expect(strength(1, 1)).toBeLessThan(strength(10, 10));
   });

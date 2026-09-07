@@ -1,15 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-// The app header used to scroll up behind the Android status bar, and wide
-// layouts used to run past the right edge under the navigation strip.
 
 test("the header holds the top of the page while the content scrolls", async ({ page }) => {
-  // short enough that the setup screen has to scroll
   await page.setViewportSize({ width: 360, height: 420 });
   await page.goto("/");
   await expect(page.locator("#splash")).toHaveCount(0);
 
-  // cards carry their own <header>, so take the app one
   const header = page.locator("header").first();
   const top = (await header.boundingBox())?.y;
   expect(top).toBeDefined();
@@ -35,15 +31,10 @@ test("no screen runs past the right edge", async ({ page }) => {
 });
 
 test("the header stays flat only while it fits", async ({ page }) => {
-  // French is the widest language: the longest tagline, the longest tab labels
-  // and a picker as wide as its longest entry. If the flat row holds here it
-  // holds everywhere, so this is what pins the breakpoint in AppHeader.
   await page.addInitScript(() => {
     localStorage.setItem("kana-trainer-prefs", JSON.stringify({ lang: "fr" }));
   });
 
-  // 640px to 800px used to run the flat header past the right edge, and 800px
-  // to 1100px used to wrap the tagline and squash the mark into an oval
   for (const width of [640, 700, 760, 800, 900, 1100, 1200, 1400]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto("/");
@@ -61,7 +52,6 @@ test("the header stays flat only while it fits", async ({ page }) => {
           element.getBoundingClientRect().height /
             parseFloat(getComputedStyle(element).lineHeight)
         );
-      // the tagline only shows in the flat row, where it must stay on one line
       const tagline = title.nextElementSibling!;
       const mark = header.querySelector("span.kana")!.getBoundingClientRect();
       return {

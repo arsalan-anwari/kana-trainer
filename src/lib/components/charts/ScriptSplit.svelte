@@ -5,11 +5,6 @@
   import { masteryLabel, masteryOf, strength, summarize } from "../../core/report";
   import { t } from "../../i18n.svelte";
 
-  // One dial per alphabet that actually turns up in the shown runs, so a view
-  // narrowed to hiragana draws a single dial rather than half an empty
-  // comparison. The dial is strength; the bar under it is share of the work,
-  // and carries its own number so the two are never read as the same thing.
-
   let { answers, scripts }: { answers: Answer[]; scripts: Script[] } = $props();
 
   const parts = $derived(

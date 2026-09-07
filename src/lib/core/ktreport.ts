@@ -1,20 +1,6 @@
 import { t } from "../i18n.svelte";
 import type { Report } from "./report";
 
-// The .kt-report container format. Header is 24 bytes, integers little endian:
-//
-//   offset  size  field
-//   0       8     magic, ASCII "KTREPORT"
-//   8       1     format version
-//   9       1     reserved, must be 0
-//   10      2     flags, must be 0
-//   12      4     number of runs
-//   16      4     payload length in bytes
-//   20      4     CRC32 of the payload
-//   24      ..    payload
-//
-// The payload is that many records, each a u32 byte length followed by the run
-// as UTF-8 JSON.
 
 export const FILE_EXTENSION = "kt-report";
 export const FILE_VERSION = 1;

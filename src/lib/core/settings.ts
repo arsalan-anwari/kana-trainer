@@ -7,7 +7,6 @@ export type Direction = "kana-romaji" | "romaji-kana" | "mixed";
 export type Side = "kana" | "romaji" | "audio";
 export type Difficulty = "beginner" | "advanced" | "expert";
 
-// One selected set of characters per alphabet.
 export type Selections = Record<Script, string[]>;
 
 export type RunSettings = {
@@ -28,7 +27,6 @@ export type RunSettings = {
 
 export type LegacySettings = Partial<Omit<RunSettings, "selections">> & {
   includeDakuten?: boolean;
-  // pre-1.3 runs kept a single list shared by both alphabets
   selection?: string[];
   selections?: Partial<Selections>;
 };
@@ -40,17 +38,13 @@ export type OptionalGroup = (typeof optionalGroups)[number];
 export const perQuestionOptions = [0, 5, 10, 15];
 export const totalTimeOptions = [0, 60, 120, 300];
 
-// Hand picked timers reach further than the presets: 1 to 100 seconds per
-// question, 1 to 100 minutes for the whole run.
 export const customPerQuestionMax = 100;
 export const customTotalMinutesMax = 100;
 
-// Whether a timer sits outside the presets it is shown beside.
 export function isCustomTime(seconds: number, options: number[]): boolean {
   return seconds > 0 && !options.includes(seconds);
 }
 
-// Preset counts, as the two rows of five the setup screen draws.
 export const questionCountRows = [
   [10, 20, 30, 40, 50],
   [60, 80, 100, 150, 200]
@@ -68,7 +62,6 @@ export const customCountValues = Array.from(
 
 export const difficulties = ["beginner", "advanced", "expert"] as const;
 
-// Below this pool size the difficulty is ignored and choices stay random.
 export const difficultyMinPool = 15;
 
 export const defaultSettings: RunSettings = {
@@ -111,7 +104,6 @@ export function enabledGroups(settings: RunSettings): Group[] {
   return enabled;
 }
 
-// The characters picked for one alphabet, switched on or not.
 export function selectionFor(settings: RunSettings, script: Script): string[] {
   return settings.selections[script] ?? [];
 }
@@ -167,7 +159,6 @@ export function usesAudio(format: Format): boolean {
   return format !== "text-text";
 }
 
-// Notes come back as translation keys, the screen that shows them translates.
 export function normalizeSettings(settings: RunSettings): {
   settings: RunSettings;
   notes: string[];
@@ -204,7 +195,6 @@ export function clampCustomCount(value: number): number {
   return Math.min(customCountMax, Math.max(customCountMin, stepped));
 }
 
-// Whether a count is neither one pass nor one of the presets.
 export function isCustomCount(count: number): boolean {
   return count > 0 && !questionCountOptions.includes(count);
 }
@@ -225,14 +215,12 @@ export function difficultyLabel(difficulty: Difficulty): string {
   return t(`common.difficulty.${difficulty}`);
 }
 
-// How many of the three wrong answers should be look alikes.
 export function lookAlikeCount(difficulty: Difficulty): number {
   if (difficulty === "expert") return 3;
   if (difficulty === "advanced") return 1;
   return 0;
 }
 
-// A named character selection, saved from the picker.
 export type Preset = {
   name: string;
   selections: Selections;
@@ -245,7 +233,6 @@ export function copySelections(selections: Partial<Selections>): Selections {
   };
 }
 
-// Adds a preset, or replaces the one already held under that name.
 export function withPreset(presets: Preset[], preset: Preset): Preset[] {
   return [...presets.filter((item) => item.name !== preset.name), preset].sort((a, b) =>
     a.name.localeCompare(b.name)

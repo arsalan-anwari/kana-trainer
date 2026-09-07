@@ -19,7 +19,6 @@
 
   function keydown(event: KeyboardEvent): void {
     if (question === null) return;
-    // the quit dialog owns the keyboard while it is open
     if (app.confirmQuit) return;
 
     if (event.key === "Escape") {
@@ -27,8 +26,6 @@
       return;
     }
 
-    // the answer field owns every other key while it has focus, so submitting
-    // with Enter does not also bubble up and skip past the verdict
     if (event.target instanceof HTMLInputElement) return;
 
     if (app.phase === "feedback") {
@@ -68,15 +65,11 @@
 {/if}
 
 {#if question !== null && kana !== null}
-  <!-- one screen, no scrolling, with the verdict on the bottom edge -->
+  
   <div class="flex min-h-0 flex-1 flex-col gap-2 sm:gap-6">
     <QuizStatusBar />
 
-    <!-- on a phone the run rides up against the progress bar, so the virtual
-         keyboard has the whole lower half to itself. pb-32 is the band the
-         pinned verdict bar sits in; it is held free the whole run so nothing
-         shifts when the verdict arrives, and it is in rem so it grows with the
-         zoom control the same way the bar does -->
+    
     <div
       class="flex min-h-0 flex-1 flex-col items-center justify-start gap-3 pb-24 sm:justify-center sm:gap-7"
     >

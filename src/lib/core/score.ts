@@ -1,4 +1,3 @@
-// Grading of a finished run.
 
 import { t } from "../i18n.svelte";
 

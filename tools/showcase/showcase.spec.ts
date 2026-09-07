@@ -14,18 +14,12 @@ import {
   splash
 } from "./drive";
 
-// Timestamp the whole recording runs at.
 const CLOCK = Date.UTC(2026, 7, 19, 20, 30);
 
-// Seed for the question generator.
 const SEED = 20260820;
 
-// Questions of the scored run answered wrong on purpose.
 const MISSED = new Set([3, 7]);
 
-// The language the closing still is shot in. Latin script, so it reads as
-// plainly not English in a listing that is otherwise English. Any tag from
-// src/lib/i18n.svelte works here.
 const LANGUAGE = "es";
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
@@ -41,8 +35,6 @@ test("record the showcase", async ({ page }, testInfo) => {
     page.getByRole("button", { name, exact });
   const startRun = button("Start run");
 
-  // leaves a half finished run and returns to the setup screen. The header
-  // tabs are hidden during a run, so this goes out through Quit.
   const backToSetup = async (): Promise<void> => {
     await button("Quit", true).click();
     await discardRun(page);
@@ -51,7 +43,6 @@ test("record the showcase", async ({ page }, testInfo) => {
 
   await expect(startRun).toBeEnabled();
 
-  // practice setup, once per question format
   await shots.top();
   await shots.shot("01_Setup_TextOnly");
 
@@ -63,7 +54,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("03_Setup_TextAudio");
 
-  // both alphabets on, each with its own character set
   await button("Text only").click();
   await button("Multiple choice").click();
   await button("Kana to romaji").click();
@@ -75,20 +65,17 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.reveal(page.getByText("Characters", { exact: true }), 44);
   await shots.shot("04_Setup_Alphabets");
 
-  // run length, difficulty and extra sets
   await shots.reveal(page.getByText("Run options", { exact: true }), 44);
   await button("Advanced").click();
   await shots.shot("05_Setup_RunOptions");
   await shots.top();
 
-  // kana to romaji, multiple choice
   await startRun.click();
   await answering(page);
   await shots.top();
   await shots.shot("06_Quiz_TextOnly_KanaRomaji");
   await backToSetup();
 
-  // romaji to kana, multiple choice
   await button("Romaji to kana").click();
   await startRun.click();
   await answering(page);
@@ -96,7 +83,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("07_Quiz_TextOnly_RomajiKana");
   await backToSetup();
 
-  // audio to text, typed answer
   await button("Audio to text").click();
   await button("Typing").click();
   await startRun.click();
@@ -104,7 +90,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("08_Quiz_AudioText_Typing");
 
-  // same run, retried until an answer misses, submitted through the check button
   const field = page.getByRole("textbox");
   for (let attempt = 0; attempt < 8; attempt += 1) {
     await shots.advance(2100 + attempt * 180);
@@ -118,7 +103,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("09_Quiz_AudioText_Incorrect");
   await backToSetup();
 
-  // text to audio, pick the matching sound
   await button("Text to audio").click();
   await startRun.click();
   await expect(page.getByRole("button", { name: "Sound 1" })).toBeEnabled();
@@ -127,7 +111,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("10_Quiz_TextAudio_Sounds");
 
-  // quit confirmation dialog
   await shots.advance(2400);
   await button("Check").click();
   await button("Quit", true).click();
@@ -136,7 +119,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await discardRun(page);
   await expect(startRun).toBeEnabled();
 
-  // a full run answered end to end
   await button("Text only").click();
   await button("Multiple choice").click();
   await button("Kana to romaji").click();
@@ -147,7 +129,6 @@ test("record the showcase", async ({ page }, testInfo) => {
     await answerChoice(page, !MISSED.has(question), question < 10);
   }
 
-  // the grade splash clears itself, so it is shot without settling
   await expect(splash(page)).toBeVisible();
   await shots.snap("12_Result_Splash", "allow");
   await expect(splash(page)).toBeHidden();
@@ -156,14 +137,12 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("13_Result_Score");
 
-  // load the misses as the next practice set
   await button("Practice mistakes").click();
   await expect(startRun).toBeEnabled();
   await shots.top();
   await shots.reveal(page.getByText(/Loaded \d+ characters/));
   await shots.shot("14_Setup_Mistakes");
 
-  // reports screen, filtered by window
   await button("Reports", true).click();
   await button("All", true).click();
   await shots.top();
@@ -173,7 +152,6 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("16_Reports_Mistakes");
   await shots.top();
 
-  // export the selected runs to a .kt-report file
   const runs = page.getByRole("button", { name: /\d+\/\d+ correct/ });
   await runs.nth(0).click();
   await runs.nth(1).click();
@@ -184,19 +162,16 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("17_Reports_Export");
 
-  // remove the selection, which asks first
   await button(/^Delete \d+ selected/).click();
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await shots.shot("18_Reports_RemoveConfirm");
   await button("Delete 2 runs", true).click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
 
-  // import the runs back from the exported file
   const picker = page.waitForEvent("filechooser");
   await button(/^Import runs/).click();
   await (await picker).setFiles(file);
   await expect(page.getByText("Imported 2 runs.")).toBeVisible();
-  // offset keeps the run count above the message in frame
   await shots.reveal(page.getByText("Imported 2 runs."), 210);
   await shots.shot("19_Reports_Imported");
   await shots.top();
@@ -208,19 +183,11 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.top();
   await shots.shot("20_Chart_Characters");
 
-  // Settings, in a sheet on a phone and in the header on a wide window. Each
-  // branch ends on a still of the app in another language.
-  //
-  // The picker is a native select, so its open list belongs to the window
-  // manager and never lands in a screenshot. What the still shows instead is
-  // the app already switched over, with the picker naming the language.
   const sheet = button("Settings", true);
   if (await sheet.isVisible()) {
     await sheet.click();
     await shots.shot("21_Settings_Menu");
 
-    // located inside the sheet rather than by label, so it still resolves once
-    // the app is no longer in English
     const picker = page.getByRole("dialog").locator("select");
     await picker.selectOption(LANGUAGE);
     await shots.shot("22_Settings_Language");
@@ -231,7 +198,6 @@ test("record the showcase", async ({ page }, testInfo) => {
     await shots.shot("21_Chart_HighContrast");
     await button("High contrast", true).click();
 
-    // back to the setup screen, the same frame as the opening still
     await button("Practice", true).click();
     await expect(startRun).toBeEnabled();
     await shots.top();

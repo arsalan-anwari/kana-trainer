@@ -4,7 +4,6 @@ import { buildQuestions, checkTyped, eligibleKana, eligiblePairs } from "../src/
 import { similarity } from "../src/lib/core/similarity";
 import { defaultSettings, type RunSettings } from "../src/lib/core/settings";
 
-// The same characters picked in both alphabets.
 function both(ids: string[]): Pick<RunSettings, "selections"> {
   return { selections: { hiragana: ids, katakana: ids } };
 }
@@ -37,7 +36,6 @@ describe("quiz building", () => {
     const on = { includeTokushon: true };
     expect(eligibleKana(settings({ ...on, scripts: ["hiragana"] }))).toHaveLength(46);
     expect(eligibleKana(settings({ ...on, scripts: ["katakana"] }))).toHaveLength(89);
-    // in a both alphabets run only the katakana half carries them
     const pairs = eligiblePairs(settings({ ...on, scripts: ["hiragana", "katakana"] }));
     const tokushon = pairs.filter((pair) => pair.kana.group === "tokushon");
     expect(tokushon).toHaveLength(43);
@@ -206,7 +204,6 @@ describe("choices that can be told apart", () => {
         const kana = kanaById(choice.kanaId);
         return kana === undefined ? [] : [kana.romaji, ...kana.alt];
       });
-      // ぢ reads "ji" as well as "dji", so it may not sit beside じ
       expect(new Set(readings).size).toBe(readings.length);
     }
   });
@@ -284,7 +281,6 @@ describe("difficulty", () => {
 
 describe("filling four options", () => {
   it("reaches past the selection when the picked characters read alike", () => {
-    // じ ぢ ず づ carry two readings between them, so they cannot fill four options
     const alike = settings({
       questionCount: 12,
       includeDakuon: true,

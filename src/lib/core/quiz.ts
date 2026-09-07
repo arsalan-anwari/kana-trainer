@@ -16,7 +16,6 @@ export type Choice = {
   script: Script;
 };
 
-// One character in one alphabet, the unit a question is drawn from.
 export type Candidate = {
   kana: Kana;
   script: Script;
@@ -42,10 +41,8 @@ export type Answer = {
 
 const CHOICE_COUNT = 4;
 
-// Readings that map onto the same sound.
 const sameSound: Record<string, string> = { dji: "ji", dzu: "zu", wo: "o" };
 
-// Every selected character, paired with the alphabet it was picked in.
 export function eligiblePairs(settings: RunSettings): Candidate[] {
   const pairs: Candidate[] = [];
   for (const script of settings.scripts) {
@@ -60,7 +57,6 @@ export function eligiblePairs(settings: RunSettings): Candidate[] {
   return pairs;
 }
 
-// The distinct characters in play, counted once across both alphabets.
 export function eligibleKana(settings: RunSettings): Kana[] {
   const seen = new Set<string>();
   const pool: Kana[] = [];
@@ -81,11 +77,9 @@ function shuffle<T>(items: T[], rng: () => number): T[] {
   return copy;
 }
 
-// Everything an option shows, used to rule out options that read the same.
 function surfaces(kana: Kana, script: Script, answer: Side): string[] {
   if (answer === "audio") return [sameSound[kana.romaji] ?? kana.romaji];
   if (answer === "romaji") return answersFor(kana);
-  // a glyph rules out its counterpart in the other alphabet, tokushon has no hiragana
   return [kana.hira, kana.kata].filter((value) => value !== "");
 }
 
@@ -106,7 +100,6 @@ function buildChoices(
   );
 
   const wanted = lookAlikeCount(difficulty);
-  // stable sort over a shuffled list, so equal scores still vary per question
   const lookAlike =
     wanted === 0
       ? []
@@ -126,7 +119,6 @@ function buildChoices(
           .slice(0, wanted)
           .map((entry) => entry.candidate);
 
-  // fallback pool, used when the selection cannot fill four distinct options
   const spare = shuffle(
     reserve.filter((candidate) => candidate.kana.id !== target.kana.id),
     rng
@@ -157,7 +149,6 @@ export function buildQuestions(
   );
   const distractors = pool.length >= CHOICE_COUNT ? pool : everything;
 
-  // a set too small for look alikes falls back to beginner
   const difficulty: Difficulty =
     pool.length >= difficultyMinPool ? settings.difficulty : "beginner";
 

@@ -13,7 +13,6 @@ const outro = {
   ]
 };
 
-// Looks up the kana behind a glyph or romaji reading.
 function resolve(text: string) {
   const value = text.trim();
   const found = allKana.find(
@@ -23,19 +22,16 @@ function resolve(text: string) {
   return found;
 }
 
-// Reads the prompt frame text, empty for an audio prompt.
 async function promptText(page: Page): Promise<string> {
   return (await page.locator("main .board").first().innerText()).trim();
 }
 
 const tiles = (page: Page) => page.locator("main button.aspect-square");
 
-// Waits until the choice tiles accept input.
 async function answering(page: Page): Promise<void> {
   await expect(tiles(page).first()).toBeEnabled();
 }
 
-// Reads the label under the slot number of each choice tile.
 async function tileLabels(page: Page): Promise<string[]> {
   const texts = await tiles(page).allInnerTexts();
   return texts.map((text) => text.trim().split("\n").filter(Boolean).pop()?.trim() ?? "");
@@ -48,7 +44,6 @@ function slotOf(labels: string[], reading: string): number {
   );
 }
 
-// Reports which of the given clips the shared audio element is holding.
 async function playingClip(page: Page, candidates: string[]): Promise<string | null> {
   return page.evaluate(async (names) => {
     const element = document.querySelector<HTMLAudioElement>("[data-kana-audio]");
@@ -77,11 +72,8 @@ async function playingClip(page: Page, candidates: string[]): Promise<string | n
 
 const everyReading = seionRows.flatMap((row) => row.kana.map((kana) => kana.romaji));
 
-// Number of questions in the closing run.
 const FINALE = 5;
 
-// Languages the picker steps through, ending back on English so the outro card
-// reads the same as the intro. Any tag from src/lib/i18n.svelte works here.
 const PROMO_LANGUAGES = ["zh-CN", "es", "en"];
 
 test("record the promo", async ({ page }) => {
@@ -95,33 +87,27 @@ test("record the promo", async ({ page }) => {
   const button = (name: string | RegExp, exact = false) =>
     page.getByRole("button", { name, exact });
   const startRun = button("Start run");
-  // the header tabs are hidden during a run, so leaving one goes through Quit
   const backToSetup = button("Quit", true);
   const discard = button("Stop and discard");
 
-  // leaves a half finished run and discards the answers
   const abandon = async (settle = 220): Promise<void> => {
     await stage.tap(backToSetup, 240);
     await stage.tap(discard, settle);
   };
 
-  // title card
   await stage.beat(650);
   await stage.hideCard();
 
-  // run setup
   await stage.caption("Hiragana, katakana, or both");
   await stage.tap(button("Katakana"), 200);
   stage.mark("alphabets");
 
-  // a character set per alphabet, behind a tab each
   await stage.caption("Each alphabet has its own set");
   await stage.tap(page.getByRole("tab", { name: "Katakana" }), 240);
   await stage.tap(button("K-row", true), 200);
   await stage.tap(page.getByRole("tab", { name: "Hiragana" }), 260);
   stage.mark("alphabet tabs");
 
-  // run length and difficulty
   await stage.caption("10 to 500 questions, or one pass over the set");
   await stage.tap(button("100", true), 240);
   await stage.tap(button("One pass", true), 280);
@@ -135,7 +121,6 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button("Select all"), 160);
   stage.mark("setup");
 
-  // run one: audio to text, typed answer
   await stage.caption("Audio to text: hear it, type it");
   await stage.tap(button("Typing"), 120);
   await stage.tap(button("Audio to text"), 140);
@@ -148,14 +133,12 @@ test("record the promo", async ({ page }) => {
   await stage.press("Enter", 450);
   stage.mark("audio run");
 
-  // quit an unfinished run
   await stage.caption("Quit early and nothing is saved");
   await stage.tap(backToSetup, 700);
   await stage.tap(discard, 200);
   await stage.hideCaption();
   stage.mark("quit");
 
-  // run two: text to audio, pick the matching sound
   await stage.caption("Text to audio: pick the sound");
   await stage.tap(button("Text to audio"), 140);
   await stage.tap(startRun, 240);
@@ -169,7 +152,6 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button("Check"), 420, true);
   stage.mark("sound run");
 
-  // closing run: one pass over a single row
   await abandon(140);
   await stage.caption("One pass covers exactly what you picked");
   await stage.tap(button("Text only"), 140);
@@ -179,12 +161,10 @@ test("record the promo", async ({ page }) => {
   await stage.tap(startRun, 420);
   await stage.frame("main .anim-pop");
 
-  // first two answered by click, one right and one wrong
   await stage.caption("Text only: read it, tap the reading");
   await answerChoice(page, stage, true);
   await stage.beat(320);
 
-  // the feedback panel sits where the caption is, so hide the caption
   await stage.hideCaption();
   await answerChoice(page, stage, false);
   await stage.beat(750);
@@ -198,7 +178,6 @@ test("record the promo", async ({ page }) => {
   await stage.hideCaption();
   stage.mark("finale run");
 
-  // hold on the grade splash until it clears itself
   await stage.beat(3000);
   stage.mark("splash");
 
@@ -209,7 +188,6 @@ test("record the promo", async ({ page }) => {
   await stage.hover(button("Practice mistakes"), 280);
   stage.mark("result");
 
-  // reports screen
   await stage.hideCaption();
   await stage.scroll(0, 240);
   await stage.tap(button("Reports", true), 300);
@@ -223,7 +201,6 @@ test("record the promo", async ({ page }) => {
   await stage.scroll(0, 240);
   stage.mark("reports");
 
-  // export, remove and reimport the selected runs
   await stage.caption("Export the runs you picked to one file");
   const saved = page.waitForEvent("download");
   await stage.tap(button(/^Export/), 300);
@@ -232,7 +209,6 @@ test("record the promo", async ({ page }) => {
 
   await stage.caption("Removing asks first, and takes the whole selection");
   await stage.tap(button(/^Delete \d+ selected/), 300);
-  // hold on the dialog long enough to read it
   await stage.beat(950);
   await stage.tap(button(/^Delete \d+ runs?$/), 500);
 
@@ -244,7 +220,6 @@ test("record the promo", async ({ page }) => {
   await stage.hideCaption();
   stage.mark("transfer");
 
-  // character chart
   await stage.caption("Swipe, or Shift and an arrow key, to change screen");
   await stage.press("Shift+ArrowRight", 520);
   await stage.caption("Every character in one chart. Tap to hear it");
@@ -254,7 +229,6 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button(/^Play kyo /), 560);
   await stage.beat(320);
 
-  // theme, zoom and contrast, from the header
   await stage.caption("Light, dark, or system default theme.");
   await stage.tap(page.getByRole("button", { name: "Theme: light" }), 700);
   await stage.tap(page.getByRole("button", { name: "Theme: dark" }), 500);
@@ -268,14 +242,10 @@ test("record the promo", async ({ page }) => {
   await stage.tap(zoomIn, 480);
 
   await stage.caption("Or a high contrast palette, when that reads easier");
-  // exact: the theme toggle reads "Theme is fixed by high contrast" once this is on
   const contrast = page.getByRole("button", { name: "High contrast", exact: true });
   await stage.tap(contrast, 900);
   await stage.tap(contrast, 300);
 
-  // The picker is a native select, so its open list is drawn by the window
-  // manager and never lands in the recording. Switching it is the shot: every
-  // label on screen turns over at once.
   await stage.caption("Twelve languages, the whole app at once");
   const language = page.getByRole("navigation").locator("select");
   await stage.hover(language, 340);
@@ -289,12 +259,10 @@ test("record the promo", async ({ page }) => {
   await stage.scroll(0, 300);
   stage.mark("chart");
 
-  // end card
   await stage.card(outro, 1600);
   stage.mark("end");
 });
 
-// Answers the multiple choice question, right or wrong on purpose.
 async function answerChoice(page: Page, stage: Stage, correct: boolean): Promise<void> {
   await answering(page);
   const labels = await tileLabels(page);

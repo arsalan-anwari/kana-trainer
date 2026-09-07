@@ -88,16 +88,12 @@ class AppState {
   staged = $state<Choice | null>(null);
   lastCorrect = $state(false);
   lastReport = $state<Report | null>(null);
-  // grade of the run just finished, while its splash is up
   splash = $state<ScoreTier | null>(null);
 
-  // which alphabet the character picker is editing
   pickerChoice = $state<Script>("hiragana");
 
   confirmQuit = $state(false);
-  // when the run was paused for that question
   pausedAt = 0;
-  // where to go once the run is abandoned
   quitTo: Route = "setup";
 
   now = $state(0);
@@ -113,7 +109,6 @@ class AppState {
   selection = $derived(selectionFor(this.settings, this.pickerScript));
 
   current = $derived(this.questions[this.index] ?? null);
-  // 0 to 1, the share of the run already answered
   progress = $derived(
     this.questions.length === 0 ? 0 : this.index / this.questions.length
   );
@@ -238,8 +233,6 @@ class AppState {
     });
   }
 
-  // Saves the characters picked in both alphabets under a name, replacing any
-  // preset already held under it.
   savePreset(name: string): void {
     const trimmed = name.trim();
     if (trimmed === "") return;
@@ -255,7 +248,6 @@ class AppState {
     storeJson(PRESETS_KEY, this.presets);
   }
 
-  // Loads a preset's characters, leaving every other setting alone.
   applyPreset(name: string): void {
     const preset = this.presets.find((item) => item.name === name);
     if (preset === undefined) return;
@@ -340,7 +332,6 @@ class AppState {
     void kanaAudio.play(kana?.audio ?? null);
   }
 
-  // marks a choice as the pick without submitting it
   stageChoice(choice: Choice): void {
     if (this.phase !== "answering" || this.current === null) return;
     this.staged = choice;
@@ -430,7 +421,6 @@ class AppState {
     void saveReport(report).then(() => this.refreshReports());
   }
 
-  // pauses the run and its clock, then shows the quit confirmation
   askQuit(to: Route = "setup"): void {
     if (this.confirmQuit) return;
     this.stopTimer();
@@ -450,7 +440,6 @@ class AppState {
     this.startTimer();
   }
 
-  // abandons the run without scoring or saving it
   quit(): void {
     this.stopTimer();
     kanaAudio.stop();
@@ -481,7 +470,6 @@ class AppState {
       this.message = t("reports.noMistakes");
       return;
     }
-    // a miss belongs to the alphabet it was made in
     const selections = { hiragana: [] as string[], katakana: [] as string[] };
     for (const script of scripts) {
       const inScript = weakKanaIds(answers.filter((answer) => answer.script === script));
@@ -502,7 +490,6 @@ class AppState {
 
   go(route: Route): void {
     sfx.click();
-    // leaving the quiz screen mid run asks to quit first
     if (this.route === "quiz" && route !== "quiz" && this.questions.length > 0) {
       this.askQuit(route);
       return;

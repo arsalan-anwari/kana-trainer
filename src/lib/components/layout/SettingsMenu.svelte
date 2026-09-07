@@ -5,8 +5,6 @@
   import { t } from "../../i18n.svelte";
   import { Chip, Icon, IconButton, Switch } from "kaizen-ui";
 
-  // Full screen settings sheet, shown on a phone.
-
   let { onclose }: { onclose: () => void } = $props();
 
   const themes: Theme[] = ["system", "light", "dark"];

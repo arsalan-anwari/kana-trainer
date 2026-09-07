@@ -11,9 +11,6 @@
   import { t } from "../../i18n.svelte";
   import { Button, IconButton, viewport } from "kaizen-ui";
 
-  // Picks the window by hand. Full screen on a phone, an overlay hanging under
-  // the filters on anything wider.
-
   let {
     current,
     onpick,
@@ -25,30 +22,20 @@
   } = $props();
 
   const today = dayKey(Date.now());
-  // a year back is as far as the window reaches
   const earliest = dayKey(Date.now() - rangeDays * 24 * 60 * 60 * 1000);
 
-  // seeded once: the panel is built fresh each time it opens. From starts empty
-  // so the reader names a start rather than deleting the one we guessed.
   let from = $state(untrack(() => current?.from) ?? "");
   let to = $state(untrack(() => current?.to) ?? today);
 
-  // an unfinished or impossible day reads as "", which fails every compare below.
-  // the keys sort the same as the dates they name, so string compare is enough
   const valid = $derived(from >= earliest && to <= today && from <= to);
 
-  // The desktop webview's date popup is a cramped calendar with no keyboard path,
-  // so type the day there and leave the native picker to touch devices.
   const touch = $derived(
     typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
   );
 
-  // what the typed fields show, kept beside the keys they parse into
   let fromText = $state(dayInputText(untrack(() => current?.from) ?? ""));
   let toText = $state(dayInputText(untrack(() => current?.to) ?? today));
 
-  // Rewrites the field to DD/MM/YYYY on every keystroke and drops the caret back
-  // after the digit it was behind, so inserting or erasing mid string stays put.
   function type(event: Event & { currentTarget: HTMLInputElement }, end: "from" | "to"): void {
     const input = event.currentTarget;
     const typed = input.value.slice(0, input.selectionStart ?? input.value.length);
@@ -79,7 +66,6 @@
       onclose();
       return;
     }
-    // a focused button answers Enter on its own, so leave that one alone
     if (event.key === "Enter" && valid && !(event.target instanceof HTMLButtonElement)) {
       onpick({ from, to });
     }

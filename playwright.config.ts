@@ -1,6 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// Playwright config for the smoke test over the built frontend.
 export default defineConfig({
   testDir: "tests/e2e",
   timeout: 30_000,

@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-// Quitting a run asks first and discards the answers.
 
 const reportCount = (page: import("@playwright/test").Page) =>
   page.evaluate(
@@ -46,7 +45,6 @@ test("confirming throws the run away without scoring it", async ({ page }) => {
   await page.getByRole("button", { name: "Quit" }).click();
   await page.getByRole("button", { name: "Stop and discard" }).click();
 
-  // back to setup, with no splash and no result screen
   await expect(page.getByRole("heading", { level: 3, name: "Alphabets" })).toBeVisible();
   await expect(page.getByRole("status")).toHaveCount(0);
   await expect(page.getByText("Run it again")).toHaveCount(0);
@@ -68,7 +66,6 @@ test("a run hides the tabs and gets them back on the way out", async ({ page }) 
   await expect(page.getByRole("button", { name: "Chart", exact: true })).toBeVisible();
 
   await startAndAnswer(page, 2);
-  // the run owns the screen, so the tabs step aside and give back the height
   await expect(page.getByRole("button", { name: "Chart", exact: true })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Reports", exact: true })).toHaveCount(0);
 
@@ -92,7 +89,6 @@ test("a run that is finished still scores and splashes", async ({ page }) => {
     if (await cont.count()) await cont.click({ timeout: 3000 }).catch(() => undefined);
   }
   await expect(page.getByRole("status")).toBeVisible({ timeout: 5000 });
-  // whichever grade it lands on, that grade's particle effect is on screen
   const particles = page.locator(
     ".anim-firework, .anim-confetti, .anim-sparkle, .anim-drift, .anim-rain"
   );

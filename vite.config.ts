@@ -7,15 +7,12 @@ export default defineConfig({
   clearScreen: false,
   publicDir: "data",
   optimizeDeps: {
-    // only reached through import() in storage.ts, so pin them to the pre-bundle
     include: ["@tauri-apps/api/core", "@tauri-apps/plugin-dialog"],
-    // ships Svelte source, so this app compiles it rather than pre-bundling it
     exclude: ["kaizen-ui"]
   },
   server: {
     port: 1420,
     strictPort: true,
-    // renders the first screen while the window is still opening
     warmup: {
       clientFiles: ["./src/main.ts", "./src/App.svelte", "./src/lib/components/setup/*.svelte"]
     },

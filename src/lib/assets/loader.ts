@@ -1,4 +1,3 @@
-// Cached loading of files that ship inside the app bundle.
 
 export type Asset = {
   key: string;
@@ -13,7 +12,6 @@ type Entry = {
 };
 
 export type AssetStoreOptions = {
-  // turns a key such as seion/a into a bundle path such as audio/seion/a.mp3
   path: (key: string) => string;
 };
 
@@ -29,7 +27,6 @@ export class AssetStore {
     return this.#entries.get(key)?.asset ?? null;
   }
 
-  // fetches once and caches, resolving to null when the file cannot be read
   load(key: string): Promise<Asset | null> {
     const existing = this.#entries.get(key);
     if (existing?.asset) return Promise.resolve(existing.asset);

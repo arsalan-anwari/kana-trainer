@@ -7,10 +7,6 @@
 
   let { row }: { row: Row } = $props();
 
-  // Yoon writes two characters in each script, so its tiles carry twice the
-  // sub text of any other row and need the extra width. Tokushon is two
-  // characters too, but katakana only, so it fits a square the same as the
-  // rest.
   const size = $derived(
     row.kana.some((kana) => [...kana.hira].length > 1 && [...kana.kata].length > 1)
       ? ("extra-wide" as const)

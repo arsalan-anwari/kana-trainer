@@ -33,8 +33,6 @@
     statsByKana(answers).filter((row) => row.mastery === "mastered").length
   );
 
-  // Every chart below follows this, so narrowing the alphabet or the tags takes
-  // the charts with it rather than leaving a half empty comparison behind.
   const seen = $derived(scriptsSeen(answers));
 </script>
 
@@ -51,7 +49,7 @@
               : windowLabel(query.window)}
           </span>
           {#if tags.length > 0}
-            <!-- the same boxes a run card carries, so the heading stays short -->
+            
             <div class="flex flex-wrap gap-1">
               {#each tags as tag (tag)}
                 <Badge tone="outline">{tag}</Badge>

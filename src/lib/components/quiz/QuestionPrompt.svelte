@@ -22,9 +22,6 @@
 
   const text = $derived(question.prompt === "kana" ? glyph(kana, question.script) : kana.romaji);
 
-  // The glyph is measured against the frame, not the viewport, so a two
-  // character yoon reading stays inside the box at any size or zoom.
-  // Kana are full width, romaji roughly half, hence the two budgets.
   const fontSize = $derived.by(() => {
     const budget = question.prompt === "kana" ? 88 : 150;
     const cap = question.prompt === "kana" ? 60 : 42;

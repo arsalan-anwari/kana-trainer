@@ -8,17 +8,13 @@
   let { question, kana }: { question: Question; kana: Kana } = $props();
 </script>
 
-<!-- Pinned to the bottom edge and drawn over the run, so the verdict never
-     pushes the question around or waits behind the navigation strip. The quiz
-     screen keeps a matching band free, so nothing moves when this appears. -->
 <div
   class="anim-pop fade-edge fixed inset-x-0 bottom-0 z-30 pl-[calc(env(safe-area-inset-left,0px)+1rem)] pt-8 pr-[calc(env(safe-area-inset-right,0px)+1rem)] pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]"
   style="--tint: color-mix(in srgb, {app.lastCorrect
     ? 'var(--success)'
     : 'var(--danger)'} 26%, transparent)"
 >
-  <!-- the verdict wraps inside its own column rather than dropping the button
-       onto a second row, so the bar keeps a predictable height -->
+  
   <div class="mx-auto flex w-full max-w-xl items-center justify-between gap-4">
     <div class="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
       <div class="flex min-w-0 flex-col gap-1">

@@ -4,28 +4,19 @@
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
 
-  // Grade emoji and confetti shown briefly before the score report.
-
   let { tier, summary }: { tier: ScoreTier; summary: Summary } = $props();
 
   const FADE = 520;
 
-  // each grade gets its own particle effect, not just more or less confetti
   type Effect = "fireworks" | "confetti" | "sparkles" | "dust" | "drizzle";
 
   type Party = {
-    // how long the splash holds before it starts leaving
     hold: number;
     effect: Effect;
-    // particles on screen at once
     count: number;
-    // expanding rings behind the emoji
     rings: number;
-    // how the emoji arrives
     entrance: string;
-    // how it behaves once it is there
     idle: string;
-    // halo behind the emoji
     glow: string;
     tones: string[];
   };
@@ -93,7 +84,6 @@
     }
   };
 
-  // the grade is read once and held for the life of the splash
   // svelte-ignore state_referenced_locally
   const party = parties[tier];
 
@@ -105,13 +95,11 @@
     return min + Math.random() * (max - min);
   }
 
-  // fixed at setup so a re-render never reshuffles the particles
   function build(): Particle[] {
     const tone = (index: number): string => party.tones[index % party.tones.length];
     const count = party.count;
 
     if (party.effect === "fireworks") {
-      // sparks are grouped into bursts, each burst firing from its own point
       const perBurst = 24;
       const bursts = Array.from({ length: Math.ceil(count / perBurst) }, (_, index) => ({
         left: between(16, 84),
@@ -212,7 +200,7 @@
           aria-hidden="true"
         ></span>
       {/each}
-      <!-- entrance and idle are separate elements, one animation each -->
+      
       <span class="relative text-[5rem] leading-none sm:text-[6.5rem] {party.entrance}">
         <span class="inline-block {party.idle}">
           {tierEmoji(tier)}

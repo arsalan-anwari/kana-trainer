@@ -2,7 +2,6 @@ import { AssetStore } from "../assets/loader";
 import { shared } from "kaizen-ui";
 import { peaksFromBytes, syntheticPeaks } from "./waveform";
 
-// Playback of the recorded character sounds.
 
 const store = shared(
   "kana-assets",
@@ -10,10 +9,8 @@ const store = shared(
 );
 
 class KanaAudio {
-  // key of the sound playing right now, null when silent
   playing = $state<string | null>(null);
 
-  // playback position of that sound, 0 to 1
   progress = $state(0);
 
   peakCache = $state<Record<string, number[]>>({});
@@ -25,7 +22,6 @@ class KanaAudio {
     if (this.element !== null) return this.element;
     const element = new Audio();
     element.preload = "auto";
-    // kept hidden in the document so tests can watch playback
     element.hidden = true;
     element.dataset.kanaAudio = "";
     document.body.append(element);
@@ -42,7 +38,6 @@ class KanaAudio {
     return element;
   }
 
-  // histogram bars for a sound, a placeholder shape while it is still decoding
   peaks(name: string): number[] {
     const found = this.peakCache[name];
     if (found !== undefined) return found;
@@ -89,7 +84,6 @@ class KanaAudio {
     this.progress = 0;
   }
 
-  // pulls files and their waveforms into memory
   preload(names: Iterable<string>): void {
     for (const name of names) {
       store.preload([name]);
@@ -98,5 +92,4 @@ class KanaAudio {
   }
 }
 
-// one instance per page, see shared
 export const kanaAudio = shared("kana-audio", () => new KanaAudio());

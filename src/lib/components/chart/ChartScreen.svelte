@@ -5,7 +5,6 @@
   import { t } from "../../i18n.svelte";
   import { Card, Icon } from "kaizen-ui";
 
-  // the Japanese name sits beside the translated one, it is the same everywhere
   const sections: { group: Group; japanese: string }[] = [
     { group: "seion", japanese: "清音" },
     { group: "dakuon", japanese: "濁音" },

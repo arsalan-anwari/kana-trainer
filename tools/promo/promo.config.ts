@@ -1,7 +1,6 @@
 import { defineConfig } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 
-// Standalone playwright config for the promo recording.
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
 const port = Number(process.env.PROMO_PORT ?? 4180);

@@ -1,7 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
-// Exports runs to a .kt-report file, removes them and imports them back.
 
 type Seed = { id: string; createdAt: string };
 
@@ -58,7 +57,6 @@ test("runs export to one file, and import back after being removed", async ({ pa
   await expect(page.getByText("Deleted 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual([]);
 
-  // the file goes through the chooser rather than a page input
   const chooser = await Promise.all([
     page.waitForEvent("filechooser"),
     page.getByRole("button", { name: /^Import runs/ }).click()
@@ -67,7 +65,6 @@ test("runs export to one file, and import back after being removed", async ({ pa
   await expect(page.getByText("Imported 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 
-  // importing the same file again is a no op
   const again = await Promise.all([
     page.waitForEvent("filechooser"),
     page.getByRole("button", { name: /^Import runs/ }).click()
@@ -93,8 +90,6 @@ test("the summary heading follows the date filter and the tags", async ({ page }
   const tags = page.locator("span.text-h2 ~ div span");
   await expect(heading).toHaveText("All");
 
-  // the seeded runs are from today, so yesterday holds none of them and the
-  // heading must not keep claiming it covers everything
   await page.getByRole("button", { name: "Yesterday", exact: true }).click();
   await expect(heading).toHaveText("Yesterday");
 
@@ -102,14 +97,12 @@ test("the summary heading follows the date filter and the tags", async ({ page }
   await expect(heading).toHaveText("All");
   await expect(tags).toHaveCount(0);
 
-  // a tag lands under the window as its own box, and takes the runs it does not match
   await page.getByText("Filters", { exact: true }).click();
   await page.getByRole("button", { name: "Typing", exact: true }).click();
   await expect(heading).toHaveText("All");
   await expect(tags).toHaveText(["Typing"]);
   await expect(page.getByText("No runs match these filters.")).toBeVisible();
 
-  // a second tag in the same dimension widens the match again
   await page.getByRole("button", { name: "Multiple choice", exact: true }).click();
   await expect(tags).toHaveText(["Multiple choice", "Typing"]);
   await expect(page.getByRole("button", { name: /^Export all 2 runs shown/ })).toBeVisible();
