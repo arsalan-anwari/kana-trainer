@@ -142,7 +142,7 @@
   </div>
 {:else}
   <div
-    class="fixed inset-0 z-50 flex flex-col paper pt-[calc(env(safe-area-inset-top,0px)+var(--edge-y,0.75rem))] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
+    class="fixed inset-0 z-50 flex flex-col paper fullscreen-sheet"
     role="dialog"
     aria-modal="true"
     aria-label={t("reports.range.pick")}

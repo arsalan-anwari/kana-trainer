@@ -5,6 +5,11 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.3 - 2026-09-08
+
+### Fixed
+- Mobile notification bar conflicts with the header on some phones, so the header now leaves room for it.
+
 ## 1.8.2 - 2026-09-08
 
 ### Fixed
@@ -396,6 +401,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.3
 [1.8.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.2
 [1.8.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.1
 [1.8.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.0
