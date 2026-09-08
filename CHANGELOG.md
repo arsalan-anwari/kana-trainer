@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The paper grain no longer lags behind and flickers while scrolling, and phones get the texture back.
 - Scroll lock on fullscreen dialogs was broken on some devices, so the background scrolled while the dialog stayed put. It now locks again.
+- Add margin top to fullscreen dialogs on phones so the header does not cover the notification bar.
 
 ### Added
 
