@@ -65,6 +65,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # only what pkg-config needs to resolve the tauri crate
       - name: Install the libraries tauri builds against
