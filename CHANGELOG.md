@@ -5,6 +5,41 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.2 - 2026-09-08
+
+### Fixed
+- The paper grain no longer lags behind and flickers while scrolling, and phones get the texture back.
+- Scroll lock on fullscreen dialogs was broken on some devices, so the background scrolled while the dialog stayed put. It now locks again.
+
+### Added
+
+- The audio question now plays from a vintage school record player drawn in SVG:
+  brushed metal case, spinning record, tonearm that drops when a sound starts and
+  a level display that fills as it plays.
+- A half height version of the question box for phones, so the on-screen keyboard
+  no longer pushes the answer field off the page.
+- A single preset control for phones: the preset list, save, new, restore and
+  delete now live in one selector that opens a sheet. Tablets and desktops keep
+  the select with its icon buttons.
+
+### Changed
+
+- `kaizen-ui` is a submodule under `vendor/` instead of a published npm package,
+  so library changes show up in the app straight away. The npm package stays for
+  anyone else who wants to use the kit.
+- The result screen now draws the same graphs as the reports screen, and only for
+  the alphabets the run actually used.
+- The running score label is gone from the quiz, the result screen already gives
+  the final score.
+- The result splash blends into the screen behind it instead of covering it with
+  paper, the fireworks burst brighter and flicker out, and phones get fewer
+  particles.
+- Use black/white accent color instead of brown gold. 
+
+### Removed
+
+- Sunlight effect in kaizen-ui, which was a performance hog on mobile and made the paper grain flicker.
+
 ## 1.8.1 - 2026-09-08
 
 ### Fixed
@@ -360,6 +395,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.2
 [1.8.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.1
 [1.8.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.0
 [1.7.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.7.4

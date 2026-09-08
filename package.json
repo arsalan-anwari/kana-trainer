@@ -1,6 +1,6 @@
 {
   "name": "kana-trainer",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Desktop trainer for hiragana and katakana",
   "type": "module",
   "private": true,
@@ -13,12 +13,13 @@
     "test:e2e": "playwright test",
     "tauri": "tauri",
     "tauri:dev": "tauri dev -- --no-default-features",
-    "tauri:build": "tauri build"
+    "sync:ui": "git -C vendor/kaizen-ui push origin HEAD:main && git add vendor/kaizen-ui",
+    "tauri:build": "tauri build --no-bundle"
   },
   "dependencies": {
     "@tauri-apps/api": "2.11.1",
     "@tauri-apps/plugin-dialog": "^2.7.2",
-    "kaizen-ui": "^0.2.1"
+    "kaizen-ui": "file:vendor/kaizen-ui"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

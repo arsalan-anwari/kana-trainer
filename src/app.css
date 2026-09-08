@@ -1,7 +1,38 @@
 @import "tailwindcss";
 @import "kaizen-ui/theme.css";
 
-@source "../node_modules/kaizen-ui/src";
+@source "../vendor/kaizen-ui/src";
+
+/* App accent: neutral ink instead of kaizen's brown. High contrast keeps its own. */
+:root:not(.dark):not(.high-contrast) {
+  --brand: #1a1a1a;
+  --brand-foreground: #ffffff;
+  --brand-shadow: #000000;
+  --brand-soft: color-mix(in srgb, #1a1a1a 8%, var(--surface));
+  --ring: #1a1a1a;
+  --sunlight: none;
+}
+
+/* :not() keeps the specificity above kaizen's prefers-color-scheme block. */
+:root.dark:not(.high-contrast) {
+  --brand: #ffffff;
+  --brand-foreground: #191410;
+  --brand-shadow: #8f8f8f;
+  --brand-soft: color-mix(in srgb, #ffffff 12%, var(--surface));
+  --ring: #ffffff;
+  --sunlight: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.high-contrast) {
+    --brand: #ffffff;
+    --brand-foreground: #191410;
+    --brand-shadow: #8f8f8f;
+    --brand-soft: color-mix(in srgb, #ffffff 12%, var(--surface));
+    --ring: #ffffff;
+    --sunlight: none;
+  }
+}
 
 @theme inline {
   --font-kana: "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Noto Sans JP",
@@ -43,10 +74,19 @@
 }
 
 @keyframes firework {
-  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.6); }
-  6% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-  60% { opacity: 1; }
-  100% { opacity: 0; transform: translate3d(var(--dx, 0px), calc(var(--dy, 0px) + 46px), 0) scale(0.7); }
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.4); }
+  5% { opacity: 1; transform: translate3d(0, 0, 0) scale(1.35); }
+  35% { opacity: 1; transform: translate3d(calc(var(--dx, 0px) * 0.72), calc(var(--dy, 0px) * 0.72), 0) scale(1); }
+  62% { opacity: 0.9; }
+  76% { opacity: 0.35; }
+  86% { opacity: 0.85; }
+  100% { opacity: 0; transform: translate3d(var(--dx, 0px), calc(var(--dy, 0px) + 90px), 0) scale(0.45); }
+}
+
+@keyframes firework-flash {
+  0% { opacity: 0; transform: scale(0.2); }
+  6% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(5); }
 }
 
 @keyframes sparkle-rise {
@@ -133,9 +173,31 @@
 
 .anim-firework {
   animation-name: firework;
-  animation-timing-function: cubic-bezier(0.12, 0.72, 0.3, 1);
+  animation-timing-function: cubic-bezier(0.1, 0.78, 0.28, 1);
   animation-fill-mode: both;
   animation-iteration-count: infinite;
+}
+
+.anim-firework-flash {
+  animation: firework-flash 1.4s ease-out infinite;
+  filter: blur(6px);
+}
+
+.splash-scrim {
+  background: radial-gradient(
+    farthest-side at 50% 45%,
+    color-mix(in srgb, var(--background) 99%, transparent) 0%,
+    color-mix(in srgb, var(--background) 95%, transparent) 34%,
+    color-mix(in srgb, var(--background) 60%, transparent) 72%,
+    transparent 100%
+  );
+  backdrop-filter: blur(2px);
+}
+
+@media (pointer: coarse) {
+  .splash-scrim {
+    backdrop-filter: none;
+  }
 }
 
 .anim-sparkle {
@@ -207,9 +269,25 @@
 
   .anim-confetti,
   .anim-firework,
+  .anim-firework-flash,
   .anim-sparkle,
   .anim-drift,
   .anim-rain {
     display: none;
+  }
+}
+
+.anim-confetti,
+.anim-firework,
+.anim-firework-flash,
+.anim-sparkle,
+.anim-drift,
+.anim-rain {
+  will-change: transform, opacity;
+}
+
+@media (pointer: coarse) {
+  .anim-firework-flash {
+    filter: none;
   }
 }

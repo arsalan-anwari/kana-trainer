@@ -3,7 +3,7 @@
   import { app } from "../../state.svelte";
   import LanguagePicker from "./LanguagePicker.svelte";
   import { t } from "../../i18n.svelte";
-  import { Chip, Icon, IconButton, Switch } from "kaizen-ui";
+  import { Chip, Icon, IconButton, lockScroll, Switch } from "kaizen-ui";
 
   let { onclose }: { onclose: () => void } = $props();
 
@@ -15,18 +15,19 @@
     dark: "prefs.themeDark"
   };
 
-  function keydown(event: KeyboardEvent): void {
-    if (event.key === "Escape") onclose();
-  }
+  let panel: HTMLDialogElement;
+
+  $effect(() => {
+    panel.showModal();
+  });
 </script>
 
-<svelte:window onkeydown={keydown} />
-
-<div
+<dialog
+  bind:this={panel}
   class="fixed inset-0 z-50 flex flex-col paper pt-[env(safe-area-inset-top,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]"
-  role="dialog"
-  aria-modal="true"
+  use:lockScroll
   aria-label={t("common.settings")}
+  onclose={onclose}
 >
   <header class="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
     <span class="text-h4 font-bold">{t("common.settings")}</span>
@@ -120,4 +121,4 @@
       {t("prefs.persist")}
     </p>
   </div>
-</div>
+</dialog>

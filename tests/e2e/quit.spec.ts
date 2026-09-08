@@ -46,7 +46,7 @@ test("confirming throws the run away without scoring it", async ({ page }) => {
   await page.getByRole("button", { name: "Stop and discard" }).click();
 
   await expect(page.getByRole("heading", { level: 3, name: "Alphabets" })).toBeVisible();
-  await expect(page.getByRole("status")).toHaveCount(0);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(page.getByText("Run it again")).toHaveCount(0);
   await page.waitForTimeout(600);
   expect(await reportCount(page)).toBe(before);
@@ -88,7 +88,7 @@ test("a run that is finished still scores and splashes", async ({ page }) => {
     const cont = page.getByRole("button", { name: "Continue" });
     if (await cont.count()) await cont.click({ timeout: 3000 }).catch(() => undefined);
   }
-  await expect(page.getByRole("status")).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole("dialog")).toBeVisible({ timeout: 5000 });
   const particles = page.locator(
     ".anim-firework, .anim-confetti, .anim-sparkle, .anim-drift, .anim-rain"
   );

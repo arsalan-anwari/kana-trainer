@@ -1,18 +1,21 @@
 <script lang="ts">
-  import { statsByKana, statsByRow, summarize } from "../../core/report";
+  import { heatByRow, scriptsSeen, statsByKana, summarize } from "../../core/report";
   import { app } from "../../state.svelte";
   import { exportReports, fileLabel } from "../../storage";
-  import BarChart from "../charts/BarChart.svelte";
+  import AccuracyGrid from "../charts/AccuracyGrid.svelte";
+  import RowHeatmap from "../charts/RowHeatmap.svelte";
+  import ScriptSplit from "../charts/ScriptSplit.svelte";
   import MissedAnswers from "./MissedAnswers.svelte";
   import ResultSplash from "./ResultSplash.svelte";
   import ScoreHeadline from "./ScoreHeadline.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button, Card } from "kaizen-ui";
+  import { Button, Card, EmptyState, Icon } from "kaizen-ui";
 
   const report = $derived(app.lastReport);
   const answers = $derived(report?.answers ?? []);
   const summary = $derived(summarize(answers));
   const misses = $derived(answers.filter((answer) => !answer.correct));
+  const seen = $derived(scriptsSeen(answers));
 
   async function saveCopy(): Promise<void> {
     if (report === null) return;
@@ -52,14 +55,50 @@
       <p class="text-sm font-semibold text-success">{app.message}</p>
     {/if}
 
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-      <Card title={t("result.characters.title")} description={t("result.characters.description")}>
-        <BarChart rows={statsByKana(answers)} limit={10} />
+    <Card title={t("result.characters.title")} description={t("reports.weakest.description")}>
+      {#snippet icon()}<Icon name="target" class="size-5" />{/snippet}
+      {#each seen as script (script)}
+        {#if seen.length > 1}
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {t(`common.${script}`)}
+          </p>
+        {/if}
+        <div class:mb-4={seen.length > 1}>
+          <AccuracyGrid
+            rows={statsByKana(
+              answers.filter((answer) => answer.script === script),
+              script
+            )}
+            limit={16}
+          />
+        </div>
+      {:else}
+        <EmptyState icon="target" title={t("reports.weakest.empty")} />
+      {/each}
+    </Card>
+
+    <Card title={t("result.rows.title")} description={t("reports.rows.description")}>
+      {#snippet icon()}<Icon name="sprout" class="size-5" />{/snippet}
+      {#each seen as script (script)}
+        {#if seen.length > 1}
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {t(`common.${script}`)}
+          </p>
+        {/if}
+        <div class:mb-4={seen.length > 1}>
+          <RowHeatmap heat={heatByRow(answers, script)} />
+        </div>
+      {:else}
+        <EmptyState icon="sprout" title={t("reports.rows.empty")} />
+      {/each}
+    </Card>
+
+    {#if seen.length > 1}
+      <Card title={t("reports.alphabets.title")} description={t("reports.alphabets.description")}>
+        {#snippet icon()}<Icon name="trophy" class="size-5" />{/snippet}
+        <ScriptSplit {answers} scripts={seen} />
       </Card>
-      <Card title={t("result.rows.title")} description={t("result.rows.description")}>
-        <BarChart rows={statsByRow(answers)} limit={10} />
-      </Card>
-    </div>
+    {/if}
 
     <MissedAnswers {misses} />
   </div>

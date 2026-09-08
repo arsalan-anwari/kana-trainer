@@ -1,5 +1,6 @@
 pkgname=kana-trainer
-pkgver=1.8.1
+pkgver=1.8.2
+_kaizenver=0.2.2
 pkgrel=1
 pkgdesc="Practice hiragana and katakana with quizzes, typing drills and audio"
 arch=('x86_64')
@@ -8,8 +9,16 @@ license=('Apache-2.0')
 depends=('webkit2gtk-4.1' 'gtk3' 'libayatana-appindicator')
 makedepends=('rust' 'cargo' 'nodejs' 'npm')
 options=('!debug')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
+        "kaizen-ui-$_kaizenver.tar.gz::https://github.com/arsalan-anwari/kaizen-ui/archive/refs/tags/v$_kaizenver.tar.gz")
+sha256sums=('SKIP' 'SKIP')
+
+prepare() {
+  cd "$srcdir/$pkgname-$pkgver"
+  rm -rf vendor/kaizen-ui
+  mkdir -p vendor
+  cp -a "$srcdir/kaizen-ui-$_kaizenver" vendor/kaizen-ui
+}
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"

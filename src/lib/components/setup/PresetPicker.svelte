@@ -1,7 +1,7 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button, ConfirmDialog, IconButton, TextField } from "kaizen-ui";
+  import { ActionSelect, Button, ConfirmDialog, TextField } from "kaizen-ui";
 
   let chosen = $state("");
   let naming = $state(false);
@@ -12,10 +12,31 @@
     if (chosen !== "" && !app.presets.some((preset) => preset.name === chosen)) chosen = "";
   });
 
-  function pick(event: Event): void {
-    chosen = (event.currentTarget as HTMLSelectElement).value;
-    if (chosen !== "") app.applyPreset(chosen);
-  }
+  const names = $derived(app.presets.map((preset) => preset.name));
+
+  const actions = $derived([
+    {
+      icon: "save" as const,
+      label: t("setup.presets.update"),
+      disabled: chosen === "",
+      onclick: (): void => app.savePreset(chosen)
+    },
+    { icon: "plus" as const, label: t("setup.presets.create"), onclick: startNaming },
+    {
+      icon: "restore" as const,
+      label: t("setup.presets.restore"),
+      disabled: chosen === "",
+      onclick: (): void => app.applyPreset(chosen)
+    },
+    {
+      icon: "trash" as const,
+      label: t("setup.presets.delete"),
+      disabled: chosen === "",
+      onclick: (): void => {
+        confirming = true;
+      }
+    }
+  ]);
 
   function startNaming(): void {
     name = "";
@@ -37,40 +58,16 @@
   }
 </script>
 
-<select
-  value={chosen}
-  onchange={pick}
-  aria-label={t("setup.presets.label")}
-  disabled={app.presets.length === 0}
-  class="h-9 min-w-32 cursor-pointer rounded-md border border-border bg-surface px-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40"
->
-  <option value="">{t(app.presets.length === 0 ? "setup.presets.none" : "setup.presets.some")}</option>
-  {#each app.presets as preset (preset.name)}
-    <option value={preset.name}>{preset.name}</option>
-  {/each}
-</select>
-
-<IconButton
-  icon="save"
-  size="sm"
-  label={t("setup.presets.update")}
-  disabled={chosen === ""}
-  onclick={() => app.savePreset(chosen)}
-/>
-<IconButton icon="plus" size="sm" label={t("setup.presets.create")} onclick={startNaming} />
-<IconButton
-  icon="restore"
-  size="sm"
-  label={t("setup.presets.restore")}
-  disabled={chosen === ""}
-  onclick={() => app.applyPreset(chosen)}
-/>
-<IconButton
-  icon="trash"
-  size="sm"
-  label={t("setup.presets.delete")}
-  disabled={chosen === ""}
-  onclick={() => (confirming = true)}
+<ActionSelect
+  bind:value={chosen}
+  options={names}
+  label={t("setup.presets.label")}
+  empty={t(app.presets.length === 0 ? "setup.presets.none" : "setup.presets.some")}
+  closeLabel={t("common.close")}
+  {actions}
+  onchange={(next) => {
+    if (next !== "") app.applyPreset(next);
+  }}
 />
 
 {#if naming}

@@ -1,0 +1,3 @@
+[submodule "vendor/kaizen-ui"]
+	path = vendor/kaizen-ui
+	url = https://github.com/arsalan-anwari/kaizen-ui.git

@@ -3,6 +3,7 @@
   import type { Summary } from "../../core/report";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
+  import { lockScroll, viewport } from "kaizen-ui";
 
   let { tier, summary }: { tier: ScoreTier; summary: Summary } = $props();
 
@@ -97,26 +98,37 @@
 
   function build(): Particle[] {
     const tone = (index: number): string => party.tones[index % party.tones.length];
-    const count = party.count;
+    const count = Math.round(party.count * (viewport.wide ? 1 : 0.4));
 
     if (party.effect === "fireworks") {
-      const perBurst = 24;
+      const perBurst = viewport.wide ? 22 : 14;
       const bursts = Array.from({ length: Math.ceil(count / perBurst) }, (_, index) => ({
-        left: between(16, 84),
-        top: between(12, 52),
-        delay: index * 0.3 + between(0, 0.12),
+        left: between(14, 86),
+        top: between(10, 54),
+        delay: index * 0.26 + between(0, 0.1),
         tone: tone(index)
       }));
-      return Array.from({ length: count }, (_, index) => {
+
+      const flashes = bursts.map((burst, index) => ({
+        index: -1 - index,
+        kind: "anim-firework-flash size-6 rounded-full",
+        style: `left: ${burst.left}%; top: ${burst.top}%; background: ${burst.tone}; animation-delay: ${burst.delay}s`
+      }));
+
+      const sparks = Array.from({ length: count }, (_, index) => {
         const burst = bursts[Math.floor(index / perBurst)];
-        const angle = ((index % perBurst) / perBurst) * Math.PI * 2 + between(-0.12, 0.12);
-        const reach = between(80, 190);
+        const seat = index % perBurst;
+        const angle = (seat / perBurst) * Math.PI * 2 + between(-0.1, 0.1);
+        const reach = between(90, 210) * (seat % 3 === 0 ? 0.62 : 1);
+        const shade = seat % 4 === 0 ? tone(index + 1) : burst.tone;
         return {
           index,
-          kind: "anim-firework size-[10px] rounded-full",
-          style: `left: ${burst.left}%; top: ${burst.top}%; background: ${burst.tone}; animation-delay: ${burst.delay}s; animation-duration: ${between(1.1, 1.5)}s; --dx: ${Math.round(Math.cos(angle) * reach)}px; --dy: ${Math.round(Math.sin(angle) * reach)}px`
+          kind: `anim-firework rounded-full ${seat % 3 === 0 ? "size-[6px]" : "size-[9px]"}`,
+          style: `left: ${burst.left}%; top: ${burst.top}%; background: ${shade}; box-shadow: 0 0 10px ${shade}; animation-delay: ${burst.delay + between(0, 0.05)}s; animation-duration: ${between(1.2, 1.7)}s; --dx: ${Math.round(Math.cos(angle) * reach)}px; --dy: ${Math.round(Math.sin(angle) * reach)}px`
         };
       });
+
+      return [...flashes, ...sparks];
     }
 
     if (party.effect === "confetti") {
@@ -138,7 +150,7 @@
     if (party.effect === "dust") {
       return Array.from({ length: count }, (_, index) => ({
         index,
-        kind: "anim-drift size-[14px] rounded-full opacity-50 blur-[2px]",
+        kind: `anim-drift size-[14px] rounded-full opacity-50 ${viewport.wide ? "blur-[2px]" : ""}`,
         style: `left: ${Math.random() * 100}%; top: 0; background: ${tone(index)}; animation-delay: ${Math.random() * 1.1}s; animation-duration: ${between(2.6, 4)}s; --drift: ${Math.round(between(-70, 70))}px`
       }));
     }
@@ -164,17 +176,32 @@
     const hold = setTimeout(dismiss, party.hold);
     return () => clearTimeout(hold);
   });
+
+  let splash: HTMLDialogElement;
+
+  /* Modal, so the page behind it is inert for the whole animation: no reaching
+     the header or the buttons underneath until the splash has faded out. */
+  $effect(() => {
+    splash.showModal();
+  });
+
+  function cancel(event: Event): void {
+    event.preventDefault();
+    dismiss();
+  }
 </script>
 
 <svelte:window onkeydown={dismiss} />
 
 <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions, a11y_no_noninteractive_element_interactions -->
-<div
-  class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden paper {leaving
+<dialog
+  bind:this={splash}
+  class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden outline-none {leaving
     ? 'anim-splash-out'
     : 'anim-splash-in'}"
-  role="status"
-  aria-live="polite"
+  use:lockScroll
+  aria-label={tierHeadline(tier)}
+  oncancel={cancel}
   onclick={dismiss}
 >
   {#if pieces.length > 0}
@@ -184,6 +211,8 @@
       {/each}
     </div>
   {/if}
+
+  <div class="splash-scrim pointer-events-none absolute inset-0" aria-hidden="true"></div>
 
   <div class="anim-splash-body relative flex flex-col items-center gap-3 px-6 text-center">
     <span class="relative flex items-center justify-center">
@@ -217,4 +246,4 @@
       {t("result.skip")}
     </span>
   </div>
-</div>
+</dialog>

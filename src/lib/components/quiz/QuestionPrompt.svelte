@@ -3,7 +3,7 @@
   import type { Question } from "../../core/quiz";
   import { kanaAudio } from "../../audio";
   import { t } from "../../i18n.svelte";
-  import { Board, PlayIcon, Waveform } from "kaizen-ui";
+  import { Board, RecordPlayer, viewport } from "kaizen-ui";
 
   let {
     question,
@@ -22,40 +22,37 @@
 
   const text = $derived(question.prompt === "kana" ? glyph(kana, question.script) : kana.romaji);
 
+  const compact = $derived(!viewport.wide);
+
   const fontSize = $derived.by(() => {
     const budget = question.prompt === "kana" ? 88 : 150;
     const cap = question.prompt === "kana" ? 60 : 42;
-    return `${Math.min(cap, budget / Math.max(1, text.length))}cqi`;
+    return `${Math.min(cap, budget / Math.max(1, text.length))}cqmin`;
   });
 </script>
 
-<div class="flex flex-col items-center gap-2 sm:gap-3">
+<div class="flex w-full flex-col items-center gap-2 sm:gap-3">
   <span class="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
     {label}
   </span>
 
-  <Board size={question.prompt === "audio" ? "md" : "lg"} guide={question.prompt !== "audio"}>
-    {#if question.prompt === "audio"}
-      <button
-        type="button"
-        class="flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl p-3 transition-colors sm:gap-3 sm:p-5 lg:gap-4 lg:p-6 hover:bg-current/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
-        aria-label={t("quiz.prompt.replay")}
-        onclick={onreplay}
-      >
-        <span
-          class="flex size-[44%] shrink-0 items-center justify-center rounded-full bg-board-foreground text-board sm:size-16 lg:size-20"
-        >
-          <PlayIcon {playing} class="size-[45%] translate-x-px sm:size-7 lg:size-8" />
-        </span>
-        <span class="h-[18%] w-full sm:h-7 lg:h-8">
-          <Waveform
-            peaks={kanaAudio.peaks(kana.audio ?? kana.romaji)}
-            progress={playing ? kanaAudio.progress : 0}
-            tone="chalk"
-          />
-        </span>
-      </button>
-    {:else}
+  {#if question.prompt === "audio"}
+    <div
+      class="w-full {compact
+        ? 'h-[min(6.5rem,14dvh)] max-w-sm'
+        : 'max-w-[13rem] sm:max-w-[15rem]'}"
+    >
+      <RecordPlayer
+        {compact}
+        {playing}
+        peaks={kanaAudio.peaks(kana.audio ?? kana.romaji)}
+        progress={playing ? kanaAudio.progress : 0}
+        label={t("quiz.prompt.replay")}
+        onplay={onreplay}
+      />
+    </div>
+  {:else}
+    <Board size="lg" {compact}>
       <span
         class="whitespace-nowrap leading-none {question.prompt === 'kana'
           ? 'kana font-medium'
@@ -64,6 +61,6 @@
       >
         {text}
       </span>
-    {/if}
-  </Board>
+    </Board>
+  {/if}
 </div>

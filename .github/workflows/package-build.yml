@@ -74,6 +74,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Work out the version being built
         id: version
@@ -188,10 +190,13 @@ jobs:
       - name: Build the arch package
         if: matrix.kind == 'arch'
         run: |
-          mkdir -p dist/packages dist/arch/repo
+          mkdir -p dist/packages dist/arch/repo/vendor/kaizen-ui
           git archive HEAD | tar -x -C dist/arch/repo
+          git -C vendor/kaizen-ui archive HEAD | tar -x -C dist/arch/repo/vendor/kaizen-ui
           version="$(node -p 'require("./package.json").version')"
           sed -e 's|^source=.*|source=()|' \
+              -e '/^ *"kaizen-ui-/d' \
+              -e '/^prepare() {/,/^}/d' \
               -e '/^sha256sums=/d' \
               -e "s|^pkgver=.*|pkgver=$version|" \
               -e 's|cd "$srcdir/$pkgname-$pkgver"|cd "$startdir/repo"|' \

@@ -92,6 +92,7 @@ sudo pacman -S webkit2gtk-4.1 gtk3 glib2 librsvg libsoup3 openssl dbus \
 from the AUR.
 
 ```sh
+git submodule update --init   # vendor/kaizen-ui, the UI kit
 npm ci
 npm run tauri:dev      # run the app against the vite dev server
 npm run tauri:build    # bundle for the current platform
