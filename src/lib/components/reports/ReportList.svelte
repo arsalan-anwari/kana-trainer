@@ -45,6 +45,7 @@
 
   let confirming = $state(false);
   let picking = $state(false);
+  let rangeAnchor = $state<HTMLElement | null>(null);
 
   const range = $derived(isDateRange(query.window) ? query.window : null);
   const active = $derived(queryTagCount(query));
@@ -114,28 +115,32 @@
 
 <div class="flex flex-col gap-3">
   
-  <div class="relative flex flex-wrap items-center gap-1.5">
+  <div class="flex flex-wrap items-center gap-1.5">
     {#each reportFilters as option (option)}
       <Chip size="sm" active={query.window === option} onclick={() => setWindow(option)}>
         {reportFilterLabel(option)}
       </Chip>
     {/each}
-    <Chip
-      size="sm"
-      active={range !== null}
-      title={range === null ? t("reports.range.pick") : reportFilterLabel(range)}
-      onclick={() => (picking = true)}
-    >
-      <span class="flex items-center gap-1.5">
-        <Icon name="calendar" class="size-4" />
-        {#if range !== null}
-          <span class="tabular-nums">{reportFilterLabel(range)}</span>
-        {/if}
-      </span>
-    </Chip>
+    
+    <span bind:this={rangeAnchor} class="inline-flex">
+      <Chip
+        size="sm"
+        active={range !== null}
+        title={range === null ? t("reports.range.pick") : reportFilterLabel(range)}
+        onclick={() => (picking = true)}
+      >
+        <span class="flex items-center gap-1.5">
+          <Icon name="calendar" class="size-4" />
+          {#if range !== null}
+            <span class="tabular-nums">{reportFilterLabel(range)}</span>
+          {/if}
+        </span>
+      </Chip>
+    </span>
 
     {#if picking}
       <DateRangePicker
+        anchor={rangeAnchor}
         current={range}
         onpick={(next) => setWindow(next)}
         onclose={() => (picking = false)}
@@ -146,7 +151,7 @@
   
   <details class="rounded-xl border-2 border-border bg-surface">
     <summary
-      class="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground [&::-webkit-details-marker]:hidden"
+      class="flex h-13 cursor-pointer list-none items-center gap-2 px-3.5 text-sm font-semibold text-muted-foreground [&::-webkit-details-marker]:hidden"
     >
       <Icon name="filter" class="size-4" />
       <span>{t("reports.filters.title")}</span>

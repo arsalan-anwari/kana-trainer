@@ -41,7 +41,7 @@
   let headerHeight = $state(0);
 
   function touchend(event: TouchEvent): void {
-    if (document.querySelector('[role="dialog"], [role="alertdialog"]') !== null) return;
+    if (document.querySelector('dialog[open], [role="dialog"], [role="alertdialog"]') !== null) return;
     const touch = event.changedTouches[0];
     const dx = touch.clientX - startX;
     const dy = touch.clientY - startY;
@@ -60,7 +60,7 @@
 
   <div
     bind:clientHeight={headerHeight}
-    class="scrim sticky top-0 z-20 -ml-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] -mr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pt-[calc(env(safe-area-inset-top,0px)+2.25rem)] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pb-8 pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] sm:pb-10"
+    class="scrim sticky top-0 z-20 -ml-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] -mr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pt-[calc(var(--status-bar)+var(--edge-y))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pb-8 pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] sm:pb-10"
   >
     <div class="mx-auto w-full max-w-[80rem]">
       <AppHeader />

@@ -258,25 +258,6 @@ function dayStart(key: string): number {
   return new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])).getTime();
 }
 
-export function maskDay(raw: string): string {
-  const digits = raw.replace(/\D/g, "").slice(0, 8);
-  return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4)]
-    .filter((part) => part !== "")
-    .join("/");
-}
-
-export function dayKeyFromInput(text: string): string {
-  const parts = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(text);
-  if (parts === null) return "";
-  const key = `${parts[3]}-${parts[2]}-${parts[1]}`;
-  return dayKey(dayStart(key)) === key ? key : "";
-}
-
-export function dayInputText(key: string): string {
-  const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
-  return parts === null ? "" : `${parts[3]}/${parts[2]}/${parts[1]}`;
-}
-
 export function reportFilterLabel(filter: ReportFilter): string {
   if (isDateRange(filter)) {
     return filter.from === filter.to

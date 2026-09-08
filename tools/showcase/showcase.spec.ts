@@ -9,6 +9,7 @@ import {
   installShowcase,
   missed,
   openRow,
+  pickLanguage,
   Showcase,
   silence,
   splash
@@ -20,7 +21,8 @@ const SEED = 20260820;
 
 const MISSED = new Set([3, 7]);
 
-const LANGUAGE = "es";
+/* Option labels are endonyms, identical in every locale. */
+const LANGUAGE = "Español";
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
 
@@ -188,10 +190,10 @@ test("record the showcase", async ({ page }, testInfo) => {
     await sheet.click();
     await shots.shot("21_Settings_Menu");
 
-    const picker = page.getByRole("dialog").locator("select");
-    await picker.selectOption(LANGUAGE);
+    const settings = page.getByRole("dialog");
+    await pickLanguage(settings, LANGUAGE);
     await shots.shot("22_Settings_Language");
-    await picker.selectOption("en");
+    await pickLanguage(settings, "English");
     await page.keyboard.press("Escape");
   } else {
     await button("High contrast", true).click();
@@ -202,10 +204,10 @@ test("record the showcase", async ({ page }, testInfo) => {
     await expect(startRun).toBeEnabled();
     await shots.top();
 
-    const picker = page.getByRole("navigation").locator("select");
-    await picker.selectOption(LANGUAGE);
+    const nav = page.getByRole("navigation");
+    await pickLanguage(nav, LANGUAGE);
     await shots.shot("22_Setup_Language");
-    await picker.selectOption("en");
+    await pickLanguage(nav, "English");
     await expect(startRun).toBeEnabled();
   }
 

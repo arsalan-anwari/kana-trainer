@@ -12,9 +12,7 @@
     "close": "Fermer la plage de dates",
     "from": "Du",
     "to": "Au",
-    "mask": "JJ/MM/AAAA",
-    "invalidPicked": "Le début doit précéder la fin et ne pas être avant {earliest}.",
-    "invalidTyped": "Utilisez JJ/MM/AAAA, début avant la fin et pas avant {earliest}."
+    "invalid": "Le début doit précéder la fin et ne pas être avant {earliest}."
   },
   "filters": {
     "title": "Filtres",
@@ -103,7 +101,6 @@
     "steady": "Solide",
     "mastered": "Maîtrisé"
   },
-  "strength": "Solidité",
   "seen_one": "vu une fois",
   "seen_other": "vu {count} fois",
   "legend": {

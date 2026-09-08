@@ -12,9 +12,7 @@
     "close": "Tutup rentang tanggal",
     "from": "Dari",
     "to": "Sampai",
-    "mask": "HH/BB/TTTT",
-    "invalidPicked": "Awal harus sebelum akhir dan tidak lebih awal dari {earliest}.",
-    "invalidTyped": "Pakai HH/BB/TTTT, awal sebelum akhir, tidak lebih awal dari {earliest}."
+    "invalid": "Awal harus sebelum akhir dan tidak lebih awal dari {earliest}."
   },
   "filters": {
     "title": "Saringan",
@@ -95,7 +93,6 @@
     "steady": "Mantap",
     "mastered": "Dikuasai"
   },
-  "strength": "Kekuatan",
   "seen_one": "muncul sekali",
   "seen_other": "muncul {count} kali",
   "legend": {

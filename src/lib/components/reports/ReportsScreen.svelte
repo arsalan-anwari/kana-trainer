@@ -63,7 +63,7 @@
           disabled={answers.length === 0}
           onclick={() => app.practiceMistakes(answers)}
         >
-          <Icon name="flame" class="size-5" />
+          <Icon name="flame" class="size-5 text-seal" />
           {t("reports.practice")}
         </Button>
       </div>

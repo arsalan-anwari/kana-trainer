@@ -5,6 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.4 - 2026-09-08
+
+### Changed
+- Dropdowns and the date picker are drawn by the app instead of the operating
+  system, so they follow the theme everywhere. On a phone they open as a
+  fullscreen sheet, on a tablet or desktop as a panel beside the control that
+  opened them.
+- Desktop picks a date range from the same calendar as phones do, instead of
+  typing it into a masked text field.
+- Selects are as tall and as solid as the rest of the controls, and the Android
+  build no longer draws its own arrow on the language picker.
+- The report cards drop the "Strength" caption; the coloured labels already say
+  what they mean.
+
+### Fixed
+- The header and every fullscreen sheet now move down by the height of the
+  system status bar, worked out per platform, instead of a fixed guess. The date
+  range picker on phones and tablets no longer opens under the header.
+- The flame on "Practice these mistakes" sits on the text baseline and is red
+  instead of taking the button's colour.
+- Selector boxes and other UI elements are more chunky to be easier to press on touch screen. 
+
 ## 1.8.3 - 2026-09-08
 
 ### Fixed
@@ -401,6 +423,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.4
 [1.8.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.3
 [1.8.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.2
 [1.8.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.1

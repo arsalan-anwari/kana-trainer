@@ -1,7 +1,6 @@
 <script lang="ts">
   import { heatColor } from "kaizen-ui";
   import { masteryLabel, masteryLevels } from "../../core/report";
-  import { t } from "../../i18n.svelte";
 
   let { class: className = "" }: { class?: string } = $props();
 
@@ -15,9 +14,6 @@
 </script>
 
 <div class="flex flex-wrap items-center gap-x-3 gap-y-1 {className}">
-  <span class="text-[0.625rem] font-bold uppercase tracking-wide text-muted-foreground">
-    {t("reports.strength")}
-  </span>
   {#each masteryLevels as level (level)}
     <span class="flex items-center gap-1 text-[0.625rem] text-muted-foreground">
       <span

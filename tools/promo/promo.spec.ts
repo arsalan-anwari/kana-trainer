@@ -2,6 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { allKana, seionRows } from "../../src/lib/core/kana";
 import { applySeed, seedPayload } from "./seed";
 import { installStage, Stage } from "./stage";
+import { langPicker } from "../showcase/drive";
 
 const intro = { title: "Kana Trainer", lines: ["Hiragana and katakana practice"] };
 
@@ -74,7 +75,8 @@ const everyReading = seionRows.flatMap((row) => row.kana.map((kana) => kana.roma
 
 const FINALE = 5;
 
-const PROMO_LANGUAGES = ["zh-CN", "es", "en"];
+/* Option labels are endonyms, identical in every locale. */
+const PROMO_LANGUAGES = ["简体中文", "Español", "English"];
 
 test("record the promo", async ({ page }) => {
   const stage = new Stage(page);
@@ -247,11 +249,12 @@ test("record the promo", async ({ page }) => {
   await stage.tap(contrast, 300);
 
   await stage.caption("Twelve languages, the whole app at once");
-  const language = page.getByRole("navigation").locator("select");
+  const language = langPicker(page.getByRole("navigation"));
   await stage.hover(language, 340);
-  for (const tag of PROMO_LANGUAGES) {
-    await language.selectOption(tag);
-    await stage.beat(tag === "en" ? 420 : 950);
+  for (const name of PROMO_LANGUAGES) {
+    await stage.tap(language, 200, true);
+    await stage.tap(page.getByRole("option", { name, exact: true }), 200, true);
+    await stage.beat(name === "English" ? 420 : 950);
   }
   stage.mark("languages");
 

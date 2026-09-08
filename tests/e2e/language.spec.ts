@@ -7,11 +7,13 @@ test("picking a language redraws the app and sticks", async ({ page }) => {
 
   const inHeader = page.getByRole("navigation").getByLabel("Language");
   if (await inHeader.isVisible()) {
-    await inHeader.selectOption("nl");
+    await inHeader.click();
+    await page.getByRole("option", { name: "Nederlands" }).click();
   } else {
     await page.getByRole("button", { name: "Settings", exact: true }).click();
     const sheet = page.getByRole("dialog", { name: "Settings" });
-    await sheet.getByLabel("Language").selectOption("nl");
+    await sheet.getByLabel("Language").click();
+    await page.getByRole("option", { name: "Nederlands" }).click();
     await page.getByRole("button", { name: "Instellingen sluiten" }).click();
   }
 

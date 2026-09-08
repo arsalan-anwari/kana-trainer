@@ -199,3 +199,16 @@ export async function missed(page: Page): Promise<boolean> {
   }
   throw new Error("the answer was never given a verdict");
 }
+
+/* The language picker is no longer a native <select>: the trigger opens a
+   listbox in a dialog. The trigger's own label is translated, so match it on
+   the popup role instead; the option labels are endonyms and never translate. */
+export const langPicker = (scope: Locator): Locator =>
+  scope.locator('[aria-haspopup="listbox"]');
+
+export async function pickLanguage(scope: Locator, name: string): Promise<void> {
+  await langPicker(scope).click();
+  const option = scope.page().getByRole("option", { name, exact: true });
+  await option.click();
+  await expect(option).toBeHidden();
+}

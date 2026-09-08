@@ -12,9 +12,7 @@
     "close": "Fechar o intervalo",
     "from": "De",
     "to": "Até",
-    "mask": "DD/MM/AAAA",
-    "invalidPicked": "O início deve vir antes do fim e não ser anterior a {earliest}.",
-    "invalidTyped": "Use DD/MM/AAAA, com o início antes do fim e não anterior a {earliest}."
+    "invalid": "O início deve vir antes do fim e não ser anterior a {earliest}."
   },
   "filters": {
     "title": "Filtros",
@@ -103,7 +101,6 @@
     "steady": "Sólido",
     "mastered": "Dominado"
   },
-  "strength": "Solidez",
   "seen_one": "visto uma vez",
   "seen_other": "visto {count} vezes",
   "legend": {

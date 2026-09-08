@@ -12,9 +12,7 @@
     "close": "Đóng khoảng ngày",
     "from": "Từ",
     "to": "Đến",
-    "mask": "NN/TT/NNNN",
-    "invalidPicked": "Ngày đầu phải trước ngày cuối và không sớm hơn {earliest}.",
-    "invalidTyped": "Dùng NN/TT/NNNN, ngày đầu trước ngày cuối, không sớm hơn {earliest}."
+    "invalid": "Ngày đầu phải trước ngày cuối và không sớm hơn {earliest}."
   },
   "filters": {
     "title": "Bộ lọc",
@@ -95,7 +93,6 @@
     "steady": "Vững",
     "mastered": "Thành thạo"
   },
-  "strength": "Độ vững",
   "seen_one": "gặp 1 lần",
   "seen_other": "gặp {count} lần",
   "legend": {

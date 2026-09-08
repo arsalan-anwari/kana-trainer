@@ -12,9 +12,7 @@
     "close": "Close the date range",
     "from": "From",
     "to": "To",
-    "mask": "DD/MM/YYYY",
-    "invalidPicked": "Start on or before the end, and no earlier than {earliest}.",
-    "invalidTyped": "Use DD/MM/YYYY, start on or before the end, no earlier than {earliest}."
+    "invalid": "Start on or before the end, and no earlier than {earliest}."
   },
   "filters": {
     "title": "Filters",
@@ -103,7 +101,6 @@
     "steady": "Steady",
     "mastered": "Mastered"
   },
-  "strength": "Strength",
   "seen_one": "seen once",
   "seen_other": "seen {count} times",
   "legend": {

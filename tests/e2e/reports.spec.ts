@@ -107,3 +107,25 @@ test("the summary heading follows the date filter and the tags", async ({ page }
   await expect(tags).toHaveText(["Multiple choice", "Typing"]);
   await expect(page.getByRole("button", { name: /^Export all 2 runs shown/ })).toBeVisible();
 });
+
+test("the date range picker filters down to one day", async ({ page }) => {
+  await openReports(page, seed);
+
+  const now = new Date();
+  const day = String(now.getDate());
+  const key = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(
+    now.getDate()
+  ).padStart(2, "0")}`;
+
+  await page.getByRole("button", { name: "Pick a date range" }).click();
+  const picker = page.getByRole("dialog", { name: "Date range" });
+
+  // The first pick sets the start and moves on to the end, the second closes it.
+  await picker.getByRole("button", { name: day, exact: true }).click();
+  await picker.getByRole("button", { name: day, exact: true }).click();
+  await picker.getByRole("button", { name: "Apply" }).click();
+
+  await expect(page.locator("span.text-h2")).toHaveText("Custom");
+  await expect(page.getByRole("button", { name: key })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Export all 2 runs shown/ })).toBeVisible();
+});

@@ -12,9 +12,7 @@
     "close": "Periode sluiten",
     "from": "Van",
     "to": "Tot",
-    "mask": "DD/MM/JJJJ",
-    "invalidPicked": "Het begin mag niet na het einde liggen en niet vóór {earliest}.",
-    "invalidTyped": "Gebruik DD/MM/JJJJ, begin niet na het einde en niet vóór {earliest}."
+    "invalid": "Het begin mag niet na het einde liggen en niet vóór {earliest}."
   },
   "filters": {
     "title": "Filters",
@@ -103,7 +101,6 @@
     "steady": "Stabiel",
     "mastered": "Beheerst"
   },
-  "strength": "Sterkte",
   "seen_one": "1 keer gezien",
   "seen_other": "{count} keer gezien",
   "legend": {

@@ -12,9 +12,7 @@
     "close": "Zeitraum schließen",
     "from": "Von",
     "to": "Bis",
-    "mask": "TT/MM/JJJJ",
-    "invalidPicked": "Der Start darf nicht nach dem Ende und nicht vor {earliest} liegen.",
-    "invalidTyped": "TT/MM/JJJJ benutzen, Start nicht nach dem Ende und nicht vor {earliest}."
+    "invalid": "Der Start darf nicht nach dem Ende und nicht vor {earliest} liegen."
   },
   "filters": {
     "title": "Filter",
@@ -103,7 +101,6 @@
     "steady": "Sicher",
     "mastered": "Gemeistert"
   },
-  "strength": "Stärke",
   "seen_one": "einmal gesehen",
   "seen_other": "{count}-mal gesehen",
   "legend": {

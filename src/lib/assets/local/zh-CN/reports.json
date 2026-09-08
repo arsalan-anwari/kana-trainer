@@ -12,9 +12,7 @@
     "close": "关闭日期范围",
     "from": "开始",
     "to": "结束",
-    "mask": "日/月/年",
-    "invalidPicked": "开始不得晚于结束，且不得早于 {earliest}。",
-    "invalidTyped": "格式为 日/月/年，开始不得晚于结束，且不得早于 {earliest}。"
+    "invalid": "开始不得晚于结束，且不得早于 {earliest}。"
   },
   "filters": {
     "title": "筛选",
@@ -95,7 +93,6 @@
     "steady": "稳固",
     "mastered": "精通"
   },
-  "strength": "掌握度",
   "seen_one": "出现 1 次",
   "seen_other": "出现 {count} 次",
   "legend": {

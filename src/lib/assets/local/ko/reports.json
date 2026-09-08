@@ -12,9 +12,7 @@
     "close": "기간 닫기",
     "from": "시작",
     "to": "끝",
-    "mask": "일/월/연도",
-    "invalidPicked": "시작은 끝보다 앞이어야 하고 {earliest} 이후여야 합니다.",
-    "invalidTyped": "일/월/연도 형식으로, 시작은 끝보다 앞이고 {earliest} 이후여야 합니다."
+    "invalid": "시작은 끝보다 앞이어야 하고 {earliest} 이후여야 합니다."
   },
   "filters": {
     "title": "필터",
@@ -95,7 +93,6 @@
     "steady": "안정적",
     "mastered": "숙달"
   },
-  "strength": "숙련도",
   "seen_one": "1번 나옴",
   "seen_other": "{count}번 나옴",
   "legend": {

@@ -12,9 +12,7 @@
     "close": "關閉日期範圍",
     "from": "開始",
     "to": "結束",
-    "mask": "日/月/年",
-    "invalidPicked": "開始不得晚於結束，且不得早於 {earliest}。",
-    "invalidTyped": "格式為 日/月/年，開始不得晚於結束，且不得早於 {earliest}。"
+    "invalid": "開始不得晚於結束，且不得早於 {earliest}。"
   },
   "filters": {
     "title": "篩選",
@@ -95,7 +93,6 @@
     "steady": "穩固",
     "mastered": "精通"
   },
-  "strength": "掌握度",
   "seen_one": "出現 1 次",
   "seen_other": "出現 {count} 次",
   "legend": {
