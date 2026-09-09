@@ -14,6 +14,7 @@
   "check": "Vérifier",
   "soundTile": "Son {slot}",
   "soundHint": "Touchez un son pour l'écouter, puis vérifiez.",
+  "soundCompare": "Touchez un son pour l'écouter à nouveau.",
   "quit": "Quitter",
   "score": "{count} bonnes",
   "correct": "Correct",

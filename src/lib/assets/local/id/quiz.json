@@ -10,6 +10,7 @@
   "check": "Periksa",
   "soundTile": "Bunyi {slot}",
   "soundHint": "Ketuk sebuah bunyi untuk mendengarnya, lalu periksa.",
+  "soundCompare": "Ketuk suara untuk mendengarnya lagi.",
   "quit": "Keluar",
   "score": "{count} benar",
   "correct": "Benar",

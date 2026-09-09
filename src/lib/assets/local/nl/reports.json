@@ -29,6 +29,7 @@
     "remove": "{target} verwijderen",
     "export": "{target} exporteren",
     "import": "Rondes uit een bestand importeren",
+    "actions": "Acties",
     "score": "{correct}/{total} goed, {percent}%",
     "empty": "Nog geen overzicht. Maak een ronde af en die komt hier te staan.",
     "noMatch": "Geen ronde past bij deze filters."
@@ -53,7 +54,7 @@
   "deleted_other": "{count} rondes verwijderd.",
   "runs_one": "1 ronde",
   "runs_other": "{count} rondes",
-  "exported": "{runs} geëxporteerd naar {file}",
+  "exported": "{runs} geëxporteerd",
   "imported": "{runs} geïmporteerd.",
   "importedSome": "{runs} geïmporteerd, {skipped} stonden er al.",
   "selected": "{count} rondes gekozen",

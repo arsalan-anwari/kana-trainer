@@ -29,6 +29,7 @@
     "remove": "{target} löschen",
     "export": "{target} exportieren",
     "import": "Durchgänge aus Datei importieren",
+    "actions": "Aktionen",
     "score": "{correct}/{total} richtig, {percent}%",
     "empty": "Noch kein Verlauf. Beende einen Durchgang, dann steht er hier.",
     "noMatch": "Kein Durchgang passt zu diesen Filtern."
@@ -53,7 +54,7 @@
   "deleted_other": "{count} Durchgänge gelöscht.",
   "runs_one": "1 Durchgang",
   "runs_other": "{count} Durchgänge",
-  "exported": "{runs} nach {file} exportiert",
+  "exported": "{runs} exportiert",
   "imported": "{runs} importiert.",
   "importedSome": "{runs} importiert, {skipped} waren schon da.",
   "selected": "{count} Durchgänge ausgewählt",

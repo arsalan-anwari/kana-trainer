@@ -29,6 +29,7 @@
     "remove": "Xoá {target}",
     "export": "Xuất {target}",
     "import": "Nhập phiên từ tệp",
+    "actions": "Thao tác",
     "score": "Đúng {correct}/{total}, {percent}%",
     "empty": "Chưa có lịch sử. Hoàn thành một phiên là nó hiện ở đây.",
     "noMatch": "Không có phiên nào khớp bộ lọc."
@@ -46,7 +47,7 @@
   },
   "deleted_other": "Đã xoá {count} phiên.",
   "runs_other": "{count} phiên",
-  "exported": "Đã xuất {runs} ra {file}",
+  "exported": "Đã xuất {runs}",
   "imported": "Đã nhập {runs}.",
   "importedSome": "Đã nhập {runs}, {skipped} đã có sẵn.",
   "selected": "Đã chọn {count} phiên",

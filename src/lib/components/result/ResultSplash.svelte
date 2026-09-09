@@ -199,7 +199,7 @@
   class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden outline-none {leaving
     ? 'anim-splash-out'
     : 'anim-splash-in'}"
-  use:lockScroll
+  use:lockScroll={dismiss}
   aria-label={tierHeadline(tier)}
   oncancel={cancel}
   onclick={dismiss}

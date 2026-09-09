@@ -10,6 +10,7 @@
   "check": "Kiểm tra",
   "soundTile": "Âm {slot}",
   "soundHint": "Chạm một âm để nghe, rồi kiểm tra.",
+  "soundCompare": "Chạm vào một âm để nghe lại.",
   "quit": "Thoát",
   "score": "Đúng {count} câu",
   "correct": "Chính xác",

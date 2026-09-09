@@ -62,29 +62,17 @@ const fileFilters = (): { name: string; extensions: string[] }[] => [
   { name: t("common.file.filterName"), extensions: [FILE_EXTENSION] }
 ];
 
-export function fileLabel(path: string): string {
-  if (!path.startsWith("content://")) return path;
-  try {
-    const tail = decodeURIComponent(path).split(/[/:]/).pop();
-    return tail === undefined || tail === "" ? path : tail;
-  } catch {
-    return path;
-  }
-}
-
-export async function exportReports(reports: Report[]): Promise<string | null> {
+/** Resolves to false when the picker was dismissed without saving. */
+export async function exportReports(reports: Report[]): Promise<boolean> {
   const bytes = encodeReportFile(reports);
+  const name = suggestedName(reports.length);
   if (inTauri()) {
     const { save } = await import("@tauri-apps/plugin-dialog");
-    const path = await save({
-      defaultPath: suggestedName(reports.length),
-      filters: fileFilters()
-    });
-    if (path === null) return null;
+    const path = await save({ defaultPath: name, filters: fileFilters() });
+    if (path === null) return false;
     await call<null>("write_report_file", { path, data: [...bytes] });
-    return path;
+    return true;
   }
-  const name = suggestedName(reports.length);
   const blob = new Blob([bytes as BlobPart], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -92,7 +80,7 @@ export async function exportReports(reports: Report[]): Promise<string | null> {
   link.download = name;
   link.click();
   URL.revokeObjectURL(url);
-  return name;
+  return true;
 }
 
 function pickFileInBrowser(): Promise<Uint8Array | null> {

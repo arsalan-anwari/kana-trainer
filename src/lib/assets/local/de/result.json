@@ -21,7 +21,7 @@
   "export": "Durchgang exportieren",
   "allReports": "Ganzer Verlauf",
   "back": "Zurück",
-  "exported": "Durchgang nach {file} exportiert",
+  "exported": "Durchgang exportiert",
   "characters": { "title": "Zeichen", "description": "Die schwächsten zuerst." },
   "rows": { "title": "Reihen", "description": "Wo es hakt." },
   "missed": {

@@ -203,18 +203,23 @@ test("record the promo", async ({ page }) => {
   await stage.scroll(0, 240);
   stage.mark("reports");
 
+  const openActions = () => stage.tap(button("Run actions"), 260);
+
   await stage.caption("Export the runs you picked to one file");
+  await openActions();
   const saved = page.waitForEvent("download");
   await stage.tap(button(/^Export/), 300);
   const file = await (await saved).path();
   await stage.beat(400);
 
   await stage.caption("Removing asks first, and takes the whole selection");
+  await openActions();
   await stage.tap(button(/^Delete \d+ selected/), 300);
   await stage.beat(950);
   await stage.tap(button(/^Delete \d+ runs?$/), 500);
 
   await stage.caption("One .kt-report file moves them to another device");
+  await openActions();
   const picker = page.waitForEvent("filechooser");
   await stage.tap(button(/^Import runs/), 200);
   await (await picker).setFiles(file);

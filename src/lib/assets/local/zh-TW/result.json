@@ -21,7 +21,7 @@
   "export": "匯出本次練習",
   "allReports": "全部紀錄",
   "back": "回到設定",
-  "exported": "已匯出至 {file}",
+  "exported": "已匯出此次紀錄",
   "characters": { "title": "字元", "description": "最弱的排在前面。" },
   "rows": { "title": "行", "description": "問題出在哪一行。" },
   "missed": {

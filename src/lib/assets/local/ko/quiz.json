@@ -10,6 +10,7 @@
   "check": "확인",
   "soundTile": "소리 {slot}",
   "soundHint": "소리를 눌러 들어 보고 확인하세요.",
+  "soundCompare": "소리를 눌러 다시 들어 보세요.",
   "quit": "그만두기",
   "score": "{count}개 정답",
   "correct": "정답",

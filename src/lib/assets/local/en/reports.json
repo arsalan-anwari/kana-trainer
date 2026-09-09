@@ -29,6 +29,7 @@
     "remove": "Delete {target}",
     "export": "Export {target}",
     "import": "Import runs from a file",
+    "actions": "Run actions",
     "score": "{correct}/{total} correct, {percent}%",
     "empty": "No reports yet. Finish a run and it lands here.",
     "noMatch": "No runs match these filters."
@@ -53,7 +54,7 @@
   "deleted_other": "Deleted {count} runs.",
   "runs_one": "1 run",
   "runs_other": "{count} runs",
-  "exported": "Exported {runs} to {file}",
+  "exported": "Exported {runs}",
   "imported": "Imported {runs}.",
   "importedSome": "Imported {runs}, {skipped} already here.",
   "selected": "{count} runs selected",

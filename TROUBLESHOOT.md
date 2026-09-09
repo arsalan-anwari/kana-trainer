@@ -2,6 +2,14 @@
 
 Known problems on specific systems and hardware, and their workarounds.
 
+## 2026-09-09
+
+### WebKitGTK scroll glitch on Linux (AMD/Mesa, Wayland, DMA-BUF)
+
+On Linux desktop with wayland, the top header briefly jumps or disappears while scrolling with the mouse wheel. Dragging the scrollbar works fine, and phones and tablets are unaffected. The cause sits in the browser engine Linux builds run on, not in our own code. Two attempted fixes both made it worse and were rolled back, so its likely to be fixed in a future WebKitGTK release.
+
+For now you can use the scroll bar in the app itself or the arrow keys on your keyboard to scroll.
+
 ## 2026-08-24
 
 ### Crash notification for WebKitWebProcess when closing the app on KDE

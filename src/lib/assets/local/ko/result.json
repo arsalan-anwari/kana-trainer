@@ -21,7 +21,7 @@
   "export": "이 연습 내보내기",
   "allReports": "전체 기록",
   "back": "설정으로",
-  "exported": "{file} 로 내보냈습니다",
+  "exported": "이번 기록을 내보냈습니다",
   "characters": { "title": "문자", "description": "약한 것부터." },
   "rows": { "title": "행", "description": "어느 행이 문제인지." },
   "missed": {

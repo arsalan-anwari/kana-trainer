@@ -21,7 +21,7 @@
   "export": "Exportar sesión",
   "allReports": "Historial",
   "back": "Volver",
-  "exported": "Sesión exportada a {file}",
+  "exported": "Sesión exportada",
   "characters": { "title": "Caracteres", "description": "Los más flojos primero." },
   "rows": { "title": "Filas", "description": "Dónde está el problema." },
   "missed": {

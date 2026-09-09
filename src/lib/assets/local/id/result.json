@@ -21,7 +21,7 @@
   "export": "Ekspor sesi ini",
   "allReports": "Semua riwayat",
   "back": "Kembali",
-  "exported": "Sesi diekspor ke {file}",
+  "exported": "Sesi diekspor",
   "characters": { "title": "Huruf", "description": "Yang terlemah dulu." },
   "rows": { "title": "Baris", "description": "Di mana letak masalahnya." },
   "missed": {

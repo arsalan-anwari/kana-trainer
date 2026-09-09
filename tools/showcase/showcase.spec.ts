@@ -158,18 +158,23 @@ test("record the showcase", async ({ page }, testInfo) => {
   await runs.nth(0).click();
   await runs.nth(1).click();
 
+  const openActions = () => button("Run actions").click();
+
+  await openActions();
   const saved = page.waitForEvent("download");
   await button(/^Export/).click();
   const file = await (await saved).path();
   await shots.top();
   await shots.shot("17_Reports_Export");
 
+  await openActions();
   await button(/^Delete \d+ selected/).click();
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await shots.shot("18_Reports_RemoveConfirm");
   await button("Delete 2 runs", true).click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
 
+  await openActions();
   const picker = page.waitForEvent("filechooser");
   await button(/^Import runs/).click();
   await (await picker).setFiles(file);

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { heatByRow, scriptsSeen, statsByKana, summarize } from "../../core/report";
   import { app } from "../../state.svelte";
-  import { exportReports, fileLabel } from "../../storage";
+  import { exportReports } from "../../storage";
   import AccuracyGrid from "../charts/AccuracyGrid.svelte";
   import RowHeatmap from "../charts/RowHeatmap.svelte";
   import ScriptSplit from "../charts/ScriptSplit.svelte";
@@ -20,10 +20,10 @@
   async function saveCopy(): Promise<void> {
     if (report === null) return;
     try {
-      const path = await exportReports([report]);
-      app.message = path === null ? "" : t("result.exported", { file: fileLabel(path) });
-    } catch (error) {
-      app.message = error instanceof Error ? error.message : t("common.file.writeFailed");
+      const saved = await exportReports([report]);
+      app.message = saved ? t("result.exported") : "";
+    } catch {
+      app.message = t("common.file.writeFailed");
     }
   }
 </script>

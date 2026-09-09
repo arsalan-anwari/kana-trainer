@@ -25,7 +25,7 @@
   "export": "Export this run",
   "allReports": "All reports",
   "back": "Back to setup",
-  "exported": "Exported this run to {file}",
+  "exported": "Exported this run",
   "characters": {
     "title": "Characters",
     "description": "Weakest first."

@@ -25,7 +25,7 @@
     staged: "border-foreground bg-foreground text-background",
     correct: "border-success/50 bg-success-soft text-success",
     wrong: "border-danger/50 bg-danger-soft text-danger anim-shake",
-    dimmed: "border-border bg-surface opacity-40"
+    dimmed: "border-border bg-surface opacity-60"
   };
 
   const waveTone = $derived(

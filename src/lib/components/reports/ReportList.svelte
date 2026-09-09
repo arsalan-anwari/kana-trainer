@@ -18,11 +18,11 @@
     type ReportTag
   } from "../../core/report";
   import { app } from "../../state.svelte";
-  import { deleteReport, exportReports, fileLabel, importReports } from "../../storage";
+  import { deleteReport, exportReports, importReports } from "../../storage";
   import DateRangePicker from "./DateRangePicker.svelte";
   import ReportListItem from "./ReportListItem.svelte";
   import { t } from "../../i18n.svelte";
-  import { Chip, ConfirmDialog, EmptyState, Icon, IconButton } from "kaizen-ui";
+  import { Button, Chip, ConfirmDialog, EmptyState, Icon, Popover, type IconName } from "kaizen-ui";
 
   let {
     reports,
@@ -45,7 +45,9 @@
 
   let confirming = $state(false);
   let picking = $state(false);
+  let acting = $state(false);
   let rangeAnchor = $state<HTMLElement | null>(null);
+  let actionAnchor = $state<HTMLElement | null>(null);
 
   const range = $derived(isDateRange(query.window) ? query.window : null);
   const active = $derived(queryTagCount(query));
@@ -88,12 +90,11 @@
 
   async function save(): Promise<void> {
     try {
-      const path = await exportReports(target);
-      if (path === null) return;
+      if (!(await exportReports(target))) return;
       const runs = t("reports.runs", { count: target.length });
-      app.message = t("reports.exported", { runs, file: fileLabel(path) });
-    } catch (error) {
-      app.message = error instanceof Error ? error.message : t("common.file.writeFailed");
+      app.message = t("reports.exported", { runs });
+    } catch {
+      app.message = t("common.file.writeFailed");
     }
   }
 
@@ -111,6 +112,35 @@
       app.message = error instanceof Error ? error.message : t("common.file.readFailed");
     }
   }
+  type Action = {
+    icon: IconName;
+    label: string;
+    disabled: boolean;
+    danger?: boolean;
+    run: () => void;
+  };
+
+  const actions = $derived<Action[]>([
+    {
+      icon: "download",
+      label: t("reports.list.export", { target: targetLabel }),
+      disabled: target.length === 0,
+      run: save
+    },
+    {
+      icon: "folder-open",
+      label: t("reports.list.import"),
+      disabled: false,
+      run: load
+    },
+    {
+      icon: "trash",
+      label: t("reports.list.remove", { target: targetLabel }),
+      disabled: target.length === 0,
+      danger: true,
+      run: () => (confirming = true)
+    }
+  ]);
 </script>
 
 <div class="flex flex-col gap-3">
@@ -218,48 +248,73 @@
   </details>
 
   <div class="flex items-center justify-between gap-2">
-    <span class="hidden text-xs text-muted-foreground sm:inline">
-      {picked.length === 0
-        ? t("reports.list.shown", { count: reports.length })
-        : t("reports.list.pickedOf", { picked: picked.length, total: reports.length })}
+    
+    <button
+      type="button"
+      class="flex min-w-0 cursor-pointer items-center gap-2 rounded-lg py-1 text-xs text-muted-foreground transition-colors hover:text-foreground disabled:cursor-default disabled:opacity-40"
+      disabled={reports.length === 0}
+      aria-pressed={allPicked}
+      aria-label={t(allPicked ? "reports.list.clearSelection" : "reports.list.selectAll")}
+      onclick={() => (picked = allPicked ? [] : reports.map((report) => report.id))}
+    >
+      <span
+        class="flex size-5 shrink-0 items-center justify-center rounded border-2 {picked.length === 0
+          ? 'border-border'
+          : 'border-selected bg-selected-soft text-selected'}"
+        aria-hidden="true"
+      >
+        {#if allPicked}
+          <Icon name="check" class="size-3.5" />
+        {:else if picked.length > 0}
+          <span class="h-0.5 w-2.5 rounded-full bg-selected"></span>
+        {/if}
+      </span>
+      <span class="truncate">
+        {picked.length === 0
+          ? t("reports.list.shown", { count: reports.length })
+          : t("reports.list.pickedOf", { picked: picked.length, total: reports.length })}
+      </span>
+    </button>
+
+    <span bind:this={actionAnchor} class="inline-flex">
+      <Button size="sm" variant="outline" onclick={() => (acting = true)}>
+        {t("reports.list.actions")}
+        <Icon name="chevron-down" class="size-4" />
+      </Button>
     </span>
-    <div class="flex items-center gap-1.5">
-      <IconButton
-        size="sm"
-        icon="select-all"
-        label={t("reports.list.selectAll")}
-        disabled={reports.length === 0 || allPicked}
-        onclick={() => (picked = reports.map((report) => report.id))}
-      />
-      <IconButton
-        size="sm"
-        icon="select-none"
-        label={t("reports.list.clearSelection")}
-        disabled={picked.length === 0}
-        onclick={() => (picked = [])}
-      />
-      <IconButton
-        size="sm"
-        icon="trash"
-        label={t("reports.list.remove", { target: targetLabel })}
-        disabled={target.length === 0}
-        onclick={() => (confirming = true)}
-      />
-      <IconButton
-        size="sm"
-        icon="download"
-        label={t("reports.list.export", { target: targetLabel })}
-        disabled={target.length === 0}
-        onclick={save}
-      />
-      <IconButton
-        size="sm"
-        icon="folder-open"
-        label={t("reports.list.import")}
-        onclick={load}
-      />
-    </div>
   </div>
+
+  {#if acting}
+    <Popover
+      anchor={actionAnchor}
+      width={17}
+      label={t("reports.list.actions")}
+      closeLabel={t("common.close")}
+      onclose={() => (acting = false)}
+    >
+      {#snippet children(close)}
+        <div class="flex flex-col gap-1">
+          {#each actions as action (action.label)}
+            <button
+              type="button"
+              class="flex h-11 shrink-0 cursor-pointer items-center gap-3 rounded-lg px-3 text-left text-sm font-semibold transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-40 {action.danger ===
+              true
+                ? 'text-danger'
+                : ''}"
+              disabled={action.disabled}
+              onclick={() => {
+                close();
+                action.run();
+              }}
+            >
+              <Icon name={action.icon} class="size-4.5 shrink-0" />
+              <span class="min-w-0 flex-1">{action.label}</span>
+            </button>
+          {/each}
+        </div>
+      {/snippet}
+    </Popover>
+  {/if}
 
   
   <div class="sheet ruled rounded-2xl border-2 border-border bg-surface p-2 sm:p-3">

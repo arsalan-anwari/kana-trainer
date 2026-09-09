@@ -29,6 +29,7 @@
     "remove": "ลบ{target}",
     "export": "ส่งออก{target}",
     "import": "นำเข้ารอบฝึกจากไฟล์",
+    "actions": "การจัดการ",
     "score": "ถูก {correct}/{total}, {percent}%",
     "empty": "ยังไม่มีประวัติ ทำรอบฝึกให้จบแล้วจะมาอยู่ที่นี่",
     "noMatch": "ไม่มีรอบใดตรงกับตัวกรองนี้"
@@ -46,7 +47,7 @@
   },
   "deleted_other": "ลบไปแล้ว {count} รอบ",
   "runs_other": "{count} รอบ",
-  "exported": "ส่งออก{runs}ไปที่ {file} แล้ว",
+  "exported": "ส่งออก{runs}แล้ว",
   "imported": "นำเข้า{runs}แล้ว",
   "importedSome": "นำเข้า{runs}แล้ว มี {skipped} รอบที่มีอยู่แล้ว",
   "selected": "เลือกไว้ {count} รอบ",

@@ -29,6 +29,7 @@
     "remove": "Hapus {target}",
     "export": "Ekspor {target}",
     "import": "Impor sesi dari berkas",
+    "actions": "Tindakan",
     "score": "{correct}/{total} benar, {percent}%",
     "empty": "Belum ada riwayat. Selesaikan satu sesi dan akan muncul di sini.",
     "noMatch": "Tidak ada sesi yang cocok dengan saringan ini."
@@ -46,7 +47,7 @@
   },
   "deleted_other": "{count} sesi dihapus.",
   "runs_other": "{count} sesi",
-  "exported": "{runs} diekspor ke {file}",
+  "exported": "{runs} diekspor",
   "imported": "{runs} diimpor.",
   "importedSome": "{runs} diimpor, {skipped} sudah ada.",
   "selected": "{count} sesi terpilih",

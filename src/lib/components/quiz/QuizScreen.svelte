@@ -32,6 +32,13 @@
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         app.next();
+        return;
+      }
+      // The sound tiles stay live after an answer so the correct reading and the
+      // one that was picked can be replayed side by side.
+      const replay = Number(event.key);
+      if (picksSound && replay >= 1 && replay <= question.choices.length) {
+        app.playChoice(question.choices[replay - 1]);
       }
       return;
     }

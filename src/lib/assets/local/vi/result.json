@@ -21,7 +21,7 @@
   "export": "Xuất phiên này",
   "allReports": "Toàn bộ lịch sử",
   "back": "Quay lại",
-  "exported": "Đã xuất phiên này ra {file}",
+  "exported": "Đã xuất phiên này",
   "characters": { "title": "Ký tự", "description": "Yếu nhất lên trước." },
   "rows": { "title": "Hàng", "description": "Vấn đề nằm ở đâu." },
   "missed": {

@@ -21,7 +21,7 @@
   "export": "Ronde exporteren",
   "allReports": "Hele overzicht",
   "back": "Terug",
-  "exported": "Ronde geëxporteerd naar {file}",
+  "exported": "Ronde geëxporteerd",
   "characters": { "title": "Tekens", "description": "De zwakste eerst." },
   "rows": { "title": "Rijen", "description": "Waar het misgaat." },
   "missed": {

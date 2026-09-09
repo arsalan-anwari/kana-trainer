@@ -32,6 +32,9 @@ async function openReports(page: import("@playwright/test").Page, runs: Seed[]) 
   await page.getByRole("button", { name: "Reports" }).click();
 }
 
+const openActions = (page: import("@playwright/test").Page) =>
+  page.getByRole("button", { name: "Run actions" }).click();
+
 const storedIds = (page: import("@playwright/test").Page) =>
   page.evaluate(() =>
     (JSON.parse(localStorage.getItem("kana-trainer-reports") ?? "[]") as { id: string }[])
@@ -42,6 +45,7 @@ const storedIds = (page: import("@playwright/test").Page) =>
 test("runs export to one file, and import back after being removed", async ({ page }) => {
   await openReports(page, seed);
 
+  await openActions(page);
   const download = await Promise.all([
     page.waitForEvent("download"),
     page.getByRole("button", { name: /^Export all 2 runs shown/ }).click()
@@ -51,12 +55,14 @@ test("runs export to one file, and import back after being removed", async ({ pa
   const bytes = await readFile(file);
   expect(bytes.subarray(0, 8).toString("ascii")).toBe("KTREPORT");
 
+  await openActions(page);
   await page.getByRole("button", { name: /^Delete all 2 runs shown/ }).click();
   await expect(page.getByRole("alertdialog")).toContainText("Delete 2 runs?");
   await page.getByRole("button", { name: "Delete 2 runs" }).click();
   await expect(page.getByText("Deleted 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual([]);
 
+  await openActions(page);
   const chooser = await Promise.all([
     page.waitForEvent("filechooser"),
     page.getByRole("button", { name: /^Import runs/ }).click()
@@ -65,6 +71,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
   await expect(page.getByText("Imported 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 
+  await openActions(page);
   const again = await Promise.all([
     page.waitForEvent("filechooser"),
     page.getByRole("button", { name: /^Import runs/ }).click()
@@ -77,6 +84,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
 test("cancelling the delete dialog keeps the runs", async ({ page }) => {
   await openReports(page, seed);
 
+  await openActions(page);
   await page.getByRole("button", { name: /^Delete all 2 runs shown/ }).click();
   await page.getByRole("button", { name: "Keep them" }).click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
@@ -105,7 +113,7 @@ test("the summary heading follows the date filter and the tags", async ({ page }
 
   await page.getByRole("button", { name: "Multiple choice", exact: true }).click();
   await expect(tags).toHaveText(["Multiple choice", "Typing"]);
-  await expect(page.getByRole("button", { name: /^Export all 2 runs shown/ })).toBeVisible();
+  await expect(page.getByText("2 shown")).toBeVisible();
 });
 
 test("the date range picker filters down to one day", async ({ page }) => {
@@ -127,5 +135,5 @@ test("the date range picker filters down to one day", async ({ page }) => {
 
   await expect(page.locator("span.text-h2")).toHaveText("Custom");
   await expect(page.getByRole("button", { name: key })).toBeVisible();
-  await expect(page.getByRole("button", { name: /^Export all 2 runs shown/ })).toBeVisible();
+  await expect(page.getByText("2 shown")).toBeVisible();
 });

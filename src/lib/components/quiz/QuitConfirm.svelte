@@ -1,7 +1,7 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button } from "kaizen-ui";
+  import { Button, lockScroll } from "kaizen-ui";
 
   let keep = $state<HTMLDivElement | null>(null);
 
@@ -22,7 +22,7 @@
 
 <svelte:window onkeydown={keydown} />
 
-<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4" use:lockScroll={() => app.cancelQuit()}>
   <button
     type="button"
     class="absolute inset-0 cursor-default bg-foreground/40"

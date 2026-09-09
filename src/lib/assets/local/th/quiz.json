@@ -10,6 +10,7 @@
   "check": "ตรวจ",
   "soundTile": "เสียง {slot}",
   "soundHint": "แตะเสียงเพื่อฟัง แล้วกดตรวจ",
+  "soundCompare": "แตะเสียงเพื่อฟังอีกครั้ง",
   "quit": "ออก",
   "score": "ถูก {count} ข้อ",
   "correct": "ถูกต้อง",

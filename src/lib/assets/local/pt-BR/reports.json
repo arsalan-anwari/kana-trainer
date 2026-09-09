@@ -29,6 +29,7 @@
     "remove": "Excluir {target}",
     "export": "Exportar {target}",
     "import": "Importar sessões de um arquivo",
+    "actions": "Ações",
     "score": "{correct}/{total} certas, {percent}%",
     "empty": "Ainda não há histórico. Termine uma sessão e ela aparece aqui.",
     "noMatch": "Nenhuma sessão bate com esses filtros."
@@ -53,7 +54,7 @@
   "deleted_other": "{count} sessões excluídas.",
   "runs_one": "1 sessão",
   "runs_other": "{count} sessões",
-  "exported": "{runs} exportadas para {file}",
+  "exported": "{runs} exportadas",
   "imported": "{runs} importadas.",
   "importedSome": "{runs} importadas, {skipped} já estavam aqui.",
   "selected": "{count} sessões selecionadas",

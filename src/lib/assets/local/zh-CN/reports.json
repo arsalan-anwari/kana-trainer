@@ -29,6 +29,7 @@
     "remove": "删除{target}",
     "export": "导出{target}",
     "import": "从文件导入记录",
+    "actions": "操作",
     "score": "答对 {correct}/{total}，{percent}%",
     "empty": "还没有记录。完成一场练习就会出现在这里。",
     "noMatch": "没有符合筛选条件的记录。"
@@ -46,7 +47,7 @@
   },
   "deleted_other": "已删除 {count} 条记录。",
   "runs_other": "{count} 条记录",
-  "exported": "已将{runs}导出到 {file}",
+  "exported": "已导出{runs}",
   "imported": "已导入{runs}。",
   "importedSome": "已导入{runs}，{skipped} 条已存在。",
   "selected": "已选中 {count} 条记录",

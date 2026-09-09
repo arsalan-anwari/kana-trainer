@@ -29,6 +29,7 @@
     "remove": "Eliminar {target}",
     "export": "Exportar {target}",
     "import": "Importar sesiones de un archivo",
+    "actions": "Acciones",
     "score": "{correct}/{total} aciertos, {percent}%",
     "empty": "Aún no hay historial. Termina una sesión y aparecerá aquí.",
     "noMatch": "Ninguna sesión encaja con estos filtros."
@@ -53,7 +54,7 @@
   "deleted_other": "{count} sesiones eliminadas.",
   "runs_one": "1 sesión",
   "runs_other": "{count} sesiones",
-  "exported": "{runs} exportadas a {file}",
+  "exported": "{runs} exportadas",
   "imported": "{runs} importadas.",
   "importedSome": "{runs} importadas, {skipped} ya estaban.",
   "selected": "{count} sesiones seleccionadas",

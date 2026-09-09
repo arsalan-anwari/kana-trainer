@@ -25,7 +25,7 @@
 <dialog
   bind:this={panel}
   class="fixed inset-0 z-50 flex flex-col paper fullscreen-sheet"
-  use:lockScroll
+  use:lockScroll={onclose}
   aria-label={t("common.settings")}
   onclose={onclose}
 >

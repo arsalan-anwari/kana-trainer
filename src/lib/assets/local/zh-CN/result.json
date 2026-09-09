@@ -21,7 +21,7 @@
   "export": "导出本次练习",
   "allReports": "全部记录",
   "back": "返回设置",
-  "exported": "已导出到 {file}",
+  "exported": "已导出此次记录",
   "characters": { "title": "字符", "description": "最弱的排在前面。" },
   "rows": { "title": "行", "description": "问题出在哪一行。" },
   "missed": {

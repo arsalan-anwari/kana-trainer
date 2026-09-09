@@ -14,6 +14,7 @@
   "check": "Prüfen",
   "soundTile": "Ton {slot}",
   "soundHint": "Tippe einen Ton an, um ihn zu hören, dann prüfen.",
+  "soundCompare": "Tippe auf einen Klang, um ihn erneut zu hören.",
   "quit": "Beenden",
   "score": "{count} richtig",
   "correct": "Richtig",

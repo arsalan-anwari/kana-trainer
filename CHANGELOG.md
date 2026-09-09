@@ -5,6 +5,23 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.5 - 2026-09-09
+
+### Added
+- After a "text to audio" question is answered, the sound tiles stay live. 
+
+### Changed
+- The report list drops its row of five icon buttons. Selecting is now a
+  checkbox that carries the count, and delete, export and import moved into one
+  "Run actions" menu where each entry spells out what it acts on. 
+
+### Fixed
+- The back button and the back swipe on Android close the open menu, sheet,
+  picker or dialog instead of closing the app. Nested overlays close one at a
+  time, innermost first.
+- Exporting a `.kt-report` confirms with a plain "exported" message in every
+  language not file name anymore. Some devices don't give the app the file name correctly.
+
 ## 1.8.4 - 2026-09-08
 
 ### Changed
@@ -423,6 +440,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.5]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.5
 [1.8.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.4
 [1.8.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.3
 [1.8.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.2

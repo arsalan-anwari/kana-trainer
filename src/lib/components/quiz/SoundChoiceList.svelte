@@ -26,8 +26,9 @@
           slot={row.slot}
           audio={row.audio}
           state={choiceState(question, row.choice, app.phase, app.picked, app.staged)}
-          disabled={app.phase !== "answering"}
-          onpick={() => app.stageChoice(row.choice)}
+          disabled={app.phase === "done"}
+          onpick={() =>
+            app.phase === "answering" ? app.stageChoice(row.choice) : app.playChoice(row.choice)}
         />
       {/if}
     {/each}
@@ -44,6 +45,6 @@
     {t("quiz.check")}
   </Button>
   <p class="text-center text-xs text-muted-foreground">
-    {t("quiz.soundHint")}
+    {t(app.phase === "answering" ? "quiz.soundHint" : "quiz.soundCompare")}
   </p>
 </div>

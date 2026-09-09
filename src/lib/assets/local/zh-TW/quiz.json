@@ -10,6 +10,7 @@
   "check": "確認",
   "soundTile": "讀音 {slot}",
   "soundHint": "點一下聽讀音，再確認。",
+  "soundCompare": "點按音訊可再聽一次。",
   "quit": "離開",
   "score": "答對 {count} 題",
   "correct": "答對了",

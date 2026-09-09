@@ -14,6 +14,7 @@
   "check": "Nakijken",
   "soundTile": "Geluid {slot}",
   "soundHint": "Tik een geluid aan om het te horen en kijk dan na.",
+  "soundCompare": "Tik op een klank om die opnieuw te horen.",
   "quit": "Stoppen",
   "score": "{count} goed",
   "correct": "Goed",

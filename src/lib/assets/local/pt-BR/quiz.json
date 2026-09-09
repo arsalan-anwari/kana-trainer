@@ -14,6 +14,7 @@
   "check": "Conferir",
   "soundTile": "Som {slot}",
   "soundHint": "Toque num som para ouvi-lo e depois confira.",
+  "soundCompare": "Toque em um som para ouvi-lo de novo.",
   "quit": "Sair",
   "score": "{count} certas",
   "correct": "Certo",
