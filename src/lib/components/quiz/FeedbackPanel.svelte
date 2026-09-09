@@ -9,7 +9,7 @@
 </script>
 
 <div
-  class="anim-pop fade-edge fixed inset-x-0 bottom-0 z-30 pl-[calc(env(safe-area-inset-left,0px)+1rem)] pt-8 pr-[calc(env(safe-area-inset-right,0px)+1rem)] pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]"
+  class="anim-pop fade-edge fixed inset-x-0 bottom-0 z-30 pl-[calc(env(safe-area-inset-left,0px)+1rem)] pt-8 pr-[calc(env(safe-area-inset-right,0px)+1rem)] pb-[calc(var(--nav-bar)+1rem)]"
   style="--tint: color-mix(in srgb, {app.lastCorrect
     ? 'var(--success)'
     : 'var(--danger)'} 26%, transparent)"

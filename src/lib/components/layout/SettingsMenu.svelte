@@ -35,7 +35,7 @@
   </header>
 
   <div
-    class="flex flex-1 flex-col gap-5 overflow-y-auto px-4 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)]"
+    class="flex flex-1 flex-col gap-5 overflow-y-auto px-4 pt-5 pb-[calc(var(--nav-bar)+1.25rem)]"
   >
     <div class="flex flex-col gap-2">
       <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">

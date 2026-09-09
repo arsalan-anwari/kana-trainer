@@ -69,7 +69,7 @@
 
   
   <main
-    class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 pb-[calc(env(safe-area-inset-bottom,0px)+var(--edge-y))] sm:gap-5"
+    class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 pb-[calc(var(--nav-bar)+var(--edge-y))] sm:gap-5"
   >
     {#if app.route === "setup"}
       <SetupScreen />

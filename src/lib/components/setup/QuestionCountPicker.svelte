@@ -3,19 +3,16 @@
     clampCustomCount,
     customCountMax,
     customCountMin,
-    customCountStep,
     customCountValues,
     isCustomCount,
     questionCountRows
   } from "../../core/settings";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Chip, NumberRoller } from "kaizen-ui";
+  import { Chip, NumberField, NumberRoller } from "kaizen-ui";
 
   let custom = $state(isCustomCount(app.settings.questionCount));
   let rolling = $state(false);
-  let field = $state<HTMLInputElement | null>(null);
-  let draft = $state(String(app.settings.questionCount || customCountMin));
 
   const touch = $derived(
     typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
@@ -29,24 +26,15 @@
   function openCustom(): void {
     custom = true;
     const start = clampCustomCount(app.settings.questionCount || customCountMin);
-    draft = String(start);
     if (touch) {
       rolling = true;
       return;
     }
     app.updateSettings({ questionCount: start });
-    queueMicrotask(() => field?.select());
-  }
-
-  function commit(): void {
-    const next = clampCustomCount(Number(draft));
-    draft = String(next);
-    app.updateSettings({ questionCount: next });
   }
 
   function picked(value: number): void {
     rolling = false;
-    draft = String(value);
     app.updateSettings({ questionCount: value });
   }
 </script>
@@ -69,23 +57,15 @@
 
   <div class="grid grid-cols-2 gap-2">
     {#if custom && !touch}
-      <label
-        class="flex h-9 items-center gap-2 rounded-md border-2 border-selected bg-selected-soft px-2 text-xs font-semibold"
-      >
-        <span class="sr-only">{t("setup.questions.count")}</span>
-        <input
-          bind:this={field}
-          bind:value={draft}
-          type="number"
-          inputmode="numeric"
-          min={customCountMin}
-          max={customCountMax}
-          step={customCountStep}
-          onblur={commit}
-          onchange={commit}
-          class="w-full min-w-0 bg-transparent text-center tabular-nums outline-none"
-        />
-      </label>
+      <NumberField
+        value={app.settings.questionCount}
+        min={customCountMin}
+        max={customCountMax}
+        label={t("setup.questions.count")}
+        focusOnMount
+        class="w-full"
+        oncommit={(count) => app.updateSettings({ questionCount: count })}
+      />
     {:else}
       <Chip size="sm" class="w-full" active={custom} onclick={openCustom}>
         {custom ? app.settings.questionCount : t("common.custom")}

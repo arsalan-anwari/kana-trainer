@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.6 - 2026-09-09
+
+### Changed
+- Number fields on desktop and tablet are drawn by the app instead of the
+  operating system. Enter applies the typed value, Escape puts the old one back.
+
+### Fixed
+- Pickers and dropdowns always open below the control that opened them, and
+  fall back to the fullscreen sheet when there is too little room under it,
+  instead of flipping over the control in landscape.
+- The number spinner and the page content reserve room for mobile navigation bars.
+
 ## 1.8.5 - 2026-09-09
 
 ### Added
@@ -440,6 +452,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.6]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.6
 [1.8.5]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.5
 [1.8.4]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.4
 [1.8.3]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.3
