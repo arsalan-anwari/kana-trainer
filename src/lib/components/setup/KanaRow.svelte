@@ -14,7 +14,14 @@
   const taken = $derived(row.kana.filter((kana) => selected.has(kana.id)).length);
   const complete = $derived(taken === row.kana.length);
 
-  const tracks = "repeat(auto-fill, minmax(3.25rem, 1fr))";
+  const track = $derived(
+    viewport.touch &&
+    viewport.short &&
+    row.kana.some((kana) => glyph(kana, script).length > 1)
+      ? "4.5rem"
+      : "3.25rem"
+  );
+  const tracks = $derived(`repeat(auto-fill, minmax(${track}, 1fr))`);
 </script>
 
 {#snippet chips()}

@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fall back to the fullscreen sheet when there is too little room under it,
   instead of flipping over the control in landscape.
 - The number spinner and the page content reserve room for mobile navigation bars.
+- For mobile on landschape input boxes dont use spinner anymore and character boxes are wider to fit the text.
 
 ## 1.8.5 - 2026-09-09
 

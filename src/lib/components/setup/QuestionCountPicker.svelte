@@ -9,14 +9,12 @@
   } from "../../core/settings";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Chip, NumberField, NumberRoller } from "kaizen-ui";
+  import { Chip, NumberField, NumberRoller, viewport } from "kaizen-ui";
 
   let custom = $state(isCustomCount(app.settings.questionCount));
   let rolling = $state(false);
 
-  const touch = $derived(
-    typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
-  );
+  const roller = $derived(viewport.touch && !viewport.short);
 
   function choose(count: number): void {
     custom = false;
@@ -26,7 +24,7 @@
   function openCustom(): void {
     custom = true;
     const start = clampCustomCount(app.settings.questionCount || customCountMin);
-    if (touch) {
+    if (roller) {
       rolling = true;
       return;
     }
@@ -56,7 +54,7 @@
   {/each}
 
   <div class="grid grid-cols-2 gap-2">
-    {#if custom && !touch}
+    {#if custom && !roller}
       <NumberField
         value={app.settings.questionCount}
         min={customCountMin}
