@@ -1,8 +1,11 @@
 <script lang="ts">
   import type { Component } from "svelte";
   import { app, type Route } from "./lib/state.svelte";
-  import AppHeader from "./lib/components/layout/AppHeader.svelte";
-  import { PageBackdrop } from "kaizen-ui";
+  import { tabRoutes, type TabRoute } from "./lib/core/prefs";
+  import AppControls from "./lib/components/layout/AppControls.svelte";
+  import SettingsMenu from "./lib/components/layout/SettingsMenu.svelte";
+  import { t } from "./lib/i18n.svelte";
+  import { AppHeader, PageBackdrop } from "kaizen-ui";
   import SetupScreen from "./lib/components/setup/SetupScreen.svelte";
 
   app.load();
@@ -39,6 +42,7 @@
   }
 
   let headerHeight = $state(0);
+  let menu = $state(false);
 
   function touchend(event: TouchEvent): void {
     if (document.querySelector('dialog[open], [role="dialog"], [role="alertdialog"]') !== null) return;
@@ -63,7 +67,23 @@
     class="scrim sticky top-0 z-20 -ml-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] -mr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pt-[calc(var(--status-bar)+var(--edge-y))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pb-8 pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] sm:pb-10"
   >
     <div class="mx-auto w-full max-w-[80rem]">
-      <AppHeader />
+      <AppHeader
+        sticky={false}
+        glyph="あ"
+        title={t("common.appName")}
+        subtitle={t("common.tagline")}
+        items={app.route === "quiz"
+          ? []
+          : tabRoutes.map((route) => ({ value: route, label: t(`common.nav.${route}`) }))}
+        value={app.route as TabRoute}
+        onpick={(route) => app.go(route)}
+        settingsLabel={t("common.settings")}
+        onsettings={() => (menu = true)}
+      >
+        {#snippet controls()}
+          <AppControls />
+        {/snippet}
+      </AppHeader>
     </div>
   </div>
 
@@ -80,3 +100,7 @@
     {/if}
   </main>
 </div>
+
+{#if menu}
+  <SettingsMenu onclose={() => (menu = false)} />
+{/if}

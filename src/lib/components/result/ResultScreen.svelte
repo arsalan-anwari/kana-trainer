@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tierBlurb, tierEmoji, tierHeadline } from "../../core/score";
   import { heatByRow, scriptsSeen, statsByKana, summarize } from "../../core/report";
   import { app } from "../../state.svelte";
   import { exportReports } from "../../storage";
@@ -6,10 +7,9 @@
   import RowHeatmap from "../charts/RowHeatmap.svelte";
   import ScriptSplit from "../charts/ScriptSplit.svelte";
   import MissedAnswers from "./MissedAnswers.svelte";
-  import ResultSplash from "./ResultSplash.svelte";
   import ScoreHeadline from "./ScoreHeadline.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button, Card, EmptyState, Icon } from "kaizen-ui";
+  import { Button, Card, EmptyState, Icon, ResultSplash } from "kaizen-ui";
 
   const report = $derived(app.lastReport);
   const answers = $derived(report?.answers ?? []);
@@ -29,7 +29,17 @@
 </script>
 
 {#if app.splash !== null}
-  <ResultSplash tier={app.splash} {summary} />
+  <ResultSplash
+    grade={app.splash}
+    headline={tierHeadline(app.splash)}
+    blurb={tierBlurb(app.splash)}
+    emoji={tierEmoji(app.splash)}
+    hint={t("result.skip")}
+    ondismiss={() => app.dismissSplash()}
+  >
+    {summary.correct} / {summary.total}
+    <span class="text-muted-foreground">· {Math.round(summary.accuracy * 100)}%</span>
+  </ResultSplash>
 {/if}
 
 {#if report !== null}
