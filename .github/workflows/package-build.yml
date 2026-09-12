@@ -246,8 +246,9 @@ jobs:
           [ -d "$res" ] || { echo "no generated android project at $res" >&2; exit 1; }
           cp -R src-tauri/icons/android/. "$res/"
           # ship the native debug symbols to Play: AGP strips the packaged .so and
-          # stores the symbol table under BUNDLE-METADATA, so no manual upload
-          printf 'android {\n    ndkVersion = "%s"\n    buildTypes.getByName("release").ndk.debugSymbolLevel = "SYMBOL_TABLE"\n}\n' \
+          # stores the symbol table under BUNDLE-METADATA, so no manual upload.
+          # the leading newline matters, the template has no trailing one
+          printf '\nandroid {\n    ndkVersion = "%s"\n    buildTypes.getByName("release").ndk.debugSymbolLevel = "SYMBOL_TABLE"\n}\n' \
             "$NDK_VERSION" >> src-tauri/gen/android/app/build.gradle.kts
           # the wrapper download from services.gradle.org resets often enough to
           # break the build, so fetch the distribution first and retry it alone
