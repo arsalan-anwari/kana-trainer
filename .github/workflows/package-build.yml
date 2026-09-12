@@ -231,28 +231,22 @@ jobs:
           echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/$ndk" >> "$GITHUB_ENV"
           echo "NDK_VERSION=$ndk" >> "$GITHUB_ENV"
 
-      # matrix.kind is apk or aab, which is also the flag tauri takes
       - name: Build the ${{ matrix.kind }}
         if: matrix.android
         # the release profile strips symbols, which leaves Play with nothing to
-        # symbolicate native crashes and ANRs with. Keep them in the .so and let
-        # the gradle setting below move them into the bundle instead.
+        # symbolicate native crashes and ANRs with.
         env:
           CARGO_PROFILE_RELEASE_STRIP: none
         run: |
           npx tauri android init --skip-targets-install
-          # replace the generated placeholder launcher icons with the ones in the repo
+
           res=src-tauri/gen/android/app/src/main/res
           [ -d "$res" ] || { echo "no generated android project at $res" >&2; exit 1; }
           cp -R src-tauri/icons/android/. "$res/"
-          # ship the native debug symbols to Play: AGP strips the packaged .so and
-          # stores the symbol table under BUNDLE-METADATA, so no manual upload.
-          # the leading newline matters, the template has no trailing one
+
           printf '\nandroid {\n    ndkVersion = "%s"\n    buildTypes.getByName("release").ndk.debugSymbolLevel = "SYMBOL_TABLE"\n}\n' \
             "$NDK_VERSION" >> src-tauri/gen/android/app/build.gradle.kts
-          # the wrapper download from services.gradle.org resets often enough to
-          # break the build, so fetch the distribution first and retry it alone
-          # rather than the whole cargo+gradle assemble
+
           for i in 1 2 3 4 5; do
             src-tauri/gen/android/gradlew --project-dir src-tauri/gen/android --version && break
             echo "gradle wrapper download failed (attempt $i), retrying"
@@ -296,7 +290,7 @@ jobs:
           fi
           export STOREPASS KEYPASS
 
-          unsigned="$(find src-tauri/gen/android -name '*.apk' -path '*release*' | head -1)"
+          unsigned="$(find src-tauri/gen/android/app/build/outputs/apk -name '*.apk' -path '*elease*' | head -1)"
           [ -n "$unsigned" ] || { echo "tauri produced no release apk" >&2; exit 1; }
 
           tools="$ANDROID_SDK_ROOT/build-tools/36.0.0"
@@ -332,7 +326,7 @@ jobs:
           KEYPASS="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
           export STOREPASS KEYPASS
 
-          unsigned="$(find src-tauri/gen/android -name '*.aab' -path '*release*' | head -1)"
+          unsigned="$(find src-tauri/gen/android/app/build/outputs/bundle -name '*.aab' | head -1)"
           [ -n "$unsigned" ] || { echo "tauri produced no release aab" >&2; exit 1; }
 
           mkdir -p dist/packages
@@ -341,10 +335,15 @@ jobs:
             -keystore keystore.jks -storepass:env STOREPASS -keypass:env KEYPASS \
             -signedjar "$out" "$unsigned" "$alias"
 
-          # a silently stripped build would upload fine and only show up as
-          # unreadable native crash reports weeks later
-          unzip -l "$out" | grep -q 'BUNDLE-METADATA/com.android.tools.build.debugsymbols' \
-            || { echo "the aab carries no native debug symbols" >&2; exit 1; }
+          unzip -l "$out" | grep -q 'BUNDLE-METADATA/com.android.tools.build.debugsymbols' || {
+            echo "the aab carries no native debug symbols" >&2
+            echo "signed $unsigned, bundles found:" >&2
+            find src-tauri/gen/android/app/build/outputs -name '*.aab' >&2
+            unzip -l "$out" | grep -i 'metadata\|\.so' >&2
+            "$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-readelf" -S \
+              src-tauri/gen/android/app/src/main/jniLibs/arm64-v8a/*.so | grep -i symtab >&2
+            exit 1
+          }
 
           jarsigner -verify -verbose:summary -certs "$out" > verify.txt
           head -20 verify.txt
