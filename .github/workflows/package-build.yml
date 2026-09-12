@@ -226,18 +226,29 @@ jobs:
       - name: Install the android ndk
         if: matrix.android
         run: |
-          sdkmanager --install "ndk;28.2.13676358" "platforms;android-36" "build-tools;36.0.0"
-          echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/28.2.13676358" >> "$GITHUB_ENV"
+          ndk=28.2.13676358
+          sdkmanager --install "ndk;$ndk" "platforms;android-36" "build-tools;36.0.0"
+          echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/$ndk" >> "$GITHUB_ENV"
+          echo "NDK_VERSION=$ndk" >> "$GITHUB_ENV"
 
       # matrix.kind is apk or aab, which is also the flag tauri takes
       - name: Build the ${{ matrix.kind }}
         if: matrix.android
+        # the release profile strips symbols, which leaves Play with nothing to
+        # symbolicate native crashes and ANRs with. Keep them in the .so and let
+        # the gradle setting below move them into the bundle instead.
+        env:
+          CARGO_PROFILE_RELEASE_STRIP: none
         run: |
           npx tauri android init --skip-targets-install
           # replace the generated placeholder launcher icons with the ones in the repo
           res=src-tauri/gen/android/app/src/main/res
           [ -d "$res" ] || { echo "no generated android project at $res" >&2; exit 1; }
           cp -R src-tauri/icons/android/. "$res/"
+          # ship the native debug symbols to Play: AGP strips the packaged .so and
+          # stores the symbol table under BUNDLE-METADATA, so no manual upload
+          printf 'android {\n    ndkVersion = "%s"\n    buildTypes.getByName("release").ndk.debugSymbolLevel = "SYMBOL_TABLE"\n}\n' \
+            "$NDK_VERSION" >> src-tauri/gen/android/app/build.gradle.kts
           # the wrapper download from services.gradle.org resets often enough to
           # break the build, so fetch the distribution first and retry it alone
           # rather than the whole cargo+gradle assemble
@@ -328,6 +339,11 @@ jobs:
           jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore keystore.jks -storepass:env STOREPASS -keypass:env KEYPASS \
             -signedjar "$out" "$unsigned" "$alias"
+
+          # a silently stripped build would upload fine and only show up as
+          # unreadable native crash reports weeks later
+          unzip -l "$out" | grep -q 'BUNDLE-METADATA/com.android.tools.build.debugsymbols' \
+            || { echo "the aab carries no native debug symbols" >&2; exit 1; }
 
           jarsigner -verify -verbose:summary -certs "$out" > verify.txt
           head -20 verify.txt
