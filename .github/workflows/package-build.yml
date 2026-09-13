@@ -229,23 +229,19 @@ jobs:
           ndk=28.2.13676358
           sdkmanager --install "ndk;$ndk" "platforms;android-36" "build-tools;36.0.0"
           echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/$ndk" >> "$GITHUB_ENV"
-          echo "NDK_VERSION=$ndk" >> "$GITHUB_ENV"
 
       - name: Build the ${{ matrix.kind }}
         if: matrix.android
-        # the release profile strips symbols, which leaves Play with nothing to
-        # symbolicate native crashes and ANRs with.
+        # Play symbolicates native crashes and ANRs from the debug symbols the
+        # signing step splits out of the .so below. Nothing reads them in an apk.
         env:
-          CARGO_PROFILE_RELEASE_STRIP: none
+          CARGO_PROFILE_RELEASE_STRIP: ${{ matrix.kind == 'aab' && 'none' || 'symbols' }}
         run: |
           npx tauri android init --skip-targets-install
 
           res=src-tauri/gen/android/app/src/main/res
           [ -d "$res" ] || { echo "no generated android project at $res" >&2; exit 1; }
           cp -R src-tauri/icons/android/. "$res/"
-
-          printf '\nandroid {\n    ndkVersion = "%s"\n    buildTypes.getByName("release").ndk.debugSymbolLevel = "SYMBOL_TABLE"\n}\n' \
-            "$NDK_VERSION" >> src-tauri/gen/android/app/build.gradle.kts
 
           for i in 1 2 3 4 5; do
             src-tauri/gen/android/gradlew --project-dir src-tauri/gen/android --version && break
@@ -328,6 +324,20 @@ jobs:
 
           unsigned="$(find src-tauri/gen/android/app/build/outputs/bundle -name '*.aab' | head -1)"
           [ -n "$unsigned" ] || { echo "tauri produced no release aab" >&2; exit 1; }
+
+          objcopy="$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy"
+          symbols="BUNDLE-METADATA/com.android.tools.build.debugsymbols"
+          work="$(mktemp -d)"
+          for so in src-tauri/gen/android/app/src/main/jniLibs/*/*.so; do
+            abi="$(basename "$(dirname "$so")")"
+            name="$(basename "$so")"
+            mkdir -p "$work/$symbols/$abi" "$work/base/lib/$abi"
+            cp -L "$so" "$work/$symbols/$abi/$name.sym"
+            "$objcopy" --strip-all "$so" "$work/base/lib/$abi/$name"
+          done
+          unsigned="$(realpath "$unsigned")"
+          (cd "$work" && zip -qrD "$unsigned" "$symbols" base)  # -D: aabs carry no directory entries
+          rm -rf "$work"
 
           mkdir -p dist/packages
           out="dist/packages/kana-trainer-$VERSION.aab"
