@@ -38,7 +38,6 @@ import {
   clampZoom,
   defaultPrefs,
   mergePrefs,
-  nextTab,
   zoomStep,
   type Prefs
 } from "./core/prefs";
@@ -162,11 +161,6 @@ class AppState {
 
   zoomBy(steps: number): void {
     this.setPref("zoom", clampZoom(this.prefs.zoom + steps * zoomStep));
-  }
-
-  shiftTab(step: number): void {
-    const next = nextTab(this.route, step);
-    if (next !== null) this.go(next);
   }
 
   updateSettings(patch: Partial<RunSettings>): void {

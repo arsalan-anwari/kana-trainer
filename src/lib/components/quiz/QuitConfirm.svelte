@@ -1,59 +1,22 @@
 <script lang="ts">
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button, lockScroll } from "kaizen-ui";
-
-  let keep = $state<HTMLDivElement | null>(null);
+  import { ConfirmDialog } from "kaizen-ui";
 
   const answered = $derived(app.answers.length);
   const left = $derived(Math.max(0, app.questions.length - answered));
-
-  $effect(() => {
-    keep?.querySelector("button")?.focus();
-  });
-
-  function keydown(event: KeyboardEvent): void {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      app.cancelQuit();
-    }
-  }
 </script>
 
-<svelte:window onkeydown={keydown} />
-
-<div class="fixed inset-0 z-50 flex items-center justify-center p-4" use:lockScroll={() => app.cancelQuit()}>
-  <button
-    type="button"
-    class="absolute inset-0 cursor-default bg-foreground/40"
-    aria-label={t("quiz.stop.cancel")}
-    onclick={() => app.cancelQuit()}
-  ></button>
-
-  <div
-    class="anim-pop relative flex w-full max-w-md flex-col gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6"
-    role="alertdialog"
-    aria-modal="true"
-    aria-labelledby="quit-title"
-    aria-describedby="quit-body"
-  >
-    <div class="flex flex-col gap-2">
-      <h2 id="quit-title" class="text-h3 font-bold leading-tight">{t("quiz.stop.title")}</h2>
-      <p id="quit-body" class="text-sm leading-snug text-muted-foreground">
-        {t(answered === 0 ? "quiz.stop.nothing" : "quiz.stop.discard", { count: answered })}
-      </p>
-      {#if left > 0 && answered > 0}
-        <p class="text-sm leading-snug text-muted-foreground">
-          {t("quiz.stop.left", { count: left })}
-        </p>
-      {/if}
-    </div>
-
-    <div class="flex flex-col-reverse gap-2 sm:flex-row">
-      <Button variant="danger" full onclick={() => app.quit()}>{t("quiz.stop.confirm")}</Button>
-      <div bind:this={keep} class="w-full">
-        <Button variant="brand" full onclick={() => app.cancelQuit()}>{t("quiz.stop.cancel")}</Button>
-      </div>
-    </div>
-  </div>
-</div>
+<ConfirmDialog
+  title={t("quiz.stop.title")}
+  confirmLabel={t("quiz.stop.confirm")}
+  cancelLabel={t("quiz.stop.cancel")}
+  closeLabel={t("quiz.stop.cancel")}
+  onconfirm={() => app.quit()}
+  oncancel={() => app.cancelQuit()}
+>
+  <p>{t(answered === 0 ? "quiz.stop.nothing" : "quiz.stop.discard", { count: answered })}</p>
+  {#if left > 0 && answered > 0}
+    <p>{t("quiz.stop.left", { count: left })}</p>
+  {/if}
+</ConfirmDialog>

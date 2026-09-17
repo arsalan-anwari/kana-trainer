@@ -3,6 +3,7 @@
   import { selectionFor } from "../../core/settings";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
+  import { roving } from "kaizen-ui";
 
   const tabs: Script[] = ["hiragana", "katakana"];
 
@@ -14,6 +15,7 @@
     class="flex items-center gap-1 rounded-lg border border-border bg-secondary p-1"
     role="tablist"
     aria-label={t("setup.characters.editAlphabet")}
+    use:roving={{ selector: "[role='tab']", wrap: true }}
   >
     {#each shown as tab (tab)}
       {@const count = selectionFor(app.settings, tab).length}

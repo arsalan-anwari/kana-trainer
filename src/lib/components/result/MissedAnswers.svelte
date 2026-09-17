@@ -2,7 +2,7 @@
   import { glyph, kanaById } from "../../core/kana";
   import type { Answer } from "../../core/quiz";
   import { t } from "../../i18n.svelte";
-  import { Badge, Card } from "kaizen-ui";
+  import { Badge, Card, Glyph } from "kaizen-ui";
 
   let { misses }: { misses: Answer[] } = $props();
 </script>
@@ -16,7 +16,7 @@
         {@const kana = kanaById(miss.kanaId)}
         {#if kana}
           <div class="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2">
-            <span class="kana text-h2">{glyph(kana, miss.script)}</span>
+            <Glyph text={glyph(kana, miss.script)} class="text-h2" />
             <div class="flex flex-col">
               <span class="text-sm font-semibold">{kana.romaji}</span>
               <span class="text-xs text-muted-foreground">

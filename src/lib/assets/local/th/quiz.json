@@ -1,4 +1,7 @@
 {
+  "runProgress": "ความคืบหน้าของรอบ",
+  "timeLeft": "เวลาที่เหลือ",
+  "announce": "คำถามที่ {index} จาก {total} {prompt}",
   "prompt": {
     "listen": "ฟังแล้วเลือก",
     "pickSound": "เลือกเสียงที่ตรงกัน",

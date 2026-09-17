@@ -5,6 +5,7 @@
 </script>
 
 <div
+  data-section
   class="sheet ruled flex flex-col gap-3 rounded-2xl border-2 border-border bg-sidebar p-4 sm:p-5"
 >
   <div class="grid grid-cols-2 gap-2">

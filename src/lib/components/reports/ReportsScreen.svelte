@@ -1,7 +1,11 @@
 <script lang="ts">
   import {
     anyQuery,
+    describeCell,
+    describeHeatRow,
+    describeStat,
     heatByRow,
+    masteryLabels,
     queryLabels,
     queryReports,
     scriptsSeen,
@@ -11,13 +15,21 @@
     type ReportQuery
   } from "../../core/report";
   import { app } from "../../state.svelte";
-  import AccuracyGrid from "../charts/AccuracyGrid.svelte";
-  import RowHeatmap from "../charts/RowHeatmap.svelte";
   import ScriptSplit from "../charts/ScriptSplit.svelte";
   import MistakeBreakdown from "./MistakeBreakdown.svelte";
   import ReportList from "./ReportList.svelte";
   import { t } from "../../i18n.svelte";
-  import { Badge, Button, Card, EmptyState, Icon, Stat } from "kaizen-ui";
+  import {
+    AccuracyGrid,
+    Announcer,
+    Badge,
+    Button,
+    Card,
+    EmptyState,
+    Icon,
+    RowHeatmap,
+    Stat
+  } from "kaizen-ui";
 
   let picked = $state<string[]>([]);
   let query = $state<ReportQuery>({ ...anyQuery });
@@ -40,7 +52,7 @@
   <ReportList reports={shown} bind:picked bind:query />
 
   <div class="flex flex-col gap-5">
-    <div class="sheet ruled flex flex-col gap-4 rounded-2xl border-2 border-border bg-sidebar p-4 sm:p-5">
+    <div data-section class="sheet ruled flex flex-col gap-4 rounded-2xl border-2 border-border bg-sidebar p-4 sm:p-5">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex min-w-0 flex-col gap-1">
           <span class="text-h2 font-bold leading-tight">
@@ -80,6 +92,7 @@
       </div>
     </div>
 
+    <Announcer message={app.message} />
     {#if app.message !== ""}
       <p class="text-sm font-semibold text-success">{app.message}</p>
     {/if}
@@ -99,6 +112,9 @@
               script
             )}
             limit={16}
+            labels={masteryLabels()}
+            describe={describeStat}
+            empty={t("reports.noData")}
           />
         </div>
       {:else}
@@ -115,7 +131,13 @@
           </p>
         {/if}
         <div class:mb-4={seen.length > 1}>
-          <RowHeatmap heat={heatByRow(answers, script)} />
+          <RowHeatmap
+            rows={heatByRow(answers, script)}
+            labels={masteryLabels()}
+            describeCell={describeCell}
+            describeRow={describeHeatRow}
+            empty={t("reports.rows.empty")}
+          />
         </div>
       {:else}
         <EmptyState icon="sprout" title={t("reports.rows.empty")} />

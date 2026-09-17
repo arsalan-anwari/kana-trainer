@@ -1,4 +1,7 @@
 {
+  "runProgress": "진행 상황",
+  "timeLeft": "남은 시간",
+  "announce": "{total}문제 중 {index}번째. {prompt}",
   "prompt": {
     "listen": "듣고 고르세요",
     "pickSound": "맞는 소리를 고르세요",

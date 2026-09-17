@@ -1,4 +1,7 @@
 {
+  "runProgress": "Kemajuan sesi",
+  "timeLeft": "Sisa waktu",
+  "announce": "Pertanyaan {index} dari {total}. {prompt}",
   "prompt": {
     "listen": "Dengar lalu pilih",
     "pickSound": "Pilih bunyinya",

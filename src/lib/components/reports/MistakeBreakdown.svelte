@@ -3,7 +3,7 @@
   import { missesByGroup } from "../../core/report";
   import type { Answer } from "../../core/quiz";
   import { t } from "../../i18n.svelte";
-  import { Badge, Card, Icon } from "kaizen-ui";
+  import { Badge, Card, Glyph, Icon } from "kaizen-ui";
 
   let { answers }: { answers: Answer[] } = $props();
 
@@ -40,11 +40,18 @@
                   </span>
                   <div class="flex flex-wrap gap-1.5">
                     {#each entry.misses as miss (miss.key)}
+                      {@const tip = t("reports.tip.missed", {
+                        romaji: miss.romaji,
+                        misses: miss.misses,
+                        total: miss.total
+                      })}
                       <span
+                        role="img"
+                        aria-label={tip}
+                        title={tip}
                         class="inline-flex items-center gap-1 rounded-md border border-border bg-surface px-1.5 py-1"
-                        title={t("reports.tip.missed", { romaji: miss.romaji, misses: miss.misses, total: miss.total })}
                       >
-                        <span class="kana text-base leading-none">{miss.glyph}</span>
+                        <Glyph text={miss.glyph} class="text-base leading-none" />
                         <span class="text-[0.625rem] leading-none text-muted-foreground">
                           {miss.romaji}
                         </span>

@@ -4,6 +4,7 @@
   import { app } from "../../state.svelte";
   import ChoiceTile from "./ChoiceTile.svelte";
   import { choiceState } from "./choiceState";
+  import { roving } from "kaizen-ui";
 
   let { question }: { question: Question } = $props();
 
@@ -16,7 +17,7 @@
   }
 </script>
 
-<div class="grid w-full max-w-[min(17rem,33dvh)] grid-cols-2 gap-2.5 sm:max-w-md sm:gap-3">
+<div use:roving class="grid w-full max-w-[min(17rem,33dvh)] grid-cols-2 gap-2.5 sm:max-w-md sm:gap-3">
   {#each question.choices as choice, index (choice.kanaId)}
     <ChoiceTile
       slot={index + 1}

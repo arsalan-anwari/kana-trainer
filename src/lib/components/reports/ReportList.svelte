@@ -143,7 +143,7 @@
   ]);
 </script>
 
-<div class="flex flex-col gap-3">
+<div data-section class="flex flex-col gap-3">
   
   <div class="flex flex-wrap items-center gap-1.5">
     {#each reportFilters as option (option)}
@@ -318,7 +318,7 @@
 
   
   <div class="sheet ruled rounded-2xl border-2 border-border bg-surface p-2 sm:p-3">
-    <div class="flex max-h-100 flex-col gap-2 overflow-y-auto p-1 lg:max-h-132">
+    <div class="flex flex-col gap-2 overflow-visible p-1 lg:max-h-132 lg:overflow-y-auto">
       {#each reports as report (report.id)}
         <ReportListItem
           {report}

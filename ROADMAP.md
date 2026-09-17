@@ -8,10 +8,9 @@ For shipped changes see the [CHANGELOG](CHANGELOG.md).
 
 | Mark | Meaning |
 |------|---------|
-| [DONE] | Done, released |
-| [WIP] | In progress |
-| [TODO] | Planned, not started |
-| [IDEA] | Idea, still being scoped |
+| [✅] | Done, released |
+| [⚙️] | In progress |
+| [📋] | Planned, not started |
 
 ## How versions map to milestones
 
@@ -41,7 +40,7 @@ For shipped changes see the [CHANGELOG](CHANGELOG.md).
 
 ## Milestone: Foundation (v1.x)
 
-### Core app [DONE]
+### Core app [✅]
 
 - Hiragana, katakana or both, in either direction, single characters up to all
   147 including dakuon, handakuon, yoon and katakana tokushon
@@ -53,33 +52,33 @@ For shipped changes see the [CHANGELOG](CHANGELOG.md).
 - Score reports saved on disk, exported and imported as `.kt-report` files
 - Packaged for Linux, Windows, macOS and Android
 
-### Responsive and accessible layout [WIP]
+### Responsive and accessible layout [✅]
 
-- [DONE] Header, insets and prompt frame hold from extra-small phones to wide
+- [✅] Header, insets and prompt frame hold from extra-small phones to wide
   desktops
-- [DONE] Character grids scale their column count by container size and zoom level
+- [✅] Character grids scale their column count by container size and zoom level
   so text never gets clipped
-- [DONE] Multi-character rows (yoon, tokushon) scale against their container
-- [DONE] Continue tightening layout against real devices reported by testers
-- [TODO] Keyboard-only navigation across every screen
-- [TODO] Screen reader and accessibility support for every screen
+- [✅] Multi-character rows (yoon, tokushon) scale against their container
+- [✅] Continue tightening layout against real devices reported by testers
+- [✅] Keyboard-only navigation across every screen
+- [✅] Screen reader and accessibility support for every screen
 
-### External testing [DONE]
+### External testing [✅]
 
-- [DONE] Collect visual and layout bugs from external testers across device classes
-- [DONE] Document a lightweight feedback and triage flow for testers
-- [DONE] Add regression tests (unit + Playwright) for each confirmed tester bug
+- [✅] Collect visual and layout bugs from external testers across device classes
+- [✅] Document a lightweight feedback and triage flow for testers
+- [✅] Add regression tests (unit + Playwright) for each confirmed tester bug
 
-### Decouple the UI as a library [DONE]
+### Decouple the UI as a library [✅]
 
 Goal: extract the Svelte components, theme and layout primitives into a
 standalone package so sibling apps can share them.
 
-- [DONE] Identify components that are app-agnostic vs. kana-specific
-- [DONE] Move shared components, tokens and the cream-paper / black-ink theme into a
+- [✅] Identify components that are app-agnostic vs. kana-specific
+- [✅] Move shared components, tokens and the cream-paper / black-ink theme into a
   separate package
-- [DONE] Define a stable public API and document it
-- [DONE] Consume the library back in Kana Trainer with no visual change
+- [✅] Define a stable public API and document it
+- [✅] Consume the library back in Kana Trainer with no visual change
 
 ---
 
@@ -88,28 +87,28 @@ standalone package so sibling apps can share them.
 The shift in v2 is from a right/wrong quiz to a genuine tutor. Three problems,
 each profiled for energy and latency with [zinfer](#related-projects).
 
-### 1. Energy-efficient local models [TODO]
+### 1. Energy-efficient local models [📋]
 
 Current models for Japanese handwriting and speech are built for desktop-class
 hardware and drain a phone battery after moderate use. And the mobile-first
 models ae to simple to be useful, they are binary classifiers without intent. 
 
-- [TODO] Benchmark candidate architectures (not only dense LLMs) for accuracy vs.
+- [📋] Benchmark candidate architectures (not only dense LLMs) for accuracy vs.
   energy per inference using zinfer
-- [TODO] Target a per-character energy budget that supports a long practice session
+- [📋] Target a per-character energy budget that supports a long practice session
   on battery
-- [TODO] Ship models that run fully on-device across the supported platforms
+- [📋] Ship models that run fully on-device across the supported platforms
 
-### 2. Real-time feedback latency [TODO]
+### 2. Real-time feedback latency [📋]
 
 Multi-second inference is fine for one character and painful for a thousand.
 
-- [TODO] Sub-second feedback per character
-- [TODO] Streaming / incremental evaluation while the user is still drawing or
+- [📋] Sub-second feedback per character
+- [📋] Streaming / incremental evaluation while the user is still drawing or
   speaking
-- [TODO] Degrade gracefully on weaker hardware without blocking the drill
+- [📋] Degrade gracefully on weaker hardware without blocking the drill
 
-### 3. Delta-based, corrective feedback [TODO]
+### 3. Delta-based, corrective feedback [📋]
 
 Existing tools are too deterministic: fixed stroke order, pixel overlap, or
 discrete sound matching, and they ignore how much handwriting and speech vary
@@ -118,24 +117,24 @@ how far off and in which direction, and coach in real time.
 
 **Handwriting**
 
-- [TODO] Evaluate stroke direction, angle and path over time rather than pixel
+- [📋] Evaluate stroke direction, angle and path over time rather than pixel
   boundaries or a fixed stroke order
-- [TODO] Judge whether the intent is correct and the result is readable, not whether
+- [📋] Judge whether the intent is correct and the result is readable, not whether
   it matches one template
-- [TODO] Show, in real time, where a stroke diverged and how to adjust it
+- [📋] Show, in real time, where a stroke diverged and how to adjust it
 
 **Speech**
 
-- [TODO] Live feedback on pitch, tone and timing at each moment of the utterance
-- [TODO] Mouth-movement guidance toward the correct articulation
-- [TODO] Tolerate accent and speaker variation across ethnicities
+- [📋] Live feedback on pitch, tone and timing at each moment of the utterance
+- [📋] Mouth-movement guidance toward the correct articulation
+- [📋] Tolerate accent and speaker variation across ethnicities
 
-### Tutor loop [TODO]
+### Tutor loop [📋]
 
-- [TODO] Replace the pass/fail quiz result with a guided "try again" loop that
+- [📋] Replace the pass/fail quiz result with a guided "try again" loop that
   repeats a character until the learner produces a readable / intelligible
   version
-- [TODO] Track improvement over time per character and per learner
+- [📋] Track improvement over time per character and per learner
 
 ---
 

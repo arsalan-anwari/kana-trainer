@@ -18,6 +18,24 @@ import {
 } from "./settings";
 import { t } from "../i18n.svelte";
 import { rowLabel } from "../labels";
+import {
+  masteryLevels,
+  masteryOf,
+  strength,
+  type HeatCell,
+  type HeatRow as BaseHeatRow,
+  type Mastery,
+  type StatRow
+} from "kaizen-ui";
+
+export {
+  masteryLevels,
+  masteryOf,
+  strength,
+  type HeatCell,
+  type Mastery,
+  type StatRow
+};
 
 export type Report = {
   id: string;
@@ -36,41 +54,38 @@ export type Summary = {
   averageMs: number;
 };
 
-export type StatRow = {
-  key: string;
-  label: string;
-  sub: string;
-  total: number;
-  correct: number;
-  accuracy: number;
-  strength: number;
-  mastery: Mastery;
-};
-
-export function strength(correct: number, total: number): number {
-  if (total === 0) return 0;
-  const z = 1;
-  const share = correct / total;
-  const centre = share + (z * z) / (2 * total);
-  const spread = z * Math.sqrt((share * (1 - share) + (z * z) / (4 * total)) / total);
-  return Math.max(0, (centre - spread) / (1 + (z * z) / total));
-}
-
-export const masteryLevels = ["new", "shaky", "learning", "steady", "mastered"] as const;
-
-export type Mastery = (typeof masteryLevels)[number];
-
 export function masteryLabel(level: Mastery): string {
   return t(`reports.mastery.${level}`);
 }
 
-export function masteryOf(correct: number, total: number): Mastery {
-  if (total === 0) return "new";
-  const score = strength(correct, total);
-  if (score < 0.35) return "shaky";
-  if (score < 0.6) return "learning";
-  if (score < 0.85) return "steady";
-  return "mastered";
+export function masteryLabels(): Record<Mastery, string> {
+  return Object.fromEntries(
+    masteryLevels.map((level) => [level, masteryLabel(level)])
+  ) as Record<Mastery, string>;
+}
+
+function strengthTip(romaji: string, correct: number, total: number, share: number): string {
+  return t("reports.tip.strength", {
+    romaji,
+    correct,
+    total,
+    percent: Math.round(share * 100)
+  });
+}
+
+export function describeStat(row: StatRow): string {
+  return `${strengthTip(row.sub, row.correct, row.total, row.strength)}, ${masteryLabel(row.mastery)}`;
+}
+
+export function describeCell(cell: HeatCell): string {
+  return cell.total === 0
+    ? t("reports.tip.never", { romaji: cell.romaji })
+    : `${strengthTip(cell.romaji, cell.correct, cell.total, cell.strength)}, ${masteryLabel(cell.mastery)}`;
+}
+
+export function describeHeatRow(row: BaseHeatRow): string {
+  const tally = t("reports.tip.rowRight", { correct: row.correct, total: row.total });
+  return `${row.label}, ${tally}, ${masteryLabel(row.mastery)}`;
 }
 
 export function summarize(answers: Answer[]): Summary {
@@ -391,28 +406,7 @@ export function scriptsSeen(answers: Answer[]): Script[] {
   return order.filter((script) => answers.some((answer) => answer.script === script));
 }
 
-export type HeatCell = {
-  key: string;
-  glyph: string;
-  romaji: string;
-  total: number;
-  correct: number;
-  accuracy: number;
-  strength: number;
-  mastery: Mastery;
-};
-
-export type HeatRow = {
-  id: string;
-  label: string;
-  group: Group;
-  total: number;
-  correct: number;
-  accuracy: number;
-  strength: number;
-  mastery: Mastery;
-  cells: HeatCell[];
-};
+export type HeatRow = BaseHeatRow & { group: Group };
 
 export function heatByRow(answers: Answer[], script: Script): HeatRow[] {
   const counts = tally(

@@ -63,15 +63,15 @@ test("escape asks the same question", async ({ page }) => {
 
 test("a run hides the tabs and gets them back on the way out", async ({ page }) => {
     await page.goto("/");
-  await expect(page.getByRole("button", { name: "Chart", exact: true })).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Chart", exact: true })).toBeVisible();
 
   await startAndAnswer(page, 2);
-  await expect(page.getByRole("button", { name: "Chart", exact: true })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Reports", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("tab", { name: "Chart", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("tab", { name: "Reports", exact: true })).toHaveCount(0);
 
   await page.getByRole("button", { name: "Quit" }).click();
   await page.getByRole("button", { name: "Stop and discard" }).click();
-  await expect(page.getByRole("button", { name: "Chart", exact: true })).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Chart", exact: true })).toBeVisible();
 });
 
 test("a run that is finished still scores and splashes", async ({ page }) => {

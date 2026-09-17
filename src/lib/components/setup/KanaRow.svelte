@@ -3,7 +3,7 @@
   import { rowLabel } from "../../labels";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Chip, RowBar, viewport } from "kaizen-ui";
+  import { Chip, Glyph, RowBar, roving, viewport } from "kaizen-ui";
 
   let {
     row,
@@ -14,14 +14,8 @@
   const taken = $derived(row.kana.filter((kana) => selected.has(kana.id)).length);
   const complete = $derived(taken === row.kana.length);
 
-  const track = $derived(
-    viewport.touch &&
-    viewport.short &&
-    row.kana.some((kana) => glyph(kana, script).length > 1)
-      ? "4.5rem"
-      : "3.25rem"
-  );
-  const tracks = $derived(`repeat(auto-fill, minmax(${track}, 1fr))`);
+  // Matches the Chip md min width so digraph chips never outgrow their cell.
+  const tracks = "repeat(auto-fill, minmax(3.75rem, 1fr))";
 </script>
 
 {#snippet chips()}
@@ -33,7 +27,7 @@
       onclick={() => app.toggleKana(kana.id)}
     >
       <span class="flex flex-col items-center leading-none">
-        <span class="kana text-base">{glyph(kana, script)}</span>
+        <Glyph text={glyph(kana, script)} class="text-base" />
         <span class="text-[0.625rem] font-medium opacity-70">{kana.romaji}</span>
       </span>
     </Chip>
@@ -51,7 +45,7 @@
     >
       {rowLabel(row)}
     </button>
-    <div class="grid min-w-0 flex-1 gap-1.5 sm:gap-2" style="grid-template-columns: {tracks}">
+    <div use:roving class="grid min-w-0 flex-1 gap-1.5 sm:gap-2" style="grid-template-columns: {tracks}">
       {@render chips()}
     </div>
   </div>
@@ -64,7 +58,7 @@
     collapseLabel={t("common.hide", { label: rowLabel(row) })}
     onpress={() => app.toggleRow(row.id)}
   >
-    <div class="grid gap-1.5" style="grid-template-columns: {tracks}">
+    <div use:roving class="grid gap-1.5" style="grid-template-columns: {tracks}">
       {@render chips()}
     </div>
   </RowBar>

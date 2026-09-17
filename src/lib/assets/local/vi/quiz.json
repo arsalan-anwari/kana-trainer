@@ -1,4 +1,7 @@
 {
+  "runProgress": "Tiến độ lượt chơi",
+  "timeLeft": "Thời gian còn lại",
+  "announce": "Câu hỏi {index} trên {total}. {prompt}",
   "prompt": {
     "listen": "Nghe rồi chọn",
     "pickSound": "Chọn âm đúng",

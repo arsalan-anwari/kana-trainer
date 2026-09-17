@@ -5,6 +5,33 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.8 - 2026-09-17
+
+### Added
+- Keyboard-only navigation across every screen, and the focused element and its section are
+  outlined in blue. Desktop only.
+- Screen reader support across every screen. 
+- A shortcut sheet listing every key, opened with `?` or from the settings menu.
+- Accessibility regression tests: every screen, plus the dark and high-contrast
+  themes, is checked against WCAG 2.2 AA on each run of the end-to-end suite.
+
+### Changed
+- The seal red, the danger red, the success green and the gold are all a shade
+  darker on paper, the danger red is a shade lighter in the dark theme, and the
+  mastery captions under the character tiles are drawn in the normal text colour
+  instead of the heat colour, so small text meets the contrast minimum on every
+  theme.
+- The character grids, the heat charts and the mastery scoring moved into
+  `kaizen-ui`.
+
+### Fixed
+- On a phone the report page could get stuck below the run selector and refuse
+  to scroll back to the top.
+- The number roller takes the keyboard: arrows, page keys, Home and End spin it,
+  and it takes focus when it opens instead of only answering a swipe.
+- Answer fields carry a name, and progress bars that were given no label no
+  longer announce themselves as unnamed progress bars.
+
 ## 1.8.7 - 2026-09-13
 
 ### Fixed
@@ -458,6 +485,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.8]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.8
 [1.8.7]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.7
 [1.8.6]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.6
 [1.8.5]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.5

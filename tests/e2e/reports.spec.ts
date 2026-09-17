@@ -29,11 +29,15 @@ async function openReports(page: import("@playwright/test").Page, runs: Seed[]) 
     localStorage.setItem("kana-trainer-reports", JSON.stringify(reports));
   }, runs);
   await page.reload();
-  await page.getByRole("button", { name: "Reports" }).click();
+  await page.getByRole("tab", { name: "Reports" }).click();
 }
 
 const openActions = (page: import("@playwright/test").Page) =>
   page.getByRole("button", { name: "Run actions" }).click();
+
+// The same text also lands in the sr-only announcer, so match the visible flash only.
+const flash = (page: import("@playwright/test").Page, text: string) =>
+  page.locator("p").filter({ hasText: text });
 
 const storedIds = (page: import("@playwright/test").Page) =>
   page.evaluate(() =>
@@ -59,7 +63,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
   await page.getByRole("button", { name: /^Delete all 2 runs shown/ }).click();
   await expect(page.getByRole("alertdialog")).toContainText("Delete 2 runs?");
   await page.getByRole("button", { name: "Delete 2 runs" }).click();
-  await expect(page.getByText("Deleted 2 runs.")).toBeVisible();
+  await expect(flash(page, "Deleted 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual([]);
 
   await openActions(page);
@@ -68,7 +72,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
     page.getByRole("button", { name: /^Import runs/ }).click()
   ]).then(([event]) => event);
   await chooser.setFiles(file);
-  await expect(page.getByText("Imported 2 runs.")).toBeVisible();
+  await expect(flash(page, "Imported 2 runs.")).toBeVisible();
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 
   await openActions(page);
@@ -77,7 +81,7 @@ test("runs export to one file, and import back after being removed", async ({ pa
     page.getByRole("button", { name: /^Import runs/ }).click()
   ]).then(([event]) => event);
   await again.setFiles(file);
-  await expect(page.getByText("Imported 0 runs, 2 already here.")).toBeVisible();
+  await expect(flash(page, "Imported 0 runs, 2 already here.")).toBeVisible();
   expect(await storedIds(page)).toEqual(["run-one", "run-two"]);
 });
 
@@ -136,4 +140,29 @@ test("the date range picker filters down to one day", async ({ page }) => {
   await expect(page.locator("span.text-h2")).toHaveText("Custom");
   await expect(page.getByRole("button", { name: key })).toBeVisible();
   await expect(page.getByText("2 shown")).toBeVisible();
+});
+
+test("the report page scrolls back to the top on a phone", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "the stacked single-column layout only happens on a phone");
+
+  const many = Array.from({ length: 12 }, (_, index) => ({
+    id: `run-${index}`,
+    createdAt: new Date(Date.now() - index * 60_000).toISOString()
+  }));
+  await openReports(page, many);
+  await expect(page.getByRole("heading", { name: "Weakest characters" })).toBeVisible();
+
+  const height = () => page.evaluate(() => document.documentElement.scrollHeight);
+  const settled = await height();
+
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForFunction(() => window.scrollY > 0);
+  expect(await height()).toBe(settled);
+
+  for (let top = await page.evaluate(() => window.scrollY); top > 0; top -= 200) {
+    await page.evaluate((to) => window.scrollTo(0, to), Math.max(0, top - 200));
+  }
+
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  expect(await height()).toBe(settled);
 });

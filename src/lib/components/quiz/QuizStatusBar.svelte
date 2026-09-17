@@ -11,9 +11,15 @@
   });
 </script>
 
-<div class="flex items-center gap-2 sm:gap-3">
+<div data-section class="flex items-center gap-2 sm:gap-3">
   <Button size="sm" variant="ghost" onclick={() => app.askQuit()}>{t("quiz.quit")}</Button>
-  <Progress value={app.progress} tone="success" size="lg" class="flex-1" />
+  <Progress
+    value={app.progress}
+    tone="success"
+    size="lg"
+    class="flex-1"
+    label={t("quiz.runProgress")}
+  />
   <span class="shrink-0 text-sm font-semibold tabular-nums">
     {app.index + 1} / {app.questions.length}
   </span>

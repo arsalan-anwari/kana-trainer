@@ -3,7 +3,7 @@
   import type { Question } from "../../core/quiz";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button } from "kaizen-ui";
+  import { Button, Glyph } from "kaizen-ui";
 
   let { question, kana }: { question: Question; kana: Kana } = $props();
 </script>
@@ -22,7 +22,7 @@
           {t(app.lastCorrect ? "quiz.correct" : "quiz.wrong")}
         </span>
         <span class="text-sm text-foreground">
-          <span class="kana">{glyph(kana, question.script)}</span>
+          <Glyph text={glyph(kana, question.script)} />
           =
           <span class="font-semibold">{kana.romaji}</span>
           {#if kana.alt.length > 0}

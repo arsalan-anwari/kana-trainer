@@ -1,4 +1,7 @@
 {
+  "runProgress": "Voortgang van de ronde",
+  "timeLeft": "Resterende tijd",
+  "announce": "Vraag {index} van {total}. {prompt}",
   "prompt": {
     "listen": "Luister en kies",
     "pickSound": "Kies het geluid",

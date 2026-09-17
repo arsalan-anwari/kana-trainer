@@ -1,4 +1,7 @@
 {
+  "runProgress": "Run progress",
+  "timeLeft": "Time left",
+  "announce": "Question {index} of {total}. {prompt}",
   "prompt": {
     "listen": "Listen and pick",
     "pickSound": "Pick the sound",

@@ -29,6 +29,7 @@ src-tauri/gen/apple
 .promo
 .flatpak-builder
 .showcase
+.serena
 .test_ci.log
 *.log
 test-results

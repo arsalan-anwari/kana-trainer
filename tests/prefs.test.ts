@@ -3,7 +3,6 @@ import {
   clampZoom,
   defaultPrefs,
   mergePrefs,
-  nextTab,
   zoomMax,
   zoomMin
 } from "../src/lib/core/prefs";
@@ -26,18 +25,5 @@ describe("prefs from storage", () => {
     });
     expect(mergePrefs(null)).toEqual(defaultPrefs);
     expect(mergePrefs({ zoom: 99 }).zoom).toBe(zoomMax);
-  });
-});
-
-describe("tab movement", () => {
-  it("wraps at both ends", () => {
-    expect(nextTab("setup", 1)).toBe("reports");
-    expect(nextTab("chart", 1)).toBe("setup");
-    expect(nextTab("setup", -1)).toBe("chart");
-  });
-
-  it("leaves screens that are not tabs alone", () => {
-    expect(nextTab("quiz", 1)).toBeNull();
-    expect(nextTab("result", -1)).toBeNull();
   });
 });

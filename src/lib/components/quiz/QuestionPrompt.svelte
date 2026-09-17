@@ -54,8 +54,9 @@
   {:else}
     <Board size="lg" {compact}>
       <span
+        lang={question.prompt === "kana" ? "ja" : undefined}
         class="whitespace-nowrap leading-none {question.prompt === 'kana'
-          ? 'kana font-medium'
+          ? 'jp font-medium'
           : 'font-bold'}"
         style="font-size: {fontSize}"
       >

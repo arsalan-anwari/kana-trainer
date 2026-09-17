@@ -28,7 +28,7 @@
   </span>
 
   <span class="text-h3 leading-none font-bold sm:text-h4">{kana.romaji}</span>
-  <span class="kana flex items-baseline gap-0.5 leading-none text-muted-foreground">
+  <span lang="ja" class="jp flex items-baseline gap-0.5 leading-none text-muted-foreground">
     {#if kana.hira !== ""}
       <span class="text-base sm:text-sm">{kana.hira}</span>
       <span class="text-[0.625rem] opacity-50" aria-hidden="true">·</span>

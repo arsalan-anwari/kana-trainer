@@ -44,6 +44,7 @@ See the [roadmap](ROADMAP.md) for planned features and improvements.
 - Score reports saved on disk, exported and imported as `.kt-report` files holding any number of runs. Easy migration of runs to other devices. 
 - Responsive interface, the same app on a wide screen and on a phone
 - Localization for 11 languges: Dutch, German, English, Spanish, French, Portuguese, Indonesian, Vietnamese, Thai, Chinese (simplified and traditional).
+- Support for WCAG 2.2 AA accessibility, including high contrast mode, screen reader support and keyboard navigation.
 - Works on Linux, Windows, MacOS and Android.
 
 ## Installing
@@ -102,12 +103,37 @@ npm run test:e2e       # playwright
 
 ## Keyboard Shortcuts
 
-- `1` to `4` picks an answer in multiple choice
-- `Enter` submits a typed answer, submits the picked sound in text to audio, and
-  moves on after feedback
-- `r` replays the sound in audio questions
-- `Escape` leaves the run
-- `Shift+left` and `Shift+right` move between pages.
+Desktop only. Press `Ctrl+/` to start keyboard mode and `Ctrl+Shift+/` to stop
+it; outside the mode these shortcuts do nothing. A badge in the top left shows when
+the mode is on. Press `?` anywhere for a list of shortcuts.
+
+`Shift+up` and `Shift+down` walk between sections; the current section is
+outlined in blue.  `Tab` and `Shift+Tab` navigation only works in the active section.
+
+### Menus and pages
+
+| Key | Does |
+| --- | --- |
+| `Ctrl+/` | Start keyboard mode |
+| `Ctrl+Shift+/` | Stop keyboard mode |
+| `Shift+up` / `Shift+down` | Move between sections |
+| `Tab` / `Shift+Tab` | Next or previous element in the section |
+| `up` / `down` | First or last element in the section |
+| `Ctrl+up` / `Ctrl+down` | Scroll the page |
+| `Space` | Select what is focused |
+| `Enter` | Confirm what is focused |
+| `Ctrl+left` / `Ctrl+right` | Switch between Practice, Reports and Chart |
+| `Escape` | Close a dialog, sheet or picker |
+| `?` | Show the shortcut list |
+
+### During a run
+
+| Key | Does |
+| --- | --- |
+| `1` to `4` | Pick an answer in multiple choice |
+| `Enter` | Submit a typed answer or a picked sound, then move on |
+| `r` | Replay the sound in audio questions |
+| `Escape` | Leave the run |
 
 ## Credits
 

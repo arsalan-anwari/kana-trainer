@@ -44,9 +44,7 @@
         <div class="flex min-w-0 flex-1 flex-col gap-1.5">
           <span class="flex items-baseline gap-2">
             <span class="text-sm font-bold">{part.label}</span>
-            <span class="text-[0.625rem] font-bold" style="color: {heatColor(part.strength)}">
-              {masteryLabel(part.mastery)}
-            </span>
+            <span class="text-[0.625rem] font-bold">{masteryLabel(part.mastery)}</span>
           </span>
           <span class="text-xs tabular-nums text-muted-foreground">
             {t("reports.tip.rowRight", { correct: part.stats.correct, total: part.stats.total })}

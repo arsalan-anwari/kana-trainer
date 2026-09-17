@@ -47,7 +47,8 @@
     {slot}
   </span>
   <span
-    class="whitespace-nowrap text-center font-bold leading-none {kana ? 'kana' : ''}"
+    lang={kana ? "ja" : undefined}
+    class="whitespace-nowrap text-center font-bold leading-none {kana ? 'jp' : ''}"
     style="font-size: {fontSize}"
   >
     {label}

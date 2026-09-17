@@ -1,15 +1,31 @@
 <script lang="ts">
   import { tierBlurb, tierEmoji, tierHeadline } from "../../core/score";
-  import { heatByRow, scriptsSeen, statsByKana, summarize } from "../../core/report";
+  import {
+    describeCell,
+    describeHeatRow,
+    describeStat,
+    heatByRow,
+    masteryLabels,
+    scriptsSeen,
+    statsByKana,
+    summarize
+  } from "../../core/report";
   import { app } from "../../state.svelte";
   import { exportReports } from "../../storage";
-  import AccuracyGrid from "../charts/AccuracyGrid.svelte";
-  import RowHeatmap from "../charts/RowHeatmap.svelte";
   import ScriptSplit from "../charts/ScriptSplit.svelte";
   import MissedAnswers from "./MissedAnswers.svelte";
   import ScoreHeadline from "./ScoreHeadline.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button, Card, EmptyState, Icon, ResultSplash } from "kaizen-ui";
+  import {
+    AccuracyGrid,
+    Announcer,
+    Button,
+    Card,
+    EmptyState,
+    Icon,
+    ResultSplash,
+    RowHeatmap
+  } from "kaizen-ui";
 
   const report = $derived(app.lastReport);
   const answers = $derived(report?.answers ?? []);
@@ -46,7 +62,7 @@
   <div class="flex flex-col gap-5">
     <ScoreHeadline {report} {summary} />
 
-    <div class="flex flex-wrap gap-2 sm:gap-3">
+    <div data-section class="flex flex-wrap gap-2 sm:gap-3">
       <Button size="lg" variant="brand" onclick={() => app.start()}>{t("result.again")}</Button>
       <Button
         size="lg"
@@ -61,6 +77,7 @@
       <Button size="lg" variant="ghost" onclick={() => app.go("setup")}>{t("result.back")}</Button>
     </div>
 
+    <Announcer message={app.message} />
     {#if app.message !== ""}
       <p class="text-sm font-semibold text-success">{app.message}</p>
     {/if}
@@ -80,6 +97,9 @@
               script
             )}
             limit={16}
+            labels={masteryLabels()}
+            describe={describeStat}
+            empty={t("reports.noData")}
           />
         </div>
       {:else}
@@ -96,7 +116,13 @@
           </p>
         {/if}
         <div class:mb-4={seen.length > 1}>
-          <RowHeatmap heat={heatByRow(answers, script)} />
+          <RowHeatmap
+            rows={heatByRow(answers, script)}
+            labels={masteryLabels()}
+            describeCell={describeCell}
+            describeRow={describeHeatRow}
+            empty={t("reports.rows.empty")}
+          />
         </div>
       {:else}
         <EmptyState icon="sprout" title={t("reports.rows.empty")} />

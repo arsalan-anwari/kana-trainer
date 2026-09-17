@@ -1,4 +1,7 @@
 {
+  "runProgress": "Fortschritt des Durchlaufs",
+  "timeLeft": "Verbleibende Zeit",
+  "announce": "Frage {index} von {total}. {prompt}",
   "prompt": {
     "listen": "Hören und wählen",
     "pickSound": "Wähle den Ton",

@@ -1,4 +1,7 @@
 {
+  "runProgress": "本轮进度",
+  "timeLeft": "剩余时间",
+  "announce": "第 {index} 题，共 {total} 题。{prompt}",
   "prompt": {
     "listen": "听音选答案",
     "pickSound": "选出对应读音",

@@ -81,7 +81,9 @@ const PROMO_LANGUAGES = ["简体中文", "Español", "English"];
 test("record the promo", async ({ page }) => {
   const stage = new Stage(page);
 
-  await page.addInitScript(applySeed, seedPayload());
+  /* Matches the showcase desktop zoom, so a five character kana row stays on
+     one line rather than wrapping as four plus one. */
+  await page.addInitScript(applySeed, seedPayload({ zoom: 0.9 }));
   await page.addInitScript(installStage, intro);
   await page.goto("/");
   await expect(page.getByRole("button", { name: "Start run" })).toBeEnabled();
@@ -172,11 +174,14 @@ test("record the promo", async ({ page }) => {
   await stage.beat(750);
   await stage.tap(button("Continue"), 140);
 
-  await stage.caption("Shortcut keys 1 to 4 work too");
+  await stage.caption("Ctrl and / turns on keyboard mode");
+  await stage.press("Control+/", 480);
+  await stage.caption("Then keys 1 to 4 pick an answer");
   for (let question = 3; question <= FINALE; question += 1) {
     await answering(page);
     await stage.press(String(slotOf(await tileLabels(page), await promptText(page)) + 1), 420);
   }
+  await stage.press("Control+Shift+/", 200);
   await stage.hideCaption();
   stage.mark("finale run");
 
@@ -192,7 +197,7 @@ test("record the promo", async ({ page }) => {
 
   await stage.hideCaption();
   await stage.scroll(0, 240);
-  await stage.tap(button("Reports", true), 300);
+  await stage.tap(page.getByRole("tab", { name: "Reports", exact: true }), 300);
   await stage.caption("Every run kept, on your machine only");
   await stage.beat(420);
   await stage.caption("Look back a day, or any range you pick");
@@ -227,8 +232,27 @@ test("record the promo", async ({ page }) => {
   await stage.hideCaption();
   stage.mark("transfer");
 
-  await stage.caption("Swipe, or Shift and an arrow key, to change screen");
-  await stage.press("Shift+ArrowRight", 520);
+  await stage.caption("Keyboard mode drives the menus too");
+  await stage.press("Control+/", 480);
+  await stage.caption("Shift with up or down walks the sections");
+  for (let up = 0; up < 4; up += 1) await stage.press("Shift+ArrowUp", 180);
+  await stage.press("Shift+ArrowDown", 420);
+  await stage.press("Shift+ArrowDown", 420);
+  await stage.press("Shift+ArrowDown", 460);
+  await stage.press("Shift+ArrowUp", 320);
+  await stage.press("Shift+ArrowUp", 460);
+  await stage.caption("Tab stays inside the section it landed on");
+  await stage.press("Tab", 320);
+  await stage.press("Tab", 320);
+  await stage.press("Tab", 320);
+  await stage.press("Tab", 420);
+  await stage.caption("Press ? for the whole list");
+  await stage.press("?", 1600);
+  await stage.press("Escape", 360);
+  stage.mark("keyboard");
+
+  await stage.caption("Swipe, or Ctrl and an arrow key, to change screen");
+  await stage.press("Control+ArrowRight", 520);
   await stage.caption("Every character in one chart. Tap to hear it");
   await stage.tap(button(/^Play ka /), 560);
   await stage.beat(200);
@@ -236,6 +260,7 @@ test("record the promo", async ({ page }) => {
   await stage.tap(button(/^Play kyo /), 560);
   await stage.beat(320);
 
+  await stage.press("Control+Shift+/", 240);
   await stage.caption("Light, dark, or system default theme.");
   await stage.tap(page.getByRole("button", { name: "Theme: light" }), 700);
   await stage.tap(page.getByRole("button", { name: "Theme: dark" }), 500);

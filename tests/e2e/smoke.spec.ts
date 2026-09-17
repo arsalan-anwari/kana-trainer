@@ -61,14 +61,14 @@ test("a wrong typed answer holds the red verdict", async ({ page }) => {
   await field.fill("zzz");
   await field.press("Enter");
 
-  await expect(page.getByText("Not quite")).toBeVisible();
+  await expect(page.getByText("Not quite", { exact: true })).toBeVisible();
   await expect(field).toHaveClass(/border-danger/);
   await expect(page.getByRole("button", { name: "Continue" })).toBeVisible();
 });
 
 test("the chart lists every character and plays one", async ({ page }) => {
   await openApp(page);
-  await page.getByRole("button", { name: "Chart" }).click();
+  await page.getByRole("tab", { name: "Chart" }).click();
 
   await expect(page.getByRole("heading", { name: /Seion/ })).toBeVisible();
 

@@ -21,6 +21,14 @@ const SEED = 20260820;
 
 const MISSED = new Set([3, 7]);
 
+/* The kana grids fill their track at 4.25rem, so at 100% a five character row
+   wraps as four plus one. A step of the app zoom shrinks the tracks enough for
+   the whole row to sit on one line. The phone carries the wider chart tiles in
+   a narrow column, so it needs the extra step. */
+const ZOOM: Record<string, number> = { phone: 0.85, tablet7: 1 };
+
+const DEFAULT_ZOOM = 0.9;
+
 /* Option labels are endonyms, identical in every locale. */
 const LANGUAGE = "Español";
 
@@ -29,7 +37,14 @@ const root = fileURLToPath(new URL("../..", import.meta.url));
 test("record the showcase", async ({ page }, testInfo) => {
   const shots = new Showcase(page, join(root, "packaging/repo", testInfo.project.name));
 
-  await page.addInitScript(applySeed, seedPayload({ now: CLOCK, effects: false }));
+  await page.addInitScript(
+    applySeed,
+    seedPayload({
+      now: CLOCK,
+      effects: false,
+      zoom: ZOOM[testInfo.project.name] ?? DEFAULT_ZOOM
+    })
+  );
   await page.addInitScript(installShowcase, { randomSeed: SEED, clockStart: CLOCK });
   await page.goto("/");
 
@@ -145,7 +160,7 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.reveal(page.getByText(/Loaded \d+ characters/));
   await shots.shot("14_Setup_Mistakes");
 
-  await button("Reports", true).click();
+  await page.getByRole("tab", { name: "Reports", exact: true }).click();
   await button("All", true).click();
   await shots.top();
   await shots.shot("15_Reports_All");
@@ -183,7 +198,7 @@ test("record the showcase", async ({ page }, testInfo) => {
   await shots.shot("19_Reports_Imported");
   await shots.top();
 
-  await button("Chart", true).click();
+  await page.getByRole("tab", { name: "Chart", exact: true }).click();
   await expect(page.getByRole("heading", { name: /Seion/ })).toBeVisible();
   await openRow(page, "A-row");
   await openRow(page, "K-row");
@@ -205,7 +220,7 @@ test("record the showcase", async ({ page }, testInfo) => {
     await shots.shot("21_Chart_HighContrast");
     await button("High contrast", true).click();
 
-    await button("Practice", true).click();
+    await page.getByRole("tab", { name: "Practice", exact: true }).click();
     await expect(startRun).toBeEnabled();
     await shots.top();
 

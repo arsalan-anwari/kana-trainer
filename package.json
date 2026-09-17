@@ -1,6 +1,6 @@
 {
   "name": "kana-trainer",
-  "version": "1.8.7",
+  "version": "1.8.8",
   "description": "Desktop trainer for hiragana and katakana",
   "type": "module",
   "private": true,
@@ -22,6 +22,7 @@
     "kaizen-ui": "file:vendor/kaizen-ui"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@sveltejs/vite-plugin-svelte": "7.3.0",
     "@tailwindcss/vite": "4.3.3",

@@ -27,10 +27,3 @@ export function mergePrefs(stored: Partial<Prefs> | null): Prefs {
 export const tabRoutes = ["setup", "reports", "chart"] as const;
 
 export type TabRoute = (typeof tabRoutes)[number];
-
-export function nextTab(route: string, step: number): TabRoute | null {
-  const index = tabRoutes.indexOf(route as TabRoute);
-  if (index === -1) return null;
-  const length = tabRoutes.length;
-  return tabRoutes[(((index + step) % length) + length) % length];
-}

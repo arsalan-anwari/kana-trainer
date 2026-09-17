@@ -5,7 +5,7 @@
   import SoundChoice from "./SoundChoice.svelte";
   import { choiceState } from "./choiceState";
   import { t } from "../../i18n.svelte";
-  import { Button } from "kaizen-ui";
+  import { Button, roving } from "kaizen-ui";
 
   let { question }: { question: Question } = $props();
 
@@ -19,7 +19,7 @@
 </script>
 
 <div class="flex w-full max-w-xl flex-col gap-3">
-  <div class="grid grid-cols-1 gap-2 sm:gap-3">
+  <div use:roving class="grid grid-cols-1 gap-2 sm:gap-3">
     {#each rows as row (row.choice.kanaId)}
       {#if row.audio !== null}
         <SoundChoice

@@ -21,7 +21,7 @@ test("no screen runs past the right edge", async ({ page }) => {
   await expect(page.locator("#splash")).toHaveCount(0);
 
   for (const tab of ["Reports", "Chart", "Practice"]) {
-    await page.getByRole("button", { name: tab, exact: true }).click();
+    await page.getByRole("tab", { name: tab, exact: true }).click();
     const overflow = await page.evaluate(() => {
       const root = document.documentElement;
       return root.scrollWidth - root.clientWidth;

@@ -5,8 +5,9 @@
   import AppControls from "./lib/components/layout/AppControls.svelte";
   import SettingsMenu from "./lib/components/layout/SettingsMenu.svelte";
   import { t } from "./lib/i18n.svelte";
-  import { AppHeader, PageBackdrop } from "kaizen-ui";
+  import { AppHeader, focusMain, keynav, KeyNavBadge, PageBackdrop, ShortcutHelp } from "kaizen-ui";
   import SetupScreen from "./lib/components/setup/SetupScreen.svelte";
+  import { shortcuts } from "./lib/shortcuts";
 
   app.load();
 
@@ -24,43 +25,20 @@
   if (typeof requestIdleCallback === "function") requestIdleCallback(() => warmScreens());
   else setTimeout(warmScreens, 400);
 
-  function keydown(event: KeyboardEvent): void {
-    if (!event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-    event.preventDefault();
-    app.shiftTab(event.key === "ArrowRight" ? 1 : -1);
-  }
-
-  const SWIPE = 70;
-  let startX = 0;
-  let startY = 0;
-
-  function touchstart(event: TouchEvent): void {
-    const touch = event.changedTouches[0];
-    startX = touch.clientX;
-    startY = touch.clientY;
-  }
-
   let headerHeight = $state(0);
   let menu = $state(false);
 
-  function touchend(event: TouchEvent): void {
-    if (document.querySelector('dialog[open], [role="dialog"], [role="alertdialog"]') !== null) return;
-    const touch = event.changedTouches[0];
-    const dx = touch.clientX - startX;
-    const dy = touch.clientY - startY;
-    if (Math.abs(dx) < SWIPE || Math.abs(dx) < Math.abs(dy) * 2) return;
-    app.shiftTab(dx < 0 ? 1 : -1);
-  }
+  $effect(() => focusMain(app.route));
 </script>
 
-<svelte:window onkeydown={keydown} ontouchstart={touchstart} ontouchend={touchend} />
+<svelte:window onkeydown={(event) => keynav.handle(event)} />
 
 <div
   class="flex min-h-dvh w-full flex-col [--edge-x:1rem] [--edge-y:0.75rem] pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] sm:[--edge-x:1.5rem] sm:[--edge-y:1.75rem] lg:[--edge-x:2.5rem] lg:[--edge-y:2.25rem]"
   style="--header-height: {headerHeight}px"
 >
   <PageBackdrop />
+  <KeyNavBadge label={t("common.shortcuts.mode")} />
 
   <div
     bind:clientHeight={headerHeight}
@@ -68,6 +46,7 @@
   >
     <div class="mx-auto w-full max-w-[80rem]">
       <AppHeader
+        paging
         sticky={false}
         glyph="あ"
         title={t("common.appName")}
@@ -79,6 +58,7 @@
         onpick={(route) => app.go(route)}
         settingsLabel={t("common.settings")}
         onsettings={() => (menu = true)}
+        navLabel={t("common.navLabel")}
       >
         {#snippet controls()}
           <AppControls />
@@ -89,7 +69,9 @@
 
   
   <main
-    class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 pb-[calc(var(--nav-bar)+var(--edge-y))] sm:gap-5"
+    id="main"
+    tabindex="-1"
+    class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 pb-[calc(var(--nav-bar)+var(--edge-y))] focus:outline-none sm:gap-5"
   >
     {#if app.route === "setup"}
       <SetupScreen />
@@ -103,4 +85,13 @@
 
 {#if menu}
   <SettingsMenu onclose={() => (menu = false)} />
+{/if}
+
+{#if keynav.help}
+  <ShortcutHelp
+    title={t("common.shortcuts.title")}
+    closeLabel={t("common.close")}
+    groups={shortcuts()}
+    onclose={() => (keynav.help = false)}
+  />
 {/if}
