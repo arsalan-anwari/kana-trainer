@@ -5,7 +5,7 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.8.9 - 2026-09-18
+## 1.9.0 - 2026-09-18
 
 ### Changed
 - The run list on the report page is paged: eight runs at a time, with arrows
@@ -499,7 +499,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
-[1.8.9]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.9
+[1.9.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.9.0
 [1.8.8]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.8
 [1.8.7]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.7
 [1.8.6]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.6

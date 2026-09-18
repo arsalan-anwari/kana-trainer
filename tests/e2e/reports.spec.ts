@@ -181,26 +181,18 @@ test("long run lists page instead of scrolling, and the pager works by keyboard"
 
   await expect(page.getByText("20 shown")).toBeVisible();
   await expect(rows).toHaveCount(4);
-  // Neighbour chips depend on the column width; first and last are always there.
-  await expect(pager.getByRole("button", { name: "5", exact: true })).toBeVisible();
+  // The pager is a counter plus two arrows, so it fits every column width.
+  await expect(pager).toContainText("1 / 5");
 
   await pager.getByRole("button", { name: "Next page" }).click();
-  await expect(pager.getByRole("button", { name: "2", exact: true })).toHaveAttribute(
-    "aria-current",
-    "page"
-  );
+  await expect(pager).toContainText("2 / 5");
   await expect(rows).toHaveCount(4);
 
-  await pager.getByRole("button", { name: "1", exact: true }).focus();
+  await pager.getByRole("button", { name: "Previous page" }).focus();
   await page.keyboard.press("ArrowRight");
-  await expect(pager.getByRole("button", { name: "2", exact: true })).toBeFocused();
-  await page.keyboard.press("ArrowRight");
-  const landed = await page.evaluate(() => document.activeElement?.textContent?.trim() ?? "");
+  await expect(pager.getByRole("button", { name: "Next page" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(pager.getByRole("button", { name: landed, exact: true })).toHaveAttribute(
-    "aria-current",
-    "page"
-  );
+  await expect(pager).toContainText("3 / 5");
 
   await page.getByRole("button", { name: "Yesterday", exact: true }).click();
   await expect(pager).toHaveCount(0);
