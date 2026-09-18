@@ -44,7 +44,7 @@
     bind:clientHeight={headerHeight}
     class="scrim sticky top-0 z-20 -ml-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] -mr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pt-[calc(var(--status-bar)+var(--edge-y))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pb-8 pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] sm:pb-10"
   >
-    <div class="mx-auto w-full max-w-[80rem]">
+    <div class="mx-auto w-full max-w-7xl">
       <AppHeader
         paging
         sticky={false}
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  
+
   <main
     id="main"
     tabindex="-1"

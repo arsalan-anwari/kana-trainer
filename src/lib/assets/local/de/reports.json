@@ -34,6 +34,12 @@
     "empty": "Noch kein Verlauf. Beende einen Durchgang, dann steht er hier.",
     "noMatch": "Kein Durchgang passt zu diesen Filtern."
   },
+  "pages": {
+    "label": "Verlaufsseiten",
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "at": "Seite {page} von {pages}"
+  },
   "target": {
     "shown_one": "den sichtbaren Durchgang",
     "shown_other": "alle {count} sichtbaren Durchgänge",

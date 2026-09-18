@@ -34,6 +34,12 @@
     "empty": "Belum ada riwayat. Selesaikan satu sesi dan akan muncul di sini.",
     "noMatch": "Tidak ada sesi yang cocok dengan saringan ini."
   },
+  "pages": {
+    "label": "Halaman sesi",
+    "previous": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "at": "Halaman {page} dari {pages}"
+  },
   "target": {
     "shown_other": "semua {count} sesi yang tampil",
     "picked_other": "{count} sesi terpilih"

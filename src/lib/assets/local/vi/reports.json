@@ -34,6 +34,12 @@
     "empty": "Chưa có lịch sử. Hoàn thành một phiên là nó hiện ở đây.",
     "noMatch": "Không có phiên nào khớp bộ lọc."
   },
+  "pages": {
+    "label": "Trang phiên",
+    "previous": "Trang trước",
+    "next": "Trang sau",
+    "at": "Trang {page} trên {pages}"
+  },
   "target": {
     "shown_other": "toàn bộ {count} phiên đang hiện",
     "picked_other": "{count} phiên đã chọn"

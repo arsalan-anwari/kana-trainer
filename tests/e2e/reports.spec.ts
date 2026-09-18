@@ -166,3 +166,77 @@ test("the report page scrolls back to the top on a phone", async ({ page, isMobi
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
   expect(await height()).toBe(settled);
 });
+
+test("long run lists page instead of scrolling, and the pager works by keyboard", async ({
+  page
+}) => {
+  const many = Array.from({ length: 20 }, (_, index) => ({
+    id: `run-${index}`,
+    createdAt: new Date(Date.now() - index * 60_000).toISOString()
+  }));
+  await openReports(page, many);
+
+  const pager = page.getByRole("navigation", { name: "Report pages" });
+  const rows = page.locator("[data-section] button[aria-pressed][class*='flex-col']");
+
+  await expect(page.getByText("20 shown")).toBeVisible();
+  await expect(rows).toHaveCount(4);
+  // Neighbour chips depend on the column width; first and last are always there.
+  await expect(pager.getByRole("button", { name: "5", exact: true })).toBeVisible();
+
+  await pager.getByRole("button", { name: "Next page" }).click();
+  await expect(pager.getByRole("button", { name: "2", exact: true })).toHaveAttribute(
+    "aria-current",
+    "page"
+  );
+  await expect(rows).toHaveCount(4);
+
+  await pager.getByRole("button", { name: "1", exact: true }).focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(pager.getByRole("button", { name: "2", exact: true })).toBeFocused();
+  await page.keyboard.press("ArrowRight");
+  const landed = await page.evaluate(() => document.activeElement?.textContent?.trim() ?? "");
+  await page.keyboard.press("Enter");
+  await expect(pager.getByRole("button", { name: landed, exact: true })).toHaveAttribute(
+    "aria-current",
+    "page"
+  );
+
+  await page.getByRole("button", { name: "Yesterday", exact: true }).click();
+  await expect(pager).toHaveCount(0);
+});
+
+// Keyboard nav is off on touch devices, so this is a desktop-only concern.
+test("keyboard nav walks the filters, the toolbar and the runs as separate sections", async ({
+  page,
+  isMobile
+}) => {
+  test.skip(isMobile === true, "keyboard navigation is disabled on touch");
+  await openReports(page, seed);
+
+  await page.keyboard.press("Control+/");
+  await page.getByRole("button", { name: "All", exact: true }).focus();
+
+  // Collapsed filters must not swallow the jump down to the runs.
+  await page.keyboard.press("Shift+ArrowDown");
+  await expect(page.getByRole("button", { name: "Select every run shown" })).toBeFocused();
+
+  await page.keyboard.press("Shift+ArrowDown");
+  await expect(page.locator("button[aria-pressed][class*='flex-col']").first()).toBeFocused();
+
+  await page.keyboard.press("Shift+ArrowUp");
+  await expect(page.getByRole("button", { name: "Select every run shown" })).toBeFocused();
+});
+
+// Regression: keyboard mode used to need a Shift+Arrow first, because nothing
+// was marked yet and Tab fell through to the browser.
+test("keyboard mode catches the very first Tab", async ({ page, isMobile }) => {
+  test.skip(isMobile === true, "keyboard navigation is disabled on touch");
+  await openReports(page, seed);
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+
+  await page.keyboard.press("Control+/");
+  await page.keyboard.press("Tab");
+
+  await expect(page.locator("[data-keynav]").locator(":focus")).toHaveCount(1);
+});

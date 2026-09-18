@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.9 - 2026-09-18
+
+### Changed
+- The run list on the report page is paged: eight runs at a time, with arrows
+  and page numbers under the list. It replaces the scrollbox that only appeared
+  on a wide window, so the list is the same height on a phone, a tablet and a
+  resized desktop window. The pager takes the keyboard (arrows, Home, End) and
+  announces the page it moved to.
+- `Pagination` moved into `kaizen-ui`.
+
+### Fixed
+- Pressing tab on first time in keyboard shortcut mode would not select first 
+  element in section
+
 ## 1.8.8 - 2026-09-17
 
 ### Added
@@ -485,6 +499,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.8.9]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.9
 [1.8.8]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.8
 [1.8.7]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.7
 [1.8.6]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.6

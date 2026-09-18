@@ -34,6 +34,12 @@
     "empty": "Pas encore d'historique. Terminez une session et elle apparaîtra ici.",
     "noMatch": "Aucune session ne correspond à ces filtres."
   },
+  "pages": {
+    "label": "Pages des sessions",
+    "previous": "Page précédente",
+    "next": "Page suivante",
+    "at": "Page {page} sur {pages}"
+  },
   "target": {
     "shown_one": "la session affichée",
     "shown_other": "les {count} sessions affichées",

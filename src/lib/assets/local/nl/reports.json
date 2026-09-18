@@ -34,6 +34,12 @@
     "empty": "Nog geen overzicht. Maak een ronde af en die komt hier te staan.",
     "noMatch": "Geen ronde past bij deze filters."
   },
+  "pages": {
+    "label": "Pagina's met rondes",
+    "previous": "Vorige pagina",
+    "next": "Volgende pagina",
+    "at": "Pagina {page} van {pages}"
+  },
   "target": {
     "shown_one": "de ronde in beeld",
     "shown_other": "alle {count} rondes in beeld",

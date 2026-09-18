@@ -34,6 +34,12 @@
     "empty": "还没有记录。完成一场练习就会出现在这里。",
     "noMatch": "没有符合筛选条件的记录。"
   },
+  "pages": {
+    "label": "记录分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "at": "第 {page} 页，共 {pages} 页"
+  },
   "target": {
     "shown_other": "显示的全部 {count} 条记录",
     "picked_other": "选中的 {count} 条记录"

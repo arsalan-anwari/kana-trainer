@@ -30,6 +30,7 @@ src-tauri/gen/apple
 .flatpak-builder
 .showcase
 .serena
+CLAUDE.md
 .test_ci.log
 *.log
 test-results

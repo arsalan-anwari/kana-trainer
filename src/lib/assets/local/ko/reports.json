@@ -34,6 +34,12 @@
     "empty": "아직 기록이 없습니다. 연습을 끝내면 여기에 남습니다.",
     "noMatch": "조건에 맞는 기록이 없습니다."
   },
+  "pages": {
+    "label": "기록 페이지",
+    "previous": "이전 페이지",
+    "next": "다음 페이지",
+    "at": "{pages}페이지 중 {page}페이지"
+  },
   "target": {
     "shown_other": "표시된 {count}개 기록",
     "picked_other": "선택한 {count}개 기록"

@@ -34,6 +34,12 @@
     "empty": "Aún no hay historial. Termina una sesión y aparecerá aquí.",
     "noMatch": "Ninguna sesión encaja con estos filtros."
   },
+  "pages": {
+    "label": "Páginas de sesiones",
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "at": "Página {page} de {pages}"
+  },
   "target": {
     "shown_one": "la sesión visible",
     "shown_other": "las {count} sesiones visibles",
