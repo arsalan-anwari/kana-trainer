@@ -13,7 +13,11 @@
   const textOnly = $derived(app.settings.format === "text-text");
 </script>
 
-<div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(340px,420px)]">
+<!-- The character column is sized in rem so it tracks the zoom: exactly enough
+     for a whole seion row on one line -- five 3.75rem chips, four 0.5rem gaps,
+     the 4rem row button and the card padding. Anything left over goes to the
+     settings column, which never needed the room it had. -->
+<div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(28.5rem,29rem)]">
   <div class="flex flex-col gap-5">
     <AlphabetPicker />
     <FormatPicker />

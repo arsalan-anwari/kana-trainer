@@ -5,7 +5,15 @@
   import AppControls from "./lib/components/layout/AppControls.svelte";
   import SettingsMenu from "./lib/components/layout/SettingsMenu.svelte";
   import { t } from "./lib/i18n.svelte";
-  import { AppHeader, focusMain, keynav, KeyNavBadge, PageBackdrop, ShortcutHelp } from "kaizen-ui";
+  import {
+    AppHeader,
+    focusMain,
+    keynav,
+    KeyNavBadge,
+    PageBackdrop,
+    ShortcutHelp,
+    viewport
+  } from "kaizen-ui";
   import SetupScreen from "./lib/components/setup/SetupScreen.svelte";
   import { shortcuts } from "./lib/shortcuts";
 
@@ -35,14 +43,14 @@
 
 <div
   class="flex min-h-dvh w-full flex-col [--edge-x:1rem] [--edge-y:0.75rem] pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] sm:[--edge-x:1.5rem] sm:[--edge-y:1.75rem] lg:[--edge-x:2.5rem] lg:[--edge-y:2.25rem]"
-  style="--header-height: {headerHeight}px"
+  style="--header-height: {headerHeight}px; {viewport.short ? '--edge-y: 0.5rem' : ''}"
 >
   <PageBackdrop />
   <KeyNavBadge label={t("common.shortcuts.mode")} />
 
   <div
     bind:clientHeight={headerHeight}
-    class="scrim sticky top-0 z-20 -ml-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] -mr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pt-[calc(var(--status-bar)+var(--edge-y))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pb-8 pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] sm:pb-10"
+    class="scrim sticky top-0 z-20 -ml-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] -mr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pt-[calc(var(--status-bar)+var(--edge-y))] pr-[calc(env(safe-area-inset-right,0px)+var(--edge-x))] pl-[calc(env(safe-area-inset-left,0px)+var(--edge-x))] {viewport.short ? 'pb-3' : 'pb-8 sm:pb-10'}"
   >
     <div class="mx-auto w-full max-w-7xl">
       <AppHeader

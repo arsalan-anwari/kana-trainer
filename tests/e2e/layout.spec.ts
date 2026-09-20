@@ -68,3 +68,38 @@ test("the header stays flat only while it fits", async ({ page }) => {
     expect(fit.markSkew, `the mark is squashed at ${width}px`).toBeLessThanOrEqual(1);
   }
 });
+
+test("a run in landscape sits the prompt beside the answers and never scrolls", async ({
+  page
+}) => {
+  for (const size of [
+    { width: 844, height: 390 },
+    { width: 1180, height: 820 }
+  ]) {
+    for (const style of ["", "Typing", "Text to audio"]) {
+      await page.setViewportSize(size);
+      await page.goto("/");
+      await expect(page.locator("#splash")).toHaveCount(0);
+      if (style !== "") await page.getByRole("button", { name: style }).first().click();
+      await page.getByRole("button", { name: "Start run" }).click();
+      await expect(page.getByText("1 / 20")).toBeVisible();
+
+      const where = `${style === "" ? "multiple choice" : style} at ${size.width}x${size.height}`;
+      const box = await page.evaluate(() => {
+        const [prompt, answers] = [...document.querySelectorAll(".anim-pop > div")];
+        const root = document.documentElement;
+        return {
+          overflow: root.scrollHeight - root.clientHeight,
+          stacked: answers.getBoundingClientRect().top >= prompt.getBoundingClientRect().bottom
+        };
+      });
+
+      expect(box.stacked, `${where} still stacks`).toBe(false);
+      expect(box.overflow, `${where} scrolls`).toBeLessThanOrEqual(0);
+
+      // The half-finished run is saved, so the next pass would reopen on the
+      // quiz instead of the setup it needs.
+      await page.evaluate(() => localStorage.clear());
+    }
+  }
+});

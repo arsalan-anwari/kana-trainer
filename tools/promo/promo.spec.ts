@@ -81,9 +81,7 @@ const PROMO_LANGUAGES = ["简体中文", "Español", "English"];
 test("record the promo", async ({ page }) => {
   const stage = new Stage(page);
 
-  /* Matches the showcase desktop zoom, so a five character kana row stays on
-     one line rather than wrapping as four plus one. */
-  await page.addInitScript(applySeed, seedPayload({ zoom: 0.9 }));
+  await page.addInitScript(applySeed, seedPayload());
   await page.addInitScript(installStage, intro);
   await page.goto("/");
   await expect(page.getByRole("button", { name: "Start run" })).toBeEnabled();

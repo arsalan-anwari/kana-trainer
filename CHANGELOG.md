@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.9.1 - 2026-09-20
+
+### Changed
+- A run in landscape (desktop, tablet, or a phone held sideways) uses 2 column layout
+- The character column on the practice page is sized in rem, wide enough for a
+  whole seion row on one line and no wider.
+- On a short window the header takes less vertical room.
+
 ## 1.9.0 - 2026-09-18
 
 ### Changed
@@ -499,6 +507,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.9.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.9.1
 [1.9.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.9.0
 [1.8.8]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.8
 [1.8.7]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.7

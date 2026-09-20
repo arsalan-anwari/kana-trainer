@@ -5,14 +5,20 @@
   import { t } from "../../i18n.svelte";
   import { Button, Glyph } from "kaizen-ui";
 
-  let { question, kana }: { question: Question; kana: Kana } = $props();
+  let {
+    question,
+    kana,
+    tight = false
+  }: { question: Question; kana: Kana; tight?: boolean } = $props();
 </script>
 
 <div
-  class="anim-pop fade-edge fixed inset-x-0 bottom-0 z-30 pl-[calc(env(safe-area-inset-left,0px)+1rem)] pt-8 pr-[calc(env(safe-area-inset-right,0px)+1rem)] pb-[calc(var(--nav-bar)+1rem)]"
-  style="--tint: color-mix(in srgb, {app.lastCorrect
-    ? 'var(--success)'
-    : 'var(--danger)'} 26%, transparent)"
+  class="anim-pop fade-edge fixed bottom-0 left-0 z-30 pl-[calc(env(safe-area-inset-left,0px)+1rem)] pr-[calc(env(safe-area-inset-right,0px)+1rem)] pb-[calc(var(--nav-bar)+1rem)] {tight
+    ? 'right-1/2 pt-3'
+    : 'right-0 pt-8'}"
+  style="--tint: {tight
+    ? 'transparent'
+    : `color-mix(in srgb, ${app.lastCorrect ? 'var(--success)' : 'var(--danger)'} 26%, transparent)`}"
 >
   
   <div class="mx-auto flex w-full max-w-xl items-center justify-between gap-4">

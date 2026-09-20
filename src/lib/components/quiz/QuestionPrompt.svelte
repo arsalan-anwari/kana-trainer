@@ -8,8 +8,9 @@
   let {
     question,
     kana,
+    split = false,
     onreplay
-  }: { question: Question; kana: Kana; onreplay: () => void } = $props();
+  }: { question: Question; kana: Kana; split?: boolean; onreplay: () => void } = $props();
 
   const label = $derived.by(() => {
     if (question.prompt === "audio") return t("quiz.prompt.listen");
@@ -52,7 +53,7 @@
       />
     </div>
   {:else}
-    <Board size="lg" {compact}>
+    <Board size="lg" {compact} class={split ? "size-[clamp(7rem,var(--answer-max),16rem)]!" : ""}>
       <span
         lang={question.prompt === "kana" ? "ja" : undefined}
         class="whitespace-nowrap leading-none {question.prompt === 'kana'

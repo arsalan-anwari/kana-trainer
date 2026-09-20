@@ -2,9 +2,9 @@
   import type { Question } from "../../core/quiz";
   import { app } from "../../state.svelte";
   import { t } from "../../i18n.svelte";
-  import { Button, TextField } from "kaizen-ui";
+  import { Button, TextField, viewport } from "kaizen-ui";
 
-  let { question }: { question: Question } = $props();
+  let { question, split = false }: { question: Question; split?: boolean } = $props();
 
   const placeholder = $derived(
     app.settings.format === "audio-text"
@@ -19,20 +19,22 @@
   );
 </script>
 
-<div class="flex w-full max-w-md flex-col gap-3">
-  <TextField
-    bind:value={app.typed}
-    big
-    focusOnMount
-    {placeholder}
-    {tone}
-    disabled={app.phase !== "answering"}
-    onenter={() => app.submitTyped()}
-  />
+<div class="flex w-full max-w-md gap-3 {split ? 'items-center' : 'flex-col'}">
+  <div class={split ? "min-w-0 flex-1" : "contents"}>
+    <TextField
+      bind:value={app.typed}
+      big={!viewport.short}
+      focusOnMount
+      {placeholder}
+      {tone}
+      disabled={app.phase !== "answering"}
+      onenter={() => app.submitTyped()}
+    />
+  </div>
   <Button
-    size="lg"
+    size={viewport.short ? "md" : "lg"}
     variant="brand"
-    full
+    full={!split}
     silent
     disabled={app.phase !== "answering" || app.typed.trim() === ""}
     onclick={() => app.submitTyped()}

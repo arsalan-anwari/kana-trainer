@@ -208,9 +208,6 @@ export type SeedPayload = {
 export type SeedOptions = {
   now?: number;
   effects?: boolean;
-  /* Below 1 the kana grids fit a whole five character row, which the promo art
-     wants. Stepped like the in-app control, so the badge reads a real value. */
-  zoom?: number;
 };
 
 export function seedPayload(options: SeedOptions = {}): SeedPayload {
@@ -222,7 +219,7 @@ export function seedPayload(options: SeedOptions = {}): SeedPayload {
       effects: options.effects ?? true,
       theme: "light",
       contrast: false,
-      zoom: options.zoom ?? 1
+      zoom: 1
     }
   };
 }

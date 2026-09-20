@@ -21,14 +21,6 @@ const SEED = 20260820;
 
 const MISSED = new Set([3, 7]);
 
-/* The kana grids fill their track at 4.25rem, so at 100% a five character row
-   wraps as four plus one. A step of the app zoom shrinks the tracks enough for
-   the whole row to sit on one line. The phone and the 7 inch tablet stay at
-   100%, so their stills show the app at its default size. */
-const ZOOM: Record<string, number> = { phone: 1, tablet7: 1 };
-
-const DEFAULT_ZOOM = 0.9;
-
 /* Option labels are endonyms, identical in every locale. */
 const LANGUAGE = "Español";
 
@@ -41,8 +33,7 @@ test("record the showcase", async ({ page }, testInfo) => {
     applySeed,
     seedPayload({
       now: CLOCK,
-      effects: false,
-      zoom: ZOOM[testInfo.project.name] ?? DEFAULT_ZOOM
+      effects: false
     })
   );
   await page.addInitScript(installShowcase, { randomSeed: SEED, clockStart: CLOCK });

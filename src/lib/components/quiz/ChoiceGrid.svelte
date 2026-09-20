@@ -6,7 +6,7 @@
   import { choiceState } from "./choiceState";
   import { roving } from "kaizen-ui";
 
-  let { question }: { question: Question } = $props();
+  let { question, split = false }: { question: Question; split?: boolean } = $props();
 
   function label(choice: Choice): string {
     const item = kanaById(choice.kanaId);
@@ -17,7 +17,12 @@
   }
 </script>
 
-<div use:roving class="grid w-full max-w-[min(17rem,33dvh)] grid-cols-2 gap-2.5 sm:max-w-md sm:gap-3">
+<div
+  use:roving
+  class="grid w-full grid-cols-2 gap-2.5 sm:gap-3 {split
+    ? 'max-w-[clamp(11rem,calc(var(--answer-max)+2rem),26rem)]'
+    : 'max-w-[min(17rem,33dvh)] sm:max-w-md'}"
+>
   {#each question.choices as choice, index (choice.kanaId)}
     <ChoiceTile
       slot={index + 1}

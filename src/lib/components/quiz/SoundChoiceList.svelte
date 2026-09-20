@@ -5,9 +5,9 @@
   import SoundChoice from "./SoundChoice.svelte";
   import { choiceState } from "./choiceState";
   import { t } from "../../i18n.svelte";
-  import { Button, roving } from "kaizen-ui";
+  import { Button, roving, viewport } from "kaizen-ui";
 
-  let { question }: { question: Question } = $props();
+  let { question, split = false }: { question: Question; split?: boolean } = $props();
 
   const rows = $derived(
     question.choices.map((choice, index) => ({
@@ -19,11 +19,12 @@
 </script>
 
 <div class="flex w-full max-w-xl flex-col gap-3">
-  <div use:roving class="grid grid-cols-1 gap-2 sm:gap-3">
+  <div use:roving class="grid gap-2 sm:gap-3 {split ? 'grid-cols-2' : 'grid-cols-1'}">
     {#each rows as row (row.choice.kanaId)}
       {#if row.audio !== null}
         <SoundChoice
           slot={row.slot}
+          {split}
           audio={row.audio}
           state={choiceState(question, row.choice, app.phase, app.picked, app.staged)}
           disabled={app.phase === "done"}
@@ -35,7 +36,7 @@
   </div>
 
   <Button
-    size="xl"
+    size={split ? "lg" : "xl"}
     variant="brand"
     full
     silent
@@ -44,7 +45,9 @@
   >
     {t("quiz.check")}
   </Button>
-  <p class="text-center text-xs text-muted-foreground">
-    {t(app.phase === "answering" ? "quiz.soundHint" : "quiz.soundCompare")}
-  </p>
+  {#if !viewport.short}
+    <p class="text-center text-xs text-muted-foreground">
+      {t(app.phase === "answering" ? "quiz.soundHint" : "quiz.soundCompare")}
+    </p>
+  {/if}
 </div>

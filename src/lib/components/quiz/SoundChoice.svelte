@@ -7,12 +7,15 @@
   let {
     slot,
     audio,
+    split = false,
     state = "idle",
     disabled = false,
     onpick
   }: {
     slot: number;
     audio: string;
+    /** Side by side with the prompt: the row is bounded by the window height. */
+    split?: boolean;
     state?: ChoiceState;
     disabled?: boolean;
     onpick: () => void;
@@ -48,19 +51,21 @@
   {disabled}
   aria-pressed={state === "staged"}
   aria-label={t("quiz.soundTile", { slot })}
-  class="flex h-16 w-full cursor-pointer items-center gap-3 rounded-2xl border-2 px-3 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default sm:h-22 sm:gap-5 sm:px-5 {tones[
-    state
-  ]}"
+  class="flex w-full cursor-pointer items-center gap-3 rounded-2xl border-2 px-3 transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default sm:gap-5 sm:px-5 {split
+    ? 'h-[clamp(2.75rem,calc((var(--answer-max)-3.5rem)/2),5.5rem)]'
+    : 'h-16 sm:h-22'} {tones[state]}"
   onclick={onpick}
 >
   <span class="w-4 shrink-0 text-left text-xs font-bold opacity-60" aria-hidden="true">{slot}</span>
   <span
-    class="flex size-11 shrink-0 items-center justify-center rounded-full transition-colors sm:size-13 {knob}"
+    class="flex shrink-0 items-center justify-center rounded-full transition-colors {split
+      ? 'size-[clamp(1.75rem,calc((var(--answer-max)-3.5rem)/3),3.25rem)]'
+      : 'size-11 sm:size-13'} {knob}"
     aria-hidden="true"
   >
     <PlayIcon {playing} class="size-4 translate-x-px sm:size-5" />
   </span>
-  <span class="h-10 min-w-0 flex-1 sm:h-12">
+  <span class="min-w-0 flex-1 {split ? 'h-[clamp(1.5rem,calc((var(--answer-max)-3.5rem)/3),3rem)]' : 'h-10 sm:h-12'}">
     <Waveform
       peaks={kanaAudio.peaks(audio)}
       progress={playing ? kanaAudio.progress : 0}
