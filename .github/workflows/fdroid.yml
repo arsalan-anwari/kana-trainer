@@ -1,0 +1,63 @@
+# Builds the self-hosted F-Droid repo from a release's apk and attaches it to
+# that release as fdroid-repo.tar.gz, which pages.yml unpacks under fdroid/repo.
+#
+# The release workflow calls this for every new tag. A push that changes the
+# F-Droid metadata, or a run by hand, rebuilds it for the latest release, and
+# pages.yml redeploys once that finishes.
+
+name: fdroid
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: true
+  push:
+    branches: [main]
+    paths:
+      - 'packaging/fdroid/**'
+      - 'scripts/fdroid_repo.sh'
+      - '.github/workflows/fdroid.yml'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release to build from, for example v1.9.2. Empty means the latest release.'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fdroid
+  cancel-in-progress: false
+
+jobs:
+  repo:
+    name: build the F-Droid repo
+    runs-on: ubuntu-24.04
+    permissions:
+      # attach the repo to the release
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Work out which release to build from
+        run: echo "TAG=${TAG:-$(gh release view --json tagName -q .tagName)}" >> "$GITHUB_ENV"
+
+      - name: Build the F-Droid repo
+        env:
+          FDROID_KEYSTORE_BASE64: ${{ secrets.FDROID_KEYSTORE_BASE64 }}
+          FDROID_KEYSTORE_PASS: ${{ secrets.FDROID_KEYSTORE_PASS }}
+        run: |
+          [ -n "$FDROID_KEYSTORE_BASE64" ] || { echo "no FDROID_KEYSTORE_BASE64 secret, stopping" >&2; exit 1; }
+          scripts/fdroid_repo.sh "$TAG"
+
+      - name: Attach it to the release
+        run: |
+          tar -czf fdroid-repo.tar.gz -C build/fdroid repo
+          gh release upload "$TAG" fdroid-repo.tar.gz --clobber

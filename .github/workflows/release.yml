@@ -3,7 +3,8 @@
 #   1. builds every package in a matrix
 #   2. runs the playwright smoke test against the built frontend
 #   3. creates the release, with the changelog entry and every package attached
-#   4. repoints the github pages download page and the README badges at the new assets
+#   4. builds the F-Droid repo from the new apk and attaches it to the release
+#   5. repoints the github pages download page and the README badges at the new assets
 
 name: release
 
@@ -136,9 +137,19 @@ jobs:
             --verify-tag \
             staging/*
 
+  fdroid:
+    needs: release
+    uses: ./.github/workflows/fdroid.yml
+    secrets: inherit
+    permissions:
+      contents: write
+    with:
+      tag: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}', inputs.version) }}
+
   download-page:
     name: repoint the download page
-    needs: release
+    # the pages deploy unpacks the F-Droid repo off this release, so it has to be there first
+    needs: [release, fdroid]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -171,12 +182,16 @@ jobs:
         run: |
           if git diff --quiet -- packaging/repo/html README.md; then
             echo "the download page already points at ${{ steps.version.outputs.tag }}"
-            exit 0
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add packaging/repo/html README.md
+            git commit -m 'Point the download page at ${{ steps.version.outputs.tag }}'
+            git push origin main
           fi
 
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add packaging/repo/html README.md
-          git commit -m 'Point the download page at ${{ steps.version.outputs.tag }}'
-          git push origin main
-          gh workflow run pages.yml --ref main
+      # always, since the F-Droid repo changed even when the page did not
+      - name: Deploy the download page
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

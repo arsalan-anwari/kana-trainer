@@ -279,6 +279,11 @@
       /* full screen qr code, a click anywhere or escape closes it */
 
       .qr-dialog {
+        /* always light, a qr code scans best dark on white */
+        --ink: #1b1915;
+        --muted: #6e6657;
+        --accent: #1b1915;
+        --accent-ink: #f7f2e7;
         width: 100%;
         max-width: none;
         height: 100%;
@@ -286,7 +291,7 @@
         margin: 0;
         padding: 1.5rem;
         border: 0;
-        background: var(--paper);
+        background: #fff;
         color: var(--ink);
         cursor: pointer;
       }
@@ -296,13 +301,13 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1.5rem;
+        gap: 1.25rem;
         text-align: center;
       }
 
       .qr-dialog img {
-        width: min(85vw, 70vh);
-        height: min(85vw, 70vh);
+        width: auto;
+        height: min(55vh, 26rem);
       }
 
       .qr-dialog p {

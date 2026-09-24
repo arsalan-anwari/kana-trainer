@@ -20,8 +20,7 @@ STORE_URL=https://apps.microsoft.com/detail/9pbn4s73d1qc?ocid=webpdpshare
 PLAY_URL=https://play.google.com/store/apps/details?id=nl.anwari.kanatrainer
 # the self-hosted F-Droid repo that pages.yml builds, see scripts/fdroid_repo.sh.
 # fdroidrepos:// opens the add repository dialog in the F-Droid app.
-# $OUT_DIR/fdroid-qr.svg is this url as a qr code, made once with
-# qrencode -t SVG -m 1 -o fdroid-qr.svg "https://$FDROID_REPO"
+# $OUT_DIR/fdroid-qr.svg is "https://$FDROID_REPO" as a qr code
 FDROID_REPO=arsalan-anwari.github.io/kana-trainer/fdroid/repo?fingerprint=2A64A47045E7B6AB998DA0234E4F898B85DDA75CD2F341C972E6398156C6A1F8
 VERSION="$(node -p "require('./package.json').version")"
 
@@ -177,7 +176,8 @@ android|*.apk|android|Android|7.0 and later|Sideloaded apk. Allow installs from 
           </div>
           <dialog class=\"qr-dialog\" id=\"fdroid-qr\" aria-label=\"F-Droid QR code\" onclick=\"this.close()\">
             <img src=\"fdroid-qr.svg\" alt=\"QR code of the Kana Trainer F-Droid repository\" />
-            <p>Scan with the F-Droid app to add the Kana Trainer repository. Tap anywhere to close.</p>
+            <p>Scan with the F-Droid app to add the Kana Trainer repository.</p>
+            <form method=\"dialog\"><button class=\"button\">Close</button></form>
           </dialog>
         </li>
 "

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
 # Builds the self-hosted F-Droid repo into build/fdroid/repo, from the apk
-# attached to a GitHub release. The pages workflow publishes it next to the
-# download page, at https://arsalan-anwari.github.io/kana-trainer/fdroid/repo
+# attached to a GitHub release. fdroid.yml attaches it to the release, and the
+# pages workflow publishes it next to the download page, at
+# https://arsalan-anwari.github.io/kana-trainer/fdroid/repo
 #
 #   scripts/fdroid_repo.sh                  from the latest release
 #   scripts/fdroid_repo.sh v1.9.1           from that tag
