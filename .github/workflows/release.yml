@@ -3,7 +3,7 @@
 #   1. builds every package in a matrix
 #   2. runs the playwright smoke test against the built frontend
 #   3. creates the release, with the changelog entry and every package attached
-#   4. repoints the github pages download page at the new assets
+#   4. repoints the github pages download page and the README badges at the new assets
 
 name: release
 
@@ -169,14 +169,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- packaging/repo/html; then
+          if git diff --quiet -- packaging/repo/html README.md; then
             echo "the download page already points at ${{ steps.version.outputs.tag }}"
             exit 0
           fi
 
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add packaging/repo/html
+          git add packaging/repo/html README.md
           git commit -m 'Point the download page at ${{ steps.version.outputs.tag }}'
           git push origin main
           gh workflow run pages.yml --ref main

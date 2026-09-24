@@ -3,7 +3,7 @@
 # Publishes what a release needs after the packages are built.
 #
 #   scripts/publish.sh --all               the download page, then crates.io
-#   scripts/publish.sh --pages             regenerate packaging/repo/html
+#   scripts/publish.sh --pages             regenerate packaging/repo/html and the README badges
 #   scripts/publish.sh --pages v1.5.1      for that tag rather than this version
 #   scripts/publish.sh --crates            publish to crates.io
 #   scripts/publish.sh --crates --dry-run  package and verify, upload nothing
@@ -16,7 +16,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 OUT_DIR=packaging/repo/html
 TEMPLATE=tools/download-page/index.template.html
 REPO_URL=https://github.com/arsalan-anwari/kana-trainer
-STORE_URL=https://apps.microsoft.com/detail/9pbn4s73d1qc
+STORE_URL=https://apps.microsoft.com/detail/9pbn4s73d1qc?ocid=webpdpshare
+PLAY_URL=https://play.google.com/store/apps/details?id=nl.anwari.kanatrainer
 # the self-hosted F-Droid repo that pages.yml builds, see scripts/fdroid_repo.sh.
 # fdroidrepos:// opens the add repository dialog in the F-Droid app.
 # $OUT_DIR/fdroid-qr.svg is this url as a qr code, made once with
@@ -84,6 +85,7 @@ android|*.apk|android|Android|7.0 and later|Sideloaded apk. Allow installs from 
 
   cards=""
   missing=()
+  declare -A asset_urls=()
 
   while IFS='|' read -r os glob icon_name name note blurb; do
     [ -n "${os:-}" ] || continue
@@ -97,6 +99,7 @@ android|*.apk|android|Android|7.0 and later|Sideloaded apk. Allow installs from 
     url="$(jq -r .url <<<"$asset")"
     size="$(human_size "$(jq -r .size <<<"$asset")")"
     filename="$(jq -r .name <<<"$asset")"
+    asset_urls[$glob]="$url"
 
     cards+="        <li class=\"card\" data-os=\"$os\">
           <div class=\"card-head\">
@@ -181,7 +184,23 @@ d }" \
 
   echo "==> $OUT_DIR/index.html now points at $TAG"
 
-  echo "    commit $OUT_DIR to publish it, the pages workflow deploys from there"
+  # points the README badge with this alt text at url, a missing asset keeps its old link
+  badge() {
+    [ -n "$2" ] || return 0
+    sed -i "s|<a href=\"[^\"]*\"><img \([^>]*\)alt=\"$1\">|<a href=\"$2\"><img \1alt=\"$1\">|" README.md
+  }
+  badge "Get it on Google Play" "$PLAY_URL"
+  badge "Get it on F-Droid" "fdroidrepos://$FDROID_REPO"
+  badge "Get it from Microsoft Store" "$STORE_URL"
+  badge "Download for Arch Linux" "${asset_urls['*.pkg.tar.zst']:-}"
+  badge "Download for Fedora" "${asset_urls['*.x86_64.rpm']:-}"
+  badge "Download for Ubuntu / Debian" "${asset_urls['*_amd64.deb']:-}"
+  badge "Download for macOS" "${asset_urls['*universal.dmg']:-}"
+  badge "Download for Windows" "${asset_urls['*x64-setup.exe']:-}"
+  badge "Download the Android APK" "${asset_urls['*.apk']:-}"
+  echo "==> README.md badges now point at $TAG"
+
+  echo "    commit $OUT_DIR and README.md to publish it, the pages workflow deploys from there"
 }
 
 # crates.io
