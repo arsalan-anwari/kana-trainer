@@ -69,6 +69,7 @@ android|*.apk|android|Android|7.0 and later|Sideloaded apk. Allow installs from 
       fedora)  echo '<path d="M12 0a12 12 0 0 0 0 24h5.7a6.3 6.3 0 0 0 6.3-6.3V12A12 12 0 0 0 12 0zm1.6 5.6a3.6 3.6 0 0 1 3.6 3.6 1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 0-1.2-1.2 1.2 1.2 0 0 0-1.2 1.2v2.2h2a1.2 1.2 0 1 1 0 2.4h-2v1.4a3.6 3.6 0 1 1-3.6-3.6h1.2V9.2a3.6 3.6 0 0 1 3.6-3.6zM9.2 13.6a1.2 1.2 0 1 0 1.2 1.2v-1.2z"/>' ;;
       arch)    echo '<path d="M12 .8c.8 1.6 1.3 2.7 2.2 4.3-.6-.6-1.2-1-1.8-1.4.9 2.3 1.4 4.7 1.2 7.1-.1 2.6-1.1 5-2.7 7 1.6-.4 3.2-1.3 4.4-2.5-.1.7-.4 1.4-.9 2.1 2.1-1.4 3.2-3.4 3.4-5.4l4.6 10.2H1.6L12 .8zm.3 15.4c1 .6 1.9 1.4 2.5 2.4H9.2c.6-1 1.5-1.8 2.5-2.4z"/>' ;;
       store)   echo '<path d="M3.4 7.6h17.2l-1.2 12.6a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.2 7.6V5.4a3.8 3.8 0 0 1 7.6 0v2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.1 11.6h2.6v2.6H9.1zm3.2 0h2.6v2.6h-2.6zm-3.2 3.2h2.6v2.6H9.1zm3.2 0h2.6v2.6h-2.6z"/>' ;;
+      play)    echo '<path d="M3.6 1.8 13.8 12 3.6 22.2a1.6 1.6 0 0 1-.6-1.3V3.1c0-.5.2-1 .6-1.3zm11.3 11.3 2.6 2.6-11.9 6.8zm0-2.2L5.6 1.5l11.9 6.8zM18.8 9l3 1.7a1.5 1.5 0 0 1 0 2.6l-3 1.7-2.8-3z"/>' ;;
       fdroid)  echo '<path d="M3.2 1.3a.7.7 0 0 0-1.1.8l1.6 2.3A2 2 0 0 0 3 6v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-.7-1.6L22 2.1a.7.7 0 0 0-1.1-.8l-1.7 2.4-.2.3H5l-.2-.3zM8 5.4a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zm8 0a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM5 11.3a2 2 0 0 0-2 2V21a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7.7a2 2 0 0 0-2-2zm7 1.8a4.4 4.4 0 1 1 0 8.8 4.4 4.4 0 0 1 0-8.8zm0 1.6a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z"/>' ;;
       android) echo '<path d="M6 9v7.5c0 .6.4 1 1 1h1V21a1.5 1.5 0 0 0 3 0v-3.5h2V21a1.5 1.5 0 0 0 3 0v-3.5h1c.6 0 1-.4 1-1V9H6zM4 9a1.5 1.5 0 0 0-1.5 1.5v5a1.5 1.5 0 0 0 3 0v-5A1.5 1.5 0 0 0 4 9zm16 0a1.5 1.5 0 0 0-1.5 1.5v5a1.5 1.5 0 0 0 3 0v-5A1.5 1.5 0 0 0 20 9zM15.9 2.7l1.1-1.9a.3.3 0 0 0-.5-.3l-1.1 2A6.7 6.7 0 0 0 12 2c-.9 0-1.7.2-2.4.5L8.5.5a.3.3 0 0 0-.5.3l1.1 1.9A5.6 5.6 0 0 0 6 7.5h12a5.6 5.6 0 0 0-2.1-4.8zM9.5 5.4a.6.6 0 1 1 0-1.2.6.6 0 0 1 0 1.2zm5 0a.6.6 0 1 1 0-1.2.6.6 0 0 1 0 1.2z"/>' ;;
     esac
@@ -139,11 +140,26 @@ android|*.apk|android|Android|7.0 and later|Sideloaded apk. Allow installs from 
             </div>
             <span class=\"yours-flag\">Your system</span>
           </div>
-          <p class=\"card-body\">Installs and updates through the store, signed and checked by Microsoft. No unknown publisher warning.</p>
+          <p class=\"card-body\">Installs and updates through the Microsoft Store.</p>
           <a class=\"button\" href=\"$STORE_URL\">Open in Microsoft Store</a>
         </li>
 "
   echo "    Microsoft Store -> $STORE_URL"
+
+  cards+="        <li class=\"card\" data-os=\"android\">
+          <div class=\"card-head\">
+            <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">$(icon play)</svg>
+            <div>
+              <div class=\"card-name\">Google Play</div>
+              <div class=\"card-note\">Android 7.0 and later</div>
+            </div>
+            <span class=\"yours-flag\">Your system</span>
+          </div>
+          <p class=\"card-body\">Installs and updates through the Play Store.</p>
+          <a class=\"button\" href=\"$PLAY_URL\">Get it on Google Play</a>
+        </li>
+"
+  echo "    Google Play -> $PLAY_URL"
 
   cards+="        <li class=\"card\" data-os=\"android\">
           <div class=\"card-head\">
@@ -154,9 +170,15 @@ android|*.apk|android|Android|7.0 and later|Sideloaded apk. Allow installs from 
             </div>
             <span class=\"yours-flag\">Your system</span>
           </div>
-          <p class=\"card-body\">Adds the Kana Trainer repository to the <a href=\"https://f-droid.org/\">F-Droid app</a>, which then installs and updates it. On a computer, scan the code with F-Droid.</p>
-          <img class=\"qr\" src=\"fdroid-qr.svg\" alt=\"QR code of the Kana Trainer F-Droid repository\" />
-          <a class=\"button\" href=\"fdroidrepos://$FDROID_REPO\">Add to F-Droid</a>
+          <p class=\"card-body\">Adds our repository to the <a href=\"https://f-droid.org/\">F-Droid app</a>, which keeps it updated.</p>
+          <div class=\"buttons\">
+            <a class=\"button\" href=\"fdroidrepos://$FDROID_REPO\">Add to F-Droid</a>
+            <button class=\"button secondary qr-open\" type=\"button\" onclick=\"document.getElementById('fdroid-qr').showModal()\">Open QR</button>
+          </div>
+          <dialog class=\"qr-dialog\" id=\"fdroid-qr\" aria-label=\"F-Droid QR code\" onclick=\"this.close()\">
+            <img src=\"fdroid-qr.svg\" alt=\"QR code of the Kana Trainer F-Droid repository\" />
+            <p>Scan with the F-Droid app to add the Kana Trainer repository. Tap anywhere to close.</p>
+          </dialog>
         </li>
 "
   echo "    F-Droid -> https://$FDROID_REPO"

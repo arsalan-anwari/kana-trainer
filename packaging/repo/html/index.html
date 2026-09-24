@@ -140,6 +140,8 @@
       .downloads {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        /* every card as tall as the tallest one */
+        grid-auto-rows: 1fr;
         gap: 0.875rem;
         margin: 0;
         padding: 0;
@@ -187,10 +189,17 @@
         font-size: 0.875rem;
       }
 
-      .qr {
-        align-self: center;
-        width: 7rem;
-        height: 7rem;
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      /* side by side when they fit, stacked in a narrow card */
+      .buttons .button {
+        flex: 1 1 auto;
+        padding-inline: 0.75rem;
+        white-space: nowrap;
       }
 
       .button {
@@ -199,7 +208,10 @@
         justify-content: center;
         gap: 0.5rem;
         padding: 0.625rem 1rem;
+        border: 0;
         border-radius: 0.625rem;
+        cursor: pointer;
+        font-family: inherit;
         background: var(--accent);
         color: var(--accent-ink);
         font-size: 0.9375rem;
@@ -215,6 +227,12 @@
       .button:focus-visible {
         outline: 2px solid var(--ink);
         outline-offset: 2px;
+      }
+
+      .button.secondary {
+        background: transparent;
+        box-shadow: inset 0 0 0 1px var(--wire);
+        color: var(--ink);
       }
 
       .button .size {
@@ -254,8 +272,42 @@
       }
 
       /* no point scanning a code with the phone that is showing it */
-      .card.is-yours .qr {
+      .card.is-yours .qr-open {
         display: none;
+      }
+
+      /* full screen qr code, a click anywhere or escape closes it */
+
+      .qr-dialog {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        max-height: none;
+        margin: 0;
+        padding: 1.5rem;
+        border: 0;
+        background: var(--paper);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .qr-dialog[open] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        text-align: center;
+      }
+
+      .qr-dialog img {
+        width: min(85vw, 70vh);
+        height: min(85vw, 70vh);
+      }
+
+      .qr-dialog p {
+        margin: 0;
+        color: var(--muted);
       }
 
       /* install notes */
@@ -448,8 +500,20 @@
             </div>
             <span class="yours-flag">Your system</span>
           </div>
-          <p class="card-body">Installs and updates through the store, signed and checked by Microsoft. No unknown publisher warning.</p>
+          <p class="card-body">Installs and updates through the Microsoft Store.</p>
           <a class="button" href="https://apps.microsoft.com/detail/9pbn4s73d1qc?ocid=webpdpshare">Open in Microsoft Store</a>
+        </li>
+        <li class="card" data-os="android">
+          <div class="card-head">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2a1.6 1.6 0 0 1-.6-1.3V3.1c0-.5.2-1 .6-1.3zm11.3 11.3 2.6 2.6-11.9 6.8zm0-2.2L5.6 1.5l11.9 6.8zM18.8 9l3 1.7a1.5 1.5 0 0 1 0 2.6l-3 1.7-2.8-3z"/></svg>
+            <div>
+              <div class="card-name">Google Play</div>
+              <div class="card-note">Android 7.0 and later</div>
+            </div>
+            <span class="yours-flag">Your system</span>
+          </div>
+          <p class="card-body">Installs and updates through the Play Store.</p>
+          <a class="button" href="https://play.google.com/store/apps/details?id=nl.anwari.kanatrainer">Get it on Google Play</a>
         </li>
         <li class="card" data-os="android">
           <div class="card-head">
@@ -460,9 +524,15 @@
             </div>
             <span class="yours-flag">Your system</span>
           </div>
-          <p class="card-body">Adds the Kana Trainer repository to the <a href="https://f-droid.org/">F-Droid app</a>, which then installs and updates it. On a computer, scan the code with F-Droid.</p>
-          <img class="qr" src="fdroid-qr.svg" alt="QR code of the Kana Trainer F-Droid repository" />
-          <a class="button" href="fdroidrepos://arsalan-anwari.github.io/kana-trainer/fdroid/repo?fingerprint=2A64A47045E7B6AB998DA0234E4F898B85DDA75CD2F341C972E6398156C6A1F8">Add to F-Droid</a>
+          <p class="card-body">Adds our repository to the <a href="https://f-droid.org/">F-Droid app</a>, which keeps it updated.</p>
+          <div class="buttons">
+            <a class="button" href="fdroidrepos://arsalan-anwari.github.io/kana-trainer/fdroid/repo?fingerprint=2A64A47045E7B6AB998DA0234E4F898B85DDA75CD2F341C972E6398156C6A1F8">Add to F-Droid</a>
+            <button class="button secondary qr-open" type="button" onclick="document.getElementById('fdroid-qr').showModal()">Open QR</button>
+          </div>
+          <dialog class="qr-dialog" id="fdroid-qr" aria-label="F-Droid QR code" onclick="this.close()">
+            <img src="fdroid-qr.svg" alt="QR code of the Kana Trainer F-Droid repository" />
+            <p>Scan with the F-Droid app to add the Kana Trainer repository. Tap anywhere to close.</p>
+          </dialog>
         </li>
       </ul>
 
