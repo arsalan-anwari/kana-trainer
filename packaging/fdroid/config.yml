@@ -1,0 +1,23 @@
+# fdroidserver config for the self-hosted F-Droid repo at
+# https://arsalan-anwari.github.io/kana-trainer/fdroid/repo
+#
+# Built by scripts/fdroid_repo.sh. The keystore and its password are not in
+# git: locally they sit next to this file (gitignored), in CI they come from
+# the FDROID_KEYSTORE_BASE64 and FDROID_KEYSTORE_PASS secrets.
+
+repo_url: https://arsalan-anwari.github.io/kana-trainer/fdroid/repo
+repo_name: Kana Trainer
+repo_icon: kana-trainer.png
+repo_description: >-
+  Official releases of Kana Trainer, a trainer for the hiragana and katakana
+  alphabets. The same signed apk as on the GitHub releases page.
+
+# only the latest release is kept
+archive_older: 0
+
+sdk_path: /usr/lib/android-sdk
+keystore: keystore.p12
+repo_keyalias: f4cf45962af9
+keydname: CN=f4cf45962af9, OU=F-Droid
+keystorepass: {env: FDROID_KEYSTORE_PASS}
+keypass: {env: FDROID_KEYSTORE_PASS}

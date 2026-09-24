@@ -1,0 +1,86 @@
+{
+  "shortcuts": {
+    "title": "میان‌برهای صفحه‌کلید",
+    "mode": "حالت صفحه‌کلید",
+    "appGroup": "منوها و صفحه‌ها",
+    "runGroup": "در طول دور",
+    "start": "شروع حالت صفحه‌کلید",
+    "stop": "پایان حالت صفحه‌کلید",
+    "section": "جابه‌جایی بین بخش‌ها",
+    "next": "عنصر بعدی",
+    "previous": "عنصر قبلی",
+    "edges": "اولین یا آخرین عنصر",
+    "scroll": "پیمایش صفحه",
+    "select": "انتخاب",
+    "confirm": "تأیید",
+    "page": "تغییر صفحه",
+    "answer": "انتخاب پاسخ",
+    "submit": "ثبت پاسخ",
+    "replay": "پخش دوباره صدا",
+    "quit": "خروج از دور",
+    "close": "بستن"
+  },
+  "navLabel": "بخش‌ها",
+  "appName": "Kana Trainer",
+  "tagline": "تمرین هیراگانا و کاتاکانا",
+  "settings": "تنظیمات",
+  "closeSettings": "بستن تنظیمات",
+  "cancel": "لغو",
+  "save": "ذخیره",
+  "apply": "اعمال",
+  "close": "بستن",
+  "delete": "حذف",
+  "keep": "نگه‌داشتن",
+  "hiragana": "هیراگانا",
+  "katakana": "کاتاکانا",
+  "both": "هر دو",
+  "any": "همه",
+  "off": "خاموش",
+  "custom": "دلخواه",
+  "pickValue": "یک مقدار انتخاب کنید",
+  "nav": {
+    "setup": "تمرین",
+    "reports": "گزارش‌ها",
+    "chart": "جدول"
+  },
+  "group": {
+    "seion": "سی‌اون",
+    "dakuon": "داکواون",
+    "handakuon": "هانداکواون",
+    "yoon": "یواون",
+    "tokushon": "توکوشون"
+  },
+  "format": {
+    "text-text": "فقط متن",
+    "audio-text": "صدا به متن",
+    "text-audio": "متن به صدا"
+  },
+  "answerStyle": {
+    "choice": "چندگزینه‌ای",
+    "typing": "تایپ"
+  },
+  "direction": {
+    "kana-romaji": "کانا به روماجی",
+    "romaji-kana": "روماجی به کانا",
+    "mixed": "ترکیبی"
+  },
+  "difficulty": {
+    "beginner": "مبتدی",
+    "advanced": "پیشرفته",
+    "expert": "حرفه‌ای"
+  },
+  "rowLabel": "ردیف {letter}",
+  "file": {
+    "filterName": "دورهای Kana Trainer",
+    "writeFailed": "نوشتن این فایل ممکن نشد.",
+    "readFailed": "خواندن این فایل ممکن نشد.",
+    "tooShort": "این فایل برای یک فایل ‎.kt-report خیلی کوتاه است.",
+    "notReport": "این یک فایل ‎.kt-report نیست.",
+    "newer": "این فایل با نسخهٔ جدیدتری نوشته شده است (قالب {version}).",
+    "incomplete": "این فایل ‎.kt-report ناقص است.",
+    "damaged": "این فایل ‎.kt-report آسیب دیده است.",
+    "badRun": "این فایل ‎.kt-report دوری دارد که خوانده نمی‌شود."
+  },
+  "show": "نمایش {label}",
+  "hide": "پنهان کردن {label}"
+}

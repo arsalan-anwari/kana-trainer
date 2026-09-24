@@ -187,6 +187,12 @@
         font-size: 0.875rem;
       }
 
+      .qr {
+        align-self: center;
+        width: 7rem;
+        height: 7rem;
+      }
+
       .button {
         display: flex;
         align-items: baseline;
@@ -245,6 +251,11 @@
 
       .card.is-yours .yours-flag {
         display: block;
+      }
+
+      /* no point scanning a code with the phone that is showing it */
+      .card.is-yours .qr {
+        display: none;
       }
 
       /* install notes */

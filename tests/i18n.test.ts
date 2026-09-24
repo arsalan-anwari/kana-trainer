@@ -31,6 +31,16 @@ describe("t", () => {
     expect(t("reports.runs", { count: 3 })).toBe("3 runs");
   });
 
+  it("picks every plural form a language has, not just one and other", () => {
+    setLocale("ru");
+    expect(t("reports.runs", { count: 21 })).toBe("21 тренировка");
+    expect(t("reports.runs", { count: 3 })).toBe("3 тренировки");
+    expect(t("reports.runs", { count: 5 })).toBe("5 тренировок");
+    setLocale("ar");
+    expect(t("reports.runs", { count: 2 })).toBe("جولتان");
+    setLocale("en");
+  });
+
   it("falls back to English when a locale is missing a key", () => {
     setLocale("de");
     expect(t("common.appName")).toBe("Kana Trainer");

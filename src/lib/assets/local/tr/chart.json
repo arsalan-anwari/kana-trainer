@@ -1,0 +1,11 @@
+{
+  "title": "Karakter tablosu",
+  "description": "Gruba ve satıra göre 147 karakterin tamamı. Dinlemek için birine dokunun.",
+  "sounds": "{count} ses",
+  "play": "{romaji} {kata} çal",
+  "seion": "46 temel karakter.",
+  "dakuon": "Ötümlü か さ た は satırları.",
+  "handakuon": "Yarı ötümlü は satırı.",
+  "yoon": "Küçük ゃ ゅ ょ ile birleşenler.",
+  "tokushon": "Ödünç sesler, yalnızca katakana."
+}

@@ -38,3 +38,7 @@ playwright-report
 
 # Python dev venv
 .venv
+
+# F-Droid repo signing key, lives in the FDROID_KEYSTORE_* secrets in CI
+packaging/fdroid/keystore.p12
+packaging/fdroid/keystore.pass

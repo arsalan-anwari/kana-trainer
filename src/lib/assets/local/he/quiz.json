@@ -1,0 +1,40 @@
+{
+  "runProgress": "התקדמות הסבב",
+  "timeLeft": "הזמן שנותר",
+  "announce": "שאלה {index} מתוך {total}. {prompt}",
+  "prompt": {
+    "listen": "להקשיב ולבחור",
+    "pickSound": "בחירת הצליל",
+    "whichRomaji": "איזה רומאג'י זה",
+    "whichKana": "איזה תו זה",
+    "replay": "השמעת הצליל שוב"
+  },
+  "typing": {
+    "kana": "הקלדת הקאנה",
+    "romaji": "הקלדת הרומאג'י",
+    "either": "קאנה או רומאג'י"
+  },
+  "check": "בדיקה",
+  "soundTile": "צליל {slot}",
+  "soundHint": "הקשה על צליל משמיעה אותו, ואז בודקים.",
+  "soundCompare": "הקשה על צליל משמיעה אותו שוב.",
+  "quit": "יציאה",
+  "score": "{count} נכונות",
+  "correct": "נכון",
+  "wrong": "לא בדיוק",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "גם {list}",
+  "continue": "המשך",
+  "stop": {
+    "title": "לעצור את הסבב?",
+    "nothing": "עוד אין תשובות, אין מה לשמור.",
+    "discard_one": "רק סבב שהסתיים מקבל ציון. התשובה האחת שלך תימחק.",
+    "discard_two": "רק סבב שהסתיים מקבל ציון. שתי התשובות שלך יימחקו.",
+    "discard_other": "רק סבב שהסתיים מקבל ציון. {count} התשובות שלך יימחקו.",
+    "left_one": "נותרה שאלה אחת.",
+    "left_two": "נותרו שתי שאלות.",
+    "left_other": "נותרו {count} שאלות.",
+    "confirm": "לעצור ולמחוק",
+    "cancel": "להמשיך"
+  }
+}

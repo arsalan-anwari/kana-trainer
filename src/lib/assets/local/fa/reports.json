@@ -1,0 +1,114 @@
+{
+  "window": {
+    "today": "امروز",
+    "yesterday": "دیروز",
+    "all": "همه",
+    "custom": "دلخواه",
+    "range": "از {from} تا {to}"
+  },
+  "range": {
+    "pick": "یک بازهٔ زمانی انتخاب کنید",
+    "title": "بازهٔ زمانی",
+    "close": "بستن بازهٔ زمانی",
+    "from": "از",
+    "to": "تا",
+    "invalid": "شروع باید پیش از پایان یا همان روز باشد و نه زودتر از {earliest}."
+  },
+  "filters": {
+    "title": "فیلترها",
+    "clear": "پاک کردن فیلترها",
+    "format": "قالب سؤال",
+    "answering": "پاسخ‌دادن",
+    "alphabet": "الفبا"
+  },
+  "list": {
+    "shown": "{count} نمایش داده شده",
+    "pickedOf": "{picked} از {total}",
+    "selectAll": "انتخاب همهٔ دورهای نمایش‌داده‌شده",
+    "clearSelection": "پاک کردن انتخاب",
+    "remove": "حذف {target}",
+    "export": "خروجی گرفتن از {target}",
+    "import": "وارد کردن دورها از فایل",
+    "actions": "کارهای دور",
+    "score": "{correct}/{total} درست، {percent}%",
+    "empty": "هنوز گزارشی نیست. یک دور را تمام کنید تا اینجا بیاید.",
+    "noMatch": "هیچ دوری با این فیلترها جور نیست."
+  },
+  "pages": {
+    "label": "صفحه‌های گزارش",
+    "previous": "صفحهٔ قبلی",
+    "next": "صفحهٔ بعدی",
+    "at": "صفحهٔ {page} از {pages}"
+  },
+  "target": {
+    "shown_other": "{count} دور نمایش‌داده‌شده",
+    "picked_other": "{count} دور انتخاب‌شده"
+  },
+  "confirm": {
+    "title_other": "{count} دور حذف شود؟",
+    "yes_other": "حذف {count} دور",
+    "no_other": "نگه‌داشتن",
+    "bodyShown": "همهٔ دورهای در حال نمایش برای همیشه حذف می‌شوند. برای داشتن نسخه، اول از آن‌ها خروجی بگیرید.",
+    "bodyPicked": "دورهای انتخاب‌شده برای همیشه حذف می‌شوند. برای داشتن نسخه، اول از آن‌ها خروجی بگیرید."
+  },
+  "deleted_other": "{count} دور حذف شد.",
+  "runs_other": "{count} دور",
+  "exported": "خروجی گرفته شد: {runs}",
+  "imported": "وارد شد: {runs}.",
+  "importedSome": "وارد شد: {runs}، {skipped} از قبل اینجا بود.",
+  "selected": "{count} دور انتخاب شد",
+  "overall": "{correct} از {total} درست، در کل {percent}%",
+  "practice": "تمرین این اشتباه‌ها",
+  "noMistakes": "اشتباهی برای تمرین نیست.",
+  "loadedMistakes": "{count} حرفی که اشتباه کرده بودید بارگذاری شد.",
+  "weakest": {
+    "title": "ضعیف‌ترین حروف",
+    "description": "بر اساس میزان تسلط بر هر کدام: حرفی که دو بار دیده شده هرگز از حرفی که ثابت کرده‌اید جلو نمی‌زند.",
+    "empty": "یک دور را تمام کنید تا آمار حروف را ببینید."
+  },
+  "rows": {
+    "title": "ردیف‌ها",
+    "description": "جدول کانا، رنگ‌آمیزی‌شده بر اساس میزان تسلط بر هر ردیف.",
+    "empty": "هنوز ردیفی نیست."
+  },
+  "alphabets": {
+    "title": "الفباها",
+    "description": "میزان تسلط بر هر کدام و سهم آن از کار.",
+    "share": "{percent}% از سؤال‌ها",
+    "shareLabel": "سهم سؤال‌ها"
+  },
+  "mistakes": {
+    "title": "اشتباه‌ها بر اساس گروه",
+    "description": "هر حرفی که اشتباه کردید، بر اساس مجموعه، ردیف و الفبا.",
+    "none": "اینجا اشتباهی نیست.",
+    "miss_other": "{count} اشتباه"
+  },
+  "tip": {
+    "right": "{romaji}، {correct} از {total} درست",
+    "never": "{romaji}، هرگز نیامد",
+    "missed": "{romaji}، {misses} از {total} اشتباه",
+    "rowRight": "{correct} از {total} درست",
+    "cell": "{sub}، {correct} از {total} درست",
+    "strength": "{romaji}: {correct} از {total} درست، تسلط {percent}%"
+  },
+  "noData": "هنوز داده‌ای نیست",
+  "ofTotal": "از {total}",
+  "mastery": {
+    "new": "تازه",
+    "shaky": "لرزان",
+    "learning": "در حال یادگیری",
+    "steady": "پایدار",
+    "mastered": "مسلط"
+  },
+  "seen_other": "{count} بار دیده شده",
+  "legend": {
+    "weak": "نیاز به تمرین",
+    "strong": "محکم"
+  },
+  "stat": {
+    "accuracy": "دقت",
+    "runs": "دورها",
+    "answers": "پاسخ‌ها",
+    "mastered": "مسلط"
+  }
+}

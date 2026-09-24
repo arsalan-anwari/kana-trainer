@@ -187,6 +187,12 @@
         font-size: 0.875rem;
       }
 
+      .qr {
+        align-self: center;
+        width: 7rem;
+        height: 7rem;
+      }
+
       .button {
         display: flex;
         align-items: baseline;
@@ -245,6 +251,11 @@
 
       .card.is-yours .yours-flag {
         display: block;
+      }
+
+      /* no point scanning a code with the phone that is showing it */
+      .card.is-yours .qr {
+        display: none;
       }
 
       /* install notes */
@@ -439,6 +450,19 @@
           </div>
           <p class="card-body">Installs and updates through the store, signed and checked by Microsoft. No unknown publisher warning.</p>
           <a class="button" href="https://apps.microsoft.com/detail/9pbn4s73d1qc">Open in Microsoft Store</a>
+        </li>
+        <li class="card" data-os="android">
+          <div class="card-head">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 1.3a.7.7 0 0 0-1.1.8l1.6 2.3A2 2 0 0 0 3 6v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-.7-1.6L22 2.1a.7.7 0 0 0-1.1-.8l-1.7 2.4-.2.3H5l-.2-.3zM8 5.4a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zm8 0a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM5 11.3a2 2 0 0 0-2 2V21a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7.7a2 2 0 0 0-2-2zm7 1.8a4.4 4.4 0 1 1 0 8.8 4.4 4.4 0 0 1 0-8.8zm0 1.6a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z"/></svg>
+            <div>
+              <div class="card-name">F-Droid</div>
+              <div class="card-note">Android 7.0 and later</div>
+            </div>
+            <span class="yours-flag">Your system</span>
+          </div>
+          <p class="card-body">Adds the Kana Trainer repository to the <a href="https://f-droid.org/">F-Droid app</a>, which then installs and updates it. On a computer, scan the code with F-Droid.</p>
+          <img class="qr" src="fdroid-qr.svg" alt="QR code of the Kana Trainer F-Droid repository" />
+          <a class="button" href="fdroidrepos://arsalan-anwari.github.io/kana-trainer/fdroid/repo?fingerprint=2A64A47045E7B6AB998DA0234E4F898B85DDA75CD2F341C972E6398156C6A1F8">Add to F-Droid</a>
         </li>
       </ul>
 

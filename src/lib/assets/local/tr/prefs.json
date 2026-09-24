@@ -1,0 +1,26 @@
+{
+  "theme": "Tema",
+  "themeSystem": "Sistem",
+  "themeLight": "Açık",
+  "themeDark": "Koyu",
+  "themeIs": {
+    "system": "Tema: sistem",
+    "light": "Tema: açık",
+    "dark": "Tema: koyu"
+  },
+  "themeLocked": "Tema yüksek karşıtlık tarafından sabitlendi",
+  "contrast": "Yüksek karşıtlık",
+  "contrastHint": "Siyah beyaz, temanın yerine geçer",
+  "zoom": "Yakınlaştırma",
+  "zoomIn": "Yakınlaştır",
+  "zoomOut": "Uzaklaştır",
+  "scale": "Ölçek",
+  "scaleHint": "Tüm uygulamayı yeniden boyutlandırır",
+  "sound": "Ses",
+  "effects": "Ses efektleri",
+  "effectsHint": "Tıklamalar ve cevap geri bildirimi",
+  "soundOn": "Ses açık",
+  "soundOff": "Ses kapalı",
+  "language": "Dil",
+  "persist": "Bunlar turlar arasında aynı kalır."
+}

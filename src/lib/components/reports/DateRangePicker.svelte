@@ -49,7 +49,7 @@
   }
 
   const tab =
-    "flex flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left transition-colors";
+    "flex flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-start transition-colors";
 </script>
 
 <Popover

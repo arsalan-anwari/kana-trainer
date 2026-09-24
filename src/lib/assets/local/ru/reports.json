@@ -1,0 +1,139 @@
+{
+  "window": {
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "all": "Всё",
+    "custom": "Период",
+    "range": "С {from} по {to}"
+  },
+  "range": {
+    "pick": "Выберите период",
+    "title": "Период",
+    "close": "Закрыть выбор периода",
+    "from": "С",
+    "to": "По",
+    "invalid": "Начало должно быть не позже конца и не раньше {earliest}."
+  },
+  "filters": {
+    "title": "Фильтры",
+    "clear": "Сбросить фильтры",
+    "format": "Формат вопросов",
+    "answering": "Ответ",
+    "alphabet": "Азбука"
+  },
+  "list": {
+    "shown": "Показано: {count}",
+    "pickedOf": "{picked} из {total}",
+    "selectAll": "Выбрать все показанные тренировки",
+    "clearSelection": "Снять выделение",
+    "remove": "Удалить: {target}",
+    "export": "Экспортировать: {target}",
+    "import": "Импортировать тренировки из файла",
+    "actions": "Действия с тренировками",
+    "score": "{correct}/{total} верно, {percent}%",
+    "empty": "Отчётов пока нет. Завершите тренировку, и она появится здесь.",
+    "noMatch": "Нет тренировок под эти фильтры."
+  },
+  "pages": {
+    "label": "Страницы отчётов",
+    "previous": "Предыдущая страница",
+    "next": "Следующая страница",
+    "at": "Страница {page} из {pages}"
+  },
+  "target": {
+    "shown_one": "показанная тренировка",
+    "shown_few": "все {count} показанные тренировки",
+    "shown_many": "все {count} показанных тренировок",
+    "shown_other": "все {count} показанных тренировок",
+    "picked_one": "{count} выбранная тренировка",
+    "picked_few": "{count} выбранные тренировки",
+    "picked_many": "{count} выбранных тренировок",
+    "picked_other": "{count} выбранных тренировок"
+  },
+  "confirm": {
+    "title_one": "Удалить эту тренировку?",
+    "title_few": "Удалить {count} тренировки?",
+    "title_many": "Удалить {count} тренировок?",
+    "title_other": "Удалить {count} тренировок?",
+    "yes_one": "Удалить тренировку",
+    "yes_few": "Удалить {count} тренировки",
+    "yes_many": "Удалить {count} тренировок",
+    "yes_other": "Удалить {count} тренировок",
+    "no_one": "Оставить",
+    "no_other": "Оставить",
+    "bodyShown": "Навсегда удаляет все показанные тренировки. Экспортируйте их, чтобы сохранить копию.",
+    "bodyPicked": "Навсегда удаляет выбранные тренировки. Экспортируйте их, чтобы сохранить копию."
+  },
+  "deleted_one": "Удалена {count} тренировка.",
+  "deleted_few": "Удалено {count} тренировки.",
+  "deleted_many": "Удалено {count} тренировок.",
+  "deleted_other": "Удалено {count} тренировок.",
+  "runs_one": "{count} тренировка",
+  "runs_few": "{count} тренировки",
+  "runs_many": "{count} тренировок",
+  "runs_other": "{count} тренировок",
+  "exported": "Экспортировано: {runs}",
+  "imported": "Импортировано: {runs}.",
+  "importedSome": "Импортировано: {runs}, уже были здесь: {skipped}.",
+  "selected": "Выбрано тренировок: {count}",
+  "overall": "{correct} из {total} верно, всего {percent}%",
+  "practice": "Отработать эти ошибки",
+  "noMistakes": "Нет ошибок для отработки.",
+  "loadedMistakes": "Загружено символов с ошибками: {count}.",
+  "weakest": {
+    "title": "Самые слабые символы",
+    "description": "По степени освоения: символ, встреченный дважды, никогда не обгонит уже доказанный.",
+    "empty": "Завершите тренировку, чтобы увидеть статистику символов."
+  },
+  "rows": {
+    "title": "Ряды",
+    "description": "Таблица каны, окрашенная по степени освоения каждого ряда.",
+    "empty": "Рядов пока нет."
+  },
+  "alphabets": {
+    "title": "Азбуки",
+    "description": "Насколько освоена каждая и какую часть работы она заняла.",
+    "share": "{percent}% вопросов",
+    "shareLabel": "Доля вопросов"
+  },
+  "mistakes": {
+    "title": "Ошибки по группам",
+    "description": "Все символы с ошибками по группам, рядам и азбукам.",
+    "none": "Здесь ошибок нет.",
+    "miss_one": "{count} ошибка",
+    "miss_few": "{count} ошибки",
+    "miss_many": "{count} ошибок",
+    "miss_other": "{count} ошибок"
+  },
+  "tip": {
+    "right": "{romaji}, верно {correct} из {total}",
+    "never": "{romaji}, ещё не встречался",
+    "missed": "{romaji}, ошибок {misses} из {total}",
+    "rowRight": "Верно {correct} из {total}",
+    "cell": "{sub}, верно {correct} из {total}",
+    "strength": "{romaji}: верно {correct} из {total}, освоение {percent}%"
+  },
+  "noData": "Данных пока нет",
+  "ofTotal": "из {total}",
+  "mastery": {
+    "new": "Новый",
+    "shaky": "Шаткий",
+    "learning": "Изучается",
+    "steady": "Уверенный",
+    "mastered": "Освоен"
+  },
+  "seen_one": "встречался {count} раз",
+  "seen_few": "встречался {count} раза",
+  "seen_many": "встречался {count} раз",
+  "seen_other": "встречался {count} раз",
+  "legend": {
+    "weak": "Нужна практика",
+    "strong": "Освоено"
+  },
+  "stat": {
+    "accuracy": "Точность",
+    "runs": "Тренировки",
+    "answers": "Ответы",
+    "mastered": "Освоено"
+  }
+}

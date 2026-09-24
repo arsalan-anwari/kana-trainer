@@ -209,7 +209,7 @@
             {active}
           </span>
         {/if}
-        <Icon name="chevron-down" class="ml-auto size-4" />
+        <Icon name="chevron-down" class="ms-auto size-4" />
       </summary>
 
       <div class="flex flex-col gap-3 border-t border-border px-3 py-3">
@@ -317,7 +317,7 @@
             {#each actions as action (action.label)}
               <button
                 type="button"
-                class="flex h-11 shrink-0 cursor-pointer items-center gap-3 rounded-lg px-3 text-left text-sm font-semibold transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-40 {action.danger ===
+                class="flex h-11 shrink-0 cursor-pointer items-center gap-3 rounded-lg px-3 text-start text-sm font-semibold transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-40 {action.danger ===
                 true
                   ? 'text-danger'
                   : ''}"

@@ -15,7 +15,12 @@ export const locales = [
   { tag: "th", name: "ไทย" },
   { tag: "fr", name: "Français" },
   { tag: "de", name: "Deutsch" },
-  { tag: "nl", name: "Nederlands" }
+  { tag: "nl", name: "Nederlands" },
+  { tag: "tr", name: "Türkçe" },
+  { tag: "ru", name: "Русский" },
+  { tag: "ar", name: "العربية" },
+  { tag: "fa", name: "فارسی" },
+  { tag: "he", name: "עברית" }
 ] as const;
 
 export type LocaleTag = (typeof locales)[number]["tag"];

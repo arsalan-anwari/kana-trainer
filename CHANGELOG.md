@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.9.2 - 2026-09-24
+
+### Changed
+- On a phone held sideways, the correct/wrong screen takes over the prompt half
+  with the verdict and Continue centred in it, and tints the whole screen red or
+  green again. The answer half stays tappable, so the sounds can still be
+  replayed.
+- On a phone held sideways, the audio to text prompt uses the slim record player
+  and the text only answer tiles are a bit smaller, so a question fits without
+  scrolling.
+
+### Added
+- Turkish, Russian, Arabic, Persian and Hebrew. Arabic, Persian and Hebrew lay
+  the app out right to left.
+- `.ktrc`: source it to call the scripts in `scripts/` by name, e.g.
+  `update_version 1.x.x`.
+- Added Store badges in promo video and readme.
+- Added support for Fdroid store. 
+
 ## 1.9.1 - 2026-09-20
 
 ### Changed
@@ -507,6 +526,7 @@ First stable release.
 - Keyboard controls: `1` to `4` to answer, `Enter` to submit, `r` to replay a sound, `Escape` to leave a run
 - Linux packaging for deb, rpm, AppImage, Arch and Flatpak
 
+[1.9.2]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.9.2
 [1.9.1]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.9.1
 [1.9.0]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.9.0
 [1.8.8]: https://github.com/arsalan-anwari/kana-trainer/releases/tag/v1.8.8

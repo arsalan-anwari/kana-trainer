@@ -1,0 +1,90 @@
+{
+  "alphabets": {
+    "title": "Alfabeler",
+    "description": "Ne göreceğinizi seçin."
+  },
+  "format": {
+    "title": "Soru biçimi",
+    "description": "Her sorunun nasıl sorulacağı.",
+    "text-text": "Bir karakter görün, metinle cevaplayın",
+    "audio-text": "Bir ses duyun, metinle cevaplayın",
+    "text-audio": "Bir karakter görün, sesi seçin"
+  },
+  "answerStyle": {
+    "title": "Cevap şekli",
+    "description": "Bir cevaba dokunun ya da yazın.",
+    "choice": "4 seçenekten biri",
+    "choiceAudio": "Seçenekler hep kana",
+    "typing": "Cevabı yazın",
+    "typingAudio": "Kana ya da romaji"
+  },
+  "direction": {
+    "title": "Yön",
+    "description": "Hangi tarafla cevap verdiğiniz.",
+    "kana-romaji": "Romajiyle cevapla",
+    "romaji-kana": "Kanayla cevapla",
+    "mixed": "Rastgele iki yönde"
+  },
+  "characters": {
+    "title": "Karakterler",
+    "description": "Satırın tamamını almak için satır etiketine dokunun.",
+    "editAlphabet": "Düzenlenecek alfabe",
+    "selectAll": "Tümünü seç",
+    "clear": "Temizle"
+  },
+  "run": {
+    "title": "Tur seçenekleri",
+    "description": "Turda neler var ve ne kadar sürer."
+  },
+  "sets": {
+    "title": "Ek gruplar",
+    "dakuon": "が ざ だ ば",
+    "handakuon": "ぱ",
+    "yoon": "きゃ しゃ ちゃ ve diğerleri",
+    "tokushon": "ファ ティ ヴァ, yalnızca katakana"
+  },
+  "questions": {
+    "title": "Sorular",
+    "count": "Soru sayısı",
+    "onePass": "Tek geçiş"
+  },
+  "difficulty": {
+    "title": "Zorluk",
+    "beginner": "Yanlış cevaplar rastgele",
+    "advanced": "Bir yanlış cevap benzer görünür",
+    "expert": "Tüm yanlış cevaplar benzer görünür",
+    "tooFew": "Etkili olması için en az {min} karakter gerekir.",
+    "choiceOnly": "Yalnızca çoktan seçmeli."
+  },
+  "time": {
+    "perQuestion": "Soru başına",
+    "wholeRun": "Tüm tur",
+    "seconds": "Soru başına saniye",
+    "minutes": "Tüm tur için dakika"
+  },
+  "presets": {
+    "label": "Ön ayar",
+    "some": "Ön ayarlar",
+    "none": "Ön ayar yok",
+    "update": "Ön ayarı güncelle",
+    "create": "Yeni ön ayar",
+    "restore": "Ön ayarı geri yükle",
+    "delete": "Ön ayarı sil",
+    "name": "Ön ayar adı",
+    "confirmTitle": "Bu ön ayar silinsin mi?",
+    "confirmBody": "\"{name}\" ön ayarını siler. Mevcut seçiminiz kalır."
+  },
+  "start": {
+    "inPlay": "Oyundaki karakterler",
+    "button": "Turu başlat",
+    "empty": "Bu moda uyan en az bir karakter seçin.",
+    "inPlayShort": "Oyunda",
+    "questions": "Sorular"
+  },
+  "notes": {
+    "needsAlphabet": "Hiragana açıldı, bir tur için en az bir alfabe gerekir.",
+    "audioNeedsChoice": "Sesle cevaplamada çoktan seçmeli kullanılır.",
+    "audioTextDirection": "Sesten metne modunun yönü yoktur, kana ya da romaji yazılabilir.",
+    "textAudioDirection": "Metinden sese modu her zaman karakterle başlar."
+  }
+}

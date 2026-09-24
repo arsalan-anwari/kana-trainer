@@ -4,7 +4,7 @@
   import { app } from "../../state.svelte";
   import ChoiceTile from "./ChoiceTile.svelte";
   import { choiceState } from "./choiceState";
-  import { roving } from "kaizen-ui";
+  import { roving, viewport } from "kaizen-ui";
 
   let { question, split = false }: { question: Question; split?: boolean } = $props();
 
@@ -20,7 +20,9 @@
 <div
   use:roving
   class="grid w-full grid-cols-2 gap-2.5 sm:gap-3 {split
-    ? 'max-w-[clamp(11rem,calc(var(--answer-max)+2rem),26rem)]'
+    ? viewport.short
+      ? 'max-w-[clamp(11rem,var(--answer-max),26rem)]'
+      : 'max-w-[clamp(11rem,calc(var(--answer-max)+2rem),26rem)]'
     : 'max-w-[min(17rem,33dvh)] sm:max-w-md'}"
 >
   {#each question.choices as choice, index (choice.kanaId)}

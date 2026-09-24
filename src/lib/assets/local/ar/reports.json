@@ -1,0 +1,144 @@
+{
+  "window": {
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "all": "الكل",
+    "custom": "مخصص",
+    "range": "من {from} إلى {to}"
+  },
+  "range": {
+    "pick": "اختر نطاقًا زمنيًا",
+    "title": "النطاق الزمني",
+    "close": "إغلاق النطاق الزمني",
+    "from": "من",
+    "to": "إلى",
+    "invalid": "يجب أن تكون البداية قبل النهاية أو مثلها، وليس قبل {earliest}."
+  },
+  "filters": {
+    "title": "عوامل التصفية",
+    "clear": "مسح عوامل التصفية",
+    "format": "صيغة السؤال",
+    "answering": "الإجابة",
+    "alphabet": "الأبجدية"
+  },
+  "list": {
+    "shown": "المعروض: {count}",
+    "pickedOf": "{picked} من {total}",
+    "selectAll": "تحديد كل الجولات المعروضة",
+    "clearSelection": "مسح التحديد",
+    "remove": "حذف {target}",
+    "export": "تصدير {target}",
+    "import": "استيراد جولات من ملف",
+    "actions": "إجراءات الجولات",
+    "score": "{correct}/{total} صحيحة، {percent}%",
+    "empty": "لا توجد تقارير بعد. أنهِ جولة وستظهر هنا.",
+    "noMatch": "لا توجد جولات تطابق عوامل التصفية هذه."
+  },
+  "pages": {
+    "label": "صفحات التقارير",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "at": "الصفحة {page} من {pages}"
+  },
+  "target": {
+    "shown_one": "الجولة المعروضة",
+    "shown_two": "الجولتين المعروضتين",
+    "shown_other": "كل الجولات المعروضة ({count})",
+    "picked_one": "الجولة المحددة",
+    "picked_two": "الجولتين المحددتين",
+    "picked_other": "الجولات المحددة ({count})"
+  },
+  "confirm": {
+    "title_one": "حذف هذه الجولة؟",
+    "title_two": "حذف الجولتين؟",
+    "title_few": "حذف {count} جولات؟",
+    "title_many": "حذف {count} جولة؟",
+    "title_other": "حذف {count} جولة؟",
+    "yes_one": "حذف الجولة",
+    "yes_two": "حذف الجولتين",
+    "yes_few": "حذف {count} جولات",
+    "yes_many": "حذف {count} جولة",
+    "yes_other": "حذف {count} جولة",
+    "no_one": "إبقاؤها",
+    "no_two": "إبقاؤهما",
+    "no_other": "إبقاؤها",
+    "bodyShown": "يحذف كل الجولات المعروضة نهائيًا. صدّرها أولًا للاحتفاظ بنسخة.",
+    "bodyPicked": "يحذف الجولات التي اخترتها نهائيًا. صدّرها أولًا للاحتفاظ بنسخة."
+  },
+  "deleted_one": "حُذفت جولة واحدة.",
+  "deleted_two": "حُذفت جولتان.",
+  "deleted_few": "حُذفت {count} جولات.",
+  "deleted_many": "حُذفت {count} جولة.",
+  "deleted_other": "حُذفت {count} جولة.",
+  "runs_one": "جولة واحدة",
+  "runs_two": "جولتان",
+  "runs_few": "{count} جولات",
+  "runs_many": "{count} جولة",
+  "runs_other": "{count} جولة",
+  "exported": "تم التصدير: {runs}",
+  "imported": "تم الاستيراد: {runs}.",
+  "importedSome": "تم الاستيراد: {runs}، وكانت {skipped} موجودة من قبل.",
+  "selected": "الجولات المحددة: {count}",
+  "overall": "{correct} من {total} صحيحة، {percent}% إجمالًا",
+  "practice": "تدرّب على هذه الأخطاء",
+  "noMistakes": "لا أخطاء للتدرّب عليها.",
+  "loadedMistakes": "تم تحميل الحروف التي أخطأت فيها: {count}.",
+  "weakest": {
+    "title": "أضعف الحروف",
+    "description": "مرتبة حسب مدى إتقان كل حرف: الحرف الذي ظهر مرتين لا يتقدّم أبدًا على حرف أثبتّه.",
+    "empty": "أنهِ جولة لترى إحصاءات الحروف."
+  },
+  "rows": {
+    "title": "الصفوف",
+    "description": "جدول الكانا، ملوّن حسب مدى إتقان كل صف.",
+    "empty": "لا صفوف بعد."
+  },
+  "alphabets": {
+    "title": "الأبجديات",
+    "description": "مدى إتقان كل منها، وحصتها من العمل.",
+    "share": "{percent}% من الأسئلة",
+    "shareLabel": "حصة الأسئلة"
+  },
+  "mistakes": {
+    "title": "الأخطاء حسب المجموعة",
+    "description": "كل حرف أخطأت فيه، حسب المجموعة والصف والأبجدية.",
+    "none": "لا أخطاء هنا.",
+    "miss_one": "خطأ واحد",
+    "miss_two": "خطآن",
+    "miss_few": "{count} أخطاء",
+    "miss_many": "{count} خطأً",
+    "miss_other": "{count} خطأ"
+  },
+  "tip": {
+    "right": "{romaji}، {correct} صحيحة من {total}",
+    "never": "{romaji}، لم يظهر قط",
+    "missed": "{romaji}، {misses} خاطئة من {total}",
+    "rowRight": "{correct} صحيحة من {total}",
+    "cell": "{sub}، {correct} صحيحة من {total}",
+    "strength": "{romaji}: {correct} صحيحة من {total}، الإتقان {percent}%"
+  },
+  "noData": "لا بيانات بعد",
+  "ofTotal": "من {total}",
+  "mastery": {
+    "new": "جديد",
+    "shaky": "مهتز",
+    "learning": "قيد التعلّم",
+    "steady": "ثابت",
+    "mastered": "متقن"
+  },
+  "seen_one": "ظهر مرة واحدة",
+  "seen_two": "ظهر مرتين",
+  "seen_few": "ظهر {count} مرات",
+  "seen_many": "ظهر {count} مرة",
+  "seen_other": "ظهر {count} مرة",
+  "legend": {
+    "weak": "يحتاج إلى تدريب",
+    "strong": "متين"
+  },
+  "stat": {
+    "accuracy": "الدقة",
+    "runs": "الجولات",
+    "answers": "الإجابات",
+    "mastered": "المتقنة"
+  }
+}

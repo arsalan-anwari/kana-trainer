@@ -1,6 +1,7 @@
 import type { Locator, Page } from "@playwright/test";
 
-export type Card = { title: string; lines: string[] };
+export type Badge = { icon: string; over: string; name: string };
+export type Card = { title: string; lines: string[]; badges?: Badge[] };
 
 type StageApi = {
   caption: (text: string) => void;
@@ -68,6 +69,16 @@ export function installStage(intro: Card): void {
     #promo-card .title { font-size: 54px; font-weight: 800; letter-spacing: -0.02em; }
     #promo-card .line { font-size: 24px; color: #6e6657; }
     #promo-card .line.mono { font-family: ui-monospace, monospace; color: #1b1915; }
+    #promo-card .badges {
+      display: grid; grid-template-columns: repeat(3, 300px); gap: 16px; margin-top: 18px;
+    }
+    #promo-card .badge {
+      display: flex; align-items: center; gap: 16px; padding: 14px 22px;
+      border-radius: 16px; background: #1b1915; color: #f7f2e7; text-align: left;
+    }
+    #promo-card .badge svg { flex: none; width: 36px; height: 36px; fill: currentColor; }
+    #promo-card .badge .over { font-size: 14px; opacity: 0.72; }
+    #promo-card .badge .name { font-size: 23px; font-weight: 700; letter-spacing: -0.01em; }
   `;
 
   const build = (): void => {
@@ -113,7 +124,16 @@ export function installStage(intro: Card): void {
       const lines = next.lines
         .map((line) => `<div class="line${line.startsWith("$") ? " mono" : ""}">${line}</div>`)
         .join("");
-      card.innerHTML = `<div class="mark">あ</div><div class="title">${next.title}</div>${lines}`;
+      const badges = next.badges
+        ?.map(
+          (badge) =>
+            `<div class="badge"><svg viewBox="0 0 24 24">${badge.icon}</svg>` +
+            `<div><div class="over">${badge.over}</div><div class="name">${badge.name}</div></div></div>`
+        )
+        .join("");
+      card.innerHTML =
+        `<div class="mark">あ</div><div class="title">${next.title}</div>${lines}` +
+        (badges ? `<div class="badges">${badges}</div>` : "");
     };
 
     window.__promo = {

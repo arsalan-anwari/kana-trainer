@@ -1,0 +1,47 @@
+{
+  "tier": {
+    "perfect": "מושלם",
+    "great": "כמעט מושלם",
+    "good": "סבב חזק",
+    "fair": "בדרך הנכונה",
+    "poor": "ממשיכים לתרגל"
+  },
+  "blurb": {
+    "perfect": "אף טעות אחת.",
+    "great": "כל כך קרוב לדף נקי.",
+    "good": "רובן פגעו במטרה.",
+    "fair": "הבסיס כבר שם.",
+    "poor": "כל סבב מקל על הבא."
+  },
+  "skip": "הקשה בכל מקום לדילוג",
+  "summary": "{correct} מתוך {total} נכונות ב-{seconds} שניות",
+  "stat": {
+    "accuracy": "דיוק",
+    "perQuestion": "לשאלה",
+    "timedOut": "הזמן נגמר"
+  },
+  "again": "סבב נוסף",
+  "practice": "תרגול הטעויות",
+  "export": "ייצוא הסבב",
+  "allReports": "כל הדוחות",
+  "back": "חזרה להגדרה",
+  "exported": "הסבב יוצא",
+  "characters": {
+    "title": "תווים",
+    "description": "החלשים קודם."
+  },
+  "rows": {
+    "title": "שורות",
+    "description": "איפה הקושי."
+  },
+  "missed": {
+    "title": "תשובות שגויות",
+    "description": "כל מה שטעית בו.",
+    "none": "אין טעויות, כל הכבוד.",
+    "timedOut": "הזמן נגמר",
+    "said": "ענית {given}",
+    "nothing": "כלום",
+    "hiragana": "הירה",
+    "katakana": "קטה"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "shortcuts": {
+    "title": "Klavye kısayolları",
+    "mode": "Klavye modu",
+    "appGroup": "Menüler ve sayfalar",
+    "runGroup": "Tur sırasında",
+    "start": "Klavye modunu başlat",
+    "stop": "Klavye modunu durdur",
+    "section": "Bölümler arasında geç",
+    "next": "Sonraki öğe",
+    "previous": "Önceki öğe",
+    "edges": "İlk ya da son öğe",
+    "scroll": "Sayfayı kaydır",
+    "select": "Seç",
+    "confirm": "Onayla",
+    "page": "Sayfa değiştir",
+    "answer": "Bir cevap seç",
+    "submit": "Cevabı gönder",
+    "replay": "Sesi yeniden çal",
+    "quit": "Turdan çık",
+    "close": "Kapat"
+  },
+  "navLabel": "Bölümler",
+  "appName": "Kana Trainer",
+  "tagline": "Hiragana ve katakana alıştırması",
+  "settings": "Ayarlar",
+  "closeSettings": "Ayarları kapat",
+  "cancel": "İptal",
+  "save": "Kaydet",
+  "apply": "Uygula",
+  "close": "Kapat",
+  "delete": "Sil",
+  "keep": "Sakla",
+  "hiragana": "Hiragana",
+  "katakana": "Katakana",
+  "both": "İkisi de",
+  "any": "Hepsi",
+  "off": "Kapalı",
+  "custom": "Özel",
+  "pickValue": "Bir değer seçin",
+  "nav": {
+    "setup": "Alıştırma",
+    "reports": "Raporlar",
+    "chart": "Tablo"
+  },
+  "group": {
+    "seion": "Seion",
+    "dakuon": "Dakuon",
+    "handakuon": "Handakuon",
+    "yoon": "Yōon",
+    "tokushon": "Tokushon"
+  },
+  "format": {
+    "text-text": "Yalnızca metin",
+    "audio-text": "Sesten metne",
+    "text-audio": "Metinden sese"
+  },
+  "answerStyle": {
+    "choice": "Çoktan seçmeli",
+    "typing": "Yazarak"
+  },
+  "direction": {
+    "kana-romaji": "Kanadan romajiye",
+    "romaji-kana": "Romajiden kanaya",
+    "mixed": "Karışık"
+  },
+  "difficulty": {
+    "beginner": "Başlangıç",
+    "advanced": "İleri",
+    "expert": "Uzman"
+  },
+  "rowLabel": "{letter} satırı",
+  "file": {
+    "filterName": "Kana Trainer turları",
+    "writeFailed": "Bu dosya yazılamadı.",
+    "readFailed": "Bu dosya okunamadı.",
+    "tooShort": "Bu dosya bir .kt-report dosyası olamayacak kadar kısa.",
+    "notReport": "Bu bir .kt-report dosyası değil.",
+    "newer": "Bu dosya daha yeni bir sürümle yazılmış (biçim {version}).",
+    "incomplete": "Bu .kt-report dosyası eksik.",
+    "damaged": "Bu .kt-report dosyası bozuk.",
+    "badRun": "Bu .kt-report dosyasında okunamayan bir tur var."
+  },
+  "show": "Göster: {label}",
+  "hide": "Gizle: {label}"
+}

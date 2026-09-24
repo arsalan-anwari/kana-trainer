@@ -1,0 +1,47 @@
+{
+  "tier": {
+    "perfect": "Kusursuz",
+    "great": "Neredeyse kusursuz",
+    "good": "Güçlü bir tur",
+    "fair": "Yol alıyorsunuz",
+    "poor": "Çalışmaya devam"
+  },
+  "blurb": {
+    "perfect": "Tek bir hata bile yok.",
+    "great": "Temiz sayfaya çok yakın.",
+    "good": "Çoğu tam isabet.",
+    "fair": "Temeli oturmaya başladı.",
+    "poor": "Her tur bir sonrakini kolaylaştırır."
+  },
+  "skip": "Geçmek için herhangi bir yere dokunun",
+  "summary": "{seconds} sn'de {total} sorudan {correct} doğru",
+  "stat": {
+    "accuracy": "doğruluk",
+    "perQuestion": "soru başına",
+    "timedOut": "süre doldu"
+  },
+  "again": "Yeniden oyna",
+  "practice": "Hataları çalış",
+  "export": "Bu turu dışa aktar",
+  "allReports": "Tüm raporlar",
+  "back": "Ayarlara dön",
+  "exported": "Bu tur dışa aktarıldı",
+  "characters": {
+    "title": "Karakterler",
+    "description": "En zayıflar önce."
+  },
+  "rows": {
+    "title": "Satırlar",
+    "description": "Sorunun olduğu yerler."
+  },
+  "missed": {
+    "title": "Yanlış cevaplar",
+    "description": "Yanlış yaptığınız her şey.",
+    "none": "Hiç hata yok, tebrikler.",
+    "timedOut": "süre doldu",
+    "said": "cevabınız: {given}",
+    "nothing": "hiçbir şey",
+    "hiragana": "hira",
+    "katakana": "kata"
+  }
+}

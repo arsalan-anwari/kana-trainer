@@ -1,0 +1,86 @@
+{
+  "shortcuts": {
+    "title": "קיצורי מקלדת",
+    "mode": "מצב מקלדת",
+    "appGroup": "תפריטים ודפים",
+    "runGroup": "במהלך סבב",
+    "start": "הפעלת מצב מקלדת",
+    "stop": "יציאה ממצב מקלדת",
+    "section": "מעבר בין אזורים",
+    "next": "הרכיב הבא",
+    "previous": "הרכיב הקודם",
+    "edges": "הרכיב הראשון או האחרון",
+    "scroll": "גלילת הדף",
+    "select": "בחירה",
+    "confirm": "אישור",
+    "page": "החלפת דף",
+    "answer": "בחירת תשובה",
+    "submit": "שליחת התשובה",
+    "replay": "השמעה חוזרת",
+    "quit": "יציאה מהסבב",
+    "close": "סגירה"
+  },
+  "navLabel": "אזורים",
+  "appName": "Kana Trainer",
+  "tagline": "תרגול הירגאנה וקטקנה",
+  "settings": "הגדרות",
+  "closeSettings": "סגירת ההגדרות",
+  "cancel": "ביטול",
+  "save": "שמירה",
+  "apply": "החלה",
+  "close": "סגירה",
+  "delete": "מחיקה",
+  "keep": "השארה",
+  "hiragana": "הירגאנה",
+  "katakana": "קטקנה",
+  "both": "שתיהן",
+  "any": "הכול",
+  "off": "כבוי",
+  "custom": "מותאם",
+  "pickValue": "בחירת ערך",
+  "nav": {
+    "setup": "תרגול",
+    "reports": "דוחות",
+    "chart": "טבלה"
+  },
+  "group": {
+    "seion": "סייאון",
+    "dakuon": "דאקואון",
+    "handakuon": "האנדאקואון",
+    "yoon": "יואון",
+    "tokushon": "טוקושון"
+  },
+  "format": {
+    "text-text": "טקסט בלבד",
+    "audio-text": "משמע לטקסט",
+    "text-audio": "טקסט למשמע"
+  },
+  "answerStyle": {
+    "choice": "בחירה מרובה",
+    "typing": "הקלדה"
+  },
+  "direction": {
+    "kana-romaji": "מקאנה לרומאג'י",
+    "romaji-kana": "מרומאג'י לקאנה",
+    "mixed": "מעורב"
+  },
+  "difficulty": {
+    "beginner": "מתחילים",
+    "advanced": "מתקדמים",
+    "expert": "מומחים"
+  },
+  "rowLabel": "שורת {letter}",
+  "file": {
+    "filterName": "סבבים של Kana Trainer",
+    "writeFailed": "לא ניתן היה לכתוב את הקובץ.",
+    "readFailed": "לא ניתן היה לקרוא את הקובץ.",
+    "tooShort": "הקובץ קצר מכדי להיות קובץ ‎.kt-report.",
+    "notReport": "זה לא קובץ ‎.kt-report.",
+    "newer": "הקובץ נכתב בגרסה חדשה יותר (תבנית {version}).",
+    "incomplete": "קובץ ה-‎.kt-report הזה חלקי.",
+    "damaged": "קובץ ה-‎.kt-report הזה פגום.",
+    "badRun": "קובץ ה-‎.kt-report הזה מכיל סבב שלא ניתן לקרוא."
+  },
+  "show": "הצגת {label}",
+  "hide": "הסתרת {label}"
+}

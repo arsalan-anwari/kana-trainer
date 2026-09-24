@@ -1,0 +1,131 @@
+{
+  "window": {
+    "today": "היום",
+    "yesterday": "אתמול",
+    "all": "הכול",
+    "custom": "מותאם",
+    "range": "{from} עד {to}"
+  },
+  "range": {
+    "pick": "בחירת טווח תאריכים",
+    "title": "טווח תאריכים",
+    "close": "סגירת טווח התאריכים",
+    "from": "מ-",
+    "to": "עד",
+    "invalid": "ההתחלה צריכה להיות לפני הסוף או באותו יום, ולא לפני {earliest}."
+  },
+  "filters": {
+    "title": "מסננים",
+    "clear": "ניקוי המסננים",
+    "format": "סוג השאלה",
+    "answering": "אופן המענה",
+    "alphabet": "כתב"
+  },
+  "list": {
+    "shown": "{count} מוצגים",
+    "pickedOf": "{picked} מתוך {total}",
+    "selectAll": "בחירת כל הסבבים המוצגים",
+    "clearSelection": "ניקוי הבחירה",
+    "remove": "מחיקת {target}",
+    "export": "ייצוא {target}",
+    "import": "ייבוא סבבים מקובץ",
+    "actions": "פעולות על סבבים",
+    "score": "{correct}/{total} נכונות, {percent}%",
+    "empty": "עוד אין דוחות. סבב שמסתיים מופיע כאן.",
+    "noMatch": "אין סבבים שמתאימים למסננים האלה."
+  },
+  "pages": {
+    "label": "דפי דוחות",
+    "previous": "הדף הקודם",
+    "next": "הדף הבא",
+    "at": "דף {page} מתוך {pages}"
+  },
+  "target": {
+    "shown_one": "הסבב המוצג",
+    "shown_two": "שני הסבבים המוצגים",
+    "shown_other": "כל {count} הסבבים המוצגים",
+    "picked_one": "הסבב שנבחר",
+    "picked_two": "שני הסבבים שנבחרו",
+    "picked_other": "{count} הסבבים שנבחרו"
+  },
+  "confirm": {
+    "title_one": "למחוק את הסבב?",
+    "title_two": "למחוק שני סבבים?",
+    "title_other": "למחוק {count} סבבים?",
+    "yes_one": "מחיקת הסבב",
+    "yes_two": "מחיקת שני הסבבים",
+    "yes_other": "מחיקת {count} סבבים",
+    "no_one": "להשאיר אותו",
+    "no_other": "להשאיר אותם",
+    "bodyShown": "מוחק לצמיתות את כל הסבבים המוצגים. כדי לשמור עותק, כדאי לייצא אותם קודם.",
+    "bodyPicked": "מוחק לצמיתות את הסבבים שנבחרו. כדי לשמור עותק, כדאי לייצא אותם קודם."
+  },
+  "deleted_one": "נמחק סבב אחד.",
+  "deleted_two": "נמחקו שני סבבים.",
+  "deleted_other": "נמחקו {count} סבבים.",
+  "runs_one": "סבב אחד",
+  "runs_two": "שני סבבים",
+  "runs_other": "{count} סבבים",
+  "exported": "יוצאו: {runs}",
+  "imported": "יובאו: {runs}.",
+  "importedSome": "יובאו: {runs}, {skipped} כבר היו כאן.",
+  "selected": "נבחרו {count} סבבים",
+  "overall": "{correct} מתוך {total} נכונות, {percent}% בסך הכול",
+  "practice": "לתרגל את הטעויות האלה",
+  "noMistakes": "אין טעויות לתרגל.",
+  "loadedMistakes": "נטענו {count} תווים שטעית בהם.",
+  "weakest": {
+    "title": "התווים החלשים ביותר",
+    "description": "לפי מידת השליטה בכל אחד: תו שהופיע פעמיים לעולם לא יעקוף תו שכבר הוכחת.",
+    "empty": "סיום סבב יציג כאן נתונים על התווים."
+  },
+  "rows": {
+    "title": "שורות",
+    "description": "טבלת הקאנה, צבועה לפי מידת השליטה בכל שורה.",
+    "empty": "עוד אין שורות."
+  },
+  "alphabets": {
+    "title": "כתבים",
+    "description": "מידת השליטה בכל אחד, וכמה מהעבודה הוא נשא.",
+    "share": "{percent}% מהשאלות",
+    "shareLabel": "חלק מהשאלות"
+  },
+  "mistakes": {
+    "title": "טעויות לפי קבוצה",
+    "description": "כל תו שטעית בו, לפי קבוצה, שורה וכתב.",
+    "none": "אין כאן טעויות.",
+    "miss_one": "טעות אחת",
+    "miss_two": "שתי טעויות",
+    "miss_other": "{count} טעויות"
+  },
+  "tip": {
+    "right": "{romaji}, {correct} נכונות מתוך {total}",
+    "never": "{romaji}, עוד לא הופיע",
+    "missed": "{romaji}, {misses} טעויות מתוך {total}",
+    "rowRight": "{correct} נכונות מתוך {total}",
+    "cell": "{sub}, {correct} נכונות מתוך {total}",
+    "strength": "{romaji}: {correct} נכונות מתוך {total}, שליטה {percent}%"
+  },
+  "noData": "עוד אין נתונים",
+  "ofTotal": "מתוך {total}",
+  "mastery": {
+    "new": "חדש",
+    "shaky": "רעוע",
+    "learning": "בלמידה",
+    "steady": "יציב",
+    "mastered": "נשלט"
+  },
+  "seen_one": "הופיע פעם אחת",
+  "seen_two": "הופיע פעמיים",
+  "seen_other": "הופיע {count} פעמים",
+  "legend": {
+    "weak": "דורש תרגול",
+    "strong": "מבוסס"
+  },
+  "stat": {
+    "accuracy": "דיוק",
+    "runs": "סבבים",
+    "answers": "תשובות",
+    "mastered": "נשלטים"
+  }
+}

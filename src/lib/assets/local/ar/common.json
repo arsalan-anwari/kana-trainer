@@ -1,0 +1,86 @@
+{
+  "shortcuts": {
+    "title": "اختصارات لوحة المفاتيح",
+    "mode": "وضع لوحة المفاتيح",
+    "appGroup": "القوائم والصفحات",
+    "runGroup": "أثناء الجولة",
+    "start": "تشغيل وضع لوحة المفاتيح",
+    "stop": "إيقاف وضع لوحة المفاتيح",
+    "section": "التنقل بين الأقسام",
+    "next": "العنصر التالي",
+    "previous": "العنصر السابق",
+    "edges": "العنصر الأول أو الأخير",
+    "scroll": "تمرير الصفحة",
+    "select": "تحديد",
+    "confirm": "تأكيد",
+    "page": "تبديل الصفحة",
+    "answer": "اختيار إجابة",
+    "submit": "إرسال الإجابة",
+    "replay": "إعادة تشغيل الصوت",
+    "quit": "مغادرة الجولة",
+    "close": "إغلاق"
+  },
+  "navLabel": "الأقسام",
+  "appName": "Kana Trainer",
+  "tagline": "تدريب على الهيراغانا والكاتاكانا",
+  "settings": "الإعدادات",
+  "closeSettings": "إغلاق الإعدادات",
+  "cancel": "إلغاء",
+  "save": "حفظ",
+  "apply": "تطبيق",
+  "close": "إغلاق",
+  "delete": "حذف",
+  "keep": "إبقاء",
+  "hiragana": "هيراغانا",
+  "katakana": "كاتاكانا",
+  "both": "كلاهما",
+  "any": "الكل",
+  "off": "إيقاف",
+  "custom": "مخصص",
+  "pickValue": "اختر قيمة",
+  "nav": {
+    "setup": "تدريب",
+    "reports": "التقارير",
+    "chart": "الجدول"
+  },
+  "group": {
+    "seion": "سيئون",
+    "dakuon": "داكوأون",
+    "handakuon": "هانداكوأون",
+    "yoon": "يوأون",
+    "tokushon": "توكوشون"
+  },
+  "format": {
+    "text-text": "نص فقط",
+    "audio-text": "من صوت إلى نص",
+    "text-audio": "من نص إلى صوت"
+  },
+  "answerStyle": {
+    "choice": "اختيار من متعدد",
+    "typing": "كتابة"
+  },
+  "direction": {
+    "kana-romaji": "من الكانا إلى الروماجي",
+    "romaji-kana": "من الروماجي إلى الكانا",
+    "mixed": "مختلط"
+  },
+  "difficulty": {
+    "beginner": "مبتدئ",
+    "advanced": "متقدم",
+    "expert": "خبير"
+  },
+  "rowLabel": "صف {letter}",
+  "file": {
+    "filterName": "جولات Kana Trainer",
+    "writeFailed": "تعذّرت كتابة هذا الملف.",
+    "readFailed": "تعذّرت قراءة هذا الملف.",
+    "tooShort": "هذا الملف أقصر من أن يكون ملف ‎.kt-report.",
+    "notReport": "هذا ليس ملف ‎.kt-report.",
+    "newer": "كُتب هذا الملف بإصدار أحدث (الصيغة {version}).",
+    "incomplete": "ملف ‎.kt-report هذا غير مكتمل.",
+    "damaged": "ملف ‎.kt-report هذا تالف.",
+    "badRun": "يحتوي ملف ‎.kt-report هذا على جولة تتعذّر قراءتها."
+  },
+  "show": "إظهار {label}",
+  "hide": "إخفاء {label}"
+}

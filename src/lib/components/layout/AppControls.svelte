@@ -24,7 +24,7 @@
     active={app.prefs.effects}
     onclick={() => app.setPref("effects", !app.prefs.effects)}
   />
-  <span class="ml-1.5 flex items-center gap-1.5 border-l border-border pl-1.5">
+  <span class="ms-1.5 flex items-center gap-1.5 border-s border-border ps-1.5">
     <IconButton
       size="sm"
       icon="zoom-out"

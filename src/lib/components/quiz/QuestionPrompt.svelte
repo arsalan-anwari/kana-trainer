@@ -24,6 +24,8 @@
   const text = $derived(question.prompt === "kana" ? glyph(kana, question.script) : kana.romaji);
 
   const compact = $derived(!viewport.wide);
+  // Sideways phone: the square player outgrows the height left, the slim one fits.
+  const tight = $derived(split && viewport.short);
 
   const fontSize = $derived.by(() => {
     const budget = question.prompt === "kana" ? 88 : 150;
@@ -39,12 +41,14 @@
 
   {#if question.prompt === "audio"}
     <div
-      class="w-full {compact
-        ? 'h-[min(6.5rem,14dvh)] max-w-sm'
-        : 'max-w-[13rem] sm:max-w-[15rem]'}"
+      class="w-full {tight
+        ? 'h-[clamp(4.5rem,calc(var(--answer-max)/2),7rem)] max-w-xs'
+        : compact
+          ? 'h-[min(6.5rem,14dvh)] max-w-sm'
+          : 'max-w-[13rem] sm:max-w-[15rem]'}"
     >
       <RecordPlayer
-        {compact}
+        compact={compact || tight}
         {playing}
         peaks={kanaAudio.peaks(kana.audio ?? kana.romaji)}
         progress={playing ? kanaAudio.progress : 0}

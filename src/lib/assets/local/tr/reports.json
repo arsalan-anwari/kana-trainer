@@ -1,0 +1,123 @@
+{
+  "window": {
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "all": "Tümü",
+    "custom": "Özel",
+    "range": "{from} - {to}"
+  },
+  "range": {
+    "pick": "Bir tarih aralığı seçin",
+    "title": "Tarih aralığı",
+    "close": "Tarih aralığını kapat",
+    "from": "Başlangıç",
+    "to": "Bitiş",
+    "invalid": "Başlangıç, bitişten sonra ya da {earliest} tarihinden önce olamaz."
+  },
+  "filters": {
+    "title": "Filtreler",
+    "clear": "Filtreleri temizle",
+    "format": "Soru biçimi",
+    "answering": "Cevaplama",
+    "alphabet": "Alfabe"
+  },
+  "list": {
+    "shown": "{count} gösteriliyor",
+    "pickedOf": "{picked} / {total}",
+    "selectAll": "Gösterilen tüm turları seç",
+    "clearSelection": "Seçimi temizle",
+    "remove": "Sil: {target}",
+    "export": "Dışa aktar: {target}",
+    "import": "Turları bir dosyadan içe aktar",
+    "actions": "Tur işlemleri",
+    "score": "{correct}/{total} doğru, %{percent}",
+    "empty": "Henüz rapor yok. Bir turu bitirin, buraya gelir.",
+    "noMatch": "Bu filtrelere uyan tur yok."
+  },
+  "pages": {
+    "label": "Rapor sayfaları",
+    "previous": "Önceki sayfa",
+    "next": "Sonraki sayfa",
+    "at": "Sayfa {page} / {pages}"
+  },
+  "target": {
+    "shown_one": "gösterilen tur",
+    "shown_other": "gösterilen {count} turun tümü",
+    "picked_one": "seçilen 1 tur",
+    "picked_other": "seçilen {count} tur"
+  },
+  "confirm": {
+    "title_one": "Bu tur silinsin mi?",
+    "title_other": "{count} tur silinsin mi?",
+    "yes_one": "Turu sil",
+    "yes_other": "{count} turu sil",
+    "no_one": "Sakla",
+    "no_other": "Sakla",
+    "bodyShown": "Görünen tüm turları kalıcı olarak siler. Bir kopya için önce dışa aktarın.",
+    "bodyPicked": "Seçtiğiniz turları kalıcı olarak siler. Bir kopya için önce dışa aktarın."
+  },
+  "deleted_one": "1 tur silindi.",
+  "deleted_other": "{count} tur silindi.",
+  "runs_one": "1 tur",
+  "runs_other": "{count} tur",
+  "exported": "Dışa aktarıldı: {runs}",
+  "imported": "İçe aktarıldı: {runs}.",
+  "importedSome": "İçe aktarıldı: {runs}, {skipped} zaten vardı.",
+  "selected": "{count} tur seçildi",
+  "overall": "{total} sorudan {correct} doğru, genel %{percent}",
+  "practice": "Bu hataları çalış",
+  "noMistakes": "Çalışılacak hata yok.",
+  "loadedMistakes": "Hata yaptığınız {count} karakter yüklendi.",
+  "weakest": {
+    "title": "En zayıf karakterler",
+    "description": "Her birinin ne kadar oturduğuna göre sıralı: iki kez görülen bir karakter, kanıtlanmış bir karakterin önüne geçemez.",
+    "empty": "Karakter istatistikleri için bir tur bitirin."
+  },
+  "rows": {
+    "title": "Satırlar",
+    "description": "Kana tablosu, her satırın ne kadar oturduğuna göre renklendirilmiş.",
+    "empty": "Henüz satır yok."
+  },
+  "alphabets": {
+    "title": "Alfabeler",
+    "description": "Her birinin ne kadar oturduğu ve işin ne kadarını taşıdığı.",
+    "share": "Soruların %{percent} kadarı",
+    "shareLabel": "Soru payı"
+  },
+  "mistakes": {
+    "title": "Gruplara göre hatalar",
+    "description": "Hata yaptığınız her karakter, gruba, satıra ve alfabeye göre.",
+    "none": "Burada hata yok.",
+    "miss_one": "1 hata",
+    "miss_other": "{count} hata"
+  },
+  "tip": {
+    "right": "{romaji}, {total} sorudan {correct} doğru",
+    "never": "{romaji}, hiç çıkmadı",
+    "missed": "{romaji}, {total} sorudan {misses} hata",
+    "rowRight": "{total} sorudan {correct} doğru",
+    "cell": "{sub}, {total} sorudan {correct} doğru",
+    "strength": "{romaji}: {total} sorudan {correct} doğru, güç %{percent}"
+  },
+  "noData": "Henüz veri yok",
+  "ofTotal": "/ {total}",
+  "mastery": {
+    "new": "Yeni",
+    "shaky": "Zayıf",
+    "learning": "Öğreniliyor",
+    "steady": "Sağlam",
+    "mastered": "Ustalaşıldı"
+  },
+  "seen_one": "bir kez görüldü",
+  "seen_other": "{count} kez görüldü",
+  "legend": {
+    "weak": "Çalışılmalı",
+    "strong": "Sağlam"
+  },
+  "stat": {
+    "accuracy": "Doğruluk",
+    "runs": "Turlar",
+    "answers": "Cevaplar",
+    "mastered": "Ustalaşılan"
+  }
+}

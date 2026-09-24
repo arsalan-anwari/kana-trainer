@@ -19,7 +19,7 @@
   onclick={() => kanaAudio.play(kana.audio)}
 >
   <span
-    class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-60 {playing
+    class="absolute top-1 end-1 opacity-0 transition-opacity group-hover:opacity-60 {playing
       ? 'opacity-100'
       : ''}"
     aria-hidden="true"

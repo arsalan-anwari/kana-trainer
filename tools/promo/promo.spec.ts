@@ -3,6 +3,7 @@ import { allKana, seionRows } from "../../src/lib/core/kana";
 import { applySeed, seedPayload } from "./seed";
 import { installStage, Stage } from "./stage";
 import { langPicker } from "../showcase/drive";
+import { badges } from "./badges";
 
 const intro = { title: "Kana Trainer", lines: ["Hiragana and katakana practice"] };
 
@@ -10,8 +11,9 @@ const outro = {
   title: "Kana Trainer",
   lines: [
     "Free and open source. Desktop, tablet and phone",
-    "Download at: https://arsalan-anwari.github.io/kana-trainer/",
-  ]
+    "Download at: https://arsalan-anwari.github.io/kana-trainer/"
+  ],
+  badges
 };
 
 function resolve(text: string) {
@@ -290,7 +292,7 @@ test("record the promo", async ({ page }) => {
   await stage.scroll(0, 300);
   stage.mark("chart");
 
-  await stage.card(outro, 1600);
+  await stage.card(outro, 5000);
   stage.mark("end");
 });
 

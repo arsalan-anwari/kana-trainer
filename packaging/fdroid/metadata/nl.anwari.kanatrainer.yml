@@ -1,0 +1,23 @@
+Categories:
+  - Science & Education
+License: Apache-2.0
+AuthorName: Arsalan Anwari
+WebSite: https://arsalan-anwari.github.io/kana-trainer/
+SourceCode: https://github.com/arsalan-anwari/kana-trainer
+IssueTracker: https://github.com/arsalan-anwari/kana-trainer/issues
+Changelog: https://github.com/arsalan-anwari/kana-trainer/blob/main/CHANGELOG.md
+
+Name: Kana Trainer
+Summary: Learn and drill the hiragana and katakana alphabets
+Description: |-
+  Trainer for the hiragana and katakana alphabets, on phone, tablet and desktop.
+
+  * Three question formats: text only, audio to text and text to audio
+  * Answer by picking from choices or by typing the romaji
+  * Pick exactly which rows to drill: seion, dakuon, handakuon, yoon and more
+  * Difficulty levels that pick look-alike characters as wrong answers
+  * Reports of every run, a mistakes-only practice mode and a character chart
+  * Export and import reports between devices
+  * Full keyboard navigation and 17 interface languages
+
+  Everything stays on your device. No account, no ads, no tracking.

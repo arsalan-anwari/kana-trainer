@@ -1,0 +1,12 @@
+# Source from the repo (or your shell rc) to call scripts/*.sh by name:
+#   source .ktrc
+#   update_version 1.x.x
+#   test_ci --no-act
+
+__kt_root="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%x}}")" && pwd)"
+
+for __kt_script in "$__kt_root"/scripts/*.sh; do
+  __kt_name="$(basename "$__kt_script" .sh)"
+  eval "$__kt_name() { \"$__kt_script\" \"\$@\"; }"
+done
+unset __kt_script __kt_name

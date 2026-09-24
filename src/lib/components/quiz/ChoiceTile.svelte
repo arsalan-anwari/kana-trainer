@@ -41,7 +41,7 @@
   onclick={onpick}
 >
   <span
-    class="absolute left-3 top-2 text-xs font-bold text-muted-foreground sm:left-4 sm:top-3"
+    class="absolute start-3 top-2 text-xs font-bold text-muted-foreground sm:start-4 sm:top-3"
     aria-hidden="true"
   >
     {slot}

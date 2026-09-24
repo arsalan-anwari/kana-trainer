@@ -56,7 +56,7 @@
     : 'h-16 sm:h-22'} {tones[state]}"
   onclick={onpick}
 >
-  <span class="w-4 shrink-0 text-left text-xs font-bold opacity-60" aria-hidden="true">{slot}</span>
+  <span class="w-4 shrink-0 text-start text-xs font-bold opacity-60" aria-hidden="true">{slot}</span>
   <span
     class="flex shrink-0 items-center justify-center rounded-full transition-colors {split
       ? 'size-[clamp(1.75rem,calc((var(--answer-max)-3.5rem)/3),3.25rem)]'

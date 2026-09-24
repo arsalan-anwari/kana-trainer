@@ -1,0 +1,38 @@
+{
+  "runProgress": "Tur ilerlemesi",
+  "timeLeft": "Kalan süre",
+  "announce": "Soru {index} / {total}. {prompt}",
+  "prompt": {
+    "listen": "Dinleyin ve seçin",
+    "pickSound": "Sesi seçin",
+    "whichRomaji": "Bu hangi romaji",
+    "whichKana": "Bu hangi karakter",
+    "replay": "Sesi yeniden çal"
+  },
+  "typing": {
+    "kana": "Kanayı yazın",
+    "romaji": "Romajiyi yazın",
+    "either": "Kana ya da romaji"
+  },
+  "check": "Kontrol et",
+  "soundTile": "Ses {slot}",
+  "soundHint": "Dinlemek için bir sese dokunun, sonra kontrol edin.",
+  "soundCompare": "Yeniden dinlemek için bir sese dokunun.",
+  "quit": "Çık",
+  "score": "{count} doğru",
+  "correct": "Doğru",
+  "wrong": "Pek değil",
+  "reading": "{kana} = {romaji}",
+  "alsoReads": "ayrıca {list}",
+  "continue": "Devam",
+  "stop": {
+    "title": "Bu tur durdurulsun mu?",
+    "nothing": "Henüz cevap yok, kaydedilecek bir şey yok.",
+    "discard_one": "Yalnızca biten tur puanlanır. 1 cevabınız silinecek.",
+    "discard_other": "Yalnızca biten tur puanlanır. {count} cevabınız silinecek.",
+    "left_one": "1 soru kaldı.",
+    "left_other": "{count} soru kaldı.",
+    "confirm": "Durdur ve sil",
+    "cancel": "Devam et"
+  }
+}
