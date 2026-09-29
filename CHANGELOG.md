@@ -5,6 +5,17 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.9.3 - 2026-09-29
+
+### Changed
+- Japanese text uses Klee One, the textbook-style face bundled with kaizen-ui,
+  instead of whatever Japanese font the device happens to have.
+
+### Fixed
+- The practice page scrolls as one page on a wide window. The character column
+  no longer stays pinned while the settings column scrolls, which hid the Start
+  panel until the settings ran out.
+
 ## 1.9.2 - 2026-09-24
 
 ### Changed

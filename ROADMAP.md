@@ -145,7 +145,6 @@ how far off and in which direction, and coach in real time.
 | **zinfer** | Library to benchmark and profile the **energy** cost of an AI/ML model (dense LLMs and other ML architectures). Used to run and profile every v2 model. Developed alongside Kana Trainer. |
 | **kaizen-ui** | Shared UI library for all sibling apps. |
 | **kanji-trainer** | Planned sibling app. Consumer of the shared UI library. |
-| **jlpt-trainer** | Planned sibling app. Consumer of the shared UI library. |
 
 ## Non-goals
 

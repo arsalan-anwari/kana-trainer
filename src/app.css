@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "kaizen-ui/theme.css";
+@import "kaizen-ui/fonts.css";
 
 @source "../vendor/kaizen-ui/src";
 

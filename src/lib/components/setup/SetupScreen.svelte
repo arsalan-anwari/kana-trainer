@@ -30,7 +30,7 @@
     <SettingsPanel />
   </div>
 
-  <div class="flex flex-col gap-4 lg:sticky lg:top-[calc(var(--header-height,0px)+0.75rem)]">
+  <div class="flex flex-col gap-4">
     <Card title={t("setup.characters.title")} description={t("setup.characters.description")}>
       {#snippet icon()}<Icon name="target" class="size-5" />{/snippet}
       <KanaPicker />
